@@ -1,0 +1,16 @@
+{
+  "biomes": {
+    "mystical_forest": {
+      "water_surface_color": "#86B6CC7F",
+      "water_fog_color": "#86B6CC",
+      "water_surface_transparency": 1.0,
+      "water_fog_distance": 50
+    },
+    "the_deep": {
+      "water_surface_color": "#4E68CE",
+      "water_fog_color": "#v",
+      "water_surface_transparency": 1.0,
+      "water_fog_distance": 50
+    }
+  }
+}

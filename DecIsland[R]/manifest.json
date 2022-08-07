@@ -1,0 +1,29 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "DecIsland[R]V1.8.0",
+        "description": "/function test/creator_list",
+        "uuid": "62301035-23b0-4a15-9b03-04c40160344c",
+        "version": [
+            1,
+            8,
+            0
+        ],
+        "min_engine_version": [
+            1,
+            18,
+            0
+        ]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "f3d18299-ef21-42f4-bbc8-8a53ba3a15cf",
+            "version": [
+                1,
+                8,
+                0
+            ]
+        }
+    ]
+}
