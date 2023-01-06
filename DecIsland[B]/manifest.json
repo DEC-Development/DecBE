@@ -1,23 +1,42 @@
 {
     "format_version": 2,
+    "capabilities": ["script_eval"],
     "header": {
-        "name": "DecIsland[B]V1.8.0",
+        "name": "DecIsland[B]V1.8.0B1",
         "description": "/function test/creator_list",
-        "uuid": "b2dd3a19-31b2-406a-a9af-33db6472e169",
-        "min_engine_version": [ 1,13,0 ],
+        "uuid": "6d4ede5c-5ac6-49ba-ab2b-44be7fbaa757",
+        "min_engine_version": [ 1,19,50 ],
         "version": [1, 8, 0]
     },
     "modules": [
         {
             "type": "data",
-            "uuid": "a7a9f835-8d3d-46b0-8f81-1ce23aff7063",
+            "uuid": "12c57925-7ddc-4ac9-a9ec-e4d2133c05ef",
             "version": [1, 8, 0]
+        },
+        {
+          "type": "script",
+          "uuid": "5686fb88-fad9-440b-ac02-ccc9133aabd0",
+          "version": [1, 8, 0],
+          "entry": "scripts/out/dec.js"
         }
     ],
     "dependencies": [
         {
-            "uuid": "62301035-23b0-4a15-9b03-04c40160344c",
+            "uuid": "10379c2a-0e2e-46e3-9964-e374afde31df",
             "version": [1, 8, 0]
+        },
+        {
+            "uuid": "008f2e56-7e74-48b4-8f6b-457208e24e63",
+            "version": [1, 0, 0]
+        },
+        {
+          "module_name": "@minecraft/server",
+          "version": "1.1.0-beta"
+        },
+        {
+          "module_name": "@minecraft/server-ui",
+          "version": "1.0.0-beta"
         }
     ]
 }

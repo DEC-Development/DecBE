@@ -179,8 +179,8 @@
     "ice_brick": {
       "textures": "textures/items/ice_brick"
     },
-    "natura_essence": {
-      "textures": "textures/items/natura_essence"
+    "nature_essence": {
+      "textures": "textures/items/nature_essence"
     },
     "blaze_staff": {
       "textures": "textures/items/blaze_staff"
@@ -356,8 +356,8 @@
     "lightning_stone": {
       "textures": "textures/items/lightning_stone"
     },
-    "pluse_stone": {
-      "textures": "textures/items/pluse_stone"
+    "pulse_stone": {
+      "textures": "textures/items/pulse_stone"
     },
     "sun_stone": {
       "textures": "textures/items/sun_stone"
@@ -1049,8 +1049,8 @@
     "lapis_nugget": {
       "textures": "textures/items/lapis_nugget"
     },
-    "exprience_flower_seeds": {
-      "textures": "textures/items/exprience_flower_seeds"
+    "experience_flower_seeds": {
+      "textures": "textures/items/experience_flower_seeds"
     },
     "jellyfish_staff": {
       "textures": "textures/items/jellyfish_staff"
@@ -1189,6 +1189,177 @@
     },
     "mysterious_key_debris": {
       "textures": "textures/items/mysterious_key_debris"
-    }
+    },
+    "black_shoes": {
+      "textures": "textures/items/black_shoes"
+    },
+    "black_shorts": {
+      "textures": "textures/items/black_shorts"
+    },
+    "blue_cat_ears": {
+      "textures": "textures/items/blue_cat_ears"
+    },
+    "camouflage_pants": {
+      "textures": "textures/items/camouflage_pants"
+    },
+    "dark_blue_jacket": {
+      "textures": "textures/items/dark_blue_jacket"
+    },
+    "es_clothes": {
+      "textures": "textures/items/es_clothes"
+    },
+    "es_pants": {
+      "textures": "textures/items/es_pants"
+    },
+    "es_shoes": {
+      "textures": "textures/items/es_shoes"
+    },
+    "formal_sytle_clothes": {
+      "textures": "textures/items/formal_sytle_clothes"
+    },
+    "formal_sytle_pants": {
+      "textures": "textures/items/formal_sytle_pants"
+    },
+    "frank_mask": {
+      "textures": "textures/items/frank_mask"
+    },
+    "glamor_clothes": {
+      "textures": "textures/items/glamor_clothes"
+    },
+    "glamor_pants": {
+      "textures": "textures/items/glamor_pants"
+    },
+    "glamor_shoes": {
+      "textures": "textures/items/glamor_shoes"
+    },
+    "hanyi_clothes": {
+      "textures": "textures/items/hanyi_clothes"
+    },
+    "hanyi_hair_accessories": {
+      "textures": "textures/items/hanyi_hair_accessories"
+    },
+    "hanyi_pants": {
+      "textures": "textures/items/hanyi_pants"
+    },
+    "hanyi_shoes": {
+      "textures": "textures/items/hanyi_shoes"
+    },
+    "jiuzhi_jacket": {
+      "textures": "textures/items/jiuzhi_jacket"
+    },
+    "jiuzhi_pants": {
+      "textures": "textures/items/jiuzhi_pants"
+    },
+    "jiuzhi_shoes": {
+      "textures": "textures/items/jiuzhi_shoes"
+    },
+    "lester_clothes": {
+      "textures": "textures/items/lester_clothes"
+    },
+    "lester_pants": {
+      "textures": "textures/items/lester_pants"
+    },
+    "lester_shoes": {
+      "textures": "textures/items/lester_shoes"
+    },
+    "uniform_clothes": {
+      "textures": "textures/items/uniform_clothes"
+    },
+    "uniform_pants": {
+      "textures": "textures/items/uniform_pants"
+    },
+    "white_shoes": {
+      "textures": "textures/items/white_shoes"
+    },
+    "white_t_shirt": {
+      "textures": "textures/items/white_t_shirt"
+    },
+    "bracken": {
+      "textures": "textures/items/bracken"
+    },
+    "amethyst_ray_staff": {
+      "textures": "textures/items/amethyst_ray_staff"
+    },
+    "shadow_crystal": {
+      "textures": "textures/items/shadow_crystal"
+    },
+    "storm_staff": {
+      "textures": "textures/items/storm_staff"
+    },
+    "thunder_rapier": {
+      "textures": "textures/items/thunder_rapier"
+    },
+		"storm_battleaxe": {
+			"textures": "textures/items/storm_battleaxe"
+		},
+		"experience_book_pro_empty": {
+			"textures": "textures/items/experience_book_pro_empty"
+		},
+		"knight_helmet": {
+			"textures": "textures/items/knight_helmet"
+		},
+		"ghost_dirt_wall": {
+			"textures": "textures/items/ghost_dirt_wall"
+		},
+		"blood_meat": {
+			"textures": "textures/items/blood_meat"
+		},
+		"houttuynia_seeds": {
+			"textures": "textures/items/houttuynia_seeds"
+		},
+		"houttuynia": {
+			"textures": "textures/items/houttuynia"
+		},
+		"fritillary_seeds": {
+			"textures": "textures/items/fritillary_seeds"
+		},
+		"fritillary": {
+			"textures": "textures/items/fritillary"
+		},
+		"intestine": {
+			"textures": "textures/items/intestine"
+		},
+		"sword_of_halloween": {
+			"textures": "textures/items/sword_of_halloween"
+		},
+		"bizarre_chilli": {
+			"textures": "textures/items/bizarre_chilli"
+		},
+		"bizarre_chilli_seeds": {
+			"textures": "textures/items/bizarre_chilli_seeds"
+		},
+		"ghost_summoner": {
+			"textures": "textures/items/ghost_summoner"
+		},
+		"soul_key": {
+			"textures": "textures/items/soul_key"
+		},
+		"everlasting_winter_flintlock": {
+			"textures": "textures/items/everlasting_winter_flintlock"
+		},
+		"ghost_flintlock": {
+			"textures": "textures/items/ghost_flintlock"
+		},
+		"lava_flintlock": {
+			"textures": "textures/items/lava_flintlock"
+		},
+		"star_flintlock": {
+			"textures": "textures/items/star_flintlock"
+		},
+		"storm_flintlock": {
+			"textures": "textures/items/storm_flintlock"
+		},
+		"magic_ice_cream": {
+			"textures": "textures/items/magic_ice_cream"
+		},
+		"frozen_power_debris": {
+			"textures": "textures/items/frozen_power_debris"
+		},
+		"everlasting_winter_heart": {
+			"textures": "textures/items/everlasting_winter_heart"
+		},
+		"magic_scroll_blue": {
+			"textures": "textures/items/magic_scroll_blue"
+		}
   }
 }

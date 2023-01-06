@@ -20,12 +20,6 @@
       "scripts": {
         "scale": "1"
       },
-      "animations": {
-        "attack": "animation.sword.attack"
-      },
-      "animation_controllers": [
-        { "attack": "controller.animation.sword.attack"}
-      ],
       "render_controllers": [ "controller.render.sword" ],
       "enable_attachables": true
     }

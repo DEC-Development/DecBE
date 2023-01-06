@@ -8,7 +8,7 @@
     },
     "the_deep": {
       "water_surface_color": "#4E68CE",
-      "water_fog_color": "#v",
+      "water_fog_color": "#4E68CE",
       "water_surface_transparency": 1.0,
       "water_fog_distance": 50
     }
