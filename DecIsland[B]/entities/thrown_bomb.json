@@ -15,7 +15,8 @@
 					"fuseLit": true,
 					"power": 2,
 					"causesFire": true,
-					"destroyAffectedByGriefing": true
+					"destroy_affected_by_griefing": true,
+					"fire_affected_by_griefing": true
 				}
 			}
 		},

@@ -12,10 +12,8 @@
     },
 
     "components": {
-      "minecraft:boss": {
-        "should_darken_sky": false,
-        "name": "mini_boss.dec:ender_witch.name",
-        "hud_range": 16
+      "minecraft:despawn": {
+        "despawn_from_distance": {}
       },
       "minecraft:type_family": {
         "family": [ "ender_witch", "monster", "mob", "witch", "ender" ]
@@ -26,8 +24,8 @@
       "minecraft:teleport": {
         "random_teleports": true,
         "max_random_teleport_time": 20,
-        "random_teleport_cube": [ 8, 8, 8 ],
-        "target_distance": 16,
+        "random_teleport_cube": [ 4, 4, 4 ],
+        "target_distance": 4,
         "target_teleport_chance": 0.05,
         "light_teleport_chance": 0.05
       },
@@ -41,8 +39,8 @@
         "table": "loot_tables/entities/enderman.json"
       },
       "minecraft:health": {
-        "value": 56,
-        "max":56
+        "value": 10,
+        "max":10
       },
       "minecraft:collision_box": {
         "width": 0.6,
@@ -80,10 +78,10 @@
                 "shape": "circle",
                 "target": "self",
                 "base_delay": 0.0,
-                "num_entities_spawned": 4,
+                "num_entities_spawned": 2,
                 "entity_type": "dec:ender_witch_puppet",
                 "summon_cap": 4,
-                "summon_cap_radius":4.0,
+                "summon_cap_radius":16.0,
                 "size": 3.0,
                 "entity_lifespan": 16,
                 "sound_event": "prepare.summon"

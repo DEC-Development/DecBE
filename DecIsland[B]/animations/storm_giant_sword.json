@@ -5,12 +5,12 @@
         "timeline": {
             "0.5": [
                 "/tag @s[scores={magicpoint=3..}] add shot",
-                "/execute @s[scores={magicpoint=3..}] ~~~ playsound item.book.put @a ~~~",
+                "/execute at @s[scores={magicpoint=3..}] run playsound item.book.put @a ~~~",
                 "/scoreboard players remove @s[scores={magicpoint=3..}] magicpoint 3"
             ],
             "1.5": [
                 "/tag @s[scores={magicpoint=3..}] add shot",
-                "/execute @s[scores={magicpoint=3..}] ~~~ playsound item.book.put @a ~~~",
+                "/execute at @s[scores={magicpoint=3..}] run playsound item.book.put @a ~~~",
                 "/scoreboard players remove @s[scores={magicpoint=3..}] magicpoint 3"
             ]
         }, 

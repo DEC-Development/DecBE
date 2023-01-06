@@ -9,6 +9,9 @@
       "is_experimental": false
     },
     "component_groups": {
+      "minecraft:despawn": {
+        "minecraft:instant_despawn": {}
+      },
       "minecraft:next": {
         "minecraft:transformation": {
           "into": "dec:enchant_illager_2<minecraft:entity_spawned>"
@@ -157,6 +160,12 @@
       }
     },
     "components": {
+      "minecraft:despawn": {
+        "despawn_from_distance": {
+          "min_distance": 64,
+          "max_distance": 64
+        }
+      },
       "minecraft:damage_sensor": {
         "triggers": [
           {
@@ -177,7 +186,8 @@
                 ]
               },
               "event": "minecraft:next"
-            }
+            },
+            "deals_damage": false
           }
         ]
       },
@@ -301,6 +311,13 @@
       }
     },
     "events": {
+      "minecraft:despawn": {
+        "add": {
+          "component_groups": [
+            "minecraft:despawn"
+          ]
+        }
+      },
       "minecraft:entity_spawned": {
         "sequence": [
           {

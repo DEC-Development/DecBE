@@ -9,7 +9,6 @@
 			{
 				"places_block": "dec:stream_ore",
 				"may_replace": [
-					"minecraft:deepslate",
           "minecraft:stone"
 				]
 			}

@@ -26,40 +26,39 @@
       "minecraft:icon": {
         "texture": "amethyst_sword"
       },
-      "minecraft:use_duration": 3600,
       "minecraft:stacked_by_data": false,
       "minecraft:max_stack_size": 1,
       "minecraft:durability": {
         "max_durability": 66
       },
-			"minecraft:repairable": {
-				"repair_items": [
-					{
-						"items": [
-							"minecraft:amethyst_shard"
-						],
-						"repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.3"
-					},
-					{
-						"items": [
-							"minecraft:amethyst_cluster"
-						],
-						"repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.3"
-					},
-					{
-						"items": [
-							"minecraft:amethyst_block"
-						],
-						"repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.2"
-					},
-					{
-						"items": [
-							"minecraft:budding_amethyst"
-						],
-						"repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.2"
-					}
-				]
-			},
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "minecraft:amethyst_shard"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.3"
+          },
+          {
+            "items": [
+              "minecraft:amethyst_cluster"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.3"
+          },
+          {
+            "items": [
+              "minecraft:amethyst_block"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.2"
+          },
+          {
+            "items": [
+              "minecraft:budding_amethyst"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.2"
+          }
+        ]
+      },
       "minecraft:mining_speed": 1.5,
       "minecraft:damage": 4.4,
       "minecraft:enchantable": {

@@ -11,6 +11,24 @@
 					"magic",
 					"enter_game",
 					{
+						"event_zombie_wave": "query.scoreboard('night_event') == 1"
+					},
+					{
+						"event_skeleton_wave": "query.scoreboard('night_event') == 2"
+					},
+					{
+						"event_shadow_night": "query.scoreboard('night_event') == 3"
+					},
+					{
+						"event_cold_wave": "query.scoreboard('night_event') == 4"
+					},
+					{
+						"event_halloween": "query.scoreboard('night_event') == 5"
+					},
+					{
+						"event_silent_night": "query.scoreboard('night_event') == 6"
+					},
+					{
 						"frozen_staff": "query.get_equipped_item_name == 'frozen_staff' && query.is_using_item"
 					},
 					{
@@ -26,18 +44,6 @@
 						"gingerbread_totem_offhand": "query.get_equipped_item_name('off_hand')== 'gingerbread_totem'"
 					},
 					{
-						"rupert_armor": "query.variant == 1"
-					},
-					{
-						"frozen_power": "query.get_equipped_item_name == 'everlasting_winter_sword' && query.is_using_item"
-					},
-					{
-						"frozen_power": "query.get_equipped_item_name == 'everlasting_winter_dagger' && query.is_using_item"
-					},
-					{
-						"frozen_power": "query.get_equipped_item_name == 'everlasting_winter_sickle' && query.is_using_item"
-					},
-					{
 						"the_imperial_sword": "query.get_equipped_item_name == 'the_imperial_sword' && query.is_using_item"
 					},
 					{
@@ -47,13 +53,7 @@
 						"energy_totem_offhand": "query.get_equipped_item_name('off_hand')== 'energy_totem'"
 					},
 					{
-						"amethyst_armor": "query.variant == 2"
-					},
-					{
 						"star_sword_ranged": "query.get_equipped_item_name == 'star_sword' && query.is_using_item"
-					},
-					{
-						"wood_armor": "query.variant == 3"
 					},
 					{
 						"warden_sword": "query.get_equipped_item_name == 'warden_sword' && query.is_using_item"
@@ -68,15 +68,17 @@
 				"storm_giant_sword": "animation.storm_giant_sword",
 				"gingerbread_totem_mainhand": "animation.gingerbread_totem",
 				"gingerbread_totem_offhand": "animation.gingerbread_totem",
-				"rupert_armor": "animation.rupert_armor",
-				"frozen_power": "animation.frozen_power",
 				"the_imperial_sword": "animation.the_imperial_sword",
 				"energy_totem_mainhand": "animation.energy_totem",
 				"energy_totem_offhand": "animation.energy_totem",
-				"amethyst_armor": "animation.amethyst_armor",
 				"star_sword_ranged": "animation.star_sword_ranged",
-				"wood_armor": "animation.wood_armor",
-				"warden_sword": "animation.warden_sword"
+				"warden_sword": "animation.warden_sword",
+				"event_skeleton_wave": "animation.event_skeleton_wave",
+				"event_zombie_wave": "animation.event_zombie_wave",
+				"event_shadow_night": "animation.event_shadow_night",
+				"event_cold_wave": "animation.event_cold_wave",
+				"event_halloween": "animation.event_halloween",
+				"event_silent_night": "animation.event_silent_night"
 			}
 		},
 		"component_groups": {
@@ -121,9 +123,6 @@
 				}
 			},
 			"minecraft:normal_player": {
-				"minecraft:variant": {
-					"value": 0
-				},
 				"minecraft:attack": {
 					"damage": 1
 				},
@@ -132,62 +131,6 @@
 				},
 				"minecraft:underwater_movement": {
 					"value": 0.03
-				}
-			},
-			"minecraft:turtle_armor_player": {
-				"minecraft:attack": {
-					"damage": -100
-				}
-			},
-			"minecraft:everlasting_winter_armor_player": {
-				"minecraft:damage_sensor": {
-					"on_damage": {
-						"event": "minecraft:become_everlasting_winter_armor_hurt"
-					},
-					"deals_damage": true
-				}
-			},
-			"minecraft:lava_armor_player": {
-				"minecraft:damage_sensor": {
-					"on_damage": {
-						"event": "minecraft:become_lava_armor_hurt"
-					},
-					"deals_damage": true
-				}
-			},
-			"minecraft:rupert_armor_player": {
-				"minecraft:damage_sensor": {
-					"on_damage": {
-						"filters": {
-							"test": "is_family",
-							"operator": "!=",
-							"subject": "other",
-							"value": "nothing"
-						},
-						"event": "minecraft:become_rupert_armor_treat"
-					},
-					"deals_damage": true
-				},
-				"minecraft:variant": {
-					"value": 1
-				}
-			},
-			"minecraft:crying_armor_player": {
-				"minecraft:damage_sensor": {
-					"on_damage": {
-						"event": "minecraft:become_crying_armor_hurt"
-					},
-					"deals_damage": true
-				}
-			},
-			"minecraft:amethyst_armor_player": {
-				"minecraft:variant": {
-					"value": 2
-				}
-			},
-			"minecraft:wood_armor_player": {
-				"minecraft:variant": {
-					"value": 3
 				}
 			},
 			"minecraft:short_flintlock_speedup_player": {
@@ -348,46 +291,6 @@
 					"value": 0.095
 				}
 			},
-			"minecraft:destroy_staff_player": {
-				"minecraft:break_blocks": {
-					"breakable_blocks": [
-						"minecraft:stone",
-						"minecraft:sandstone",
-						"minecraft:cobblestone"
-					]
-				}
-			},
-			"minecraft:god_of_destroy_player": {
-				"minecraft:break_blocks": {
-					"breakable_blocks": [
-						"minecraft:stone",
-						"minecraft:sandstone",
-						"minecraft:cobblestone",
-						"minecraft:gravel",
-						"minecraft:netherrack",
-						"minecraft:end_stone",
-						"minecraft:dirt",
-						"minecraft:grass",
-						"minecraft:sand",
-						"minecraft:soul_sand",
-						"minecraft:log",
-						"minecraft:log2",
-						"minecraft:leaves",
-						"minecraft:leaves2",
-						"minecraft:tallgrass",
-						"minecraft:red_flower",
-						"minecraft:yellow_flower",
-						"minecraft:double_plant",
-						"minecraft:cactus",
-						"minecraft:chorus_flower",
-						"minecraft:chorus_plant",
-						"minecraft:snow_layer",
-						"minecraft:snow",
-						"minecraft:ice",
-						"minecraft:packed_ice"
-					]
-				}
-			},
 			"minecraft:copper_dagger_player": {
 				"minecraft:movement": {
 					"value": 0.09
@@ -431,16 +334,6 @@
 			"minecraft:amethyst_dagger_player": {
 				"minecraft:movement": {
 					"value": 0.093
-				}
-			},
-			"minecraft:blood_mare_player": {
-				"minecraft:attack": {
-					"damage": 7
-				}
-			},
-			"minecraft:blood_mare_crit_player": {
-				"minecraft:attack": {
-					"damage": 11
 				}
 			},
 			"minecraft:wind_dagger_player": {
@@ -556,14 +449,9 @@
 					"value": 0.065
 				}
 			},
-			"minecraft:the_blade_player": {
-				"minecraft:attack": {
-					"damage": 6
-				}
-			},
-			"minecraft:the_blade_crit_player": {
-				"minecraft:attack": {
-					"damage": 9
+			"minecraft:storm_battleaxe_player": {
+				"minecraft:movement": {
+					"value": 0.07
 				}
 			},
 			"minecraft:leaves_dagger_player": {
@@ -804,9 +692,37 @@
 						"filters": {
 							"all_of": [
 								{
-									"test": "brightness_greater",
+									"test": "is_daytime",
 									"subject": "self",
-									"value": -20
+									"value": true
+								}
+							]
+						},
+						"event": "minecraft:day_random"
+					}
+				},
+				{
+					"on_environment": {
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_daytime",
+									"subject": "self",
+									"value": false
+								}
+							]
+						},
+						"event": "minecraft:night_random"
+					}
+				},
+				{
+					"on_environment": {
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_family",
+									"subject": "self",
+									"value": "none"
 								}
 							]
 						},
@@ -1045,11 +961,11 @@
 									"test": "has_equipment",
 									"subject": "self",
 									"domain": "hand",
-									"value": "dec:the_blade"
+									"value": "dec:storm_battleaxe"
 								}
 							]
 						},
-						"event": "minecraft:become_the_blade"
+						"event": "minecraft:become_storm_battleaxe"
 					}
 				},
 				{
@@ -1305,21 +1221,6 @@
 									"test": "has_equipment",
 									"subject": "self",
 									"domain": "hand",
-									"value": "dec:blood_mare"
-								}
-							]
-						},
-						"event": "minecraft:become_blood_mare"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
 									"value": "dec:amethyst_dagger"
 								}
 							]
@@ -1475,36 +1376,6 @@
 							]
 						},
 						"event": "minecraft:become_night_sword"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:destroy_staff"
-								}
-							]
-						},
-						"event": "minecraft:become_destroy_staff"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:god_of_destroy"
-								}
-							]
-						},
-						"event": "minecraft:become_god_of_destroy"
 					}
 				},
 				{
@@ -1677,10 +1548,44 @@
 						"filters": {
 							"all_of": [
 								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:flintlock_pro"
+									"any_of": [
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:flintlock_pro"
+										},
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:everlasting_winter_flintlock"
+										},
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:ghost_flintlock"
+										},
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:lava_flintlock"
+										},
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:star_flintlock"
+										},
+										{
+											"test": "has_equipment",
+											"subject": "self",
+											"domain": "hand",
+											"value": "dec:storm_flintlock"
+										}
+									]
 								},
 								{
 									"test": "is_sneaking",
@@ -1790,249 +1695,6 @@
 								{
 									"test": "has_equipment",
 									"subject": "self",
-									"domain": "head",
-									"value": "dec:rupert_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:rupert_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:rupert_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:rupert_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_rupert_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "dec:lava_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:lava_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:lava_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:lava_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_lava_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "dec:everlasting_winter_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:everlasting_winter_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:everlasting_winter_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:everlasting_winter_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_everlasting_winter_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "minecraft:turtle_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:turtle_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:turtle_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:turtle_boots"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:turtle_sword"
-								},
-								{
-									"test": "is_sneaking",
-									"subject": "self",
-									"operator": "equals",
-									"value": true
-								}
-							]
-						},
-						"event": "minecraft:become_turtle_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "dec:crying_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:crying_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:crying_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:crying_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_crying_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "dec:amethyst_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:amethyst_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:amethyst_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:amethyst_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_amethyst_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "head",
-									"value": "dec:wood_helmet"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:wood_chestplate"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "leg",
-									"value": "dec:wood_leggings"
-								},
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "feet",
-									"value": "dec:wood_boots"
-								}
-							]
-						},
-						"event": "minecraft:become_wood_armor"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
 									"domain": "torso",
 									"value": "dec:wings_from_deep"
 								}
@@ -2044,6 +1706,27 @@
 			]
 		},
 		"events": {
+			"minecraft:day_random": {
+				"run_command": {
+					"command": [
+						"tag @a remove zombie_wave",
+						"scoreboard players set IsDay global 1",
+						"scoreboard players set IsNight global 0",
+						"scoreboard players set NightRandom global 0",
+						"scoreboard players set @a night_event 0",
+						"fog @a remove \"night_event\""
+					]
+				}
+			},
+			"minecraft:night_random": {
+				"run_command": {
+					"command": [
+						"execute if score IsNight global = zero global run scoreboard players random NightRandom global 1 100",
+						"scoreboard players set IsDay global 0",
+						"scoreboard players set IsNight global 1"
+					]
+				}
+			},
 			"minecraft:become_hpl1": {
 				"remove": {
 					"component_groups": [
@@ -2191,7 +1874,6 @@
 			"minecraft:become_normal": {
 				"run_command": {
 					"command": [
-						"tag @s remove wood_armor"
 					]
 				},
 				"add": {
@@ -2220,8 +1902,6 @@
 						"minecraft:angel_purification_player",
 						"minecraft:copper_sickle_player",
 						"minecraft:copper_battleaxe_player",
-						"minecraft:destroy_staff_player",
-						"minecraft:god_of_destroy_player",
 						"minecraft:scale_sword_player",
 						"minecraft:wind_dagger_player",
 						"minecraft:wind_of_shadow_player",
@@ -2248,22 +1928,13 @@
 						"minecraft:short_flintlock_speedup_player",
 						"minecraft:diamond_staff_player",
 						"minecraft:blood_sickle_player",
-						"minecraft:blood_mare_player",
-						"minecraft:blood_mare_crit_player",
 						"minecraft:steel_battleaxe_player",
-						"minecraft:the_blade_player",
-						"minecraft:the_blade_crit_player",
 						"minecraft:storm_giant_sword_ranged_player",
 						"minecraft:gingerbread_totem_player",
-						"minecraft:rupert_armor_player",
-						"minecraft:lava_armor_player",
 						"minecraft:everlasting_winter_dagger_player",
 						"minecraft:everlasting_winter_sickle_player",
-						"minecraft:everlasting_winter_armor_player",
-						"minecraft:crying_armor_player",
-						"minecraft:amethyst_armor_player",
 						"minecraft:star_sword_ranged_player",
-						"minecraft:wood_armor_player"
+						"minecraft:storm_battleaxe_player"
 					]
 				}
 			},
@@ -2381,30 +2052,6 @@
 				"add": {
 					"component_groups": [
 						"minecraft:night_sword_player"
-					]
-				}
-			},
-			"minecraft:become_destroy_staff": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:destroy_staff_player"
-					]
-				}
-			},
-			"minecraft:become_god_of_destroy": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:god_of_destroy_player"
 					]
 				}
 			},
@@ -2636,45 +2283,17 @@
 					]
 				}
 			},
-			"minecraft:become_the_blade": {
-				"sequence": [
-					{
-						"remove": {
-							"component_groups": [
-								"minecraft:normal_player"
-							]
-						}
-					},
-					{
-						"randomize": [
-							{
-								"weight": 1,
-								"sequence": [
-									{
-										"randomize": [
-											{
-												"weight": 4,
-												"add": {
-													"component_groups": [
-														"minecraft:the_blade_player"
-													]
-												}
-											},
-											{
-												"weight": 1,
-												"add": {
-													"component_groups": [
-														"minecraft:the_blade_crit_player"
-													]
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
+			"minecraft:become_storm_battleaxe": {
+				"remove": {
+					"component_groups": [
+						"minecraft:normal_player"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"minecraft:storm_battleaxe_player"
+					]
+				}
 			},
 			"minecraft:become_leaves_dagger": {
 				"remove": {
@@ -2856,46 +2475,6 @@
 					]
 				}
 			},
-			"minecraft:become_blood_mare": {
-				"sequence": [
-					{
-						"remove": {
-							"component_groups": [
-								"minecraft:normal_player"
-							]
-						}
-					},
-					{
-						"randomize": [
-							{
-								"weight": 1,
-								"sequence": [
-									{
-										"randomize": [
-											{
-												"weight": 4,
-												"add": {
-													"component_groups": [
-														"minecraft:blood_mare_player"
-													]
-												}
-											},
-											{
-												"weight": 1,
-												"add": {
-													"component_groups": [
-														"minecraft:blood_mare_crit_player"
-													]
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			},
 			"minecraft:become_amethyst_dagger": {
 				"remove": {
 					"component_groups": [
@@ -3001,225 +2580,6 @@
 				"add": {
 					"component_groups": [
 						"minecraft:star_sword_ranged_player"
-					]
-				}
-			},
-			"minecraft:become_rupert_armor_treat": {
-				"sequence": [
-					{
-						"randomize": [
-							{
-								"weight": 19
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"particle dec:tear_from_rupert ~~1~",
-										"effect @s regeneration 5"
-									]
-								}
-							}
-						]
-					}
-				]
-			},
-			"minecraft:become_rupert_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:rupert_armor_player"
-					]
-				}
-			},
-			"minecraft:become_everlasting_winter_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:everlasting_winter_armor_player"
-					]
-				}
-			},
-			"minecraft:become_everlasting_winter_armor_hurt": {
-				"sequence": [
-					{
-						"randomize": [
-							{
-								"weight": 7
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"tag @s add everlasting_winter_armor_hurt",
-										"effect @e[r=5,tag=!everlasting_winter_armor_hurt] slowness 3 1",
-										"effect @s health_boost 30 0",
-										"particle dec:frozen_shield_particle ~~~",
-										"tag @s remove everlasting_winter_armor_hurt"
-									]
-								}
-							}
-						]
-					}
-				]
-			},
-			"minecraft:become_lava_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:lava_armor_player"
-					]
-				}
-			},
-			"minecraft:become_lava_armor_hurt": {
-				"run_command": {
-					"command": [
-						"particle dec:fire_spurt_particle ~~1~",
-						"effect @s fire_resistance 3"
-					]
-				}
-			},
-			"minecraft:become_turtle_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:turtle_armor_player"
-					]
-				},
-				"run_command": {
-					"command": [
-						"effect @s slowness 5 5",
-						"effect @s resistance 2 3"
-					]
-				}
-			},
-			"minecraft:become_crying_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:crying_armor_player"
-					]
-				}
-			},
-			"minecraft:become_crying_armor_hurt": {
-				"sequence": [
-					{
-						"randomize": [
-							{
-								"weight": 4
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"effect @s weakness 3 0"
-									]
-								}
-							}
-						]
-					},
-					{
-						"randomize": [
-							{
-								"weight": 14
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"effect @s slowness 3 0"
-									]
-								}
-							}
-						]
-					},
-					{
-						"randomize": [
-							{
-								"weight": 19
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"effect @s blindness 3 0"
-									]
-								}
-							}
-						]
-					},
-					{
-						"randomize": [
-							{
-								"weight": 19
-							},
-							{
-								"weight": 1,
-								"run_command": {
-									"command": [
-										"effect @s nausea 10 0"
-									]
-								}
-							}
-						]
-					}
-				]
-			},
-			"minecraft:become_amethyst_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:amethyst_armor_player"
-					]
-				}
-			},
-			"minecraft:become_wood_armor": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:wood_armor_player"
-					]
-				},
-				"run_command": {
-					"command": [
-						"tag @s add wood_armor"
 					]
 				}
 			},

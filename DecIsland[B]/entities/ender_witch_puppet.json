@@ -10,8 +10,11 @@
 		"component_groups": {
 		},
 		"components": {
+			"minecraft:despawn": {
+			  "despawn_from_distance": {}
+			},
 			"minecraft:explode": {
-				"fuseLength": 10,
+				"fuseLength": 5,
 				"fuseLit": true,
 				"power": 0,
 				"causesFire": false
@@ -19,8 +22,8 @@
 			"minecraft:teleport": {
 				"random_teleports": true,
 				"max_random_teleport_time": 20,
-				"random_teleport_cube": [ 8, 8, 8 ],
-				"target_distance": 16,
+				"random_teleport_cube": [ 4, 4, 4 ],
+				"target_distance": 4,
 				"target_teleport_chance": 0.05,
 				"light_teleport_chance": 0.05
 			},
@@ -47,8 +50,8 @@
 			"minecraft:jump.static": {},
 			"minecraft:can_climb": {},
 			"minecraft:health": {
-				"value": 5,
-				"max": 5
+				"value": 2,
+				"max": 2
 			},
 			"minecraft:breathable": {
 				"total_supply": 15,

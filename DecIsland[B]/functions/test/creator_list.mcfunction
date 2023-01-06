@@ -22,7 +22,10 @@ tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_21.name" } ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_22.name" } ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_23.name" } ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_24.name" } ] }
+tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_25.name" } ] }
+tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_26.name" } ] }
+tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_27.name" } ] }
+tellraw @s { "rawtext" : [ { "translate" : "text.dec:creator_list_28.name" } ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:omit.name"} ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:qq_group.name" } ] }
-tellraw @s { "rawtext" : [ { "translate" : "text.dec:offical_website.name" } ] }
 tellraw @s { "rawtext" : [ { "translate" : "text.dec:thanks.name" } ] }

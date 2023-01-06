@@ -1,25 +1,23 @@
-gamerule commandblockoutput false
 gamerule doimmediaterespawn false
 
 function boss
 function block
 function magic
 
-tag @s remove shot
-tag @s remove shot_offhand
+tag @a remove shot
+tag @a remove shot_offhand
 
-execute @e[type=fireball] ~~~ particle dec:fire_wake_particle ~~~
-execute @e[type=dragon_fireball] ~~~ particle dec:ender_wake_particle ~~~
+execute at @e[type=fireball] run particle dec:fire_wake_particle ~~~
+execute at @e[type=dragon_fireball] run particle dec:ender_wake_particle ~~~
 
-##房主标记
-execute @a[tag=owner] ~~~ tag @a add ownertest
-execute @a[tag=!ownertest] ~~~ tag @a[tag=!ownertest] add owner
+execute if score IsDay global = one global run scoreboard players set NightRandom global 0
+execute if score IsDay global = zero global run scoreboard players operation @a night_event = NightRandom global
 
 ##死亡模式组件
-execute @a[tag=diemode] ~~~ tag @a[tag=!diemode] add diemode
-execute @a[tag=diemode] ~~~ title @a[tag=alreadydie] actionbar §4§lYou are Died
-execute @a[tag=diemode] ~~~ tp @a[tag=alreadydie] 0 1000 0
-execute @a[tag=diemode] ~~~ effect @a[tag=alreadydie] invisibility 20 0 true
-execute @a[tag=diemode] ~~~ effect @a[tag=alreadydie] blindness 20 0 true
-execute @a[tag=diemode] ~~~ effect @a[tag=alreadydie] night_vision 20 0 true
-execute @a[tag=diemode] ~~~ gamerule sendcommandfeedback false
+execute if score DieMode global = one global if score AlreadyDie global = one global if entity @a[tag=alreadydie] run titleraw @a[tag=alreadydie] actionbar { "rawtext" : [ { "translate" : "text.dec:diemode_spectator.name" } ] }
+execute if score DieMode global = one global if score AlreadyGmCheat global = one global if entity @a[tag=diemode_gmcheat] run titleraw @a[tag=diemode_gmcheat] actionbar { "rawtext" : [ { "translate" : "text.dec:diemode_gmcheat.name" } ] }
+execute if score DieMode global = one global run gamemode spectator @a[tag=alreadydie]
+execute if score DieMode global = one global if entity @a[tag=alreadydie] run gamerule sendcommandfeedback false
+execute if score DieMode global = one global run gamemode spectator @a[tag=diemode_gmcheat]
+execute if score DieMode global = one global if entity @a[tag=diemode_gmcheat] run gamerule sendcommandfeedback false
+execute if score DieMode global = one global run difficulty hard

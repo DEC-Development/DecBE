@@ -5,8 +5,8 @@
       "identifier": "dec:enchanted_summoner_activated"
     },
     "components": {
-      "minecraft:block_light_absorption": 1,
-      "minecraft:block_light_emission": 1,
+      "minecraft:light_dampening": 15,
+      "minecraft:light_emission": 7,
       "minecraft:destroy_time": 3.0,
       "minecraft:explosion_resistance": 100,
       "minecraft:map_color": "#897053",
@@ -28,7 +28,12 @@
         "run_command": {
           "command": [
             "tellraw @a { \"rawtext\" : [ { \"translate\" : \"text.dec:summon_enchant_illager.name\" } ] }",
-            "summon dec:enchant_illager ~~1~"
+            "summon dec:enchant_illager ~~1~",
+            "fill ~-2~~-2 ~-1~5~2 air 0 destroy",
+            "fill ~~~1 ~2~5~2 air 0 destroy",
+            "fill ~1~~ ~2~5~-2 air 0 destroy",
+            "fill ~~~-1 ~~5~-2 air 0 destroy",
+            "fill ~~1~ ~~5~ air 0 destroy"
           ]
         },
         "decrement_stack": {}

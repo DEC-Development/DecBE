@@ -41,6 +41,15 @@
     },
 
     "components": {
+      "minecraft:behavior.move_through_village": {
+        "priority": 10,
+        "speed_multiplier": 0.6,
+        "only_at_night": true
+      },
+      "minecraft:behavior.move_towards_restriction": {
+        "priority": 9,
+        "speed_multiplier": 1
+      },
       "minecraft:dweller": {
         "dwelling_type": "village",
         "dweller_role": "defender",
@@ -96,7 +105,7 @@
         ]
       },
       "minecraft:attack": {
-        "damage": 1
+        "damage": 2
       },
       "minecraft:movement": {
         "value": 0.30
@@ -128,7 +137,7 @@
       },
       "minecraft:behavior.melee_attack": {
         "priority": 3,
-        "speed_multiplier": 1,
+        "speed_multiplier": 1.2,
         "track_target": false
       },
       "minecraft:behavior.random_stroll": {
