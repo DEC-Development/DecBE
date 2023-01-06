@@ -6,7 +6,6 @@
 		"lib": [
 			"ES6","DOM"
 		],
-		
 		"sourceMap": true,
 		"rootDir": "ExcellentMInecraftscripts/src",
         "moduleResolution": "node",
