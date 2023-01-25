@@ -100,6 +100,10 @@
                         "function item/ghost_dagger"
                     ],
                     "target": "holder"
+                },
+                "damage": {
+                    "amount": 1,
+                    "type": "magic"
                 }
             },
             "attack": {
