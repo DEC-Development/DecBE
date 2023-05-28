@@ -1,3 +1,6 @@
 [submodule "DecIsland[B]/scripts/ExcellentMInecraftscripts"]
 	path = DecIsland[B]/scripts/ExcellentMInecraftscripts
 	url = git@github.com:LiLeyi/ExcellentMInecraftscripts.git
+[submodule "DecIslandB/scripts/ThePoetryOfWinter"]
+	path = DecIslandB/scripts/ThePoetryOfWinter
+	url = https://github.com/AAswordman/ThePoetryOfWinter.git/
