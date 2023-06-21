@@ -75,18 +75,21 @@ export default class ExEntity {
         }
         return (new ExEntity(entity));
     }
-    getDimension() {
-        return this._entity.dimension;
+    get exDimension() {
+        return ExDimension.getInstance(this.dimension);
     }
-    getExDimension() {
-        return ExDimension.getInstance(this.getDimension());
+    set exDimension(ex) {
+        this.dimension = ex.dimension;
     }
     addTag(str) {
         this._entity.addTag(str);
         return str;
     }
-    getTags() {
+    get tags() {
         return this._entity.getTags();
+    }
+    getTags() {
+        return this.tags;
     }
     hasTag(str) {
         return this._entity.hasTag(str);
@@ -117,18 +120,51 @@ export default class ExEntity {
     getPosition() {
         return new Vector3(this.entity.location);
     }
-    getRotation() {
+    setPosition(position, dimension) {
+        this.entity.teleport(position, {
+            "dimension": dimension,
+            "keepVelocity": true
+        });
+    }
+    get rotation() {
         return this.entity.getRotation();
     }
-    setPosition(position, dimension = this.entity.dimension) {
-        let rot = this.getRotation();
-        this.entity.teleport(position, dimension, rot.x, rot.y);
+    set rotation(ivec) {
+        this.teleport(this.getPosition(), {
+            "keepVelocity": true,
+            "rotation": ivec
+        });
     }
-    setDimension(dimension) {
+    teleport(location, teleportOptions) {
+        this.entity.teleport(location, teleportOptions);
+    }
+    tryTeleport(location, teleportOptions) {
+        this.entity.tryTeleport(location, teleportOptions);
+    }
+    set dimension(dimension) {
         this.setPosition(this.getPosition(), dimension);
     }
-    getViewDirection() {
+    get dimension() {
+        return this._entity.dimension;
+    }
+    get viewDirection() {
         return new Vector3(this.entity.getViewDirection());
+    }
+    set viewDirection(ivec) {
+        this.teleport(this.getPosition(), {
+            "keepVelocity": true,
+            "rotation": {
+                x: ivec.rotateAngleX(),
+                y: ivec.rotateAngleY()
+            }
+        });
+    }
+    addEffect(eff, during, aml, par = true) {
+        this.entity.addEffect(eff, during, aml, par);
+        // this.entity.addEffect(eff, during, {
+        //     "showParticles": par,
+        //     "amplifier": aml
+        // });
     }
     hasComponent(name) {
         return this._entity.hasComponent(name);
@@ -142,8 +178,11 @@ export default class ExEntity {
     getHealthComponent() {
         return this.getComponent(EntityHealthComponent.componentId);
     }
-    getHealth() {
+    get health() {
         return this.getHealthComponent().current;
+    }
+    set health(h) {
+        this.getHealthComponent().setCurrent(Math.max(0, h));
     }
     getMaxHealth() {
         return this.getHealthComponent().value;

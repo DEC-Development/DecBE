@@ -32,11 +32,11 @@ export default class PomDimRuinsSystem extends GameController {
                     var _a;
                     // console.warn("add");
                     // console.warn(this.exPlayer.getHealth());
-                    if (this.exPlayer.getHealth() <= 0) {
+                    if (this.exPlayer.health <= 0) {
                         (_a = this.barrier) === null || _a === void 0 ? void 0 : _a.notifyDeathAdd();
                     }
                 };
-                this.getEvents().exEvents.playerHurt.subscribe(this.deathTimesListener);
+                this.getEvents().exEvents.afterPlayerHurt.subscribe(this.deathTimesListener);
             }
             else {
                 if (this.causeDamageMonitor) {
@@ -45,7 +45,7 @@ export default class PomDimRuinsSystem extends GameController {
                     this.client.magicSystem.deleteActionbarPass("hasCauseDamage");
                 }
                 if (this.deathTimesListener) {
-                    this.getEvents().exEvents.playerHurt.unsubscribe(this.deathTimesListener);
+                    this.getEvents().exEvents.afterPlayerHurt.unsubscribe(this.deathTimesListener);
                     this.deathTimesListener = undefined;
                 }
                 this.deathTimes = 0;
@@ -70,74 +70,82 @@ export default class PomDimRuinsSystem extends GameController {
         }, false);
         this.stoneRuinBackJudge = new VarOnChangeListener((v) => {
             if (v) {
-                new ExActionAlert().title("操作").body("选择你的操作")
-                    .button("召唤boss", () => {
-                    this.getExDimension().spawnEntity("wb:magic_stoneman", this.client.getServer().ruin_stoneBoss.getBossSpawnArea().center());
-                })
-                    .button("返回主世界", () => {
-                    let v = this.data.dimBackPoint;
-                    if (!v) {
-                        v = new Vector3(0, 255, 0);
-                    }
-                    this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
-                })
-                    .button("取消", () => {
-                })
-                    .show(this.player);
+                this.setTimeout(() => {
+                    new ExActionAlert().title("操作").body("选择你的操作")
+                        .button("召唤boss", () => {
+                        this.getExDimension().spawnEntity("wb:magic_stoneman", this.client.getServer().ruin_stoneBoss.getBossSpawnArea().center());
+                    })
+                        .button("返回主世界", () => {
+                        let v = this.data.dimBackPoint;
+                        if (!v) {
+                            v = new Vector3(0, 255, 0);
+                        }
+                        this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
+                    })
+                        .button("取消", () => {
+                    })
+                        .show(this.player);
+                }, 0);
             }
         }, false);
         this.caveRuinBackJudge = new VarOnChangeListener((v) => {
             if (v) {
-                new ExActionAlert().title("操作").body("选择你的操作")
-                    .button("召唤boss", () => {
-                    this.getExDimension().spawnEntity("wb:headless_guard", this.client.getServer().ruin_caveBoss.getBossSpawnArea().center());
-                })
-                    .button("返回主世界", () => {
-                    let v = this.data.dimBackPoint;
-                    if (!v) {
-                        v = new Vector3(0, 255, 0);
-                    }
-                    this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
-                })
-                    .button("取消", () => {
-                })
-                    .show(this.player);
+                this.setTimeout(() => {
+                    new ExActionAlert().title("操作").body("选择你的操作")
+                        .button("召唤boss", () => {
+                        this.getExDimension().spawnEntity("wb:headless_guard", this.client.getServer().ruin_caveBoss.getBossSpawnArea().center());
+                    })
+                        .button("返回主世界", () => {
+                        let v = this.data.dimBackPoint;
+                        if (!v) {
+                            v = new Vector3(0, 255, 0);
+                        }
+                        this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
+                    })
+                        .button("取消", () => {
+                    })
+                        .show(this.player);
+                }, 0);
             }
         }, false);
         this.ancientRuinBackJudge = new VarOnChangeListener((v) => {
             if (v) {
-                new ExActionAlert().title("操作").body("选择你的操作")
-                    .button("召唤boss", () => {
-                    this.getExDimension().spawnEntity("wb:ancient_stone", this.client.getServer().ruin_ancientBoss.getBossSpawnArea().center());
-                })
-                    .button("返回主世界", () => {
-                    let v = this.data.dimBackPoint;
-                    if (!v) {
-                        v = new Vector3(0, 255, 0);
-                    }
-                    this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
-                })
-                    .button("取消", () => {
-                })
-                    .show(this.player);
+                this.setTimeout(() => {
+                    new ExActionAlert().title("操作").body("选择你的操作")
+                        .button("召唤boss", () => {
+                        this.getExDimension().spawnEntity("wb:ancient_stone", this.client.getServer().ruin_ancientBoss.getBossSpawnArea().center());
+                    })
+                        .button("返回主世界", () => {
+                        let v = this.data.dimBackPoint;
+                        if (!v) {
+                            v = new Vector3(0, 255, 0);
+                        }
+                        this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
+                    })
+                        .button("取消", () => {
+                    })
+                        .show(this.player);
+                }, 0);
             }
         }, false);
         this.mindRuinBackJudge = new VarOnChangeListener((v) => {
             if (v) {
-                new ExActionAlert().title("操作").body("选择你的操作")
-                    .button("召唤boss", () => {
-                    this.getExDimension().spawnEntity("wb:intentions_first", this.client.getServer().ruin_mindBoss.getBossSpawnArea().center());
-                })
-                    .button("返回主世界", () => {
-                    let v = this.data.dimBackPoint;
-                    if (!v) {
-                        v = new Vector3(0, 255, 0);
-                    }
-                    this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
-                })
-                    .button("取消", () => {
-                })
-                    .show(this.player);
+                this.setTimeout(() => {
+                    new ExActionAlert().title("操作").body("选择你的操作")
+                        .button("召唤boss", () => {
+                        this.getExDimension().spawnEntity("wb:intentions_first", this.client.getServer().ruin_mindBoss.getBossSpawnArea().center());
+                    })
+                        .button("返回主世界", () => {
+                        let v = this.data.dimBackPoint;
+                        if (!v) {
+                            v = new Vector3(0, 255, 0);
+                        }
+                        this.exPlayer.setPosition(v, this.getDimension(MinecraftDimensionTypes.overworld));
+                    })
+                        .button("取消", () => {
+                    })
+                        .show(this.player);
+                }, 0);
             }
         }, false);
         this.fogChange = new VarOnChangeListener((v, l) => {
@@ -185,7 +193,7 @@ export default class PomDimRuinsSystem extends GameController {
                 //石头遗迹判断
                 this.data.dimBackPoint = new Vector3(this.player.location).add(3, 2, 3);
                 this.client.cache.save();
-                this.player.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
+                this.exPlayer.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
                 this.exPlayer.setPosition(ExBlockArea.randomPoint(this.client.getServer().ruin_stoneBoss.getPlayerSpawnArea(), 0), this.getDimension(MinecraftDimensionTypes.theEnd));
                 //未生成遗迹判断
                 if (((this.globalSettings.ruinsExsitsData >> RuinsLoaction.STONE_RUIN_NUM) & 1) == 0) {
@@ -198,7 +206,7 @@ export default class PomDimRuinsSystem extends GameController {
                 //洞穴遗迹判断
                 this.data.dimBackPoint = new Vector3(this.player.location).add(3, 2, 3);
                 this.client.cache.save();
-                this.player.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
+                this.exPlayer.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
                 this.exPlayer.setPosition(ExBlockArea.randomPoint(this.client.getServer().ruin_caveBoss.getPlayerSpawnArea(), 0), this.getDimension(MinecraftDimensionTypes.theEnd));
                 //未生成遗迹判断
                 if (((this.globalSettings.ruinsExsitsData >> RuinsLoaction.CAVE_RUIN_NUM) & 1) == 0) {
@@ -211,7 +219,7 @@ export default class PomDimRuinsSystem extends GameController {
                 //远古遗迹判断
                 this.data.dimBackPoint = new Vector3(this.player.location).add(3, 2, 3);
                 this.client.cache.save();
-                this.player.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
+                this.exPlayer.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
                 this.exPlayer.setPosition(ExBlockArea.randomPoint(this.client.getServer().ruin_ancientBoss.getPlayerSpawnArea(), 0), this.getDimension(MinecraftDimensionTypes.theEnd));
                 //未生成遗迹判断
                 if (((this.globalSettings.ruinsExsitsData >> RuinsLoaction.ANCIENT_RUIN_NUM) & 1) == 0) {
@@ -224,7 +232,7 @@ export default class PomDimRuinsSystem extends GameController {
                 //内心遗迹判断
                 this.data.dimBackPoint = new Vector3(this.player.location).add(3, 2, 3);
                 this.client.cache.save();
-                this.player.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
+                this.exPlayer.addEffect(MinecraftEffectTypes.resistance, 20 * 10, 10, true);
                 this.exPlayer.setPosition(ExBlockArea.randomPoint(this.client.getServer().ruin_mindBoss.getPlayerSpawnArea(), 0), this.getDimension(MinecraftDimensionTypes.theEnd));
                 //未生成遗迹判断
                 if (((this.globalSettings.ruinsExsitsData >> RuinsLoaction.MIND_RUIN_NUM) & 1) == 0) {
@@ -330,21 +338,14 @@ export default class PomDimRuinsSystem extends GameController {
         // this.getEvents().exEvents.itemOnHandChange.subscribe((e) => {
         //     this.sayTo(e.afterItem?.typeId + "");
         // });
-        this.getEvents().exEvents.onceItemUseOn.subscribe(e => {
-            let block;
-            try {
-                block = this.getDimension().getBlock(e.getBlockLocation());
-            }
-            catch (err) {
-                // console.warn(err);
-                // console.warn(e.item.typeId);
-            }
-            if (e.item.typeId === "wb:start_key") {
+        this.getEvents().exEvents.beforeItemUseOn.subscribe(e => {
+            let block = e.block;
+            if (e.itemStack.typeId === "wb:start_key") {
                 //遗迹传送门激活
                 if ((block === null || block === void 0 ? void 0 : block.typeId) === "wb:block_magic_equipment") {
                     let p = this.client.getServer().portal_desertBoss;
-                    const v2 = new Vector3(e.getBlockLocation()).add(2, 2, 2);
-                    const v1 = new Vector3(e.getBlockLocation()).sub(2, 0, 2);
+                    const v2 = new Vector3(e.block).add(2, 2, 2);
+                    const v1 = new Vector3(e.block).sub(2, 0, 2);
                     let m = p.setArea(new ExBlockArea(v1, v2, true))
                         .setDimension(this.getDimension(MinecraftDimensionTypes.overworld))
                         .find();
@@ -358,14 +359,14 @@ export default class PomDimRuinsSystem extends GameController {
                             C: MinecraftBlockTypes.cobblestoneWall.id
                         })
                             .putStructure(m);
-                        const parLoc = new Vector3(e.getBlockLocation()).add(0.5, 0.5, 0.5);
+                        const parLoc = new Vector3(e.block).add(0.5, 0.5, 0.5);
                         this.getExDimension().spawnParticle("wb:portal_desertboss_par1", parLoc);
                         this.getExDimension().spawnParticle("wb:portal_desertboss_par2", parLoc);
                     }
                 }
                 else if ((block === null || block === void 0 ? void 0 : block.typeId) === "wb:block_energy_seal") {
-                    const v2 = new Vector3(e.getBlockLocation()).add(2, 1, 2);
-                    const v1 = new Vector3(e.getBlockLocation()).sub(2, 0, 2);
+                    const v2 = new Vector3(e.block).add(2, 1, 2);
+                    const v1 = new Vector3(e.block).sub(2, 0, 2);
                     let p = this.client.getServer().portal_stoneBoss;
                     let m = p.setArea(new ExBlockArea(v1, v2, true))
                         .setDimension(this.getDimension(MinecraftDimensionTypes.overworld))
@@ -383,8 +384,8 @@ export default class PomDimRuinsSystem extends GameController {
                     }
                 }
                 else if ((block === null || block === void 0 ? void 0 : block.typeId) === "wb:block_energy_boundary") {
-                    const v2 = new Vector3(e.getBlockLocation()).add(2, 1, 2);
-                    const v1 = new Vector3(e.getBlockLocation()).sub(2, 0, 2);
+                    const v2 = new Vector3(e.block).add(2, 1, 2);
+                    const v1 = new Vector3(e.block).sub(2, 0, 2);
                     let p = this.client.getServer().portal_caveBoss;
                     let m = p.setArea(new ExBlockArea(v1, v2, true))
                         .setDimension(this.getDimension(MinecraftDimensionTypes.overworld))
@@ -401,8 +402,8 @@ export default class PomDimRuinsSystem extends GameController {
                     }
                 }
                 else if ((block === null || block === void 0 ? void 0 : block.typeId) === "wb:block_magic_ink") {
-                    const v2 = new Vector3(e.getBlockLocation()).add(2, 1, 2);
-                    const v1 = new Vector3(e.getBlockLocation()).sub(2, 0, 2);
+                    const v2 = new Vector3(e.block).add(2, 1, 2);
+                    const v1 = new Vector3(e.block).sub(2, 0, 2);
                     let p = this.client.getServer().portal_ancientBoss;
                     let m = p.setArea(new ExBlockArea(v1, v2, true))
                         .setDimension(this.getDimension(MinecraftDimensionTypes.overworld))
@@ -420,8 +421,8 @@ export default class PomDimRuinsSystem extends GameController {
                     }
                 }
                 else if ((block === null || block === void 0 ? void 0 : block.typeId) === "wb:block_senior_equipment") {
-                    const v2 = new Vector3(e.getBlockLocation()).add(2, 1, 2);
-                    const v1 = new Vector3(e.getBlockLocation()).sub(2, 0, 2);
+                    const v2 = new Vector3(e.block).add(2, 1, 2);
+                    const v1 = new Vector3(e.block).sub(2, 0, 2);
                     let p = this.client.getServer().portal_mindBoss;
                     let m = p.setArea(new ExBlockArea(v1, v2, true))
                         .setDimension(this.getDimension(MinecraftDimensionTypes.overworld))

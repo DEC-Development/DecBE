@@ -7,9 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, PlayerJoinEvent, PlayerLeaveEvent, system, EntitySpawnEvent } from "@minecraft/server";
+import { world, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
 import initConsole from "../utils/Console.js";
 import ExServerEvents from "./events/ExServerEvents.js";
@@ -23,6 +24,7 @@ import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory, registerEvent } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
 import ExSound from "./env/ExSound.js";
+import { ExEventNames } from "./events/events.js";
 export default class ExGameServer {
     constructor(config) {
         this.entityControllers = new Map();
@@ -53,6 +55,13 @@ export default class ExGameServer {
         this.entityControllers.set(id, ec);
     }
     onEntitySpawn(e) {
+        let id;
+        try {
+            id = e.entity.typeId;
+        }
+        catch (e) {
+            return;
+        }
         const entityConstructor = this.entityControllers.get(e.entity.typeId);
         if (entityConstructor) {
             new (entityConstructor)(e.entity, this);
@@ -142,21 +151,21 @@ export default class ExGameServer {
 }
 ExGameServer.musicMap = new Map();
 __decorate([
-    registerEvent("entitySpawn"),
+    registerEvent(ExEventNames.afterEntitySpawn),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EntitySpawnEvent]),
+    __metadata("design:paramtypes", [typeof (_a = typeof EntitySpawnAfterEvent !== "undefined" && EntitySpawnAfterEvent) === "function" ? _a : Object]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onEntitySpawn", null);
 __decorate([
-    registerEvent("playerJoin"),
+    registerEvent(ExEventNames.afterPlayerJoin),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [PlayerJoinEvent]),
+    __metadata("design:paramtypes", [PlayerJoinAfterEvent]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onClientJoin", null);
 __decorate([
-    registerEvent("playerLeave"),
+    registerEvent(ExEventNames.afterPlayerLeave),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [PlayerLeaveEvent]),
+    __metadata("design:paramtypes", [PlayerLeaveAfterEvent]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onClientLeave", null);
 //# sourceMappingURL=ExGameServer.js.map

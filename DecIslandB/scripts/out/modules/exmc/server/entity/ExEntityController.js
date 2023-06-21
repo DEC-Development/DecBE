@@ -7,10 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 import ExEntity from "./ExEntity.js";
-import { EntityHurtEvent } from '@minecraft/server';
+import { EntityHurtAfterEvent } from '@minecraft/server';
 import ExEntityEvents from "./ExEntityEvents.js";
 import { eventDecoratorFactory, registerEvent } from "../events/eventDecoratorFactory.js";
+import { ExOtherEventNames } from "../events/events.js";
 export default class ExEntityController {
     get entity() {
         return this._entity;
@@ -74,7 +76,7 @@ export default class ExEntityController {
     }
 }
 __decorate([
-    registerEvent("tick", (ctrl, e) => {
+    registerEvent(ExOtherEventNames.tick, (ctrl, e) => {
         if (e.currentTick % 1 === 0) {
             try {
                 let dim = ctrl.entity.dimension;
@@ -92,9 +94,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExEntityController.prototype, "destroyTrigger", null);
 __decorate([
-    registerEvent("onHurt", (ctrl, e) => ctrl.exEntity.getHealth() <= 0 && !ctrl._isKilled),
+    registerEvent(ExOtherEventNames.afterOnHurt, (ctrl, e) => ctrl.exEntity.health <= 0 && !ctrl._isKilled),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EntityHurtEvent]),
+    __metadata("design:paramtypes", [typeof (_a = typeof EntityHurtAfterEvent !== "undefined" && EntityHurtAfterEvent) === "function" ? _a : Object]),
     __metadata("design:returntype", void 0)
 ], ExEntityController.prototype, "onKilled", null);
 //# sourceMappingURL=ExEntityController.js.map

@@ -1,0 +1,7 @@
+先用cd改目录到scripts里
+
+添加子模块
+git submodule add git@github.com:AAswordman/ExcellentMInecraftscripts.git
+
+删除子模块
+git rm -r ExcellentMInecraftscripts
