@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
 import { world, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent } from "@minecraft/server";
@@ -35,12 +34,12 @@ export default class ExGameServer {
             ExGameServer.isInitialized = true;
             ExGameConfig.config = config;
             if (!config.watchDog) {
-                system.events.beforeWatchdogTerminate.subscribe((e) => {
+                system.beforeEvents.watchdogTerminate.subscribe((e) => {
                     e.cancel = true;
                 });
             }
             ExGameConfig.console = initConsole(ExGameConfig);
-            ExErrorQueue.init(this);
+            ExErrorQueue.init();
             ExTickQueue.init(this);
             ExCommand.init(this);
             ExClientEvents.init(this);
@@ -66,6 +65,9 @@ export default class ExGameServer {
         if (entityConstructor) {
             new (entityConstructor)(e.entity, this);
         }
+    }
+    createEntityController(e, ec) {
+        return new ec(e, this);
     }
     getDimension(dimensionId) {
         return world.getDimension(dimensionId);
@@ -93,6 +95,13 @@ export default class ExGameServer {
         let players = [];
         for (let k of this.clients) {
             players.push(k[1].player);
+        }
+        return players;
+    }
+    getExPlayers() {
+        let players = [];
+        for (let k of this.clients) {
+            players.push(k[1].exPlayer);
         }
         return players;
     }
@@ -127,7 +136,7 @@ export default class ExGameServer {
     onClientLeave(event) {
         let client = this.findClientByName(event.playerName);
         if (client === undefined) {
-            ExGameConfig.console.error(event.playerName + "client is not exists");
+            ExGameConfig.console.error(event.playerName + " client is not exists");
             return;
         }
         client.onLeave();
@@ -153,7 +162,7 @@ ExGameServer.musicMap = new Map();
 __decorate([
     registerEvent(ExEventNames.afterEntitySpawn),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_a = typeof EntitySpawnAfterEvent !== "undefined" && EntitySpawnAfterEvent) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [EntitySpawnAfterEvent]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onEntitySpawn", null);
 __decorate([

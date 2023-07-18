@@ -57,6 +57,18 @@
 					},
 					{
 						"warden_sword": "query.get_equipped_item_name == 'warden_sword' && query.is_using_item"
+					},
+					{
+						"fire_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'fire_totem'"
+					},
+					{
+						"fire_totem_offhand": "query.get_equipped_item_name('off_hand')== 'fire_totem'"
+					},
+					{
+						"ocean_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'ocean_totem'"
+					},
+					{
+						"ocean_totem_offhand": "query.get_equipped_item_name('off_hand')== 'ocean_totem'"
 					}
 				]
 			},
@@ -78,7 +90,11 @@
 				"event_shadow_night": "animation.event_shadow_night",
 				"event_cold_wave": "animation.event_cold_wave",
 				"event_halloween": "animation.event_halloween",
-				"event_silent_night": "animation.event_silent_night"
+				"event_silent_night": "animation.event_silent_night",
+				"fire_totem_mainhand": "animation.fire_totem",
+				"fire_totem_offhand": "animation.fire_totem",
+				"ocean_totem_mainhand": "animation.ocean_totem",
+				"ocean_totem_offhand": "animation.ocean_totem"
 			}
 		},
 		"component_groups": {
@@ -187,18 +203,6 @@
 				}
 			},
 			"minecraft:fire_totem_player": {
-				"minecraft:spell_effects": {
-					"add_effects": [
-						{
-							"effect": "fire_resistance",
-							"amplifier": 0,
-							"visible": 0,
-							"ambient": 0,
-							"duration": 5,
-							"display_on_screen_animation": true
-						}
-					]
-				},
 				"minecraft:hurt_on_condition": {
 					"damage_conditions": [
 						{
@@ -214,21 +218,6 @@
 				}
 			},
 			"minecraft:ocean_totem_player": {
-				"minecraft:spell_effects": {
-					"add_effects": [
-						{
-							"effect": "water_breathing",
-							"amplifier": 0,
-							"visible": 0,
-							"ambient": 0,
-							"duration": 5,
-							"display_on_screen_animation": true
-						}
-					]
-				},
-				"minecraft:underwater_movement": {
-					"value": 0.04
-				},
 				"minecraft:hurt_on_condition": {
 					"damage_conditions": [
 						{
@@ -251,39 +240,6 @@
 							"damage_per_tick": 1
 						}
 					]
-				}
-			},
-			"minecraft:growth_player": {
-				"minecraft:spell_effects": {
-					"add_effects": [
-						{
-							"effect": "regeneration",
-							"amplifier": 0,
-							"visible": 0,
-							"ambient": 0,
-							"duration": 10,
-							"display_on_screen_animation": true
-						}
-					]
-				}
-			},
-			"minecraft:angel_purification_player": {
-				"minecraft:spell_effects": {
-					"add_effects": [
-						{
-							"effect": "regeneration",
-							"amplifier": 1,
-							"visible": 0,
-							"ambient": 0,
-							"duration": 10,
-							"display_on_screen_animation": true
-						}
-					]
-				}
-			},
-			"minecraft:village_guardian_player": {
-				"minecraft:movement": {
-					"value": 0.1
 				}
 			},
 			"minecraft:illager_sword_player": {
@@ -344,27 +300,6 @@
 			"minecraft:wind_of_shadow_player": {
 				"minecraft:movement": {
 					"value": 0.1
-				},
-				"minecraft:spawn_entity": [
-					{
-						"min_wait_time": 0,
-						"max_wait_time": 0,
-						"spawn_entity": "dec:particle_ender_wake",
-						"num_to_spawn": 1,
-						"single_use": true
-					}
-				],
-				"minecraft:spell_effects": {
-					"add_effects": [
-						{
-							"effect": "invisibility",
-							"amplifier": 0,
-							"visible": 0,
-							"ambient": 0,
-							"duration": 2,
-							"display_on_screen_animation": true
-						}
-					]
 				}
 			},
 			"minecraft:lapis_sword_player": {
@@ -686,35 +621,7 @@
 				]
 			},
 			"minecraft:scaffolding_climber": {},
-			"minecraft:environment_sensor": [/*
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "is_daytime",
-									"subject": "self",
-									"value": true
-								}
-							]
-						},
-						"event": "minecraft:day_random"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "is_daytime",
-									"subject": "self",
-									"value": false
-								}
-							]
-						},
-						"event": "minecraft:night_random"
-					}
-				},*/
+			"minecraft:environment_sensor": [
 				{
 					"on_environment": {
 						"filters": {
@@ -1462,51 +1369,6 @@
 									"test": "has_equipment",
 									"subject": "self",
 									"domain": "hand",
-									"value": "dec:growth"
-								}
-							]
-						},
-						"event": "minecraft:become_growth"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:angel_purification"
-								}
-							]
-						},
-						"event": "minecraft:become_angel_purification"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:village_guardian"
-								}
-							]
-						},
-						"event": "minecraft:become_village_guardian"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
 									"value": "dec:illager_sword"
 								}
 							]
@@ -1706,27 +1568,7 @@
 				}
 			]
 		},
-		"events": {/*
-			"minecraft:day_random": {
-				"run_command": {
-					"command": [
-						"scoreboard players set IsDay global 1",
-						"scoreboard players set IsNight global 0",
-						"scoreboard players set NightRandom global 0",
-						"scoreboard players set @a night_event 0",
-						"fog @a remove \"night_event\""
-					]
-				}
-			},
-			"minecraft:night_random": {
-				"run_command": {
-					"command": [
-						"execute if score IsNight global = zero global run scoreboard players random NightRandom global 1 100",
-						"scoreboard players set IsDay global 0",
-						"scoreboard players set IsNight global 1"
-					]
-				}
-			},*/
+		"events": {
 			"minecraft:become_hpl1": {
 				"remove": {
 					"component_groups": [
@@ -1890,12 +1732,9 @@
 						"minecraft:iron_sickle_player",
 						"minecraft:gold_sickle_player",
 						"minecraft:diamond_sickle_player",
-						"minecraft:village_guardian_player",
 						"minecraft:vortex_player",
 						"minecraft:fire_totem_player",
 						"minecraft:ocean_totem_player",
-						"minecraft:growth_player",
-						"minecraft:angel_purification_player",
 						"minecraft:copper_sickle_player",
 						"minecraft:copper_battleaxe_player",
 						"minecraft:scale_sword_player",
@@ -2108,42 +1947,6 @@
 				"add": {
 					"component_groups": [
 						"minecraft:ocean_totem_player"
-					]
-				}
-			},
-			"minecraft:become_growth": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:growth_player"
-					]
-				}
-			},
-			"minecraft:become_angel_purification": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:angel_purification_player"
-					]
-				}
-			},
-			"minecraft:become_village_guardian": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:village_guardian_player"
 					]
 				}
 			},

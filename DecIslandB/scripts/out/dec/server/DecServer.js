@@ -1,4 +1,4 @@
-import { MinecraftDimensionTypes, MinecraftEffectTypes } from '@minecraft/server';
+import { MinecraftDimensionTypes } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
@@ -6,9 +6,7 @@ import ExEntity from '../../modules/exmc/server/entity/ExEntity.js';
 import commandAnalysis from '../../modules/exmc/utils/commandAnalysis.js';
 import ExGameServer from '../../modules/exmc/server/ExGameServer.js';
 import DecGlobal from './DecGlobal.js';
-import { ArmorPlayerDec, ArmorPlayerPom } from './items/ArmorData.js';
 import Vector3 from '../../modules/exmc/math/Vector3.js';
-import { to } from '../../modules/exmc/server/ExErrorQueue.js';
 import { DecEverlastingWinterGhastBoss1, DecEverlastingWinterGhastBoss2 } from './entities/DecEverlastingWinterGhastBoss.js';
 import { DecCommonBossLastStage } from './entities/DecCommonBossLastStage.js';
 import VarOnChangeListener from '../../modules/exmc/utils/VarOnChangeListener.js';
@@ -19,6 +17,7 @@ import IStructureSettle from './data/structure/IStructureSettle.js';
 import IStructureDriver from './data/structure/IStructureDriver.js';
 import ExTaskRunner from '../../modules/exmc/server/ExTaskRunner.js';
 import { decTreeStructure } from './data/structure/decTreeStructure.js';
+import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -28,6 +27,8 @@ export default class DecServer extends ExGameServer {
         this.i_inviolable = new Objective("i_inviolable").create("i_inviolable");
         this.i_damp = new Objective("i_damp").create("i_damp");
         this.i_soft = new Objective("i_soft").create("i_soft");
+        this.i_heavy = new Objective("i_heavy").create("i_heavy");
+        this.bullet_type = new Objective("bullet_type").create("bullet_type");
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
@@ -182,12 +183,12 @@ export default class DecServer extends ExGameServer {
                 (_a = e.dimension.getBlock(e.block.location)) === null || _a === void 0 ? void 0 : _a.setType(e.brokenBlockPermutation.type);
                 let ep = ExPlayer.getInstance(e.player);
                 entity.exDimension.command.run("kill @e[type=item,r=2,x=" + e.block.x + ",y=" + e.block.y + ",z=" + e.block.z + "]");
-                ep.addEffect(MinecraftEffectTypes.blindness, 200, 0, true);
-                ep.addEffect(MinecraftEffectTypes.darkness, 400, 0, true);
-                ep.addEffect(MinecraftEffectTypes.wither, 100, 0, true);
-                ep.addEffect(MinecraftEffectTypes.miningFatigue, 600, 2, true);
-                ep.addEffect(MinecraftEffectTypes.hunger, 600, 1, true);
-                ep.addEffect(MinecraftEffectTypes.nausea, 200, 0, true);
+                ep.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
+                ep.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
+                ep.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
+                ep.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
+                ep.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
+                ep.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
                 entity.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
             }
         });
@@ -214,46 +215,12 @@ export default class DecServer extends ExGameServer {
                 "scoreboard players remove @e[scores={i_inviolable=1..}] i_inviolable 1",
                 "scoreboard players remove @e[scores={i_damp=1..}] i_damp 1",
                 "scoreboard players remove @e[scores={i_soft=1..}] i_soft 1",
+                "scoreboard players remove @e[scores={i_heavy=1..}] i_heavy 1",
                 "scoreboard players remove @e[scores={harmless=1..}] harmless 1"
             ]);
             if (e.currentTick % 100 === 0) {
                 //夜晚事件
                 this.nightEventListener.upDate(new ExEnvironment().isNight());
-                //盔甲探测
-                let prom = [];
-                for (const client of this.getClients()) {
-                    prom.push(client.checkArmor());
-                }
-                to(Promise.all(prom).then((e) => {
-                    if (!e.every(i => i)) {
-                        let prom2 = [];
-                        if (DecGlobal.isDec()) {
-                            for (let k in ArmorPlayerDec) {
-                                prom2.push(ArmorPlayerDec[k].find(this.getExDimension(MinecraftDimensionTypes.overworld).command));
-                            }
-                        }
-                        else {
-                            for (let k in ArmorPlayerPom) {
-                                prom2.push(ArmorPlayerPom[k].find(this.getExDimension(MinecraftDimensionTypes.overworld).command));
-                            }
-                        }
-                        to(Promise.all(prom2).then((x) => {
-                            for (const client of this.getClients()) {
-                                let flag = false;
-                                for (let tag of client.player.getTags()) {
-                                    if (tag.startsWith("armorTest:")) {
-                                        client.player.removeTag(tag);
-                                        client.chooseArmor(ArmorPlayerPom[tag.split(":")[1]]);
-                                        flag = true;
-                                    }
-                                }
-                                if (!flag) {
-                                    client.chooseArmor(undefined);
-                                }
-                            }
-                        }));
-                    }
-                }));
             }
         });
         //实体监听器，用于播放bgm、完成任务判断

@@ -838,6 +838,26 @@
       "textures": [
         "textures/blocks/magic_letter_box_front_with_magic_scroll_blue"
       ]
+    },
+    "ash_summoner": {
+      "textures": [
+        "textures/blocks/ash_summoner"
+      ]
+    },
+    "ash_summoner_locked": {
+      "textures": [
+        "textures/blocks/ash_summoner_locked"
+      ]
+    },
+    "ash_summoner_activated": {
+      "textures": [
+        "textures/blocks/ash_summoner_activated"
+      ]
+    },
+    "ash_cage": {
+      "textures": [
+        "textures/blocks/ash_cage"
+      ]
     }
   }
 }

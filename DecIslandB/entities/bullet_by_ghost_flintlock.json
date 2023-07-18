@@ -59,7 +59,7 @@
         ],
         "semirandomdiffdamage": true,
         "uncertaintyBase": 2.0,
-        "uncertaintyMultiplier": 1,
+        "uncertaintyMultiplier": 0.5,
         "reflectOnHurt": true
       },
       "minecraft:pushable": {

@@ -21,3 +21,7 @@ execute if score DieMode global = one global if entity @a[tag=alreadydie] run ga
 execute if score DieMode global = one global run gamemode spectator @a[tag=diemode_gmcheat]
 execute if score DieMode global = one global if entity @a[tag=diemode_gmcheat] run gamerule sendcommandfeedback false
 execute if score DieMode global = one global run difficulty hard
+
+##防末影珍珠
+execute at @e[type=ender_pearl,tag=no_ender_pearl] run loot spawn ~~~ loot "entities/ender_pearl"
+kill @e[type=ender_pearl,tag=no_ender_pearl]

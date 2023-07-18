@@ -6,21 +6,23 @@ export default class ExScoresManager {
         this.entity = e;
     }
     getIdentity(objective) {
+        var _a;
         if (this.entity instanceof ExNullEntity) {
             const e = this.entity;
-            return world.scoreboard.getObjective(objective).getParticipants().find((i) => (i.displayName === e.nameTag));
+            return (_a = world.scoreboard.getObjective(objective).getScores().find(i => i.participant.displayName === e.nameTag)) === null || _a === void 0 ? void 0 : _a.participant;
         }
         else {
             return this.entity.scoreboardIdentity;
         }
     }
     getScore(objective) {
+        var _a;
         let name = typeof objective === "string" ? objective : objective.name;
         let id = this.getIdentity(name);
         if (!id)
             return 0;
         try {
-            return world.scoreboard.getObjective(name).getScore(id);
+            return (_a = world.scoreboard.getObjective(name).getScore(id)) !== null && _a !== void 0 ? _a : 0;
         }
         catch (e) {
             return 0;
@@ -30,6 +32,9 @@ export default class ExScoresManager {
     setScore(objective, num) {
         let name = typeof objective === "string" ? objective : objective.name;
         let id = this.getIdentity(name);
+        if (!id && this.entity instanceof ExNullEntity) {
+            this.entity.runCommandAsync(`scoreboard players set ${'"' + this.entity.nameTag + '"'} ${name} ${num}`);
+        }
         if (!id)
             return false;
         world.scoreboard.getObjective(name).setScore(id, num);

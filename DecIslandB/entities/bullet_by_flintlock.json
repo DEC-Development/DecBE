@@ -36,8 +36,8 @@
     "anchor": 1,
     "offset": [ 0, 0.5, 0 ],
     "semirandomdiffdamage": true,
-    "uncertaintyBase": 12.0,
-    "uncertaintyMultiplier": 4,
+    "uncertaintyBase": 8.0,
+    "uncertaintyMultiplier": 3,
     "reflectOnHurt": true
    },
    "minecraft:pushable": {

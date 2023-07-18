@@ -27,6 +27,10 @@
           "target": "self"
         }
       },
+      "minecraft:enchantable": {
+        "value": 14,
+        "slot": "flintsteel"
+      },
       "minecraft:cooldown": {
         "category": "staff",
         "duration": 0.9

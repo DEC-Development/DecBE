@@ -1363,6 +1363,78 @@
 		},
 		"magic_surge_core": {
 			"textures": "textures/items/magic_surge_core"
+		},
+		"guide_book": {
+			"textures": "textures/items/guide_book"
+		},
+		"fire_heart": {
+			"textures": "textures/items/fire_heart"
+		},
+		"time_compass": {
+			"textures": "textures/items/time_compass"
+		},
+		"tear_from_dream": {
+			"textures": "textures/items/tear_from_dream"
+		},
+		"shadow_feather": {
+			"textures": "textures/items/shadow_feather"
+		},
+		"herb_bag": {
+			"textures": "textures/items/herb_bag"
+		},
+		"stones_bag": {
+			"textures": "textures/items/stones_bag"
+		},
+		"archer_stones_bag": {
+			"textures": "textures/items/archer_stones_bag"
+		},
+		"alchemic_stone": {
+			"textures": "textures/items/alchemic_stone"
+		},
+		"pirate_bullet_bag": {
+			"textures": "textures/items/pirate_bullet_bag"
+		},
+		"lava_bullet_bag": {
+			"textures": "textures/items/lava_bullet_bag"
+		},
+		"hunter_bullet_bag": {
+			"textures": "textures/items/hunter_bullet_bag"
+		},
+		"archer_bullet_bag": {
+			"textures": "textures/items/archer_bullet_bag"
+		},
+		"blood_bullet_bag": {
+			"textures": "textures/items/blood_bullet_bag"
+		},
+		"bullet_bag": {
+			"textures": "textures/items/bullet_bag"
+		},
+		"diamond_ring": {
+			"textures": "textures/items/diamond_ring"
+		},
+		"emerald_ring": {
+			"textures": "textures/items/emerald_ring"
+		},
+		"ender_ring": {
+			"textures": "textures/items/ender_ring"
+		},
+		"fire_ring": {
+			"textures": "textures/items/fire_ring"
+		},
+		"gold_ring": {
+			"textures": "textures/items/gold_ring"
+		},
+		"heart_ring": {
+			"textures": "textures/items/heart_ring"
+		},
+		"natural_ring": {
+			"textures": "textures/items/natural_ring"
+		},
+		"ash_key": {
+			"textures": "textures/items/ash_key"
+		},
+		"dust_ring": {
+			"textures": "textures/items/dust_ring"
 		}
   }
 }

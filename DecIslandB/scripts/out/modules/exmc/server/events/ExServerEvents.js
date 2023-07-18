@@ -1,6 +1,8 @@
 import { world } from '@minecraft/server';
+import ExErrorQueue from '../ExErrorQueue.js';
 import ExGame from '../ExGame.js';
 import { ExOtherEventNames } from './events.js';
+//顶层事件分发
 export default class ExServerEvents {
     _subscribe(name, callback) {
         let e = ExServerEvents.monitorMap.get(name);
@@ -36,6 +38,22 @@ export default class ExServerEvents {
                     });
                 }
             },
+            [ExOtherEventNames.beforeTick]: {
+                subscribe: (callback) => {
+                    this._subscribe(ExOtherEventNames.beforeTick, callback);
+                },
+                unsubscribe: (callback) => {
+                    this._unsubscribe(ExOtherEventNames.beforeTick, callback);
+                },
+                pattern: () => {
+                    ExGame.beforeTickMonitor.addMonitor((e) => {
+                        var _a;
+                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.beforeTick)) === null || _a === void 0 ? void 0 : _a.forEach((fun) => {
+                            fun(e);
+                        });
+                    });
+                }
+            },
             [ExOtherEventNames.onLongTick]: {
                 subscribe: (callback) => {
                     this._subscribe(ExOtherEventNames.onLongTick, callback);
@@ -56,10 +74,58 @@ export default class ExServerEvents {
         this._server = server;
         this.events = {};
         for (let k in world.afterEvents) {
-            this.events[`after${k[0].toUpperCase()}${k.slice(1)}`] = world.afterEvents[k];
+            const v = world.afterEvents[k];
+            this.events[`after${k[0].toUpperCase()}${k.slice(1)}`] = {
+                subscribe: (a) => {
+                    if (!ExServerEvents.interceptor.has(a)) {
+                        ExServerEvents.interceptor.set(a, (e) => {
+                            try {
+                                a(e);
+                            }
+                            catch (err) {
+                                ExErrorQueue.reportError(err);
+                                throw err;
+                            }
+                        });
+                    }
+                    return v.subscribe(ExServerEvents.interceptor.get(a));
+                },
+                unsubscribe: (a) => {
+                    if (!ExServerEvents.interceptor.has(a)) {
+                        return;
+                    }
+                    const f = ExServerEvents.interceptor.get(a);
+                    ExServerEvents.interceptor.delete(a);
+                    return v.unsubscribe(f);
+                }
+            };
         }
         for (let k in world.beforeEvents) {
-            this.events[`before${k[0].toUpperCase()}${k.slice(1)}`] = world.beforeEvents[k];
+            const v = world.beforeEvents[k];
+            this.events[`before${k[0].toUpperCase()}${k.slice(1)}`] = {
+                subscribe: (a) => {
+                    if (!ExServerEvents.interceptor.has(a)) {
+                        ExServerEvents.interceptor.set(a, (e) => {
+                            try {
+                                a(e);
+                            }
+                            catch (err) {
+                                ExErrorQueue.reportError(err);
+                                throw err;
+                            }
+                        });
+                    }
+                    return v.subscribe(ExServerEvents.interceptor.get(a));
+                },
+                unsubscribe: (a) => {
+                    if (!ExServerEvents.interceptor.has(a)) {
+                        return;
+                    }
+                    const f = ExServerEvents.interceptor.get(a);
+                    ExServerEvents.interceptor.delete(a);
+                    return v.unsubscribe(f);
+                }
+            };
         }
         if (!ExServerEvents.init) {
             ExServerEvents.init = true;
@@ -92,4 +158,5 @@ export default class ExServerEvents {
 }
 ExServerEvents.monitorMap = new Map;
 ExServerEvents.init = false;
+ExServerEvents.interceptor = new Map();
 //# sourceMappingURL=ExServerEvents.js.map

@@ -36,6 +36,7 @@ scoreboard players add @a night_event 0
 scoreboard players add @a i_inviolable 0
 scoreboard players add @a i_damp 0
 scoreboard players add @a i_soft 0
+scoreboard players add @a i_heavy 0
 scoreboard players set @a[tag=!mok] magicpoint 20
 scoreboard players set @a[tag=!mok] maxmagic 0
 scoreboard players set @a[tag=!mok] magicgain 1

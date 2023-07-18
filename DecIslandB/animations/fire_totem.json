@@ -1,0 +1,17 @@
+{
+  "format_version": "1.8.0", 
+  "animations": {
+      "animation.fire_totem": {
+        "timeline": {
+            "20": [
+                "/function item/fire_totem"
+            ],
+            "40": [
+                "/function item/fire_totem"
+            ]
+        }, 
+        "animation_length": 40.5, 
+        "loop": true
+      }
+   }
+}

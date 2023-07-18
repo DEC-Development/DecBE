@@ -121,6 +121,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "item",
+          "name": "dec:stones_bag",
+          "weight": 1
         }
       ]
     }

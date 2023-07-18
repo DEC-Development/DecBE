@@ -87,7 +87,30 @@
           "type": "magic",
           "amount": 1
         }
-      }
+      },
+      "sequence": [
+        {
+          "condition": "query.scoreboard('magicpoint') > 3",
+          "sequence": [
+            {
+              "run_command": {
+                "command": [
+                  "effect @s invisibility 2 0 true",
+                  "particle dec:ender_wake_particle ~~~",
+                  "scoreboard players remove @s magicpoint 3"
+                ],
+                "target": "holder"
+              }
+            },
+            {
+              "damage": {
+                "type": "magic",
+                "amount": 1
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }

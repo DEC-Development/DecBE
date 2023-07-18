@@ -1,9 +1,9 @@
 import { DynamicPropertiesDefinition, MinecraftEntityTypes, world } from '@minecraft/server';
 import { Serialize } from '../../../utils/Serialize.js';
 import GZIPUtil from '../../../utils/GZIPUtil.js';
-import ExGameConfig from '../../ExGameConfig.js';
+const cutLength = 980;
 world.afterEvents.worldInitialize.subscribe((e) => {
-    let def = new DynamicPropertiesDefinition().defineString("__cache:", 980);
+    let def = new DynamicPropertiesDefinition().defineString("__cache0:", cutLength);
     e.propertyRegistry.registerEntityTypeDynamicProperties(def, MinecraftEntityTypes.player);
 });
 export default class EntityPropCache {
@@ -11,13 +11,13 @@ export default class EntityPropCache {
         this.entity = entity;
     }
     load() {
-        let tag;
-        let msg = this.entity.getDynamicProperty("__cache:");
-        if (typeof msg === "string" && (tag = msg) !== undefined) {
+        let tag = this._getStringCache();
+        if (tag !== undefined && tag !== "") {
             try {
                 tag = GZIPUtil.unzipString(tag);
             }
             catch (e) {
+                console.warn("Unable to unzip cache as " + this.entity.typeId);
                 return undefined;
             }
             this.tagFrom = tag;
@@ -33,8 +33,7 @@ export default class EntityPropCache {
             let res = this.load();
             if (!res) {
                 this.cache = def;
-                this.tagFrom = JSON.stringify(this.cache);
-                this.entity.setDynamicProperty("__cache:", this.tagFrom);
+                this.save();
                 return def;
             }
             else {
@@ -47,10 +46,25 @@ export default class EntityPropCache {
         let nfrom = Serialize.to(this.cache);
         if (nfrom !== this.tagFrom) {
             let m = GZIPUtil.zipString(nfrom);
-            this.entity.setDynamicProperty("__cache:", m);
-            ExGameConfig.console.info("setDynamicProperty len " + m.length);
+            this._setStringCache(m);
+            // ExGameConfig.console.info("setDynamicProperty len "+m.length);
+            // ExGameConfig.console.info("setDynamicO len "+nfrom.length);
             this.tagFrom = nfrom;
         }
+    }
+    _getStringCache() {
+        var _a;
+        return ((_a = this.entity.getDynamicProperty("__cache0:")) !== null && _a !== void 0 ? _a : "");
+        //  + (this.entity.getDynamicProperty("__cache1:") as string ?? "")
+        //     + (this.entity.getDynamicProperty("__cache2:") as string ?? "") + (this.entity.getDynamicProperty("__cache3:") as string ?? "");
+    }
+    _setStringCache(str) {
+        // for (let i = 0; i < 1; i++) {
+        //     let start = i * cutLength, end = (i + 1) * cutLength;
+        //     let is = str.substring(Math.min(start, str.length), Math.min(end, str.length));
+        //     this.entity.setDynamicProperty("__cache" + i + ":", is);
+        // }
+        this.entity.setDynamicProperty("__cache0:", str);
     }
 }
 //# sourceMappingURL=EntityPropCache.js.map

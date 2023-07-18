@@ -5,6 +5,16 @@
       "entries": [
         {
           "type": "item",
+          "name": "dec:guide_book",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
           "name": "dec:magic_letter_box",
           "weight": 1
         }

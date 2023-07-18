@@ -17,20 +17,6 @@
           "into": "dec:enchant_illager_1<minecraft:entity_spawned>"
         }
       },
-      "minecraft:angry": {
-        "minecraft:boss": {
-          "should_darken_sky": false,
-          "name": "boss.dec:enchant_illager_angry.name",
-          "hud_range": 64
-        },
-        "minecraft:health": {
-          "value": 1000,
-          "max": 1000
-        },
-        "minecraft:movement": {
-          "value": 0.6
-        }
-      },
       "minecraft:spawn": {
         "minecraft:damage_sensor": {
           "triggers": [
@@ -451,22 +437,6 @@
                 "minecraft:spawn"
               ]
             }
-          },
-          {
-            "filters": {
-              "test": "has_biome_tag",
-              "operator": "!=",
-              "value": "jungle"
-            },
-            "randomize": [
-              {
-                "add": {
-                  "component_groups": [
-                    "minecraft:angry"
-                  ]
-                }
-              }
-            ]
           }
         ]
       },

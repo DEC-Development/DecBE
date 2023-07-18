@@ -34,6 +34,10 @@
       "minecraft:durability": {
         "max_durability": 98
       },
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "flintsteel"
+      },
       "minecraft:repairable": {
         "repair_items": [
           {

@@ -1,4 +1,4 @@
-import { MinecraftEffectTypes, ItemStack, ItemTypes } from '@minecraft/server';
+import { ItemStack, ItemTypes } from '@minecraft/server';
 import { ModalFormData } from "@minecraft/server-ui";
 import Vector3 from '../../../modules/exmc/math/Vector3.js';
 import ExDimension from '../../../modules/exmc/server/ExDimension.js';
@@ -6,11 +6,13 @@ import ExErrorQueue from '../../../modules/exmc/server/ExErrorQueue.js';
 import menuFunctionUI from "../data/menuFunctionUI.js";
 import MenuUIAlert from "../ui/MenuUIAlert.js";
 import GameController from "./GameController.js";
+import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
 export default class SimpleItemUseFunc extends GameController {
     onJoin() {
+        //连锁挖矿
         this.getEvents().exEvents.afterBlockBreak.subscribe(e => {
             var _a;
-            const itemId = (_a = this.exPlayer.getBag().getItemOnHand()) === null || _a === void 0 ? void 0 : _a.typeId;
+            const itemId = (_a = this.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId;
             if (itemId === "wb:axex_equipment_a") {
                 if (e.brokenBlockPermutation.hasTag("log")) {
                     this.chainDigging(new Vector3(e.block), e.brokenBlockPermutation.type.id, 16);
@@ -32,17 +34,19 @@ export default class SimpleItemUseFunc extends GameController {
             const item = e.itemStack;
             if (item.typeId == "wb:power") {
                 if (!this.data.lang) {
-                    new ModalFormData()
-                        .title("Choose a language")
-                        .dropdown("Language List", ["English", "简体中文"], 0)
-                        .show(this.player).then((e) => {
-                        if (!e.canceled) {
-                            this.data.lang = (e.formValues && e.formValues[0] == 0) ? "en" : "zh";
-                        }
-                    })
-                        .catch((e) => {
-                        ExErrorQueue.throwError(e);
-                    });
+                    this.setTimeout(() => {
+                        new ModalFormData()
+                            .title("Choose a language")
+                            .dropdown("Language List", ["English", "简体中文"], 0)
+                            .show(this.player).then((e) => {
+                            if (!e.canceled) {
+                                this.data.lang = (e.formValues && e.formValues[0] == 0) ? "en" : "zh";
+                            }
+                        })
+                            .catch((e) => {
+                            ExErrorQueue.throwError(e);
+                        });
+                    }, 0);
                 }
                 else {
                     new MenuUIAlert(this.client, menuFunctionUI(this.getLang())).showPage("main", "notice");
@@ -50,9 +54,11 @@ export default class SimpleItemUseFunc extends GameController {
             }
             else if (item.typeId === "wb:jet_pack") {
                 // jet pack
-                this.exPlayer.addEffect(MinecraftEffectTypes.levitation, 7, 15, false);
-                this.exPlayer.addEffect(MinecraftEffectTypes.slowFalling, 150, 3, false);
-                this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.getPosition().sub(this.exPlayer.viewDirection.scl(2)));
+                this.setTimeout(() => {
+                    this.exPlayer.addEffect(MinecraftEffectTypes.Levitation, 7, 15, false);
+                    this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 150, 3, false);
+                    this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
+                }, 0);
             }
             else if (item.typeId === "wb:start_key") {
             }
@@ -83,6 +89,19 @@ export default class SimpleItemUseFunc extends GameController {
                 }
             }
         });
+        // let target: undefined | Entity;
+        // this.getEvents().exEvents.afterPlayerShootProj.subscribe((e) => {
+        //     if (target) {
+        //         const ec = this.client.getServer().createEntityController(e.projectile, PomOccupationSkillTrack);
+        //         ec.setTarget(target);
+        //     }
+        //     // if(e.afterItem?.typeId === MinecraftItemTypes.Stick){
+        //     //     this.exPlayer.selectedSlot = e.beforeSlot;
+        //     // }
+        // });
+        // this.getEvents().exEvents.afterPlayerHitEntity.subscribe(e => {
+        //     target = e.hurtEntity;
+        // });
     }
     chainDigging(v, idType, times, posData) {
         var _a;

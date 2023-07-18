@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b;
-import { ChatSendBeforeEvent, EntityDamageCause, EntityHurtAfterEvent, GameMode, MinecraftBlockTypes, MinecraftDimensionTypes, MinecraftEffectTypes, MinecraftEntityTypes } from '@minecraft/server';
+import { ChatSendBeforeEvent, EntityDamageCause, EntityHurtAfterEvent, GameMode, MinecraftBlockTypes, MinecraftDimensionTypes, MinecraftEntityTypes } from '@minecraft/server';
 import Vector3 from '../../modules/exmc/math/Vector3.js';
 import ExDimension from "../../modules/exmc/server/ExDimension.js";
 import ExGameServer from "../../modules/exmc/server/ExGameServer.js";
@@ -38,6 +37,7 @@ import PomBossBarrier from './func/barrier/PomBossBarrier.js';
 import ExEnvironment from '../../modules/exmc/server/env/ExEnvironment.js';
 import ExSystem from '../../modules/exmc/utils/ExSystem.js';
 import { ExEventNames } from '../../modules/exmc/server/events/events.js';
+import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 // import * as b from "brain.js";
 export default class PomServer extends ExGameServer {
     sayTo(str) {
@@ -300,12 +300,12 @@ export default class PomServer extends ExGameServer {
                     return;
                 b.setType(e.brokenBlockPermutation.type);
                 ex.exDimension.command.run("kill @e[type=item,r=2,x=" + e.block.x + ",y=" + e.block.y + ",z=" + e.block.z + "]");
-                ex.addEffect(MinecraftEffectTypes.nausea, 200, 0, true);
-                ex.addEffect(MinecraftEffectTypes.darkness, 400, 0, true);
-                ex.addEffect(MinecraftEffectTypes.wither, 100, 0, true);
-                ex.addEffect(MinecraftEffectTypes.miningFatigue, 600, 2, true);
-                ex.addEffect(MinecraftEffectTypes.hunger, 600, 1, true);
-                ex.addEffect(MinecraftEffectTypes.blindness, 200, 0, true);
+                ex.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
+                ex.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
+                ex.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
+                ex.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
+                ex.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
+                ex.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
                 ex.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
             }
         });
@@ -464,13 +464,13 @@ export default class PomServer extends ExGameServer {
 __decorate([
     registerEvent(ExEventNames.beforeChatSend, (server, e) => e.message === "time"),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_a = typeof ChatSendBeforeEvent !== "undefined" && ChatSendBeforeEvent) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [ChatSendBeforeEvent]),
     __metadata("design:returntype", void 0)
 ], PomServer.prototype, "time", null);
 __decorate([
     registerEvent(ExEventNames.afterEntityHurt, (server, e) => server.setting.damageShow && e.damageSource.cause !== EntityDamageCause.suicide),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof EntityHurtAfterEvent !== "undefined" && EntityHurtAfterEvent) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [EntityHurtAfterEvent]),
     __metadata("design:returntype", void 0)
 ], PomServer.prototype, "damageShow", null);
 //# sourceMappingURL=PomServer.js.map

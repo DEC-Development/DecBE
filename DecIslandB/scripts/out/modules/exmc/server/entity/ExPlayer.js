@@ -70,6 +70,30 @@ export default class ExPlayer extends ExEntity {
     set selectedSlot(value) {
         this.entity.selectedSlot = value;
     }
+    get viewDirection() {
+        return super.viewDirection;
+    }
+    set viewDirection(ivec) {
+        this.teleport(this.position, {
+            "rotation": {
+                x: ivec.rotateAngleX(),
+                y: ivec.rotateAngleY()
+            }
+        });
+    }
+    setPosition(position, dimension) {
+        this.entity.teleport(position, {
+            "dimension": dimension
+        });
+    }
+    get rotation() {
+        return super.rotation;
+    }
+    set rotation(ivec) {
+        this.teleport(this.position, {
+            "rotation": ivec
+        });
+    }
     constructor(player) {
         super(player);
         this.bag = new ExPlayerBag(this);
@@ -81,9 +105,15 @@ export default class ExPlayer extends ExEntity {
     static getInstance(source) {
         let entity = source;
         if (this.propertyNameCache in entity) {
+            // ExGameConfig.console.log("Property id " + (entity as Player).name + "//" + (ExSystem.getId((entity[this.propertyNameCache] as ExPlayer).entity) == ExSystem.getId(entity)))
+            // ExGameConfig.console.log("Property == " + (entity[this.propertyNameCache] as ExPlayer).entity == entity)
+            // if((entity[this.propertyNameCache] as ExPlayer).entity != entity) (entity[this.propertyNameCache] as ExPlayer).entity = entity;
             return entity[this.propertyNameCache];
         }
         return (entity[this.propertyNameCache] = new ExPlayer(entity));
+    }
+    static deleteInstance(source) {
+        delete source[this.propertyNameCache];
     }
     getScoresManager() {
         return this.scoresManager;

@@ -2,8 +2,14 @@ import { MolangVariableMap, MinecraftBlockTypes } from '@minecraft/server';
 import ExGameConfig from './ExGameConfig.js';
 import ExCommand from './env/ExCommand.js';
 export default class ExDimension {
-    spawnParticle(p, v) {
-        this._dimension.spawnParticle(p, v, new MolangVariableMap());
+    spawnParticle(p, v, varMap = new MolangVariableMap()) {
+        try {
+            this._dimension.spawnParticle(p, v, varMap);
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
     }
     createExplosion(location, radius, explosionOptions) {
         //console.warn(location, radius, explosionOptions);

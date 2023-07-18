@@ -12,10 +12,10 @@
     ],
     "key": {
       "A": {
-        "item": "dec:stream_stone"
+        "item": "minecraft:conduit"
       },
       "#": {
-        "item": "minecraft:feather"
+        "item": "dec:stream_stone"
       },
       "X": {
         "item": "dec:magic_powder"
