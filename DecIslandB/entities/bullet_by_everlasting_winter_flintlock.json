@@ -19,6 +19,37 @@
     "component_groups": {
       "minecraft:despawn": {
         "minecraft:instant_despawn": {}
+      },
+      "minecraft:projectile": {
+        "onHit": {
+          "definition_event": {
+            "affect_projectile": true,
+            "event_trigger": {
+              "event": "minecraft:explode",
+              "target": "self"
+            }
+          },
+          "impact_damage": {
+            "damage": 14,
+            "knockback": true,
+            "catchFire": false,
+            "semirandomdiffdamage": false
+          }
+        },
+        "power": 2.78,
+        "gravity": 0.03,
+        "inertia": 1,
+        "liquid_inertia": 1,
+        "anchor": 1,
+        "offset": [
+          0,
+          0,
+          1
+        ],
+        "semirandomdiffdamage": true,
+        "uncertaintyBase": 0,
+        "uncertaintyMultiplier": 0,
+        "reflectOnHurt": true
       }
     },
     "components": {
@@ -42,15 +73,15 @@
             "semirandomdiffdamage": false
           }
         },
-        "power": 1.85,
+        "power": 2.78,
         "gravity": 0.03,
         "inertia": 1,
         "liquid_inertia": 1,
         "anchor": 1,
         "offset": [
           0,
-          0.5,
-          0
+          0,
+          1
         ],
         "semirandomdiffdamage": true,
         "uncertaintyBase": 4.0,
@@ -74,6 +105,13 @@
         "add": {
           "component_groups": [
             "minecraft:despawn"
+          ]
+        }
+      },
+      "minecraft:accurate": {
+        "add": {
+          "component_groups": [
+            "minecraft:accurate"
           ]
         }
       }

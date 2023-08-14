@@ -1065,7 +1065,7 @@
                 }
             },
             "minecraft:cooldown": {
-                "category": "weapon",
+                "category": "battleaxe",
                 "duration": 7
             },
             "minecraft:hand_equipped": true,
@@ -1101,7 +1101,8 @@
                     "target": "self"
                 }
             },
-            "tag:minecraft:is_axe": {}
+            "tag:minecraft:is_axe": {},
+            "tag:comp:movement_addition:-0.015": {}
         },
         "events": {
             "attack": {

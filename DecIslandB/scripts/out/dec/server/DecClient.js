@@ -1,4 +1,4 @@
-import { MinecraftDimensionTypes } from "@minecraft/server";
+import { EntityDamageCause, EquipmentSlot, GameMode, MinecraftDimensionTypes } from "@minecraft/server";
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
 import MathUtil from "../../modules/exmc/math/MathUtil.js";
@@ -16,46 +16,85 @@ export default class DecClient extends ExGameClient {
         super(server, id, player);
         this.useArmor = undefined;
         this.tmpV = new Vector3(0, 0, 0);
-        this.globalscores = new GlobalScoreBoardCache(new Objective("global"));
+        this.globalscores = new GlobalScoreBoardCache(new Objective("global"), false);
     }
-    decreaseCooldownEqu(itemCategory, tickDecrease, equipmentTest) {
-        const item = this.exPlayer.getBag().itemOnOffHand;
-        if (this.player.getItemCooldown(itemCategory) > 0 && (item === null || item === void 0 ? void 0 : item.typeId) == equipmentTest) {
+    decreaseCooldownEqu(item, itemCategory, tickDecrease, equipmentTest) {
+        if (item.typeId == equipmentTest &&
+            this.player.getItemCooldown(itemCategory) > 0) {
             this.player.startItemCooldown(itemCategory, Math.max(this.player.getItemCooldown(itemCategory) - tickDecrease, 0));
+        }
+    }
+    totemEffect(equipmentTest, commands) {
+        const item_main = this.exPlayer.getBag().itemOnMainHand;
+        const item_off = this.exPlayer.getBag().itemOnOffHand;
+        if ((item_main === null || item_main === void 0 ? void 0 : item_main.typeId) == equipmentTest || (item_off === null || item_off === void 0 ? void 0 : item_off.typeId) == equipmentTest) {
+            for (let c of commands) {
+                this.player.runCommandAsync(c);
+            }
         }
     }
     onJoin() {
         super.onJoin();
-        //副手效果
+        this.exPlayer.command.run('fog @s remove \"night_event\"');
         this.getEvents().exEvents.onLongTick.subscribe((e) => {
+            if (e.currentTick % 40 === 0) {
+                this.totemEffect('dec:gingerbread_totem', ['function item/gingerbread_totem']);
+            }
+            ;
+            if (e.currentTick % 120 === 0) {
+                this.totemEffect('dec:ocean_totem', ['function item/ocean_totem']);
+                this.totemEffect('dec:fire_totem', ['function item/fire_totem']);
+            }
+            ;
             if (e.currentTick % 4 === 0) {
-                this.decreaseCooldownEqu('gun', 9, 'dec:archer_bullet_bag');
-                this.decreaseCooldownEqu('gun', 7, 'dec:lava_bullet_bag');
-                this.decreaseCooldownEqu('gun', 4, 'dec:blood_bullet_bag');
-                this.decreaseCooldownEqu('gun', 3, 'dec:hunter_bullet_bag');
-                this.decreaseCooldownEqu('gun', 3, 'dec:pirate_bullet_bag');
-                this.decreaseCooldownEqu('gun', 2, 'dec:bullet_bag');
-                this.decreaseCooldownEqu('catapult', 5, 'dec:stones_bag');
-                this.decreaseCooldownEqu('catapult', 13, 'dec:archer_stones_bag');
-                this.decreaseCooldownEqu('staff', 4, 'dec:magic_surge_core');
-                this.decreaseCooldownEqu('staff', 3, 'dec:alchemic_stone');
-                this.decreaseCooldownEqu('katana', 6, 'dec:fire_heart');
-                this.decreaseCooldownEqu('magic_book', 4, 'dec:herb_bag');
-                this.decreaseCooldownEqu('magic_book', 7, 'dec:shadow_feather');
-                this.decreaseCooldownEqu('staff', 8, 'dec:tear_from_dream');
-                this.decreaseCooldownEqu('staff', 6, 'dec:time_compass');
-                this.decreaseCooldownEqu('missile', 3, 'dec:diamond_ring');
-                this.decreaseCooldownEqu('missile', 4, 'dec:emerald_ring');
-                this.decreaseCooldownEqu('missile', 7, 'dec:ender_ring');
-                this.decreaseCooldownEqu('missile', 6, 'dec:fire_ring');
-                this.decreaseCooldownEqu('missile', 4, 'dec:gold_ring');
-                this.decreaseCooldownEqu('missile', 5, 'dec:heart_ring');
-                this.decreaseCooldownEqu('missile', 3, 'dec:natural_ring');
+                const item = this.exPlayer.getBag().itemOnOffHand;
+                this.totemEffect('dec:energy_totem', ['function item/energy_totem']);
+                if (item) {
+                    this.decreaseCooldownEqu(item, 'gun', 9, 'dec:archer_bullet_bag');
+                    this.decreaseCooldownEqu(item, 'gun', 7, 'dec:lava_bullet_bag');
+                    this.decreaseCooldownEqu(item, 'gun', 4, 'dec:blood_bullet_bag');
+                    this.decreaseCooldownEqu(item, 'gun', 3, 'dec:hunter_bullet_bag');
+                    this.decreaseCooldownEqu(item, 'gun', 3, 'dec:pirate_bullet_bag');
+                    this.decreaseCooldownEqu(item, 'gun', 2, 'dec:bullet_bag');
+                    this.decreaseCooldownEqu(item, 'catapult', 5, 'dec:stones_bag');
+                    this.decreaseCooldownEqu(item, 'catapult', 13, 'dec:archer_stones_bag');
+                    this.decreaseCooldownEqu(item, 'staff', 4, 'dec:magic_surge_core');
+                    this.decreaseCooldownEqu(item, 'staff', 3, 'dec:alchemic_stone');
+                    this.decreaseCooldownEqu(item, 'katana', 6, 'dec:fire_heart');
+                    this.decreaseCooldownEqu(item, 'magic_book', 4, 'dec:herb_bag');
+                    this.decreaseCooldownEqu(item, 'magic_book', 7, 'dec:shadow_feather');
+                    this.decreaseCooldownEqu(item, 'staff', 8, 'dec:tear_from_dream');
+                    this.decreaseCooldownEqu(item, 'staff', 6, 'dec:time_compass');
+                    this.decreaseCooldownEqu(item, 'missile', 3, 'dec:diamond_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 4, 'dec:emerald_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 7, 'dec:ender_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 6, 'dec:fire_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 4, 'dec:gold_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 5, 'dec:heart_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 3, 'dec:natural_ring');
+                    this.decreaseCooldownEqu(item, 'missile', 7, 'dec:dust_ring');
+                }
             }
         });
+        this.getEvents().exEvents.afterItemOnHandChange.subscribe((e) => {
+            //切换物品清除skill_count
+            this.exPlayer.getScoresManager().setScore('skill_count', 0);
+        });
+        /*this.getEvents().exEvents.afterItemReleaseUse.subscribe((e) => {
+            //物品使用后清除skill_count
+            if(e.itemStack.getTags().includes('use_skill_count')){
+                this.exPlayer.getScoresManager().setScore('skill_count',0)
+            }
+        })*/
         this.getEvents().exEvents.afterItemUse.subscribe((e) => {
             if (e.itemStack.hasComponent('minecraft:cooldown')) {
                 //这里写有饰品时触发的东西
+            }
+        });
+        this.getEvents().exEvents.beforeItemUseOn.subscribe(e => {
+            const id = e.block.typeId;
+            if (id.startsWith("dec") && id.includes("summoner") && id !== "dec:summoner" && this.exPlayer.getGameMode() !== GameMode.creative) {
+                e.cancel;
             }
         });
         this.getEvents().exEvents.afterPlayerHurt.subscribe(e => {
@@ -127,18 +166,13 @@ export default class DecClient extends ExGameClient {
                 }
             }
             if (!DecGlobal.isDec() && !this.player.hasTag("wbkjlq")) {
+                const tmpV = new Vector3();
                 switch (this.useArmor) {
                     case ArmorPlayerPom.bloodsucking:
                         this.exPlayer.command.run("function armor/bloodsucking");
                         break;
                     case ArmorPlayerPom.senior_bloodsucking:
                         this.exPlayer.command.run("function armor/bloodsucking2");
-                        break;
-                    case ArmorPlayerPom.ink:
-                        //this.exPlayer.command.run("function armor/ink");
-                        break;
-                    case ArmorPlayerPom.senior_ink:
-                        //this.exPlayer.command.run("function armor/ink2");
                         break;
                     case ArmorPlayerPom.senior_seal:
                         this.exPlayer.command.run("function armor/seal2");
@@ -147,9 +181,39 @@ export default class DecClient extends ExGameClient {
                         this.exPlayer.command.run("function armor/seal");
                         break;
                     case ArmorPlayerPom.senior_water:
+                        for (let e of this.getExDimension().getEntities({
+                            "maxDistance": 10,
+                            "excludeTags": (this.exPlayer.hasTag("wbmsyh") ? ["wbmsyh"] : undefined),
+                            "location": this.player.location
+                        })) {
+                            try {
+                                e.applyDamage(5, {
+                                    "cause": EntityDamageCause.entityAttack,
+                                    "damagingEntity": this.player
+                                });
+                                let direction = tmpV.set(e.location).sub(this.player.location).normalize();
+                                e.applyKnockback(direction.x, direction.z, 4, 1);
+                            }
+                            catch (e) { }
+                        }
                         this.exPlayer.command.run("function armor/water2");
                         break;
                     case ArmorPlayerPom.water:
+                        for (let e of this.getExDimension().getEntities({
+                            "maxDistance": 10,
+                            "excludeTags": (this.exPlayer.hasTag("wbmsyh") ? ["wbmsyh"] : undefined),
+                            "location": this.player.location
+                        })) {
+                            try {
+                                e.applyDamage(5, {
+                                    "cause": EntityDamageCause.entityAttack,
+                                    "damagingEntity": this.player
+                                });
+                                let direction = tmpV.set(e.location).sub(this.player.location).normalize();
+                                e.applyKnockback(direction.x, direction.z, 3, 0.5);
+                            }
+                            catch (e) { }
+                        }
                         this.exPlayer.command.run("function armor/water");
                         break;
                     case ArmorPlayerPom.senior_equipment:
@@ -163,6 +227,16 @@ export default class DecClient extends ExGameClient {
                         break;
                     case ArmorPlayerPom.forget:
                         this.exPlayer.command.run("function armor/forget");
+                        break;
+                    case ArmorPlayerPom.senior_ink:
+                        this.exPlayer.addHealth(this, e.damage);
+                        // this.exPlayer.health += e.damage;
+                        this.exPlayer.command.run("function armor/ink2");
+                        break;
+                    case ArmorPlayerPom.ink:
+                        // this.exPlayer.health += e.damage;
+                        this.exPlayer.addHealth(this, e.damage);
+                        this.exPlayer.command.run("function armor/ink");
                         break;
                 }
             }
@@ -187,11 +261,31 @@ export default class DecClient extends ExGameClient {
                 }
             }
         });
+        let magic_gap = 60;
+        function magicreckon_filter(n) {
+            if (n <= 0) {
+                return 0;
+            }
+            else if (n >= 140) {
+                return 140;
+            }
+            else {
+                return n;
+            }
+        }
         this.getEvents().exEvents.tick.subscribe(e => {
             var _a;
             const p = this.player;
             const ep = this.exPlayer;
             const scores = this.exPlayer.getScoresManager();
+            const decMagicK = 29 / 70;
+            //生存，冒险玩家添加gaming标签
+            if (!p.getTags().includes('gaming') && (ep.getGameMode() == GameMode.adventure || ep.getGameMode() == GameMode.survival)) {
+                p.addTag('gaming');
+            }
+            else if (p.getTags().includes('gaming')) {
+                p.removeTag('gaming');
+            }
             //潜行获得tag is_sneaking
             if (p.isSneaking) {
                 p.addTag("is_sneaking");
@@ -220,6 +314,11 @@ export default class DecClient extends ExGameClient {
                     ep.command.run("fog @s remove \"night_event\"");
             }
             if (e.currentTick % 20 === 0) {
+                //深渊之翼
+                if (this.exPlayer.getBag().getSlot(EquipmentSlot.chest).typeId == 'dec:wings_from_deep') {
+                    ep.addEffect(MinecraftEffectTypes.JumpBoost, 6 * 20, 1, true);
+                    ep.addEffect(MinecraftEffectTypes.SlowFalling, 6 * 20, 0, true);
+                }
                 //紫水晶套装效果
                 if (this.useArmor === ArmorPlayerDec.amethyst) {
                     if (DecGlobal.isDec()) {
@@ -261,14 +360,14 @@ export default class DecClient extends ExGameClient {
                         let mg = scores.getScore("magicpoint");
                         if (mg <= 15) {
                             this.getExDimension().spawnParticle("dec:wood_armor_magic_increase_particle", p.location);
-                            scores.addScore("magicpoint", 1);
+                            scores.addScore("magicpoint", 5);
                         }
                     }
                     else {
                         let mg = scores.getScore("wbfl");
                         if (mg <= 70) {
                             this.getExDimension().spawnParticle("dec:wood_armor_magic_increase_particle", p.location);
-                            scores.addScore("wbfl", 1);
+                            scores.addScore("wbfl", 5);
                         }
                     }
                 }
@@ -277,10 +376,56 @@ export default class DecClient extends ExGameClient {
                 p.startItemCooldown("village_portal",p.getItemCooldown("village_portal")-10)
             }*/
             if (scores.getScore('i_heavy') > 0) { //防末影珍珠的放function/global里的
-                p.runCommandAsync('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
+                this.exPlayer.command.run('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
+            }
+            //Dec的魔法系统
+            if (DecGlobal.isDec()) {
+                let maxmagic = scores.getScore('maxmagic');
+                let magicgain = scores.getScore('magicgain');
+                let magicreckon = scores.getScore('magicreckon');
+                let magicpoint = scores.getScore('magicpoint');
+                let l = Math.pow(0.667, magicgain) - 1;
+                //p.runCommandAsync('title @s actionbar magic_gap:' + String(magic_gap))
+                if (magicpoint < maxmagic) {
+                    if (magic_gap <= 0) {
+                        //这里写魔法恢复
+                        scores.addScore('magicpoint', 1);
+                        magic_gap = 60 - decMagicK * magicreckon_filter((magicreckon - 60) / (1 + l));
+                    }
+                    else {
+                        magic_gap -= 1;
+                    }
+                    if (magicreckon < 200) {
+                        scores.setScore('magicreckon', 1 + magicreckon);
+                    }
+                }
+                else if (magicreckon != 0) {
+                    scores.setScore('magicreckon', 0);
+                    magic_gap = 60;
+                }
             }
         });
         this.getEvents().exEvents.afterItemUse.subscribe(e => {
+            let hunter_reset = () => {
+                let hunter_x_offset = (Math.random() - 0.5) * 2000;
+                let hunter_z_offset = (Math.random() - 0.5) * 2000;
+                let hunter_x = 0;
+                let hunter_z = 0;
+                if (Math.random() > 0) {
+                    hunter_x = 5000;
+                }
+                else {
+                    hunter_x = -5000;
+                }
+                if (Math.random() > 0) {
+                    hunter_z = 5000;
+                }
+                else {
+                    hunter_z = -5000;
+                }
+                this.globalscores.setNumber('hunter_x', Math.floor(e.source.location.x + hunter_x + hunter_x_offset));
+                this.globalscores.setNumber('hunter_z', Math.floor(e.source.location.z + hunter_z + hunter_z_offset));
+            };
             //魔法卷轴
             if (e.itemStack.typeId == "dec:magic_scroll_blue") {
                 const i = e.itemStack;
@@ -291,11 +436,33 @@ export default class DecClient extends ExGameClient {
                         ExGame.postMessageBetweenClient(this, PomServer, "taskUi", ["paperTask", "1"]);
                 }, 0);
             }
+            else if (e.itemStack.typeId == "dec:hunter_book") {
+                //猎人之书
+                let cur_hunter_x = this.globalscores.getNumber('hunter_x');
+                let cur_hunter_z = this.globalscores.getNumber('hunter_z');
+                if (this.globalscores.getNumber('hunter_x') == undefined || this.globalscores.getNumber('hunter_z') == undefined || this.globalscores.getNumber('hunter_x') == 0 || this.globalscores.getNumber('hunter_z') == 0) {
+                    hunter_reset();
+                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }');
+                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
+                }
+                else if (cur_hunter_x - 3 <= e.source.location.x && cur_hunter_x + 3 >= e.source.location.x && cur_hunter_z - 3 <= e.source.location.z && cur_hunter_z + 3 >= e.source.location.z) {
+                    hunter_reset();
+                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }');
+                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }');
+                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
+                    e.source.runCommandAsync('xp ' + (5000 + Math.random() * 4000) + ' @s');
+                    e.source.runCommandAsync('loot give @s loot "items/hunter_book"');
+                }
+                else {
+                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }');
+                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
+                }
+            }
         });
         this.getEvents().exEvents.onLongTick.subscribe(e => {
             if (e.currentTick % 20 === 0) {
                 //盔甲选择
-                if (this.checkArmor()) {
+                if (!this.checkArmor()) {
                     //非空
                     if (!this.exPlayer.detectAnyArmor()) {
                         let armors;
@@ -305,13 +472,21 @@ export default class DecClient extends ExGameClient {
                         else {
                             armors = ArmorPlayerPom;
                         }
+                        let flag = true;
                         for (let a in armors) {
                             const armor = armors[a];
                             if (armor.detect(this.exPlayer)) {
                                 this.chooseArmor(armor);
+                                flag = false;
                                 break;
                             }
                         }
+                        if (flag) {
+                            this.chooseArmor(undefined);
+                        }
+                    }
+                    else {
+                        this.chooseArmor(undefined);
                     }
                 }
                 //设置防御
@@ -319,24 +494,14 @@ export default class DecClient extends ExGameClient {
         });
     }
     checkArmor() {
-        if (!DecGlobal.isDec()) {
-            if (this.useArmor === ArmorPlayerPom.ink) {
-                this.player.triggerEvent("armor_ink");
-            }
-            else if (this.useArmor === ArmorPlayerPom.senior_ink) {
-                this.player.triggerEvent("armor_senior_ink");
-            }
-            else {
-                this.player.triggerEvent("hostile_mode");
-            }
-        }
         return this.useArmor ? (this.useArmor.detect(this.exPlayer)) : false;
     }
     chooseArmor(a) {
         this.useArmor = a;
+        ExGame.postMessageBetweenClient(this, PomServer, "chooseArmor", [a]);
     }
-    onLoaded() {
-        super.onLoaded();
+    onLoad() {
+        super.onLoad();
     }
     onLeave() {
         super.onLeave();

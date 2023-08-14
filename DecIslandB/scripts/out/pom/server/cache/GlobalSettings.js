@@ -1,6 +1,18 @@
 import GlobalScoreBoardCache from "../../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js";
 import Random from "../../../modules/exmc/utils/Random.js";
 export default class GlobalSettings extends GlobalScoreBoardCache {
+    get uiUpdateDelay() {
+        return this.getNumber("uiUpdateDelay") || 10;
+    }
+    set uiUpdateDelay(value) {
+        this.setNumber("uiUpdateDelay", value);
+    }
+    get gameDifficulty() {
+        return this.getNumber("gameDifficulty") || 3;
+    }
+    set gameDifficulty(value) {
+        this.setNumber("gameDifficulty", value);
+    }
     get playerTpListShowPos() {
         return this.getBoolean("playerTpListShowPos");
     }
@@ -62,19 +74,22 @@ export default class GlobalSettings extends GlobalScoreBoardCache {
         this.setBoolean("ownerExists", value);
     }
     get entityCleanerLeastNum() {
-        return this.getNumber("entityCleanerLeastNum") || 200;
+        var _a;
+        return (_a = this.getNumber("entityCleanerLeastNum")) !== null && _a !== void 0 ? _a : 200;
     }
     set entityCleanerLeastNum(value) {
         this.setNumber("entityCleanerLeastNum", value);
     }
     get entityCleanerStrength() {
-        return this.getNumber("entityCleanerStrength") || 5;
+        var _a;
+        return (_a = this.getNumber("entityCleanerStrength")) !== null && _a !== void 0 ? _a : 5;
     }
     set entityCleanerStrength(value) {
         this.setNumber("entityCleanerStrength", value);
     }
     get entityCleanerDelay() {
-        return this.getNumber("entityCleanerDelay") || 30;
+        var _a;
+        return (_a = this.getNumber("entityCleanerDelay")) !== null && _a !== void 0 ? _a : 30;
     }
     set entityCleanerDelay(value) {
         this.setNumber("entityCleanerDelay", value);

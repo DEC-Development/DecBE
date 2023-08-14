@@ -16,6 +16,7 @@ import ExActionAlert from "./ui/ExActionAlert.js";
 import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
+import ExGame from "./ExGame.js";
 export default class ExGameClient {
     debug_removeAllTag() {
         for (let i of this.exPlayer.getTags()) {
@@ -29,9 +30,12 @@ export default class ExGameClient {
     }
     constructor(server, id, player) {
         this.debuggerChatTest = (e) => {
-            if (e.message.startsWith("*/"))
-                ExGameConfig.console.info(eval(e.message.substring(2, e.message.length)));
+            ExGame.run(() => {
+                if (e.message.startsWith("*/"))
+                    ExGameConfig.console.info(eval(e.message.substring(2, e.message.length)));
+            });
         };
+        this.isLoaded = false;
         this._server = server;
         this.clientId = id;
         this.player = player;
@@ -52,7 +56,7 @@ export default class ExGameClient {
             catch (e) {
                 return false;
             }
-        }), () => this.onLoaded());
+        }), () => { this.onLoad(); this.isLoaded = true; });
         this.onJoin();
         eventDecoratorFactory(this.getEvents(), this);
     }
@@ -112,7 +116,7 @@ export default class ExGameClient {
     }
     onJoin() {
     }
-    onLoaded() {
+    onLoad() {
     }
     onLeave() {
         this._events.cancelAll();

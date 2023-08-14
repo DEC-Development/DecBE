@@ -19,8 +19,9 @@ export default class SimpleItemUseFunc extends GameController {
                 }
             }
             else if (itemId === "wb:pickaxex_equipment_a") {
-                if (this.globalSettings.chainMining) {
+                if (this.globalSettings.chainMining && this.exPlayer.getScoresManager().getScore("wbfl") >= 30) {
                     this.chainDigging(new Vector3(e.block), e.brokenBlockPermutation.type.id, 5);
+                    this.exPlayer.getScoresManager().deleteScore("wbfl");
                 }
             }
         });
@@ -62,17 +63,6 @@ export default class SimpleItemUseFunc extends GameController {
             }
             else if (item.typeId === "wb:start_key") {
             }
-            else if (item.typeId === "wb:technology_world_explorer") {
-                // this.exPlayer.command.run("locate biome ice_plains").then((e) => {
-                //     // console.warn(JSON.stringify(e));
-                //     // console.warn((e.toLocaleString()));
-                //     // console.warn((e.toString()));
-                //     // console.warn(ExSystem.parseObj(e));
-                // })
-                //     .catch((err) => {
-                //         console.warn(err);
-                //     })
-            }
             else if (item.typeId === "wb:pickaxex_equipment_a") {
                 if (this.globalSettings.chainMining) {
                 }
@@ -88,6 +78,15 @@ export default class SimpleItemUseFunc extends GameController {
                     ]);
                 }
             }
+        });
+        this.getEvents().exEvents.afterItemUse.subscribe(e => {
+            const item = e.itemStack;
+            // if (item.typeId === "wb:technology_world_explorer") {
+            //     const e = this.player.runCommand("locate biome ice_plains");
+            //     console.warn(e);
+            //     console.warn(JSON.stringify(e));
+            //     console.warn(ExSystem.parseObj(e));
+            // }
         });
         // let target: undefined | Entity;
         // this.getEvents().exEvents.afterPlayerShootProj.subscribe((e) => {
@@ -141,7 +140,7 @@ export default class SimpleItemUseFunc extends GameController {
             v.sub(-1, 0, -1);
         }
     }
-    onLoaded() {
+    onLoad() {
         this.initialMagicPickaxe();
     }
     onLeave() {

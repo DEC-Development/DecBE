@@ -56,8 +56,8 @@
         "anchor": 1,
         "offset": [
           0,
-          0.5,
-          0
+          0,
+          1
         ],
         "semirandomdiffdamage": true,
         "uncertaintyBase": 70.0,
@@ -77,6 +77,13 @@
             "fill ~-0.3~-0.3~-0.3~0.3~0.3~0.3 dec:nightmare_block [] replace air []",
             "particle dec:nightmare_block_spawn_particle ~~~",
             "event entity @s minecraft:despawn"
+          ]
+        }
+      },
+      "minecraft:despawn": {
+        "add": {
+          "component_groups": [
+            "minecraft:despawn"
           ]
         }
       }

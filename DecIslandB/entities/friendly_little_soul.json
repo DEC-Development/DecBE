@@ -131,6 +131,14 @@
 			}
 		},
 		"events": {
+			"minecraft:entity_spawned": {
+				"run_command": {
+					"command": [
+						"effect @s resistance 5 5",
+						"effect @s invisibility 7 0"
+					]
+				}
+			},
 			"minecraft:disappear": {
 				"run_command": {
 					"command": [

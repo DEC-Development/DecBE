@@ -35,11 +35,10 @@
       "use": {
         "run_command": {
           "command": [
-            "tag @s[scores={magicgain=1}] add clear_magic_crystal",
-            "scoreboard players set @s[scores={magicgain=1}] magicgain 2",
-            "clear @s[tag=clear_magic_crystal,scores={magicgain=2}] dec:magic_crystal 0 1",
-            "tag @s[scores={magicgain=2}] remove clear_magic_crystal",
-            "playsound mob.enderdragon.growl @a ~~~"
+            "tag @s[scores={magicgain=0}] add clear_magic_crystal",
+            "scoreboard players set @s[scores={magicgain=0}] magicgain 1",
+            "clear @s[tag=clear_magic_crystal] dec:magic_crystal 0 1",
+            "tag @s[tag=clear_magic_crystal] remove clear_magic_crystal"
           ]
         }
       }

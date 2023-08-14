@@ -105,8 +105,10 @@
         "run_command": {
           "command": [
             "tellraw @a { \"rawtext\" : [ { \"translate\" : \"text.dec:summon_ash_knight.name\" } ] }",
-            "summon dec:ash_knight ~~1~"
-            //这加一个破坏和放置方块
+            "camera @a[r=32] fade time 0 1 2 color 10 0 0",
+            "summon dec:ash_knight ~~1~",
+            "execute as @e[type=dec:ash_knight,c=1] at @s run ride @s summon_ride dec:ash_horse",
+            "particle dec:ash_spawn_particle ~~1~"
           ]
         },
         "decrement_stack": {}

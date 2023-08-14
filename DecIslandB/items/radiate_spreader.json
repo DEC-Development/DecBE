@@ -37,7 +37,8 @@
       },
       "minecraft:durability": {
         "max_durability": 647
-      }
+      },
+      "tag:comp:equipment_type:magic_weapon":{}
     },
     "events": {
       "attack": {
@@ -55,7 +56,8 @@
                 "run_command": {
                   "command": [
                     "playsound liquid.water @a ~~~",
-                    "scoreboard players remove @s magicpoint 8"
+                    "scoreboard players remove @s magicpoint 8",
+                    "playanimation @s animation.humanoid.staff_use"
                   ],
                   "target": "holder"
                 }

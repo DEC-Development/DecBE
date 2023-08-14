@@ -59,7 +59,8 @@
             "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.6"
           }
         ]
-      }
+      },
+      "tag:comp:equipment_type:magic_weapon":{}
     },
     "events": {
       "attack": {
@@ -77,7 +78,8 @@
                 "run_command": {
                   "command": [
                     "playsound dig.snow @a ~~~",
-                    "scoreboard players remove @s magicpoint 4"
+                    "scoreboard players remove @s magicpoint 4",
+                    "playanimation @s animation.humanoid.staff_use"
                   ],
                   "target": "holder"
                 }

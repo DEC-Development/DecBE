@@ -1,3 +1,3 @@
-tag @s[scores={magicpoint=1..}] add shot_offhand
-execute at @s[scores={magicpoint=1..}] run playsound random.eat @a ~~~
-scoreboard players remove @s[scores={magicpoint=1..}] magicpoint 1
+execute at @s[scores={magicpoint=5..}] run summon dec:gingerbread_man_by_totem
+execute at @s[scores={magicpoint=5..}] run playsound random.eat @a ~~~
+scoreboard players remove @s[scores={magicpoint=1..}] magicpoint 5

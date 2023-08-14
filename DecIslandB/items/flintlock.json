@@ -48,7 +48,8 @@
          "event": "shoot",
          "target": "self"
         }
-      }
+      },
+      "tag:comp:equipment_type:range_weapon":{}
     },
     "events": {
       "shoot_test": {
@@ -77,7 +78,7 @@
               },
               {
                 "shoot": {
-                  "projectile": "dec:bullet_by_flintlock",
+                  "projectile": "dec:bullet_by_flintlock<minecraft:accurate>",
                   "launch_power": 1
                 }
               },

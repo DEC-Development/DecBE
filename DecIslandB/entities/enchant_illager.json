@@ -62,15 +62,18 @@
                   "test": "is_family",
                   "subject": "other",
                   "value": "ghost"
-                  }
-                },
-              "deals_damage": false
+                }
               },
+              "deals_damage": false
+            },
             {
               "on_damage": {
                 "filters": {
                   "all_of": [
-                    {"test": "has_damage", "value": "fatal"}
+                    {
+                      "test": "has_damage",
+                      "value": "fatal"
+                    }
                   ]
                 },
                 "event": "minecraft:next"
@@ -430,58 +433,41 @@
         }
       },
       "minecraft:entity_spawned": {
-        "sequence": [
-          {
-            "add": {
-              "component_groups": [
-                "minecraft:spawn"
-              ]
-            }
-          }
-        ]
+        "add": {
+          "component_groups": [
+            "minecraft:spawn"
+          ]
+        }
       },
       "minecraft:change_attack": {
-        "sequence": [
+        "randomize": [
           {
-            "randomize": [
-              {
-                "weight": 1,
-                "sequence": [
-                  {
-                    "randomize": [
-                      {
-                        "weight": 1,
-                        "remove": {
-                          "component_groups": [
-                            "minecraft:summon",
-                            "minecraft:roar"
-                          ]
-                        },
-                        "add": {
-                          "component_groups": [
-                            "minecraft:summon"
-                          ]
-                        }
-                      },
-                      {
-                        "weight": 2,
-                        "remove": {
-                          "component_groups": [
-                            "minecraft:summon",
-                            "minecraft:roar"
-                          ]
-                        },
-                        "add": {
-                          "component_groups": [
-                            "minecraft:roar"
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "weight": 1,
+            "remove": {
+              "component_groups": [
+                "minecraft:summon",
+                "minecraft:roar"
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "minecraft:summon"
+              ]
+            }
+          },
+          {
+            "weight": 2,
+            "remove": {
+              "component_groups": [
+                "minecraft:summon",
+                "minecraft:roar"
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "minecraft:roar"
+              ]
+            }
           }
         ]
       },

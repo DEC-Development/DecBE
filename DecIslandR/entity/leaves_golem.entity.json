@@ -15,7 +15,7 @@
         "animate": [
           "spawn",
           "roar_ac",
-          {"walk" : "query.modified_move_speed"},
+          {"walk" : "query.modified_move_speed * 1.2"},
           "attacking_ac",
           "look_at_target"
         ]

@@ -11,7 +11,6 @@ execute at @e[type=fireball] run particle dec:fire_wake_particle ~~~
 execute at @e[type=dragon_fireball] run particle dec:ender_wake_particle ~~~
 
 execute if score IsDay global = one global run scoreboard players set NightRandom global 0
-execute if score IsDay global = zero global run scoreboard players operation @a night_event = NightRandom global
 
 ##死亡模式组件
 execute if score DieMode global = one global if score AlreadyDie global = one global if entity @a[tag=alreadydie] run titleraw @a[tag=alreadydie] actionbar { "rawtext" : [ { "translate" : "text.dec:diemode_spectator.name" } ] }

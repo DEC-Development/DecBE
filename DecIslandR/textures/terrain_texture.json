@@ -554,9 +554,9 @@
         "textures/blocks/experience_flower_stage_2"
       ]
     },
-    "snow_lotus": {
+    "snow_lotus_crop": {
       "textures": [
-        "textures/blocks/snow_lotus"
+        "textures/blocks/snow_lotus_crop"
       ]
     },
     "blue_gem_ore": {

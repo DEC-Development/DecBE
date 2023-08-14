@@ -57,7 +57,7 @@
         "minecraft:transformation": {
           "into": "minecraft:husk<minecraft:as_adult>",
           "transformation_sound": "convert_to_drowned",
-          "drop_equipment": true,
+          "drop_equipment": false,
           "delay": {
             "value": 15
           }
@@ -70,7 +70,7 @@
         "minecraft:transformation": {
           "into": "minecraft:husk<minecraft:as_baby>",
           "transformation_sound": "convert_to_drowned",
-          "drop_equipment": true,
+          "drop_equipment": false,
           "delay": {
             "value": 15
           }

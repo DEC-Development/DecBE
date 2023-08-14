@@ -17,7 +17,9 @@ import ExErrorQueue from "../../../modules/exmc/server/ExErrorQueue.js";
 import ExGameConfig from "../../../modules/exmc/server/ExGameConfig.js";
 import getCharByNum, { PROGRESS_CHAR, TALENT_CHAR } from "./getCharByNum.js";
 import POMLICENSE from "./POMLICENSE.js";
+import MathUtil from "../../../modules/exmc/math/MathUtil.js";
 import WarningAlertUI from "../ui/WarningAlertUI.js";
+import { pomDifficultyMap } from "./GameDifficulty.js";
 export default function menuFunctionUI(lang) {
     return {
         "main": {
@@ -95,6 +97,7 @@ export default function menuFunctionUI(lang) {
 Main creator:   - LiLeyi   AAswordsman
 Assistants:  -  
 EnderghostScale  - 人造肉、部分怪物、投掷炸药和技术支持
+Him1025(kALE) - 部分贴图、logo、icon、剧情、建筑、模型动画、加农炮战车、ui贴图、弩弓
 haveyouwantto - 技术支持
 huo鱼一只 - 技术支持
 AR_UnryAllenCN - 技术支持
@@ -121,9 +124,9 @@ KucerLuo - 建筑
 Repforce - 建筑
 一只有疑问的猪 - 建筑
 枨触 - 建筑
+LZN - 提供建筑、贴图
 豆沙 - 部分怪物
 某不知名的琦玉 - 灵感
-Him1025(kALE) - 部分贴图、logo、icon、剧情、建筑、模型动画、加农炮战车
 WINDes - 任务清单、测试、灵感、部分
 文海求生 - 任务清单、测试反馈
 ALiFang ZHE - 部分模型、贴图
@@ -218,21 +221,36 @@ BunBun不是笨笨    在矿里的小金呀
                         let scores = ExPlayer.getInstance(source).getScoresManager();
                         let msg = [`   ${lang.menuUIMsgBailan94}: ${client.gameId}`,
                             `   ${lang.menuUIMsgBailan96}: ${scores.getScore("wbfl")}`,
+                            `   ${`物理防御`}: ${MathUtil.round(1 - (1 - client.getDifficulty().physicalDefenseAddFactor) * (1 - client.talentSystem.armor_protection[1] / 100), 3) * 100}％ + ${Math.round(client.talentSystem.armor_protection[3])}`,
+                            `   ${`魔法防御`}: ${MathUtil.round(1 - (1 - client.getDifficulty().magicDefenseAddFactor) * (1 - client.talentSystem.armor_protection[0] / 100), 3) * 100}％ + ${Math.round(client.talentSystem.armor_protection[2])}`,
                             `   ${lang.menuUIMsgBailan97}: ${scores.getScore("wbwqlq")}`,
                             `   ${lang.menuUIMsgBailan98}: ${scores.getScore("wbkjlqcg")}`,
                             `   ${lang.menuUIMsgBailan99}: ${source.hasTag("wbmsyh") ? lang.menuUIMsgBailan15 : lang.menuUIMsgBailan16}`,
-                            `   ${lang.menuUIMsgBailan100}: ${source.hasTag("wbdjeff") ? lang.menuUIMsgBailan15 : lang.menuUIMsgBailan16}`];
+                            `   ${lang.menuUIMsgBailan100}: ${source.hasTag("wbdjeff") ? lang.menuUIMsgBailan15 : lang.menuUIMsgBailan16}`,
+                            `   ${`游戏难度`}: ${client.getDifficulty().name}`
+                        ];
                         let arr = MenuUIAlert.getLabelViews(msg);
                         arr.unshift({
                             "type": "text_title",
                             "msg": "个人信息"
                         });
-                        let g = scores.getScore("wbdjcg");
-                        let gj = scores.getScore("wbdjjf");
+                        let g = client.data.gameGrade;
+                        const addPoint = (num) => {
+                            return () => {
+                                for (let i = 0; i <= num; i++) {
+                                    client.magicSystem.checkUpgrade();
+                                }
+                                return true;
+                            };
+                        };
                         arr.push({
                             "type": "textWithBg",
-                            "msg": `${lang.menuUIMsgBailan95}: ${g} 当前等级积分: ${gj}/${150 * Math.pow(g, 2) + 1050 * g + 900}
-${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300 * g + 900), 10, PROGRESS_CHAR)}`
+                            "msg": `${lang.menuUIMsgBailan95}: ${g} 当前等级积分: ${client.magicSystem.getGradeNeedExperience(g) + client.data.gameExperience}/${client.magicSystem.getGradeNeedExperience(g + 1)}
+${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExperience(g + 1) - client.magicSystem.getGradeNeedExperience(g)), 10, PROGRESS_CHAR)}`
+                        }, {
+                            "type": "buttonList3",
+                            "msgs": ["+1", "+2", "+5"],
+                            "buttons": [addPoint(1), addPoint(2), addPoint(5)]
                         });
                         return arr;
                     }
@@ -240,37 +258,36 @@ ${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300
                 "add": {
                     "text": lang.menuUIMsgBailan19,
                     "page": [
-                        {
-                            "type": "text_title",
-                            "msg": lang.menuUIMsgBailan20
-                        },
-                        {
-                            "type": "padding"
-                        },
-                        {
-                            "type": "text",
-                            "msg": lang.menuUIMsgBailan21
-                        },
-                        {
-                            "type": "padding"
-                        },
-                        {
-                            "type": "toggle",
-                            "msg": lang.menuUIMsgBailan22,
-                            "state": (client, ui) => client.player.hasTag("wbdjeff"),
-                            "function": (client, ui) => {
-                                if (!client.player.hasTag("wbdjeff")) {
-                                    client.player.addTag("wbdjeff");
-                                }
-                                else {
-                                    client.player.removeTag("wbdjeff");
-                                }
-                                return true;
-                            }
-                        },
-                        {
-                            "type": "padding"
-                        },
+                        // {
+                        //     "type": "text_title",
+                        //     "msg": lang.menuUIMsgBailan20
+                        // },
+                        // {
+                        //     "type": "padding"
+                        // },
+                        // {
+                        //     "type": "text",
+                        //     "msg": lang.menuUIMsgBailan21
+                        // },
+                        // {
+                        //     "type": "padding"
+                        // },
+                        // {
+                        //     "type": "toggle",
+                        //     "msg": lang.menuUIMsgBailan22,
+                        //     "state": (client, ui) => client.player.hasTag("wbdjeff"),
+                        //     "function": (client, ui) => {
+                        //         if (!client.player.hasTag("wbdjeff")) {
+                        //             client.player.addTag("wbdjeff");
+                        //         } else {
+                        //             client.player.removeTag("wbdjeff");
+                        //         }
+                        //         return true;
+                        //     }
+                        // },
+                        // {
+                        //     "type": "padding"
+                        // },
                         {
                             "type": "text_title",
                             "msg": lang.menuUIMsgBailan23
@@ -322,10 +339,10 @@ ${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300
                 "talent": {
                     "text": lang.menuUIMsgBailan29,
                     "page": (client, ui) => {
-                        var _a;
+                        var _a, _b;
                         let arr;
                         if (TalentData.hasOccupation(client.data.talent)) {
-                            const canUsePoint = (client.exPlayer.getScoresManager().getScore("wbdjcg") * 2 - ((_a = client.data.talent.pointUsed) !== null && _a !== void 0 ? _a : 0));
+                            const canUsePoint = (client.data.gameGrade * 2 - ((_a = client.data.talent.pointUsed) !== null && _a !== void 0 ? _a : 0));
                             arr = [
                                 {
                                     "type": "text",
@@ -364,15 +381,18 @@ ${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300
                                     "type": "padding"
                                 });
                             }
-                            if (!client.data.occupationChooseDate || new Date().getTime() - client.data.occupationChooseDate >= 1000 * 60 * 60 * 24 * 14) {
+                            if (client.data.gameGrade > ((_b = client.data.occupationChooseNum) !== null && _b !== void 0 ? _b : 0) + 1) {
                                 arr.push({
                                     "type": "button",
                                     "msg": "清空职业",
                                     "function": (client, ui) => {
-                                        client.data.occupationChooseDate = new Date().getTime();
+                                        var _a, _b;
+                                        client.data.occupationChooseNum = ((_a = client.data.occupationChooseNum) !== null && _a !== void 0 ? _a : 0) + 1;
+                                        client.data.gameGrade -= (_b = client.data.occupationChooseNum) !== null && _b !== void 0 ? _b : 0;
                                         client.data.talent.occupation = Occupation.EMPTY;
                                         client.data.talent.talents = [];
                                         client.data.talent.pointUsed = 0;
+                                        client.magicSystem.upDateGrade();
                                         client.talentSystem.updateTalentRes();
                                         return true;
                                     }
@@ -823,6 +843,37 @@ ${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300
                                 },
                                 {
                                     "type": "button",
+                                    "msg": "冬诗难度选择",
+                                    "function": (client, ui) => {
+                                        let map = pomDifficultyMap;
+                                        new ModalFormData()
+                                            .title("Choose a mode")
+                                            .dropdown("Difficulty List", [
+                                            map.get("1").name,
+                                            map.get("2").name,
+                                            map.get("3").name,
+                                            map.get("4").name,
+                                            map.get("5").name
+                                        ], 2)
+                                            .show(client.player).then((e) => {
+                                            var _a;
+                                            if (!e.canceled) {
+                                                let v = ((_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]);
+                                                client.globalSettings.gameDifficulty = 1 + parseFloat(v + "");
+                                                client.getServer().sayTo("Difficulty Choose " + client.getDifficulty().name);
+                                                for (let c of client.getServer().getClients()) {
+                                                    c.talentSystem.updateTalentRes();
+                                                }
+                                            }
+                                        })
+                                            .catch((e) => {
+                                            ExErrorQueue.throwError(e);
+                                        });
+                                        return false;
+                                    }
+                                },
+                                {
+                                    "type": "button",
                                     "msg": "报错日志",
                                     "function": (client, ui) => {
                                         new WarningAlertUI(client, ExErrorQueue.getError(), [["我知道了", (client, ui) => {
@@ -867,7 +918,32 @@ ${getCharByNum((gj - (150 * Math.pow((g - 1), 2) + 1050 * (g - 1) + 900)) / (300
                                         });
                                         return false;
                                     }
-                                }];
+                                },
+                                {
+                                    "type": "button",
+                                    "msg": "ui刷新间隔(tick)",
+                                    "function": (client, ui) => {
+                                        let map = pomDifficultyMap;
+                                        new ModalFormData()
+                                            .title("Choose a tick")
+                                            .slider("tick", 4, 20, 1, 8)
+                                            .show(client.player).then((e) => {
+                                            var _a;
+                                            if (!e.canceled) {
+                                                let v = ((_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]);
+                                                client.globalSettings.uiUpdateDelay = Number(v !== null && v !== void 0 ? v : 30);
+                                                client.magicSystem.actionbarShow.stop();
+                                                client.magicSystem.actionbarShow.delay(client.globalSettings.uiUpdateDelay);
+                                                client.magicSystem.actionbarShow.start();
+                                            }
+                                        })
+                                            .catch((e) => {
+                                            ExErrorQueue.throwError(e);
+                                        });
+                                        return false;
+                                    }
+                                }
+                            ];
                         }
                         else {
                             return [{

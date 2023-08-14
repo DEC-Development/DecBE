@@ -24,8 +24,9 @@ export default class ExClientEvents {
             [ExEventNames.beforeItemDefinitionEvent]: new Listener(this, ExEventNames.beforeItemDefinitionEvent),
             [ExEventNames.afterItemDefinitionEvent]: new Listener(this, ExEventNames.afterItemDefinitionEvent),
             [ExEventNames.beforeItemUse]: new Listener(this, ExEventNames.beforeItemUse),
-            [ExEventNames.afterItemUse]: new Listener(this, ExEventNames.beforeItemUse),
-            [ExEventNames.afterItemStopUse]: new Listener(this, ExEventNames.beforeItemUse),
+            [ExEventNames.afterItemUse]: new Listener(this, ExEventNames.afterItemUse),
+            [ExEventNames.afterItemStopUse]: new Listener(this, ExEventNames.afterItemStopUse),
+            [ExEventNames.afterItemReleaseUse]: new Listener(this, ExEventNames.afterItemReleaseUse),
             [ExEventNames.afterChatSend]: new Listener(this, ExEventNames.afterChatSend),
             [ExEventNames.beforeChatSend]: new Listener(this, ExEventNames.beforeChatSend),
             [ExOtherEventNames.tick]: new Listener(this, ExOtherEventNames.tick),
@@ -38,7 +39,10 @@ export default class ExClientEvents {
             [ExOtherEventNames.afterPlayerHurt]: new Listener(this, ExOtherEventNames.afterPlayerHurt),
             [ExOtherEventNames.afterItemOnHandChange]: new Listener(this, ExOtherEventNames.afterItemOnHandChange),
             [ExOtherEventNames.afterPlayerShootProj]: new Listener(this, ExOtherEventNames.afterPlayerShootProj),
-            [ExEventNames.afterBlockBreak]: new Listener(this, ExEventNames.afterBlockBreak)
+            [ExEventNames.afterBlockBreak]: new Listener(this, ExEventNames.afterBlockBreak),
+            [ExEventNames.afterPlayerSpawn]: new Listener(this, ExEventNames.afterPlayerSpawn),
+            [ExEventNames.afterEntityHealthChanged]: new Listener(this, ExEventNames.afterEntityHealthChanged),
+            [ExEventNames.afterEffectAdd]: new Listener(this, ExEventNames.afterEffectAdd)
         };
         this._client = client;
     }
@@ -83,6 +87,12 @@ ExClientEvents.exEventSetting = {
         }
     },
     [ExEventNames.afterItemStopUse]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "source"
+        }
+    },
+    [ExEventNames.afterItemReleaseUse]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "source"
@@ -194,7 +204,7 @@ ExClientEvents.exEventSetting = {
     },
     [ExOtherEventNames.afterPlayerShootProj]: {
         pattern: (registerName, k) => {
-            const func = (p, item) => {
+            const func = (p, e) => {
                 let liss = ExClientEvents.eventHandlers.monitorMap[k].get(p);
                 if (!liss || liss.length === 0)
                     return;
@@ -204,17 +214,32 @@ ExClientEvents.exEventSetting = {
                 const tmpV = new Vector3();
                 for (let e of p.dimension.getEntities({
                     "location": p.location,
-                    "maxDistance": 6,
-                    "excludeFamilies": [MinecraftEntityTypes.Player]
+                    "maxDistance": 16,
+                    "families": ["arrow"]
                 })) {
                     tmpV.set(e.getVelocity());
                     const len = tmpV.len();
                     if (len === 0)
                         continue;
-                    console.warn(Math.acos(tmpV.mul(viewDic) / viewLen / tmpV.len()));
-                    if (tmpV.len() > 0.3
+                    if (tmpV.len() > 0.15
                         && Math.acos(tmpV.mul(viewDic) / viewLen / tmpV.len()) < 0.25) {
                         arr.push(e);
+                    }
+                }
+                if (arr.length === 0) {
+                    for (let e of p.dimension.getEntities({
+                        "location": p.location,
+                        "maxDistance": 6,
+                        "excludeFamilies": [MinecraftEntityTypes.Player]
+                    })) {
+                        tmpV.set(e.getVelocity());
+                        const len = tmpV.len();
+                        if (len === 0)
+                            continue;
+                        if (tmpV.len() > 0.15
+                            && Math.acos(tmpV.mul(viewDic) / viewLen / tmpV.len()) < 0.25) {
+                            arr.push(e);
+                        }
                     }
                 }
                 if (arr.length > 0) {
@@ -225,10 +250,13 @@ ExClientEvents.exEventSetting = {
                 }
             };
             ExClientEvents.eventHandlers.server.getEvents().events.afterItemDefinitionEvent.subscribe((e) => {
-                func(e.source, e.itemStack);
+                func(e.source, e);
             });
             ExClientEvents.eventHandlers.server.getEvents().events.afterItemReleaseUse.subscribe((e) => {
-                func(e.source, e.itemStack);
+                func(e.source, e);
+            });
+            ExClientEvents.eventHandlers.server.getEvents().events.afterItemUse.subscribe((e) => {
+                func(e.source, e);
             });
         }
     },
@@ -236,6 +264,24 @@ ExClientEvents.exEventSetting = {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "player"
+        }
+    },
+    [ExEventNames.afterPlayerSpawn]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "player"
+        }
+    },
+    [ExEventNames.afterEntityHealthChanged]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "entity"
+        }
+    },
+    [ExEventNames.afterEffectAdd]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "entity"
         }
     }
 };

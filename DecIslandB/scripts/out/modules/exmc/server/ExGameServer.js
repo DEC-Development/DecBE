@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent } from "@minecraft/server";
+import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
 import initConsole from "../utils/Console.js";
 import ExServerEvents from "./events/ExServerEvents.js";
@@ -24,15 +24,21 @@ import { eventDecoratorFactory, registerEvent } from "./events/eventDecoratorFac
 import notUtillTask from "../utils/notUtillTask.js";
 import ExSound from "./env/ExSound.js";
 import { ExEventNames } from "./events/events.js";
+import { falseIfError } from "../utils/tool.js";
+import ExSystem from "../utils/ExSystem.js";
 export default class ExGameServer {
     constructor(config) {
         this.entityControllers = new Map();
+        this.playerIsInSet = new Set();
         this.clients = new Map();
         this.clients_nameMap = new Map();
         this._events = new ExServerEvents(this);
         if (!ExGameServer.isInitialized) {
             ExGameServer.isInitialized = true;
             ExGameConfig.config = config;
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.nether, world.getDimension(MinecraftDimensionTypes.nether));
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.overworld, world.getDimension(MinecraftDimensionTypes.overworld));
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.theEnd, world.getDimension(MinecraftDimensionTypes.theEnd));
             if (!config.watchDog) {
                 system.beforeEvents.watchdogTerminate.subscribe((e) => {
                     e.cancel = true;
@@ -45,6 +51,20 @@ export default class ExGameServer {
             ExClientEvents.init(this);
             ExEntityEvents.init(this);
         }
+        for (const p of world.getAllPlayers()) {
+            if (!this.playerIsInSet.has(p.name)) {
+                this.onClientJoin({
+                    "playerId": p.id,
+                    "playerName": p.name
+                });
+            }
+        }
+        // for (const c of this.getClients()) {
+        //     if (!c.isLoaded) {
+        //         c.onLoad();
+        //         c.isLoaded = true;
+        //     }
+        // }
         eventDecoratorFactory(this.getEvents(), this);
     }
     say(msg) {
@@ -54,6 +74,8 @@ export default class ExGameServer {
         this.entityControllers.set(id, ec);
     }
     onEntitySpawn(e) {
+        if (!falseIfError(() => (e.entity.typeId)))
+            return;
         let id;
         try {
             id = e.entity.typeId;
@@ -70,7 +92,7 @@ export default class ExGameServer {
         return new ec(e, this);
     }
     getDimension(dimensionId) {
-        return world.getDimension(dimensionId);
+        return ExGameServer.dimensionMap.get(dimensionId);
     }
     getExDimension(dimensionId) {
         return ExDimension.getInstance(this.getDimension(dimensionId));
@@ -113,7 +135,7 @@ export default class ExGameServer {
     }
     findClientByPlayer(player) {
         for (let k of this.clients) {
-            if (k[1].player == player) {
+            if (ExSystem.getId(k[1].player) === ExSystem.getId(player)) {
                 return k[1];
             }
         }
@@ -121,6 +143,7 @@ export default class ExGameServer {
     }
     onClientJoin(event) {
         const playerName = event.playerName;
+        this.playerIsInSet.add(playerName);
         notUtillTask(this, () => {
             return world.getAllPlayers().findIndex(p => p.name === playerName) !== -1;
         }, () => {
@@ -133,7 +156,18 @@ export default class ExGameServer {
             this.clients_nameMap.set(player.name, client);
         });
     }
+    // @registerEvent(ExEventNames.afterPlayerSpawn, (obj: ExGameServer, e: PlayerSpawnAfterEvent) => e.initialSpawn)
+    // onClientLoad(e: PlayerSpawnAfterEvent) {
+    //     let c = this.findClientByPlayer(e.player);
+    //     if (c && !c.isLoaded) {
+    //         c.onLoad();
+    //         c.isLoaded = true;
+    //     } else {
+    //         ExGameConfig.console.error("can't load client: " + e.player.nameTag);
+    //     }
+    // }
     onClientLeave(event) {
+        this.playerIsInSet.delete(event.playerName);
         let client = this.findClientByName(event.playerName);
         if (client === undefined) {
             ExGameConfig.console.error(event.playerName + " client is not exists");
@@ -158,6 +192,7 @@ export default class ExGameServer {
         this.getEvents().exEvents.tick.subscribe(method);
     }
 }
+ExGameServer.dimensionMap = new Map();
 ExGameServer.musicMap = new Map();
 __decorate([
     registerEvent(ExEventNames.afterEntitySpawn),

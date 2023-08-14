@@ -215,6 +215,20 @@
           "weight": 1
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "empty",
+          "weight": 9
+        },
+        {
+          "type": "item",
+          "name": "minecraft:eye_armor_trim_smithing_template",
+          "weight": 1
+        }
+      ]
     }
   ]
 }

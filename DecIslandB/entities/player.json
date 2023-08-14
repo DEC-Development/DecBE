@@ -8,93 +8,11 @@
 			"is_experimental": false,
 			"scripts": {
 				"animate": [
-					"magic",
-					"enter_game",
-					{
-						"event_zombie_wave": "query.scoreboard('night_event') == 1"
-					},
-					{
-						"event_skeleton_wave": "query.scoreboard('night_event') == 2"
-					},
-					{
-						"event_shadow_night": "query.scoreboard('night_event') == 3"
-					},
-					{
-						"event_cold_wave": "query.scoreboard('night_event') == 4"
-					},
-					{
-						"event_halloween": "query.scoreboard('night_event') == 5"
-					},
-					{
-						"event_silent_night": "query.scoreboard('night_event') == 6"
-					},
-					{
-						"frozen_staff": "query.get_equipped_item_name == 'frozen_staff' && query.is_using_item"
-					},
-					{
-						"diamond_staff": "query.get_equipped_item_name == 'diamond_staff' && query.is_using_item"
-					},
-					{
-						"storm_giant_sword": "query.get_equipped_item_name == 'storm_giant_sword' && query.is_using_item"
-					},
-					{
-						"gingerbread_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'gingerbread_totem'"
-					},
-					{
-						"gingerbread_totem_offhand": "query.get_equipped_item_name('off_hand')== 'gingerbread_totem'"
-					},
-					{
-						"the_imperial_sword": "query.get_equipped_item_name == 'the_imperial_sword' && query.is_using_item"
-					},
-					{
-						"energy_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'energy_totem'"
-					},
-					{
-						"energy_totem_offhand": "query.get_equipped_item_name('off_hand')== 'energy_totem'"
-					},
-					{
-						"star_sword_ranged": "query.get_equipped_item_name == 'star_sword' && query.is_using_item"
-					},
-					{
-						"warden_sword": "query.get_equipped_item_name == 'warden_sword' && query.is_using_item"
-					},
-					{
-						"fire_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'fire_totem'"
-					},
-					{
-						"fire_totem_offhand": "query.get_equipped_item_name('off_hand')== 'fire_totem'"
-					},
-					{
-						"ocean_totem_mainhand": "query.get_equipped_item_name('main_hand')== 'ocean_totem'"
-					},
-					{
-						"ocean_totem_offhand": "query.get_equipped_item_name('off_hand')== 'ocean_totem'"
-					}
+					"enter_game"
 				]
 			},
 			"animations": {
-				"magic": "animation.magic",
-				"enter_game": "animation.enter_game",
-				"frozen_staff": "animation.frozen_staff",
-				"diamond_staff": "animation.diamond_staff",
-				"storm_giant_sword": "animation.storm_giant_sword",
-				"gingerbread_totem_mainhand": "animation.gingerbread_totem",
-				"gingerbread_totem_offhand": "animation.gingerbread_totem",
-				"the_imperial_sword": "animation.the_imperial_sword",
-				"energy_totem_mainhand": "animation.energy_totem",
-				"energy_totem_offhand": "animation.energy_totem",
-				"star_sword_ranged": "animation.star_sword_ranged",
-				"warden_sword": "animation.warden_sword",
-				"event_skeleton_wave": "animation.event_skeleton_wave",
-				"event_zombie_wave": "animation.event_zombie_wave",
-				"event_shadow_night": "animation.event_shadow_night",
-				"event_cold_wave": "animation.event_cold_wave",
-				"event_halloween": "animation.event_halloween",
-				"event_silent_night": "animation.event_silent_night",
-				"fire_totem_mainhand": "animation.fire_totem",
-				"fire_totem_offhand": "animation.fire_totem",
-				"ocean_totem_mainhand": "animation.ocean_totem",
-				"ocean_totem_offhand": "animation.ocean_totem"
+				"enter_game": "animation.enter_game"
 			}
 		},
 		"component_groups": {
@@ -158,39 +76,6 @@
 				"minecraft:movement": {
 					"value": 0.075
 				}
-			},
-			"minecraft:diamond_staff_player": {
-				"minecraft:spawn_entity": [
-					{
-						"min_wait_time": 0,
-						"max_wait_time": 0,
-						"spawn_entity": "dec:stream_energy_ball",
-						"num_to_spawn": 1,
-						"single_use": true
-					}
-				]
-			},
-			"minecraft:frozen_staff_player": {
-				"minecraft:spawn_entity": [
-					{
-						"min_wait_time": 0,
-						"max_wait_time": 0,
-						"spawn_entity": "minecraft:snowball",
-						"num_to_spawn": 1,
-						"single_use": true
-					}
-				]
-			},
-			"minecraft:star_sword_ranged_player": {
-				"minecraft:spawn_entity": [
-					{
-						"min_wait_time": 0,
-						"max_wait_time": 0,
-						"spawn_entity": "dec:spots_by_sword",
-						"num_to_spawn": 5,
-						"single_use": true
-					}
-				]
 			},
 			"minecraft:night_sword_player": {
 				"minecraft:movement": {
@@ -297,11 +182,6 @@
 					"value": 0.095
 				}
 			},
-			"minecraft:wind_of_shadow_player": {
-				"minecraft:movement": {
-					"value": 0.1
-				}
-			},
 			"minecraft:lapis_sword_player": {
 				"minecraft:movement": {
 					"value": 0.085
@@ -321,63 +201,6 @@
 				"minecraft:movement": {
 					"value": 0.095
 				}
-			},
-			"minecraft:storm_giant_sword_ranged_player": {
-				"minecraft:spawn_entity": {
-					"entities": [
-						{
-							"min_wait_time": 0,
-							"max_wait_time": 0,
-							"spawn_entity": "dec:storm_energy",
-							"spawn_event": "minecraft:entity_spawned",
-							"single_use": true,
-							"num_to_spawn": 1
-						},
-						{
-							"min_wait_time": 0,
-							"max_wait_time": 0,
-							"spawn_entity": "dec:storm_energy",
-							"spawn_event": "minecraft:a",
-							"single_use": true,
-							"num_to_spawn": 1
-						},
-						{
-							"min_wait_time": 0,
-							"max_wait_time": 0,
-							"spawn_entity": "dec:storm_energy",
-							"spawn_event": "minecraft:b",
-							"single_use": true,
-							"num_to_spawn": 1
-						},
-						{
-							"min_wait_time": 0,
-							"max_wait_time": 0,
-							"spawn_entity": "dec:storm_energy",
-							"spawn_event": "minecraft:d",
-							"single_use": true,
-							"num_to_spawn": 1
-						},
-						{
-							"min_wait_time": 0,
-							"max_wait_time": 0,
-							"spawn_entity": "dec:storm_energy",
-							"spawn_event": "minecraft:e",
-							"single_use": true,
-							"num_to_spawn": 1
-						}
-					]
-				}
-			},
-			"minecraft:gingerbread_totem_player": {
-				"minecraft:spawn_entity": [
-					{
-						"min_wait_time": 0,
-						"max_wait_time": 0,
-						"spawn_entity": "dec:gingerbread_man_by_totem",
-						"num_to_spawn": 1,
-						"single_use": true
-					}
-				]
 			},
 			"minecraft:steel_battleaxe_player": {
 				"minecraft:movement": {
@@ -834,26 +657,6 @@
 									"test": "has_equipment",
 									"subject": "self",
 									"domain": "hand",
-									"value": "dec:gingerbread_totem"
-								},
-								{
-									"test": "has_tag",
-									"subject": "self",
-									"value": "shot_offhand"
-								}
-							]
-						},
-						"event": "minecraft:become_gingerbread_totem"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
 									"value": "dec:steel_battleaxe"
 								}
 							]
@@ -874,26 +677,6 @@
 							]
 						},
 						"event": "minecraft:become_storm_battleaxe"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:storm_giant_sword"
-								},
-								{
-									"test": "has_tag",
-									"subject": "self",
-									"value": "shot"
-								}
-							]
-						},
-						"event": "minecraft:become_storm_giant_sword_ranged"
 					}
 				},
 				{
@@ -1134,21 +917,6 @@
 							]
 						},
 						"event": "minecraft:become_amethyst_dagger"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:wind_of_shadow"
-								}
-							]
-						},
-						"event": "minecraft:become_wind_of_shadow"
 					}
 				},
 				{
@@ -1490,81 +1258,6 @@
 						},
 						"event": "minecraft:become_blood_sickle"
 					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:diamond_staff"
-								},
-								{
-									"test": "has_tag",
-									"subject": "self",
-									"value": "shot"
-								}
-							]
-						},
-						"event": "minecraft:become_diamond_staff"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:frozen_staff"
-								},
-								{
-									"test": "has_tag",
-									"subject": "self",
-									"value": "shot"
-								}
-							]
-						},
-						"event": "minecraft:become_frozen_staff"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "hand",
-									"value": "dec:star_sword"
-								},
-								{
-									"test": "has_tag",
-									"subject": "self",
-									"value": "shot"
-								}
-							]
-						},
-						"event": "minecraft:become_star_sword_ranged"
-					}
-				},
-				{
-					"on_environment": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "has_equipment",
-									"subject": "self",
-									"domain": "torso",
-									"value": "dec:wings_from_deep"
-								}
-							]
-						},
-						"event": "minecraft:become_wings_from_deep"
-					}
 				}
 			]
 		},
@@ -1739,9 +1432,7 @@
 						"minecraft:copper_battleaxe_player",
 						"minecraft:scale_sword_player",
 						"minecraft:wind_dagger_player",
-						"minecraft:wind_of_shadow_player",
 						"minecraft:flintlock_pro_spyglass_player",
-						"minecraft:frozen_staff_player",
 						"minecraft:illager_sword_player",
 						"minecraft:chaoos_staff_player",
 						"minecraft:leaves_dagger_player",
@@ -1761,14 +1452,10 @@
 						"minecraft:steel_sickle_player",
 						"minecraft:netherite_sickle_player",
 						"minecraft:short_flintlock_speedup_player",
-						"minecraft:diamond_staff_player",
 						"minecraft:blood_sickle_player",
 						"minecraft:steel_battleaxe_player",
-						"minecraft:storm_giant_sword_ranged_player",
-						"minecraft:gingerbread_totem_player",
 						"minecraft:everlasting_winter_dagger_player",
 						"minecraft:everlasting_winter_sickle_player",
-						"minecraft:star_sword_ranged_player",
 						"minecraft:storm_battleaxe_player"
 					]
 				}
@@ -1839,30 +1526,6 @@
 				"add": {
 					"component_groups": [
 						"minecraft:blood_sickle_player"
-					]
-				}
-			},
-			"minecraft:become_diamond_staff": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:diamond_staff_player"
-					]
-				}
-			},
-			"minecraft:become_frozen_staff": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:frozen_staff_player"
 					]
 				}
 			},
@@ -2046,30 +1709,6 @@
 					]
 				}
 			},
-			"minecraft:become_storm_giant_sword_ranged": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:storm_giant_sword_ranged_player"
-					]
-				}
-			},
-			"minecraft:become_gingerbread_totem": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:gingerbread_totem_player"
-					]
-				}
-			},
 			"minecraft:become_steel_battleaxe": {
 				"remove": {
 					"component_groups": [
@@ -2250,18 +1889,6 @@
 					]
 				}
 			},
-			"minecraft:become_wind_of_shadow": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:wind_of_shadow_player"
-					]
-				}
-			},
 			"minecraft:become_wind_dagger": {
 				"remove": {
 					"component_groups": [
@@ -2367,26 +1994,6 @@
 				"add": {
 					"component_groups": [
 						"minecraft:blizzard_sword_player"
-					]
-				}
-			},
-			"minecraft:become_star_sword_ranged": {
-				"remove": {
-					"component_groups": [
-						"minecraft:normal_player"
-					]
-				},
-				"add": {
-					"component_groups": [
-						"minecraft:star_sword_ranged_player"
-					]
-				}
-			},
-			"minecraft:become_wings_from_deep": {
-				"run_command": {
-					"command": [
-						"effect @s slow_falling 3 0 true",
-						"effect @s jump_boost 3 1 true"
 					]
 				}
 			}

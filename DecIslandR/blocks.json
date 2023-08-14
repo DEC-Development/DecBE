@@ -324,8 +324,8 @@
     "textures": "experience_flower_stage_0",
     "sound": "grass"
   },
-  "dec:snow_lotus": {
-    "textures": "snow_lotus",
+  "dec:snow_lotus_crop": {
+    "textures": "snow_lotus_crop",
     "sound": "grass"
   },
   "dec:blue_gem_ore": {

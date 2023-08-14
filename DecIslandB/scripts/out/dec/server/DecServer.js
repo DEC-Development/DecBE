@@ -16,12 +16,15 @@ import GZIPUtil from '../../modules/exmc/utils/GZIPUtil.js';
 import IStructureSettle from './data/structure/IStructureSettle.js';
 import IStructureDriver from './data/structure/IStructureDriver.js';
 import ExTaskRunner from '../../modules/exmc/server/ExTaskRunner.js';
-import { decTreeStructure } from './data/structure/decTreeStructure.js';
 import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
+import DecNukeController from './entities/DecNukeController.js';
+import GlobalScoreBoardCache from '../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js';
+import MathUtil from '../../modules/exmc/math/MathUtil.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
         this.tmpV = new Vector3();
+        this.globalscores = new GlobalScoreBoardCache(new Objective("global"), false);
         //test
         this.compress = [""];
         this.i_inviolable = new Objective("i_inviolable").create("i_inviolable");
@@ -29,28 +32,28 @@ export default class DecServer extends ExGameServer {
         this.i_soft = new Objective("i_soft").create("i_soft");
         this.i_heavy = new Objective("i_heavy").create("i_heavy");
         this.bullet_type = new Objective("bullet_type").create("bullet_type");
+        this.skill_count = new Objective("skill_count").create("skill_count");
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
                 // is night
-                this.getExDimension(MinecraftDimensionTypes.overworld).command.run([
-                    "scoreboard players random NightRandom global 1 100",
-                    "scoreboard players set IsDay global 0",
-                    "scoreboard players set IsNight global 1"
-                ]);
+                if (this.globalscores.getNumber("NightRandom") === 0) {
+                    this.globalscores.setNumber("NightRandom", MathUtil.randomInteger(1, 100));
+                    this.globalscores.setNumber("IsDay", 0);
+                    this.globalscores.setNumber("IsNight", 1);
+                }
             }
             else {
+                this.globalscores.setNumber("NightRandom", 0);
+                this.globalscores.setNumber("IsDay", 1);
+                this.globalscores.setNumber("IsNight", 0);
                 this.getExDimension(MinecraftDimensionTypes.overworld).command.run([
-                    "scoreboard players set IsDay global 1",
-                    "scoreboard players set IsNight global 0",
-                    "scoreboard players set NightRandom global 0",
-                    "scoreboard players set @a night_event 0",
                     "fog @a remove \"night_event\""
                 ]);
             }
         }, false);
         this.getEvents().events.beforeChatSend.subscribe(e => {
-            var _a, _b;
+            var _a;
             let cmdRunner = this.getExDimension(MinecraftDimensionTypes.overworld);
             let sender = ExPlayer.getInstance(e.sender);
             if (e.message.startsWith(">/")) {
@@ -152,20 +155,19 @@ export default class DecServer extends ExGameServer {
                         break;
                     }
                     case "_test": {
-                        let start = new Vector3(Math.floor(parseFloat(cmds[1])), Math.floor(parseFloat(cmds[2])), Math.floor(parseFloat(cmds[3])));
-                        let data = new IStructureSettle();
-                        let task = [];
-                        for (let comp of decTreeStructure) {
-                            task.push(() => {
-                                data.load(JSON.parse(GZIPUtil.unzipString(comp)));
-                                data.run(this.getExDimension(MinecraftDimensionTypes.overworld), start)
-                                    .then(() => {
-                                    var _a;
-                                    (_a = task.shift()) === null || _a === void 0 ? void 0 : _a();
-                                });
-                            });
-                        }
-                        (_b = task.shift()) === null || _b === void 0 ? void 0 : _b();
+                        // let start = new Vector3(Math.floor(parseFloat(cmds[1])), Math.floor(parseFloat(cmds[2])), Math.floor(parseFloat(cmds[3])));
+                        // let data = new IStructureSettle();
+                        // let task: (() => void)[] = [];
+                        // for (let comp of decTreeStructure) {
+                        //     task.push(() => {
+                        //         data.load(JSON.parse(GZIPUtil.unzipString(comp)));
+                        //         data.run(this.getExDimension(MinecraftDimensionTypes.overworld), start)
+                        //             .then(() => {
+                        //                 task.shift()?.();
+                        //             });
+                        //     });
+                        // }
+                        // task.shift()?.();
                         break;
                     }
                 }
@@ -202,11 +204,29 @@ export default class DecServer extends ExGameServer {
                 }
             }
         });
+        const block_except = ['minecraft:chest', 'minecraft:anvil', 'minecraft:enchanting_table', 'minecraft:black_shulker_box', 'minecraft:blue_shulker_box',
+            'minecraft:brown_shulker_box', 'minecraft:cyan_shulker_box', 'minecraft:gray_shulker_box', 'minecraft:green_shulker_box', 'minecraft:light_blue_shulker_box',
+            'minecraft:light_gray_shulker_box', 'minecraft:lime_shulker_box', 'minecraft:magenta_shulker_box', 'minecraft:orange_shulker_box', 'minecraft:pink_shulker_box',
+            'minecraft:purple_shulker_box', 'minecraft:red_shulker_box', 'minecraft:undyed_shulker_box', 'minecraft:white_shulker_box', 'minecraft:yellow_shulker_box',
+            'minecraft:ender_chest', 'minecraft:trapped_chest', 'minecraft:barrel', 'minecraft:grindstone', 'minecraft:brewing_stand',
+            'minecraft:crafting_table', 'minecraft:smithing_table', 'minecraft:cartography_table', 'minecraft:lectern', 'minecraft:cauldron', 'minecraft:composter',
+            'minecraft:acacia_door', 'minecraft:acacia_trapdoor', 'minecraft:bamboo_door', 'minecraft:bamboo_trapdoor', 'minecraft:birch_door', 'minecraft:birch_trapdoor',
+            'minecraft:cherry_door', 'minecraft:cherry_trapdoor', 'minecraft:crimson_door', 'minecraft:crimson_trapdoor', 'minecraft:dark_oak_door', 'minecraft:dark_oak_trapdoor',
+            'minecraft:jungle_door', 'minecraft:jungle_trapdoor', 'minecraft:mangrove_door', 'minecraft:mangrove_trapdoor', 'minecraft:spruce_door', 'minecraft:spruce_trapdoor',
+            'minecraft:warped_door', 'minecraft:warped_trapdoor', 'minecraft:trapdoor', 'minecraft:wooden_door', 'minecraft:smoker', 'minecraft:blast_furnace', 'minecraft:furnace'];
+        let item_except = ['dec:iron_key', 'dec:frozen_power', 'dec:ash_key', 'dec:challenge_of_ash', 'dec:ice_ingot'];
         this.getEvents().events.beforeItemUseOn.subscribe(e => {
             const entity = ExEntity.getInstance(e.source);
             //防放方块
-            if (entity.getScoresManager().getScore(this.i_soft) > 0 && e.itemStack.typeId != "dec:iron_key" && e.itemStack.typeId != "dec:frozen_power") {
-                e.cancel = true;
+            if (entity.getScoresManager().getScore(this.i_soft) > 0) {
+                if (e.source.isSneaking) {
+                    e.cancel = true;
+                }
+                else {
+                    if ((block_except.includes(e.block.typeId) || item_except.includes(e.itemStack.typeId)) == false) {
+                        e.cancel = true;
+                    }
+                }
             }
         });
         this.getEvents().exEvents.tick.subscribe(e => {
@@ -218,7 +238,52 @@ export default class DecServer extends ExGameServer {
                 "scoreboard players remove @e[scores={i_heavy=1..}] i_heavy 1",
                 "scoreboard players remove @e[scores={harmless=1..}] harmless 1"
             ]);
-            if (e.currentTick % 100 === 0) {
+        });
+        this.getEvents().exEvents.onLongTick.subscribe(e => {
+            let night_event = this.globalscores.getNumber("NightRandom");
+            const nightEvent = (fog, eventEntity, maxSpawn) => {
+                this.getExDimension(MinecraftDimensionTypes.overworld).command.run(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
+                let i = 0;
+                for (let p of this.getExDimension(MinecraftDimensionTypes.overworld).getPlayers()) {
+                    if (i >= maxSpawn)
+                        break;
+                    this.getExDimension(MinecraftDimensionTypes.overworld).spawnEntity(eventEntity, p.location);
+                    i += 1;
+                }
+            };
+            if (e.currentTick % 80 === 0) {
+                switch (night_event) {
+                    case 1:
+                        //尸潮
+                        nightEvent('dec:event_zombie_wave', 'dec:event_zombie_wave', 6);
+                        break;
+                    case 2:
+                        //骷髅夜
+                        nightEvent('dec:event_skeleton_wave', 'dec:event_skeleton_wave', 6);
+                        break;
+                    case 3:
+                        //暗影之夜
+                        nightEvent('dec:event_shadow_night', 'dec:event_shadow_night', 3);
+                        break;
+                    case 5:
+                        //万圣夜
+                        nightEvent('dec:event_halloween', 'dec:event_halloween', 7);
+                        break;
+                    case 6:
+                        //寂静之夜
+                        nightEvent('dec:event_silent_night', 'dec:event_silent_night', 2);
+                        break;
+                }
+            }
+            if (e.currentTick % 40 === 0) {
+                switch (night_event) {
+                    case 4:
+                        //寒潮
+                        nightEvent('dec:event_cold_wave', 'dec:event_cold_wave', 7);
+                        break;
+                }
+            }
+            if (e.currentTick % 20 === 0) {
                 //夜晚事件
                 this.nightEventListener.upDate(new ExEnvironment().isNight());
             }
@@ -236,6 +301,7 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:ash_knight", DecCommonBossLastStage);
         this.addEntityController("dec:everlasting_winter_ghast", DecEverlastingWinterGhastBoss1);
         this.addEntityController("dec:everlasting_winter_ghast_1", DecEverlastingWinterGhastBoss2);
+        this.addEntityController("dec:nuke", DecNukeController);
     }
     newClient(id, player) {
         return new DecClient(this, id, player);
