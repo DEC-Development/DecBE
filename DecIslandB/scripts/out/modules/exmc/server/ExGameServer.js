@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent } from "@minecraft/server";
+import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent, Dimension } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
 import initConsole from "../utils/Console.js";
 import ExServerEvents from "./events/ExServerEvents.js";
@@ -95,7 +95,7 @@ export default class ExGameServer {
         return ExGameServer.dimensionMap.get(dimensionId);
     }
     getExDimension(dimensionId) {
-        return ExDimension.getInstance(this.getDimension(dimensionId));
+        return ExDimension.getInstance(dimensionId instanceof Dimension ? dimensionId : this.getDimension(dimensionId));
     }
     getEvents() {
         return this._events;
@@ -150,6 +150,8 @@ export default class ExGameServer {
             let player = world.getAllPlayers().find(e => e.name === playerName);
             if (!player)
                 throw new Error(`Player ${playerName} not found`);
+            if (this.findClientByPlayer(player))
+                return;
             let id = UUID.randomUUID();
             let client = this.newClient(id, player);
             this.clients.set(id, client);

@@ -40,6 +40,7 @@ export default class PomTaskSystem extends GameController {
         }
         let date = new Date();
         let nDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+        console.warn(nDate);
         let getInt = (arr) => {
             return Math.floor(arr.length * Math.random());
         };
@@ -64,50 +65,37 @@ export default class PomTaskSystem extends GameController {
             this.data.tasks.daily.cache = {};
             this.data.tasks.daily.date = nDate;
         }
-        for (let t of ta) {
-            for (let v of t.conditions) {
-                if (v.type === "break" || v.type === "kill") {
-                    this.recordDailyArray.add(v.typeId);
+        const list = [ta, tb, tc, tx];
+        this.data.tasks.daily.all.forEach((arr, index) => {
+            for (let ti of arr) {
+                const t = list[index][ti];
+                for (let v of t.conditions) {
+                    if (v.type === "break" || v.type === "kill") {
+                        this.recordDailyArray.add(v.typeId);
+                    }
                 }
             }
-        }
-        for (let t of tb) {
-            for (let v of t.conditions) {
-                if (v.type === "break" || v.type === "kill") {
-                    this.recordDailyArray.add(v.typeId);
-                }
-            }
-        }
-        for (let t of tc) {
-            for (let v of t.conditions) {
-                if (v.type === "break" || v.type === "kill") {
-                    this.recordDailyArray.add(v.typeId);
-                }
-            }
-        }
-        for (let t of tx) {
-            for (let v of t.conditions) {
-                if (v.type === "break" || v.type === "kill") {
-                    this.recordDailyArray.add(v.typeId);
-                }
-            }
-        }
+        });
         this.getEvents().exEvents.afterBlockBreak.subscribe(e => {
-            var _a;
+            var _a, _b;
             // ExGameConfig.console.log(e.brokenBlockPermutation.type.id);
             if (!this.data.tasks)
                 return;
             if (this.recordDailyArray.has(e.brokenBlockPermutation.type.id)) {
                 this.data.tasks.daily.cache[e.brokenBlockPermutation.type.id] = 1 + ((_a = this.data.tasks.daily.cache[e.brokenBlockPermutation.type.id]) !== null && _a !== void 0 ? _a : 0);
             }
-            // s
+            else {
+                if (this.recordDailyArray.has("log") && e.brokenBlockPermutation.hasTag("log")) {
+                    this.data.tasks.daily.cache["log"] = 1 + ((_b = this.data.tasks.daily.cache["log"]) !== null && _b !== void 0 ? _b : 0);
+                }
+            }
         });
         this.getEvents().exEvents.afterPlayerHitEntity.subscribe(e => {
             var _a;
             if (!this.data.tasks)
                 return;
             if (this.recordDailyArray.has(e.hurtEntity.typeId)) {
-                if (ExEntity.getInstance(e.hurtEntity).getMaxHealth() < 0) {
+                if (ExEntity.getInstance(e.hurtEntity).health <= 0) {
                     this.data.tasks.daily.cache[e.hurtEntity.typeId] = 1 + ((_a = this.data.tasks.daily.cache[e.hurtEntity.typeId]) !== null && _a !== void 0 ? _a : 0);
                 }
             }

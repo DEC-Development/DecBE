@@ -38,7 +38,7 @@ export default class ExEntity {
                 if (!this.entity.isValid())
                     return;
                 let health = this.getComponent("minecraft:health");
-                if (health.currentValue > 0.01)
+                if (health.currentValue > 0)
                     health.setCurrentValue(Math.max(0.5, health.currentValue - ((_a = this._damage) !== null && _a !== void 0 ? _a : 0)));
                 this._damage = undefined;
             }, 0);

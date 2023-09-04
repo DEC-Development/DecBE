@@ -1,8 +1,14 @@
 import GlobalScoreBoardCache from "../../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js";
 import Random from "../../../modules/exmc/utils/Random.js";
 export default class GlobalSettings extends GlobalScoreBoardCache {
+    get uiDataUpdateDelay() {
+        return this.getNumber("uiDataUpdateDelay") || 2;
+    }
+    set uiDataUpdateDelay(value) {
+        this.setNumber("uiDataUpdateDelay", value);
+    }
     get uiUpdateDelay() {
-        return this.getNumber("uiUpdateDelay") || 10;
+        return this.getNumber("uiUpdateDelay") || 8;
     }
     set uiUpdateDelay(value) {
         this.setNumber("uiUpdateDelay", value);
@@ -36,6 +42,12 @@ export default class GlobalSettings extends GlobalScoreBoardCache {
     }
     set entityCleaner(value) {
         this.setBoolean("entityCleaner", value);
+    }
+    get entityShowMsg() {
+        return this.getBoolean("entityShowMsg");
+    }
+    set entityShowMsg(value) {
+        this.setBoolean("entityShowMsg", value);
     }
     get deathRecord() {
         return this.getBoolean("deathRecord");
@@ -74,22 +86,19 @@ export default class GlobalSettings extends GlobalScoreBoardCache {
         this.setBoolean("ownerExists", value);
     }
     get entityCleanerLeastNum() {
-        var _a;
-        return (_a = this.getNumber("entityCleanerLeastNum")) !== null && _a !== void 0 ? _a : 200;
+        return this.getNumber("entityCleanerLeastNum") || 200;
     }
     set entityCleanerLeastNum(value) {
         this.setNumber("entityCleanerLeastNum", value);
     }
     get entityCleanerStrength() {
-        var _a;
-        return (_a = this.getNumber("entityCleanerStrength")) !== null && _a !== void 0 ? _a : 5;
+        return this.getNumber("entityCleanerStrength") || 5;
     }
     set entityCleanerStrength(value) {
         this.setNumber("entityCleanerStrength", value);
     }
     get entityCleanerDelay() {
-        var _a;
-        return (_a = this.getNumber("entityCleanerDelay")) !== null && _a !== void 0 ? _a : 30;
+        return this.getNumber("entityCleanerDelay") || 30;
     }
     set entityCleanerDelay(value) {
         this.setNumber("entityCleanerDelay", value);

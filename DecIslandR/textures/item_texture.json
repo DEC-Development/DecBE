@@ -1444,6 +1444,9 @@
 		},
 		"hunter_book": {
 			"textures": "textures/items/hunter_book"
+		},
+		"patterned_vase_red": {
+			"textures": "textures/items/patterned_vase_red"
 		}
   }
 }

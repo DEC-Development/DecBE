@@ -7,6 +7,7 @@ import menuFunctionUI from "../data/menuFunctionUI.js";
 import MenuUIAlert from "../ui/MenuUIAlert.js";
 import GameController from "./GameController.js";
 import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
+import RuinsLoaction from './ruins/RuinsLoaction.js';
 export default class SimpleItemUseFunc extends GameController {
     onJoin() {
         //连锁挖矿
@@ -14,14 +15,34 @@ export default class SimpleItemUseFunc extends GameController {
             var _a;
             const itemId = (_a = this.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId;
             if (itemId === "wb:axex_equipment_a") {
+                if (RuinsLoaction.isInProtectArea(e.block) && this.exPlayer.getScoresManager().getScore("i_inviolable") > 1)
+                    return;
                 if (e.brokenBlockPermutation.hasTag("log")) {
                     this.chainDigging(new Vector3(e.block), e.brokenBlockPermutation.type.id, 16);
                 }
             }
             else if (itemId === "wb:pickaxex_equipment_a") {
-                if (this.globalSettings.chainMining && this.exPlayer.getScoresManager().getScore("wbfl") >= 30) {
-                    this.chainDigging(new Vector3(e.block), e.brokenBlockPermutation.type.id, 5);
-                    this.exPlayer.getScoresManager().deleteScore("wbfl");
+                if (RuinsLoaction.isInProtectArea(e.block) && this.exPlayer.getScoresManager().getScore("i_inviolable") > 1)
+                    return;
+                if (this.globalSettings.chainMining) {
+                    if (this.exPlayer.getScoresManager().getScore("wbfl") >= 30) {
+                        this.chainDigging(new Vector3(e.block), e.brokenBlockPermutation.type.id, 5);
+                        this.exPlayer.getScoresManager().removeScore("wbfl", 30);
+                    }
+                }
+                else {
+                    if (RuinsLoaction.isInProtectArea(e.block) && this.exPlayer.getScoresManager().getScore("i_inviolable") > 1)
+                        return;
+                    this.exPlayer.command.run([
+                        "execute as @s[scores={wbfl=..39}] at @s run tellraw @s {\"rawtext\":[{\"translate\":\"tell.play.29.name\"}]}",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace stone []",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace end_stone []",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace cobblestone []",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace netherrack []",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace red_sandstone []",
+                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace deepslate []",
+                        "execute as @s[scores={wbfl=40..}] at @s run scoreboard players remove @s wbfl 40"
+                    ]);
                 }
             }
         });
@@ -60,23 +81,6 @@ export default class SimpleItemUseFunc extends GameController {
                     this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 150, 3, false);
                     this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
                 }, 0);
-            }
-            else if (item.typeId === "wb:start_key") {
-            }
-            else if (item.typeId === "wb:pickaxex_equipment_a") {
-                if (this.globalSettings.chainMining) {
-                }
-                else {
-                    this.exPlayer.command.run([
-                        "execute as @s[scores={wbfl=..39}] at @s run tellraw @s {\"rawtext\":[{\"translate\":\"tell.play.29.name\"}]}",
-                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace stone []",
-                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace end_stone []",
-                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace cobblestone []",
-                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace netherrack []",
-                        "execute as @s[tag=!wbplot,scores={wbfl=40..},m=!adventure] at @s run fill ~+4 ~+4 ~+4 ~-4 ~ ~-4 air [] replace red_sandstone []",
-                        "execute as @s[scores={wbfl=40..}] at @s run scoreboard players remove @s wbfl 40"
-                    ]);
-                }
             }
         });
         this.getEvents().exEvents.afterItemUse.subscribe(e => {

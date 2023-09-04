@@ -2408,6 +2408,26 @@
 					"death": "item.trident.throw"
 				}
 			},
+			"dec:abyssal_shadow": {
+				"volume": 2.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "item.trident.return",
+					"hurt": {
+						"sound": "item.trident.return",
+						"volume": 0.7
+					},
+					"death": "item.trident.thunder",
+					"step": {
+						"sound": "item.trident.hit",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			},
 			"dec:abyssal_controller": {
 				"volume": 3.0,
 				"pitch": [

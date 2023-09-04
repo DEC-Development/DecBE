@@ -127,6 +127,10 @@ Repforce - 建筑
 LZN - 提供建筑、贴图
 豆沙 - 部分怪物
 某不知名的琦玉 - 灵感
+夜长生 - 建筑
+默笙 - 建筑
+StereoRoom411 - 建筑
+岚天 - 建筑
 WINDes - 任务清单、测试、灵感、部分
 文海求生 - 任务清单、测试反馈
 ALiFang ZHE - 部分模型、贴图
@@ -462,10 +466,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                                 return false;
                                             }
                                             if (client.globalSettings.tpNeedItem) {
-                                                let pos = (bag.searchItem("wb:conveyor_issue"));
-                                                let item = bag.getItem(pos);
-                                                item.amount--;
-                                                bag.setItem(pos, item);
+                                                bag.clearItem("wb:conveyor_issue", 1);
                                             }
                                             client.exPlayer.setPosition(v, client.getDimension(i[0]));
                                             client.sayTo(lang.menuUIMsgBailan37);
@@ -498,9 +499,15 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 "msg": lang.menuUIMsgBailan41 + client.exPlayer.position.floor().toString(),
                                 "type": "button",
                                 "function": (client, ui) => {
-                                    var _a;
-                                    (_a = client.data.pointRecord) === null || _a === void 0 ? void 0 : _a.point.push([client.exPlayer.dimension.id, "", client.exPlayer.position.floor()]);
-                                    return true;
+                                    var _a, _b, _c;
+                                    if (((_b = (_a = client.data.pointRecord) === null || _a === void 0 ? void 0 : _a.point.length) !== null && _b !== void 0 ? _b : 0) <= 10) {
+                                        (_c = client.data.pointRecord) === null || _c === void 0 ? void 0 : _c.point.push([client.exPlayer.dimension.id, "", client.exPlayer.position.floor()]);
+                                        return true;
+                                    }
+                                    else {
+                                        client.sayTo("§b传送点不得超过10个");
+                                        return false;
+                                    }
                                 }
                             });
                         }
@@ -646,10 +653,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                         return false;
                                     }
                                     if (client.globalSettings.tpNeedItem) {
-                                        let pos = (bag.searchItem("wb:conveyor_issue"));
-                                        let item = bag.getItem(pos);
-                                        item.amount--;
-                                        bag.setItem(pos, item);
+                                        bag.clearItem("wb:conveyor_issue", 1);
                                     }
                                     client.sayTo(lang.menuUIMsgBailan57);
                                     client.setTimeout(() => {
@@ -692,10 +696,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                         return false;
                                     }
                                     if (client.globalSettings.tpNeedItem) {
-                                        let pos = (bag.searchItem("wb:conveyor_issue"));
-                                        let item = bag.getItem(pos);
-                                        item.amount--;
-                                        bag.setItem(pos, item);
+                                        bag.clearItem("wb:conveyor_issue", 1);
                                     }
                                     client.sayTo(lang.menuUIMsgBailan67);
                                     client.setTimeout(() => {
@@ -874,10 +875,14 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 },
                                 {
                                     "type": "button",
-                                    "msg": "报错日志",
+                                    "msg": "重置遗迹",
                                     "function": (client, ui) => {
-                                        new WarningAlertUI(client, ExErrorQueue.getError(), [["我知道了", (client, ui) => {
-                                                }]]).showPage();
+                                        new ExMessageAlert().title("确认").body(`是否重置遗迹？`)
+                                            .button1("是", () => {
+                                            client.globalSettings.ruinsExsitsData = 0;
+                                        })
+                                            .button2("否", () => { })
+                                            .show(client.player);
                                         return false;
                                     }
                                 }
@@ -904,14 +909,16 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                             .slider(lang.menuUIMsgBailan91, 40, 1000, 20, client.globalSettings.entityCleanerLeastNum)
                                             .slider(lang.menuUIMsgBailan92, 2, 10, 1, client.globalSettings.entityCleanerStrength)
                                             .slider(lang.menuUIMsgBailan93, 1, 60, 1, client.globalSettings.entityCleanerDelay)
+                                            .toggle("清理信息显示", client.globalSettings.entityShowMsg)
                                             .show(client.player).then((e) => {
-                                            var _a, _b, _c, _d, _e, _f, _g, _h;
+                                            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
                                             if (e.canceled)
                                                 return;
                                             client.globalSettings.entityCleaner = Boolean((_b = (_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : false);
-                                            client.globalSettings.entityCleanerLeastNum = Number((_d = (_c = e.formValues) === null || _c === void 0 ? void 0 : _c[1]) !== null && _d !== void 0 ? _d : 200);
-                                            client.globalSettings.entityCleanerStrength = Number((_f = (_e = e.formValues) === null || _e === void 0 ? void 0 : _e[2]) !== null && _f !== void 0 ? _f : 5);
-                                            client.globalSettings.entityCleanerDelay = Number((_h = (_g = e.formValues) === null || _g === void 0 ? void 0 : _g[3]) !== null && _h !== void 0 ? _h : 30);
+                                            client.globalSettings.entityShowMsg = Boolean((_d = (_c = e.formValues) === null || _c === void 0 ? void 0 : _c[4]) !== null && _d !== void 0 ? _d : false);
+                                            client.globalSettings.entityCleanerLeastNum = Number((_f = (_e = e.formValues) === null || _e === void 0 ? void 0 : _e[1]) !== null && _f !== void 0 ? _f : 200);
+                                            client.globalSettings.entityCleanerStrength = Number((_h = (_g = e.formValues) === null || _g === void 0 ? void 0 : _g[2]) !== null && _h !== void 0 ? _h : 5);
+                                            client.globalSettings.entityCleanerDelay = Number((_k = (_j = e.formValues) === null || _j === void 0 ? void 0 : _j[3]) !== null && _k !== void 0 ? _k : 30);
                                         })
                                             .catch((e) => {
                                             ExErrorQueue.throwError(e);
@@ -921,17 +928,19 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 },
                                 {
                                     "type": "button",
-                                    "msg": "ui刷新间隔(tick)",
+                                    "msg": "ui刷新间隔",
                                     "function": (client, ui) => {
                                         let map = pomDifficultyMap;
                                         new ModalFormData()
-                                            .title("Choose a tick")
-                                            .slider("tick", 4, 20, 1, 8)
+                                            .title("ui刷新间隔")
+                                            .slider("界面刷新间隔(tick)", 4, 20, 1, 4)
+                                            .slider("数据刷新间隔(每刷新n次界面刷新1次数据)", 1, 5, 1, 2)
                                             .show(client.player).then((e) => {
                                             var _a;
                                             if (!e.canceled) {
                                                 let v = ((_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]);
-                                                client.globalSettings.uiUpdateDelay = Number(v !== null && v !== void 0 ? v : 30);
+                                                client.globalSettings.uiUpdateDelay = Number(v !== null && v !== void 0 ? v : 8);
+                                                client.globalSettings.uiDataUpdateDelay = Number(v !== null && v !== void 0 ? v : 2);
                                                 client.magicSystem.actionbarShow.stop();
                                                 client.magicSystem.actionbarShow.delay(client.globalSettings.uiUpdateDelay);
                                                 client.magicSystem.actionbarShow.start();
@@ -952,6 +961,20 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 }];
                         }
                     }
+                },
+                "general": {
+                    "text": "通用",
+                    "page": [
+                        {
+                            "type": "button",
+                            "msg": "报错日志",
+                            "function": (client, ui) => {
+                                new WarningAlertUI(client, ExErrorQueue.getError(), [["我知道了", (client, ui) => {
+                                        }]]).showPage();
+                                return false;
+                            }
+                        }
+                    ]
                 }
             }
         }

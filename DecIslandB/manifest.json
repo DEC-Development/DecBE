@@ -5,7 +5,7 @@
         "name": "DecIsland[B]V1.9.1",
         "description": "/function test/creator_list",
         "uuid": "6d4ede5c-5ac6-49ba-ab2b-44be7fbaa757",
-        "min_engine_version": [ 1,19,80 ],
+        "min_engine_version": [ 1,20,10 ],
         "version": [1, 9, 1]
     },
     "modules": [

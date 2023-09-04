@@ -87,14 +87,14 @@ export default class DecClient extends ExGameClient {
             }
         })*/
         this.getEvents().exEvents.afterItemUse.subscribe((e) => {
-            if (e.itemStack.hasComponent('minecraft:cooldown')) {
+            if (e.itemStack.hasComponentById('minecraft:cooldown')) {
                 //这里写有饰品时触发的东西
             }
         });
         this.getEvents().exEvents.beforeItemUseOn.subscribe(e => {
-            const id = e.block.typeId;
+            const id = e.itemStack.typeId;
             if (id.startsWith("dec") && id.includes("summoner") && id !== "dec:summoner" && this.exPlayer.getGameMode() !== GameMode.creative) {
-                e.cancel;
+                e.cancel = true;
             }
         });
         this.getEvents().exEvents.afterPlayerHurt.subscribe(e => {
@@ -262,15 +262,18 @@ export default class DecClient extends ExGameClient {
             }
         });
         let magic_gap = 60;
-        function magicreckon_filter(n) {
-            if (n <= 0) {
-                return 0;
-            }
-            else if (n >= 140) {
-                return 140;
+        let dec_magic_store = 0;
+        const k2 = 0.001;
+        const k1 = 1 - k2 + 0.01;
+        const g_min = (1 - k1) / k2;
+        const magicgain_map_k = 1.05; //此项可修改，与magicgain<1时魔法恢复速度随magicgain变化负相关，即magicgain减小同样的数，此项越大，魔法恢复速度越慢
+        const magicgain_map_k2 = (-g_min + 1) / magicgain_map_k;
+        function magicgain_map(magicgain) {
+            if (magicgain < 1) {
+                return (magicgain_map_k2 * Math.pow(magicgain_map_k, magicgain) + g_min);
             }
             else {
-                return n;
+                return magicgain;
             }
         }
         this.getEvents().exEvents.tick.subscribe(e => {
@@ -278,12 +281,16 @@ export default class DecClient extends ExGameClient {
             const p = this.player;
             const ep = this.exPlayer;
             const scores = this.exPlayer.getScoresManager();
-            const decMagicK = 29 / 70;
             //生存，冒险玩家添加gaming标签
-            if (!p.getTags().includes('gaming') && (ep.getGameMode() == GameMode.adventure || ep.getGameMode() == GameMode.survival)) {
+            const gamemode = ep.getGameMode();
+            if (!p.hasTag('gaming') && (gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
                 p.addTag('gaming');
+                this.globalscores.setNumber("AlreadyGmCheat", 1);
+                if (this.globalscores.getNumber('DieMode')) {
+                    p.addTag('diemode_gmcheat');
+                }
             }
-            else if (p.getTags().includes('gaming')) {
+            else if (p.hasTag('gaming')) {
                 p.removeTag('gaming');
             }
             //潜行获得tag is_sneaking
@@ -322,10 +329,10 @@ export default class DecClient extends ExGameClient {
                 //紫水晶套装效果
                 if (this.useArmor === ArmorPlayerDec.amethyst) {
                     if (DecGlobal.isDec()) {
-                        let mg = scores.getScore("magicpoint");
+                        let mg = scores.getScore("wbfl");
                         if (11 <= mg && mg <= 29) {
                             this.getExDimension().spawnParticle("dec:amethyst_armor_magic_increase_particle", p.location);
-                            scores.addScore("magicpoint", 1);
+                            scores.addScore("wbfl", 1);
                         }
                     }
                     else {
@@ -357,10 +364,10 @@ export default class DecClient extends ExGameClient {
                 //木叶套装效果
                 if (this.useArmor === ArmorPlayerDec.wood) {
                     if (DecGlobal.isDec()) {
-                        let mg = scores.getScore("magicpoint");
+                        let mg = scores.getScore("wbfl");
                         if (mg <= 15) {
                             this.getExDimension().spawnParticle("dec:wood_armor_magic_increase_particle", p.location);
-                            scores.addScore("magicpoint", 5);
+                            scores.addScore("wbfl", 5);
                         }
                     }
                     else {
@@ -384,48 +391,57 @@ export default class DecClient extends ExGameClient {
                 let magicgain = scores.getScore('magicgain');
                 let magicreckon = scores.getScore('magicreckon');
                 let magicpoint = scores.getScore('magicpoint');
-                let l = Math.pow(0.667, magicgain) - 1;
+                //wait_tick实际运用可为变量，第一次魔法恢复时用时，并且越大，魔法恢复越慢
+                const wait_tick = 60;
+                //let l =  Math.pow(0.667,magicgain) - 1
                 //p.runCommandAsync('title @s actionbar magic_gap:' + String(magic_gap))
                 if (magicpoint < maxmagic) {
                     if (magic_gap <= 0) {
                         //这里写魔法恢复
                         scores.addScore('magicpoint', 1);
-                        magic_gap = 60 - decMagicK * magicreckon_filter((magicreckon - 60) / (1 + l));
+                        this.getExDimension().spawnParticle("dec:magic_increase_particle", p.location);
+                        //magic_gap = 60 - decMagicK * magicreckon_filter((magicreckon - 60)/(1+l))
+                        magic_gap = wait_tick * Math.pow(1 / (k1 + k2 * magicgain_map(magicgain)), magicreckon);
                     }
                     else {
                         magic_gap -= 1;
                     }
-                    if (magicreckon < 200) {
-                        scores.setScore('magicreckon', 1 + magicreckon);
-                    }
+                    scores.addScore('magicreckon', 1);
                 }
                 else if (magicreckon != 0) {
                     scores.setScore('magicreckon', 0);
-                    magic_gap = 60;
+                    magic_gap = wait_tick;
                 }
+                if (dec_magic_store > magicpoint) {
+                    scores.setScore('magicreckon', 0);
+                    if (magicreckon >= wait_tick) {
+                        this.getExDimension().spawnParticle("dec:magic_decrease_particle", p.location);
+                    }
+                }
+                dec_magic_store = magicpoint;
             }
         });
+        let hunter_reset = () => {
+            let hunter_x_offset = (Math.random() - 0.5) * 2000;
+            let hunter_z_offset = (Math.random() - 0.5) * 2000;
+            let hunter_x = 0;
+            let hunter_z = 0;
+            if (Math.random() > 0) {
+                hunter_x = 5000;
+            }
+            else {
+                hunter_x = -5000;
+            }
+            if (Math.random() > 0) {
+                hunter_z = 5000;
+            }
+            else {
+                hunter_z = -5000;
+            }
+            this.globalscores.setNumber('hunter_x', Math.floor(this.player.location.x + hunter_x + hunter_x_offset));
+            this.globalscores.setNumber('hunter_z', Math.floor(this.player.location.z + hunter_z + hunter_z_offset));
+        };
         this.getEvents().exEvents.afterItemUse.subscribe(e => {
-            let hunter_reset = () => {
-                let hunter_x_offset = (Math.random() - 0.5) * 2000;
-                let hunter_z_offset = (Math.random() - 0.5) * 2000;
-                let hunter_x = 0;
-                let hunter_z = 0;
-                if (Math.random() > 0) {
-                    hunter_x = 5000;
-                }
-                else {
-                    hunter_x = -5000;
-                }
-                if (Math.random() > 0) {
-                    hunter_z = 5000;
-                }
-                else {
-                    hunter_z = -5000;
-                }
-                this.globalscores.setNumber('hunter_x', Math.floor(e.source.location.x + hunter_x + hunter_x_offset));
-                this.globalscores.setNumber('hunter_z', Math.floor(e.source.location.z + hunter_z + hunter_z_offset));
-            };
             //魔法卷轴
             if (e.itemStack.typeId == "dec:magic_scroll_blue") {
                 const i = e.itemStack;
@@ -442,20 +458,20 @@ export default class DecClient extends ExGameClient {
                 let cur_hunter_z = this.globalscores.getNumber('hunter_z');
                 if (this.globalscores.getNumber('hunter_x') == undefined || this.globalscores.getNumber('hunter_z') == undefined || this.globalscores.getNumber('hunter_x') == 0 || this.globalscores.getNumber('hunter_z') == 0) {
                     hunter_reset();
-                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }');
-                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
+                    this.exPlayer.command.run(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
+                        'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }']);
                 }
                 else if (cur_hunter_x - 3 <= e.source.location.x && cur_hunter_x + 3 >= e.source.location.x && cur_hunter_z - 3 <= e.source.location.z && cur_hunter_z + 3 >= e.source.location.z) {
                     hunter_reset();
-                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }');
-                    e.source.runCommandAsync('tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }');
-                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
-                    e.source.runCommandAsync('xp ' + (5000 + Math.random() * 4000) + ' @s');
-                    e.source.runCommandAsync('loot give @s loot "items/hunter_book"');
+                    this.exPlayer.command.run(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }',
+                        'tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
+                        'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }',
+                        'xp ' + (5000 + Math.random() * 4000) + ' @s',
+                        'loot give @s loot "items/hunter_book"']);
                 }
                 else {
-                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }');
-                    e.source.runCommandAsync('tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }');
+                    this.exPlayer.command.run(['tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }',
+                        'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }']);
                 }
             }
         });

@@ -36,18 +36,9 @@
           "command": [
             "tag @s[scores={maxmagic=40..58}] add clear_red_gem",
             "tellraw @s[scores={maxmagic=20..38}] { \"rawtext\" : [ { \"translate\" : \"text.dec:red_gem_not_enough.name\" } ] }",
-            "tellraw @s[scores={maxmagic=40}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm11.name\" } ] }",
-            "tellraw @s[scores={maxmagic=42}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm12.name\" } ] }",
-            "tellraw @s[scores={maxmagic=44}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm13.name\" } ] }",
-            "tellraw @s[scores={maxmagic=46}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm14.name\" } ] }",
-            "tellraw @s[scores={maxmagic=48}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm15.name\" } ] }",
-            "tellraw @s[scores={maxmagic=50}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm16.name\" } ] }",
-            "tellraw @s[scores={maxmagic=52}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm17.name\" } ] }",
-            "tellraw @s[scores={maxmagic=54}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm18.name\" } ] }",
-            "tellraw @s[scores={maxmagic=56}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm19.name\" } ] }",
-            "tellraw @s[scores={maxmagic=58}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm20.name\" } ] }",
             "tellraw @s[scores={maxmagic=58..}] { \"rawtext\" : [ { \"translate\" : \"text.dec:red_gem_max.name\" } ] }",
             "scoreboard players add @s[tag=clear_red_gem] maxmagic 2",
+            "tellraw @s[tag=clear_red_gem] { \"rawtext\" : [ { \"translate\" : \"text.dec:red_gem_magic_up.name\" },{ \"score\":{ \"name\": \"@s\",\"objective\": \"maxmagic\" } } ] }",
             "clear @s[tag=clear_red_gem] dec:red_gem 0 1",
             "tag @s[tag=clear_red_gem] remove clear_red_gem"
           ]

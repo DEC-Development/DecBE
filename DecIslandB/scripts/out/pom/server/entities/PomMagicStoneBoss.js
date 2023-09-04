@@ -15,6 +15,14 @@ export default class PomMagicStoneBoss extends PomBossController {
         super.onSpawn();
     }
     onKilled(e) {
+        //清理周围
+        for (let e of this.exEntity.dimension.getEntities({
+            "location": this.barrier.center,
+            "maxDistance": 128,
+            "families": ["magic_stone_summoner"]
+        })) {
+            e.kill();
+        }
         //设置奖励
         for (let c of this.barrier.clientsByPlayer()) {
             c.progressTaskFinish(this.entity.typeId, c.ruinsSystem.causeDamage);

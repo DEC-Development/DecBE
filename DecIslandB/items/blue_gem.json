@@ -35,19 +35,10 @@
         "run_command": {
           "command": [
             "tag @s[scores={maxmagic=..38}] add clear_blue_gem",
-            "tellraw @s[scores={maxmagic=20}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm1.name\" } ] }",
-            "tellraw @s[scores={maxmagic=22}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm2.name\" } ] }",
-            "tellraw @s[scores={maxmagic=24}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm3.name\" } ] }",
-            "tellraw @s[scores={maxmagic=26}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm4.name\" } ] }",
-            "tellraw @s[scores={maxmagic=28}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm5.name\" } ] }",
-            "tellraw @s[scores={maxmagic=30}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm6.name\" } ] }",
-            "tellraw @s[scores={maxmagic=32}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm7.name\" } ] }",
-            "tellraw @s[scores={maxmagic=34}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm8.name\" } ] }",
-            "tellraw @s[scores={maxmagic=36}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm9.name\" } ] }",
-            "tellraw @s[scores={maxmagic=38}] { \"rawtext\" : [ { \"translate\" : \"text.dec:uptomm10.name\" } ] }",
-            "tellraw @s[scores={maxmagic=38..}] { \"rawtext\" : [ { \"translate\" : \"text.dec:blue_gem_max.name\" } ] }",
+            "tellraw @s[scores={maxmagic=38..59}] { \"rawtext\" : [ { \"translate\" : \"text.dec:blue_gem_max.name\" } ] }",
             "tellraw @s[scores={maxmagic=60..}] { \"rawtext\" : [ { \"translate\" : \"text.dec:red_gem_max.name\" } ] }",
             "scoreboard players add @s[tag=clear_blue_gem] maxmagic 2",
+            "tellraw @s[tag=clear_blue_gem] { \"rawtext\" : [ { \"translate\" : \"text.dec:blue_gem_magic_up.name\" },{ \"score\":{ \"name\": \"@s\",\"objective\": \"maxmagic\" } } ] }",
             "clear @s[tag=clear_blue_gem] dec:blue_gem 0 1",
             "tag @s[tag=clear_blue_gem] remove clear_blue_gem"
           ]

@@ -70,6 +70,7 @@ _a = ExGame;
 ExGame.beforeTickMonitor = new MonitorManager();
 ExGame.tickMonitor = new MonitorManager();
 ExGame.longTickMonitor = new MonitorManager();
+ExGame.scriptEventReceive = new MonitorManager();
 (() => {
     let tickNum = 0, tickTime = 0;
     const fun = () => {
@@ -98,6 +99,11 @@ ExGame.longTickMonitor = new MonitorManager();
         _a.longTickMonitor.trigger(event);
     };
     ExGame.runInterval(fun, 5);
+})();
+(() => {
+    system.afterEvents.scriptEventReceive.subscribe(e => {
+        ExGame.scriptEventReceive.trigger(e);
+    });
 })();
 ExGame.serverMap = new Map;
 export function receiveMessage(exportName) {

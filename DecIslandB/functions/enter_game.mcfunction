@@ -22,8 +22,6 @@ execute unless score FirstEnter global = one global run tag @a add owner
 execute unless score FirstEnter global = one global run scoreboard players set FirstEnter global 1
 
 ##声明及重置变量
-scoreboard objectives add magicreckontimer dummy
-scoreboard objectives add magicpointmirror dummy
 scoreboard objectives add gametime dummy
 scoreboard objectives add magicpoint dummy
 scoreboard objectives add maxmagic dummy
@@ -40,7 +38,6 @@ scoreboard players set @a[tag=!mok] magicpoint 20
 scoreboard players set @a[tag=!mok] maxmagic 20
 scoreboard players set @a[tag=!mok] magicgain 0
 scoreboard players set @a[tag=!mok] tens 20
-scoreboard players set @a[tag=!mok] magicreckontimer 0
 scoreboard players set @a[tag=!mok] magicreckon 0
 scoreboard players set @a[tag=!mok] skill_count 0
 tag @a[tag=!mok] add hpl1

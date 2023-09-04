@@ -858,6 +858,41 @@
       "textures": [
         "textures/blocks/ash_cage"
       ]
+    },
+    "trellis": {
+      "textures": [
+        "textures/blocks/trellis"
+      ]
+    },
+    "trellis_cover": {
+      "textures": [
+        "textures/blocks/trellis_cover"
+      ]
+    },
+    "empty": {
+      "textures": [
+        "textures/blocks/empty"
+      ]
+    },
+    "grape_crop_0": {
+      "textures": [
+        "textures/blocks/grape_crop_0"
+      ]
+    },
+    "grape_crop_1": {
+      "textures": [
+        "textures/blocks/grape_crop_1"
+      ]
+    },
+    "trellis_crop_wither": {
+      "textures": [
+        "textures/blocks/trellis_crop_wither"
+      ]
+    },
+    "patterned_vase_red_block": {
+      "textures": [
+        "textures/blocks/patterned_vase_red_block"
+      ]
     }
   }
 }

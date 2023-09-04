@@ -177,7 +177,7 @@ export default function taskDaily_a(lang) {
                 "conditions": [
                     {
                         "name": "木头",
-                        "typeId": MinecraftItemTypes.log.id,
+                        "typeId": "log",
                         "count": 64,
                         "type": "break"
                     }

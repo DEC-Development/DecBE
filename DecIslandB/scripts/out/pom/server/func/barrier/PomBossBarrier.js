@@ -61,6 +61,12 @@ export default class PomBossBarrier {
             }
         }
     }
+    *getPlayers() {
+        for (let e of this.players) {
+            if (e[0].isValid())
+                yield e[0];
+        }
+    }
     notifyDeathAdd() {
         this.deathTimes += 1;
         for (let c of this.clientsByPlayer()) {

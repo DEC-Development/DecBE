@@ -13,7 +13,7 @@ export default class PomAncientStoneBoss extends PomBossController {
                     if (this.viewTime >= 0.4) {
                         const view = new Vector3();
                         const pos = new Vector3();
-                        this.barrier.players.forEach((b, e) => {
+                        for (let e of this.barrier.getPlayers()) {
                             view.set(e.getViewDirection());
                             view.y = 0;
                             view.normalize();
@@ -23,7 +23,7 @@ export default class PomAncientStoneBoss extends PomBossController {
                             e.runCommand(`camera @s set minecraft:free ease ${this.viewTime} linear pos ${view
                                 .scl(-8).add(0, 5, 0).add(e.location).toArray().join(" ")} facing ${pos
                                 .scl(8).add(0, 1, 0).add(e.location).toArray().join(" ")}`);
-                        });
+                        }
                         this.viewTime = 0;
                     }
                 };
@@ -31,12 +31,12 @@ export default class PomAncientStoneBoss extends PomBossController {
                 this.setTimeout(() => {
                     this.getEvents().exEvents.tick.unsubscribe(f);
                 }, 5000);
-                this.barrier.players.forEach((b, e) => {
+                for (let e of this.barrier.getPlayers()) {
                     const c = this.server.findClientByPlayer(e);
                     c === null || c === void 0 ? void 0 : c.setTimeout(() => {
                         c.exPlayer.command.run(`camera @s clear`);
                     }, 5200);
-                });
+                }
             }
             else {
             }

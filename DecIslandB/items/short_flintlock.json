@@ -32,7 +32,6 @@
       },
       "minecraft:stacked_by_data": false,
       "minecraft:max_stack_size": 1,
-      "minecraft:foil": false,
       "minecraft:on_use": {
         "on_use": {
           "event": "shoot_test",

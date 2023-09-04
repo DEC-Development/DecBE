@@ -54,7 +54,6 @@
           }
         ]
       },
-      "minecraft:foil": false,
       "minecraft:hand_equipped": true,
       "minecraft:cooldown": {
         "category": "katana",

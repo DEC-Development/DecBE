@@ -146,7 +146,7 @@ export default function taskDaily_b(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 275,
+                        "count": 550,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -188,7 +188,7 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "木头",
-                        "typeId": MinecraftItemTypes.log.id,
+                        "typeId": "log",
                         "count": 128,
                         "type": "break"
                     }
@@ -196,7 +196,7 @@ export default function taskDaily_b(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 175,
+                        "count": 350,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -215,7 +215,7 @@ export default function taskDaily_b(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 175,
+                        "count": 350,
                         "unit": "点",
                         "type": "integral"
                     }
