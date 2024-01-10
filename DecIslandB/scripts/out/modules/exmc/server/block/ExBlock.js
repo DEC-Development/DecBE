@@ -1,4 +1,4 @@
-import { Block, MinecraftBlockTypes } from '@minecraft/server';
+import { Block, BlockTypes } from '@minecraft/server';
 import Vector3 from "../../math/Vector3.js";
 if (Block.prototype === undefined)
     Block.prototype = {};
@@ -18,7 +18,7 @@ Object.assign(Block.prototype, {
     },
     transTo(blockId) {
         var _a;
-        (_a = this.dimension.getBlock(this)) === null || _a === void 0 ? void 0 : _a.setType(typeof blockId === "string" ? MinecraftBlockTypes.get(blockId) : blockId);
+        (_a = this.dimension.getBlock(this)) === null || _a === void 0 ? void 0 : _a.setType(typeof blockId === "string" ? BlockTypes.get(blockId) : blockId);
     }
 });
 //# sourceMappingURL=ExBlock.js.map

@@ -6,23 +6,23 @@ export default class ExScoresManager {
         this.entity = e;
     }
     getIdentity(objective) {
-        var _a;
+        var _a, _b;
         if (this.entity instanceof ExNullEntity) {
             const e = this.entity;
-            return (_a = world.scoreboard.getObjective(objective).getScores().find(i => i.participant.displayName === e.nameTag)) === null || _a === void 0 ? void 0 : _a.participant;
+            return (_b = (_a = world.scoreboard.getObjective(objective)) === null || _a === void 0 ? void 0 : _a.getScores().find(i => i.participant.displayName === e.nameTag)) === null || _b === void 0 ? void 0 : _b.participant;
         }
         else {
             return this.entity.scoreboardIdentity;
         }
     }
     getScore(objective) {
-        var _a;
+        var _a, _b;
         let name = typeof objective === "string" ? objective : objective.name;
         let id = this.getIdentity(name);
         if (!id)
             return 0;
         try {
-            return (_a = world.scoreboard.getObjective(name).getScore(id)) !== null && _a !== void 0 ? _a : 0;
+            return (_b = (_a = world.scoreboard.getObjective(name)) === null || _a === void 0 ? void 0 : _a.getScore(id)) !== null && _b !== void 0 ? _b : 0;
         }
         catch (e) {
             return 0;
@@ -30,12 +30,13 @@ export default class ExScoresManager {
         ;
     }
     hasScore(objective) {
+        var _a;
         let name = typeof objective === "string" ? objective : objective.name;
         let id = this.getIdentity(name);
         if (!id)
             return false;
         try {
-            return world.scoreboard.getObjective(name).hasParticipant(id);
+            return (_a = world.scoreboard.getObjective(name)) === null || _a === void 0 ? void 0 : _a.hasParticipant(id);
         }
         catch (e) {
             return false;
@@ -43,6 +44,7 @@ export default class ExScoresManager {
         ;
     }
     setScore(objective, num) {
+        var _a;
         let name = typeof objective === "string" ? objective : objective.name;
         let id = this.getIdentity(name);
         if (!id && this.entity instanceof ExNullEntity) {
@@ -50,7 +52,7 @@ export default class ExScoresManager {
         }
         if (!id)
             return false;
-        world.scoreboard.getObjective(name).setScore(id, num);
+        (_a = world.scoreboard.getObjective(name)) === null || _a === void 0 ? void 0 : _a.setScore(id, num);
         return true;
     }
     addScore(objective, num) {
@@ -60,11 +62,12 @@ export default class ExScoresManager {
         return this.setScore(objective, this.getScore(objective) - num);
     }
     deleteScore(objective) {
+        var _a;
         const name = typeof objective === "string" ? objective : objective.name;
         const identity = this.getIdentity(name);
         if (!identity)
             return false;
-        world.scoreboard.getObjective(name).removeParticipant(identity);
+        (_a = world.scoreboard.getObjective(name)) === null || _a === void 0 ? void 0 : _a.removeParticipant(identity);
         return true;
     }
 }

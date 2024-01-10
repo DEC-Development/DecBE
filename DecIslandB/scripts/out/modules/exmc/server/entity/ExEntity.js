@@ -1,4 +1,4 @@
-import { EntityHealthComponent, EntityInventoryComponent, EntityVariantComponent, EntityMarkVariantComponent, EntityIsBabyComponent, EntityIsChargedComponent, EntityDamageCause, EntityEquipmentInventoryComponent } from '@minecraft/server';
+import { EntityHealthComponent, EntityInventoryComponent, EntityVariantComponent, EntityMarkVariantComponent, EntityIsBabyComponent, EntityIsChargedComponent, EntityDamageCause, EntityEquippableComponent } from '@minecraft/server';
 import ExScoresManager from './ExScoresManager.js';
 import Vector3 from '../../math/Vector3.js';
 import ExEntityBag from './ExEntityBag.js';
@@ -10,7 +10,7 @@ const compId = {
     [EntityMarkVariantComponent.componentId]: EntityMarkVariantComponent,
     [EntityVariantComponent.componentId]: EntityVariantComponent,
     [EntityInventoryComponent.componentId]: EntityInventoryComponent,
-    [EntityEquipmentInventoryComponent.componentId]: EntityEquipmentInventoryComponent,
+    [EntityEquippableComponent.componentId]: EntityEquippableComponent,
     [EntityIsChargedComponent.componentId]: EntityIsChargedComponent,
     [EntityMovementComponent.componentId]: EntityMovementComponent,
     [EntityHealthComponent.componentId]: EntityHealthComponent

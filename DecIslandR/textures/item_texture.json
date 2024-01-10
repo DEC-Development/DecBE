@@ -1447,6 +1447,60 @@
 		},
 		"patterned_vase_red": {
 			"textures": "textures/items/patterned_vase_red"
+		},
+		"lava_essence": {
+			"textures": "textures/items/lava_essence"
+		},
+		"lava_flower_seeds": {
+			"textures": "textures/items/lava_flower_seeds"
+		},
+		"mooli": {
+			"textures": "textures/items/mooli"
+		},
+		"mooli_seeds": {
+			"textures": "textures/items/mooli_seeds"
+		},
+		"red_spider_lily": {
+			"textures": "textures/items/red_spider_lily"
+		},
+		"cob": {
+			"textures": "textures/items/cob"
+		},
+		"corn": {
+			"textures": "textures/items/corn"
+		},
+		"corn_seeds": {
+			"textures": "textures/items/corn_seeds"
+		},
+		"giant_bat_wings": {
+			"textures": "textures/items/giant_bat_wings"
+		},
+		"smoke_bomb": {
+			"textures": "textures/items/smoke_bomb"
+		},
+		"gas_bomb": {
+			"textures": "textures/items/gas_bomb"
+		},
+		"golden_fence": {
+			"textures": "textures/items/golden_fence"
+		},
+		"bamboo_katana": {
+			"textures": "textures/items/bamboo_katana"
+		},
+		"hard_bamboo_katana": {
+			"textures": "textures/items/hard_bamboo_katana"
+		},
+		"rapier": {
+			"textures": "textures/items/rapier"
+		},
+		"dead_wood_rapier": {
+			"textures": "textures/items/dead_wood_rapier"
+		},
+		"dead_wood_dagger": {
+			"textures": "textures/items/dead_wood_dagger"
+		},
+		"moon_jellyfish": {
+			"textures": "textures/items/moon_jellyfish"
 		}
   }
 }

@@ -1,4 +1,3 @@
-import { MinecraftEntityTypes } from "@minecraft/server";
 import GameControllerRuinRule from "../GameControllerRuinRule.js";
 import RuinsLoaction from "../RuinsLoaction.js";
 import PomDesertRuinRules from "./PomDesertRuinRules.js";
@@ -6,6 +5,7 @@ import PomMazeMapBuilder from "../PomMazeMapBuilder.js";
 import Vector3 from "../../../../../modules/exmc/math/Vector3.js";
 import ExErrorQueue from "../../../../../modules/exmc/server/ExErrorQueue.js";
 import VarOnChangeListener from "../../../../../modules/exmc/utils/VarOnChangeListener.js";
+import { MinecraftEntityTypes } from "../../../../../modules/vanilla-data/lib/index.js";
 export default class PomDesertRuinBasicRule extends GameControllerRuinRule {
     getShowMap() {
         const show = [];
@@ -116,7 +116,7 @@ export default class PomDesertRuinBasicRule extends GameControllerRuinRule {
                 const tmpV = new Vector3();
                 const unclearList = [];
                 for (let e of game.getDimension().getEntities({
-                    excludeTypes: ["minecraft:item", MinecraftEntityTypes.player.id],
+                    excludeTypes: ["minecraft:item", MinecraftEntityTypes.Player],
                     maxDistance: 16,
                     location: lastVec
                 })) {

@@ -1,11 +1,5 @@
-import { DynamicPropertiesDefinition, MinecraftEntityTypes, world } from '@minecraft/server';
 import { Serialize } from '../../../utils/Serialize.js';
 import GZIPUtil from '../../../utils/GZIPUtil.js';
-const cutLength = 3000;
-world.afterEvents.worldInitialize.subscribe((e) => {
-    let def = new DynamicPropertiesDefinition().defineString("__cache0:", cutLength);
-    e.propertyRegistry.registerEntityTypeDynamicProperties(def, MinecraftEntityTypes.player);
-});
 export default class EntityPropCache {
     constructor(entity) {
         this.entity = entity;

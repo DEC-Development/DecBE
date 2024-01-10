@@ -1,17 +1,9 @@
-import { world, DynamicPropertiesDefinition, MinecraftEntityTypes } from "@minecraft/server";
 import MathUtil from "../../../modules/exmc/math/MathUtil.js";
 import ExSystem from "../../../modules/exmc/utils/ExSystem.js";
 import VarOnChangeListener from "../../../modules/exmc/utils/VarOnChangeListener.js";
 import { Talent } from "../cache/TalentData.js";
 import GameController from "./GameController.js";
-import { MinecraftEffectTypes } from "../../../modules/vanilla-data/lib/mojang-effect.js";
-world.afterEvents.worldInitialize.subscribe((e) => {
-    let def = new DynamicPropertiesDefinition()
-        .defineNumber("health", 40)
-        .defineNumber("damageAbsorbed", 0)
-        .defineNumber("magicReduce", 0);
-    e.propertyRegistry.registerEntityTypeDynamicProperties(def, MinecraftEntityTypes.player);
-});
+import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
 export default class PomMagicSystem extends GameController {
     constructor() {
         super(...arguments);
@@ -214,7 +206,7 @@ export default class PomMagicSystem extends GameController {
             healthListener.value = 50000;
             health.setCurrentValue(50000);
             if (e.initialSpawn) {
-                this.gameHealth = Math.min(this.gameMaxHealth, ((n = this.player.getDynamicProperty("health")) <= 0) ? this.gameMaxHealth : n);
+                this.gameHealth = Math.min(this.gameMaxHealth, ((n = this.player.getDynamicProperty("health")) <= 0) || n === undefined ? this.gameMaxHealth : n);
             }
             else {
                 this.gameHealth = this.gameMaxHealth;

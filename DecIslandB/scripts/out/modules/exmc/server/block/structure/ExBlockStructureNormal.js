@@ -1,8 +1,8 @@
-import { MinecraftBlockTypes } from "@minecraft/server";
 import Vector3 from "../../../math/Vector3.js";
 import ExDimension from "../../ExDimension.js";
 import { ExBlockArea } from "../ExBlockArea.js";
 import ExGame from "../../ExGame.js";
+import { MinecraftBlockTypes } from "../../../../vanilla-data/lib/index.js";
 export default class ExBlockStructureNormal {
     constructor() {
         this.direction = ExBlockStructureNormal.DIRECTION_AROUND | ExBlockStructureNormal.DIRECTION_LAY;
@@ -211,7 +211,7 @@ export default class ExBlockStructureNormal {
                             continue;
                         res.calculateRelPos(vec, tmpV).add(res.start);
                         // console.warn("get block at " +tmpV+" :P "+dimension?.getBlock(tmpV)?.typeId);
-                        if (((_a = dimension === null || dimension === void 0 ? void 0 : dimension.getBlock(tmpV)) === null || _a === void 0 ? void 0 : _a.typeId) !== ((_c = (_b = this.analysisMap) === null || _b === void 0 ? void 0 : _b.get(c)) !== null && _c !== void 0 ? _c : MinecraftBlockTypes.air.id)) {
+                        if (((_a = dimension === null || dimension === void 0 ? void 0 : dimension.getBlock(tmpV)) === null || _a === void 0 ? void 0 : _a.typeId) !== ((_c = (_b = this.analysisMap) === null || _b === void 0 ? void 0 : _b.get(c)) !== null && _c !== void 0 ? _c : MinecraftBlockTypes.Air)) {
                             return;
                         }
                     }
@@ -264,7 +264,7 @@ export default class ExBlockStructureNormal {
                                 continue;
                             area.calculateRelPos(vec, tmpV).add(area.start);
                             let id = this.analysisMap.get(c);
-                            this.dimension.setBlock(tmpV, id !== null && id !== void 0 ? id : MinecraftBlockTypes.air.id);
+                            this.dimension.setBlock(tmpV, id !== null && id !== void 0 ? id : MinecraftBlockTypes.Air);
                         }
                     }
                 }

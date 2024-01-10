@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { ChatSendBeforeEvent, EntityDamageCause, EntityHurtAfterEvent, GameMode, MinecraftBlockTypes, MinecraftDimensionTypes, MinecraftEntityTypes, Player } from '@minecraft/server';
+import { ChatSendBeforeEvent, EntityDamageCause, EntityHurtAfterEvent, GameMode, MinecraftDimensionTypes, Player } from '@minecraft/server';
 import Vector3 from '../../modules/exmc/math/Vector3.js';
 import ExDimension from "../../modules/exmc/server/ExDimension.js";
 import ExGameServer from "../../modules/exmc/server/ExGameServer.js";
@@ -23,7 +23,6 @@ import ExSystem from '../../modules/exmc/utils/ExSystem.js';
 import Random from "../../modules/exmc/utils/Random.js";
 import TimeLoopTask from "../../modules/exmc/utils/TimeLoopTask.js";
 import { falseIfError } from '../../modules/exmc/utils/tool.js';
-import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import PomClient from "./PomClient.js";
 import GlobalSettings from "./cache/GlobalSettings.js";
 import PomAncientStoneBoss from './entities/PomAncientStoneBoss.js';
@@ -39,6 +38,7 @@ import PomMindBossRuin from './func/ruins/mind/PomMindBossRuin.js';
 import PomStoneBossRuin from './func/ruins/stone/PomStoneBossRuin.js';
 import damageShow from './helper/damageShow.js';
 import itemCanChangeBlock from './items/itemCanChangeBlock.js';
+import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEntityTypes } from '../../modules/vanilla-data/lib/index.js';
 // import * as b from "brain.js";
 export default class PomServer extends ExGameServer {
     sayTo(str) {
@@ -140,12 +140,12 @@ export default class PomServer extends ExGameServer {
             ]
         ])
             .analysis({
-            X: MinecraftBlockTypes.sandstone.id,
-            W: MinecraftBlockTypes.water.id,
+            X: MinecraftBlockTypes.Sandstone,
+            W: MinecraftBlockTypes.Water,
             Y: "wb:block_magic_equipment",
-            A: MinecraftBlockTypes.air.id,
-            S: MinecraftBlockTypes.stoneBlockSlab2.id,
-            C: MinecraftBlockTypes.cobblestoneWall.id
+            A: MinecraftBlockTypes.Air,
+            S: MinecraftBlockTypes.StoneBlockSlab2,
+            C: MinecraftBlockTypes.CobblestoneWall
         });
         //石头遗迹
         this.portal_stoneBoss = new ExBlockStructureNormal();
@@ -167,12 +167,12 @@ export default class PomServer extends ExGameServer {
             ]
         ])
             .analysis({
-            X: MinecraftBlockTypes.sandstone.id,
-            W: MinecraftBlockTypes.water.id,
+            X: MinecraftBlockTypes.Sandstone,
+            W: MinecraftBlockTypes.Water,
             Y: "wb:block_energy_seal",
-            S: MinecraftBlockTypes.cobblestoneWall.id,
-            A: MinecraftBlockTypes.air.id,
-            B: MinecraftBlockTypes.stonebrick.id
+            S: MinecraftBlockTypes.CobblestoneWall,
+            A: MinecraftBlockTypes.Air,
+            B: MinecraftBlockTypes.Stonebrick
         });
         //洞穴遗迹
         this.portal_caveBoss = new ExBlockStructureNormal();
@@ -194,11 +194,11 @@ export default class PomServer extends ExGameServer {
             ]
         ])
             .analysis({
-            X: MinecraftBlockTypes.deepslateTiles.id,
-            W: MinecraftBlockTypes.water.id,
+            X: MinecraftBlockTypes.DeepslateTiles,
+            W: MinecraftBlockTypes.Water,
             Y: "wb:block_energy_boundary",
-            S: MinecraftBlockTypes.lantern.id,
-            A: MinecraftBlockTypes.air.id
+            S: MinecraftBlockTypes.Lantern,
+            A: MinecraftBlockTypes.Air
         });
         //洞穴远古
         this.portal_ancientBoss = new ExBlockStructureNormal();
@@ -220,12 +220,12 @@ export default class PomServer extends ExGameServer {
             ]
         ])
             .analysis({
-            X: MinecraftBlockTypes.chiseledDeepslate.id,
-            W: MinecraftBlockTypes.water.id,
+            X: MinecraftBlockTypes.ChiseledDeepslate,
+            W: MinecraftBlockTypes.Water,
             Y: "wb:block_magic_ink",
-            S: MinecraftBlockTypes.verdantFroglight.id,
-            A: MinecraftBlockTypes.air.id,
-            B: MinecraftBlockTypes.mossyCobblestone.id
+            S: MinecraftBlockTypes.VerdantFroglight,
+            A: MinecraftBlockTypes.Air,
+            B: MinecraftBlockTypes.MossyCobblestone
         });
         //遗迹内心
         this.portal_mindBoss = new ExBlockStructureNormal();
@@ -248,10 +248,10 @@ export default class PomServer extends ExGameServer {
         ])
             .analysis({
             X: "wb:block_magic_equipment",
-            W: MinecraftBlockTypes.water.id,
+            W: MinecraftBlockTypes.Water,
             Y: "wb:block_senior_equipment",
             S: "wb:block_magic_barrier",
-            A: MinecraftBlockTypes.air.id
+            A: MinecraftBlockTypes.Air
         });
         let r = new Random(this.setting.worldSeed);
         this.ruin_desertBoss = new PomDesertBossRuin(r.nextInt());
@@ -296,7 +296,7 @@ export default class PomServer extends ExGameServer {
         upDateMonster();
         this.ruinCleaner.start();
         //遗迹保护
-        this.getEvents().events.afterBlockBreak.subscribe(e => {
+        this.getEvents().events.afterPlayerBreakBlock.subscribe(e => {
             if (e.dimension === this.getDimension(MinecraftDimensionTypes.theEnd) && (RuinsLoaction.isInProtectArea(e.block))) {
                 let ex = ExPlayer.getInstance(e.player);
                 // if (ex.getGameMode() === GameMode.creative) return;
@@ -424,7 +424,7 @@ export default class PomServer extends ExGameServer {
         this.getEvents().events.afterEntitySpawn.subscribe(e => {
             if (!falseIfError(() => (e.entity.typeId)))
                 return;
-            if (e.entity.typeId === MinecraftEntityTypes.enderman.id) {
+            if (e.entity.typeId === MinecraftEntityTypes.Enderman) {
                 if (e.entity.dimension === this.getDimension(MinecraftDimensionTypes.theEnd) &&
                     (RuinsLoaction.isInProtectArea(e.entity.location))) {
                     e.entity.triggerEvent("minecraft:despawn");
@@ -460,7 +460,7 @@ export default class PomServer extends ExGameServer {
         });
         let max = [0, ""];
         map.forEach((v, k) => {
-            if (v > max[0] && [MinecraftEntityTypes.player.id, MinecraftEntityTypes.villager.id, MinecraftEntityTypes.villagerV2.id].indexOf(k) === -1) {
+            if (v > max[0] && [MinecraftEntityTypes.Player, MinecraftEntityTypes.Villager, MinecraftEntityTypes.VillagerV2].indexOf(k) === -1) {
                 max[0] = v;
                 max[1] = k;
             }

@@ -27,7 +27,8 @@ export default class ExEntityEvents {
             [ExOtherEventNames.afterItemOnHandChange]: new Listener(this, ExOtherEventNames.afterItemOnHandChange),
             [ExOtherEventNames.onLongTick]: new Listener(this, ExOtherEventNames.onLongTick),
             [ExOtherEventNames.beforeTick]: new Listener(this, ExOtherEventNames.beforeTick),
-            [ExEventNames.afterBlockBreak]: new Listener(this, ExEventNames.afterBlockBreak)
+            [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
+            [ExEventNames.afterEntityRemove]: new Listener(this, ExEventNames.afterEntityRemove)
         };
         this._ctrl = ctrl;
     }
@@ -108,11 +109,14 @@ ExEntityEvents.exEventSetting = {
     [ExOtherEventNames.onLongTick]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
     },
-    [ExEventNames.afterBlockBreak]: {
+    [ExEventNames.afterPlayerBreakBlock]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "player"
         }
+    },
+    [ExEventNames.afterEntityRemove]: {
+        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
     }
 };
 ExEntityEvents.onHandItemMap = new Map();

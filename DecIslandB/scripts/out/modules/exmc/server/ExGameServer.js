@@ -24,7 +24,6 @@ import { eventDecoratorFactory, registerEvent } from "./events/eventDecoratorFac
 import notUtillTask from "../utils/notUtillTask.js";
 import ExSound from "./env/ExSound.js";
 import { ExEventNames } from "./events/events.js";
-import { falseIfError } from "../utils/tool.js";
 import ExSystem from "../utils/ExSystem.js";
 export default class ExGameServer {
     constructor(config) {
@@ -74,7 +73,7 @@ export default class ExGameServer {
         this.entityControllers.set(id, ec);
     }
     onEntitySpawn(e) {
-        if (!falseIfError(() => (e.entity.typeId)))
+        if (!e.entity.isValid())
             return;
         let id;
         try {

@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Vector3 from "../../../../modules/exmc/math/Vector3.js";
-import { MinecraftBlockTypes } from '@minecraft/server';
 import ExTaskRunner from "../../../../modules/exmc/server/ExTaskRunner.js";
 import Random from "../../../../modules/exmc/utils/Random.js";
+import { MinecraftBlockTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default class IStructureSettle {
     constructor() {
         this.cmds = [];
@@ -64,7 +64,7 @@ export default class IStructureSettle {
                     e.set(...(c.end ? c.end : c.start));
                     if (c.end)
                         e.sub(1);
-                    dim.fillBlocks(tmpV.set(pos).add(s), tmpP.set(pos).add(e), (_a = t.block.get(c.blockId)) !== null && _a !== void 0 ? _a : MinecraftBlockTypes.air);
+                    dim.fillBlocks(tmpV.set(pos).add(s), tmpP.set(pos).add(e), (_a = t.block.get(c.blockId)) !== null && _a !== void 0 ? _a : MinecraftBlockTypes.Air);
                     yield true;
                 }
                 return false;

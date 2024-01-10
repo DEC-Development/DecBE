@@ -76,7 +76,7 @@ export default class PomTaskSystem extends GameController {
                 }
             }
         });
-        this.getEvents().exEvents.afterBlockBreak.subscribe(e => {
+        this.getEvents().exEvents.afterPlayerBreakBlock.subscribe(e => {
             var _a, _b;
             // ExGameConfig.console.log(e.brokenBlockPermutation.type.id);
             if (!this.data.tasks)

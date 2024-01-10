@@ -1,4 +1,4 @@
-import { MinecraftEntityTypes, MinecraftItemTypes } from "@minecraft/server";
+import { MinecraftEntityTypes, MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_b(lang) {
     return {
         "name": "每日任务-稀有级",
@@ -8,19 +8,19 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "小麦",
-                        "typeId": MinecraftItemTypes.wheat.id,
+                        "typeId": MinecraftItemTypes.Wheat,
                         "count": 128,
                         "type": "item"
                     },
                     {
                         "name": "南瓜",
-                        "typeId": MinecraftItemTypes.pumpkin.id,
+                        "typeId": MinecraftItemTypes.Pumpkin,
                         "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "西瓜片",
-                        "typeId": MinecraftItemTypes.melonSlice.id,
+                        "typeId": MinecraftItemTypes.MelonSlice,
                         "count": 128,
                         "type": "item"
                     }
@@ -39,19 +39,19 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "马铃薯",
-                        "typeId": MinecraftItemTypes.potato.id,
+                        "typeId": MinecraftItemTypes.Potato,
                         "count": 128,
                         "type": "item"
                     },
                     {
                         "name": "胡萝卜",
-                        "typeId": MinecraftItemTypes.carrot.id,
+                        "typeId": MinecraftItemTypes.Carrot,
                         "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "西瓜",
-                        "typeId": MinecraftItemTypes.melonBlock.id,
+                        "typeId": MinecraftItemTypes.MelonBlock,
                         "count": 32,
                         "type": "item"
                     }
@@ -70,25 +70,25 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "熟鸡肉",
-                        "typeId": MinecraftItemTypes.cookedChicken.id,
+                        "typeId": MinecraftItemTypes.CookedChicken,
                         "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "熟羊肉",
-                        "typeId": MinecraftItemTypes.cookedMutton.id,
+                        "typeId": MinecraftItemTypes.CookedMutton,
                         "count": 32,
                         "type": "item"
                     },
                     {
                         "name": "生牛肉",
-                        "typeId": MinecraftItemTypes.beef.id,
+                        "typeId": MinecraftItemTypes.Beef,
                         "count": 32,
                         "type": "item"
                     },
                     {
                         "name": "熟兔肉",
-                        "typeId": MinecraftItemTypes.cookedRabbit.id,
+                        "typeId": MinecraftItemTypes.CookedRabbit,
                         "count": 6,
                         "type": "item"
                     }
@@ -157,19 +157,19 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "猪",
-                        "typeId": MinecraftEntityTypes.pig.id,
+                        "typeId": MinecraftEntityTypes.Pig,
                         "count": 10,
                         "type": "kill"
                     },
                     {
                         "name": "牛",
-                        "typeId": MinecraftEntityTypes.cow.id,
+                        "typeId": MinecraftEntityTypes.Cow,
                         "count": 12,
                         "type": "kill"
                     },
                     {
                         "name": "羊",
-                        "typeId": MinecraftEntityTypes.sheep.id,
+                        "typeId": MinecraftEntityTypes.Sheep,
                         "count": 9,
                         "type": "kill"
                     }
@@ -207,7 +207,7 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "石头",
-                        "typeId": MinecraftItemTypes.stone.id,
+                        "typeId": MinecraftItemTypes.Stone,
                         "count": 128,
                         "type": "break"
                     }
@@ -226,7 +226,7 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "毒马铃薯",
-                        "typeId": MinecraftItemTypes.poisonousPotato.id,
+                        "typeId": MinecraftItemTypes.PoisonousPotato,
                         "count": 16,
                         "type": "item"
                     }
@@ -245,13 +245,13 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "兔肉煲",
-                        "typeId": MinecraftItemTypes.rabbitStew.id,
+                        "typeId": MinecraftItemTypes.RabbitStew,
                         "count": 5,
                         "type": "item"
                     },
                     {
                         "name": "蘑菇煲",
-                        "typeId": MinecraftItemTypes.mushroomStew.id,
+                        "typeId": MinecraftItemTypes.MushroomStew,
                         "count": 5,
                         "type": "item"
                     }
@@ -289,7 +289,7 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "末地水晶",
-                        "typeId": MinecraftItemTypes.endCrystal.id,
+                        "typeId": MinecraftItemTypes.EndCrystal,
                         "count": 4,
                         "type": "item"
                     }

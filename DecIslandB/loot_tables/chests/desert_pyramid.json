@@ -246,6 +246,20 @@
         },
         {
           "type": "item",
+          "name": "dec:mooli_seeds",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "item",
           "name": "minecraft:rotten_flesh",
           "weight": 10,
           "functions": [

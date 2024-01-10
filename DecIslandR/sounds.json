@@ -1,6 +1,17 @@
 {
 	"entity_sounds": {
 		"entities": {
+			"dec:frozen_man": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"hurt": "random.glass",
+					"death": "random.glass"
+				}
+			},
 			"dec:ash_bomb": {
 				"volume": 1.0,
 				"pitch": [
@@ -2575,7 +2586,7 @@
 					"shoot": "mob.blaze.shoot"
 				}
 			},
-			"dec:son_of_natura": {
+			"dec:son_of_nature": {
 				"volume": 1.0,
 				"pitch": [
 					0.9,

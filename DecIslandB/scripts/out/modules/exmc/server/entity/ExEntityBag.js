@@ -3,7 +3,7 @@ export default class ExEntityBag {
     constructor(entity) {
         this._entity = entity;
         this.bagComponent = entity.getComponent("minecraft:inventory");
-        this.equipmentComponent = entity.getComponent("minecraft:equipment_inventory");
+        this.equipmentComponent = entity.getComponent("minecraft:equippable");
     }
     getItem(arg) {
         if (typeof (arg) === "number") {
@@ -126,40 +126,40 @@ export default class ExEntityBag {
         return this.equipmentComponent.getEquipmentSlot(slot);
     }
     get itemOnMainHand() {
-        return this.getItem(EquipmentSlot.mainhand);
+        return this.getItem(EquipmentSlot.Mainhand);
     }
     set itemOnMainHand(item) {
-        this.setItem(EquipmentSlot.mainhand, item);
+        this.setItem(EquipmentSlot.Mainhand, item);
     }
     get itemOnOffHand() {
-        return this.getItem(EquipmentSlot.offhand);
+        return this.getItem(EquipmentSlot.Offhand);
     }
     set itemOnOffHand(item) {
-        this.setItem(EquipmentSlot.offhand, item);
+        this.setItem(EquipmentSlot.Offhand, item);
     }
     get equipmentOnHead() {
-        return this.getItem(EquipmentSlot.head);
+        return this.getItem(EquipmentSlot.Head);
     }
     set equipmentOnHead(item) {
-        this.setItem(EquipmentSlot.head, item);
+        this.setItem(EquipmentSlot.Head, item);
     }
     get equipmentOnChest() {
-        return this.getItem(EquipmentSlot.chest);
+        return this.getItem(EquipmentSlot.Chest);
     }
     set equipmentOnChest(item) {
-        this.setItem(EquipmentSlot.chest, item);
+        this.setItem(EquipmentSlot.Chest, item);
     }
     get equipmentOnFeet() {
-        return this.getItem(EquipmentSlot.feet);
+        return this.getItem(EquipmentSlot.Feet);
     }
     set equipmentOnFeet(item) {
-        this.setItem(EquipmentSlot.feet, item);
+        this.setItem(EquipmentSlot.Feet, item);
     }
     get equipmentOnLegs() {
-        return this.getItem(EquipmentSlot.legs);
+        return this.getItem(EquipmentSlot.Legs);
     }
     set equipmentOnLegs(item) {
-        this.setItem(EquipmentSlot.legs, item);
+        this.setItem(EquipmentSlot.Legs, item);
     }
 }
 //# sourceMappingURL=ExEntityBag.js.map

@@ -1,6 +1,6 @@
 import Vector3 from "../../../../modules/exmc/math/Vector3.js";
 import IStructureSettle from "./IStructureSettle.js";
-import { MinecraftBlockTypes } from "@minecraft/server";
+import { MinecraftBlockTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default class IStructureDriver {
     *save(dim, start, end) {
         if (start.x > end.x)
@@ -43,14 +43,14 @@ export default class IStructureDriver {
                     id = dim.getBlock(tmpV).type.id;
                     if (id !== last) {
                         if (last !== "") {
-                            if (last !== MinecraftBlockTypes.air.id)
+                            if (last !== MinecraftBlockTypes.Air)
                                 a1.fill([x + offset.x, y + offset.y, zlast + offset.z], [x + 1 + offset.x, y + 1 + offset.y, z + offset.z], last);
                         }
                         last = id;
                         zlast = z;
                     }
                 }
-                if (id !== MinecraftBlockTypes.air.id)
+                if (id !== MinecraftBlockTypes.Air)
                     a1.fill([x + offset.x, y + offset.y, zlast + offset.z], [x + 1 + offset.x, y + 1 + offset.y, box.z + offset.z], last);
             }
         }

@@ -2,9 +2,9 @@ var _a;
 import ExPlayer from '../entity/ExPlayer.js';
 import { ExEventNames, ExOtherEventNames, ItemOnHandChangeEvent, PlayerShootProjectileEvent } from "./events.js";
 import EventHandle from './EventHandle.js';
-import { MinecraftEntityTypes } from "../../../vanilla-data/lib/mojang-entity.js";
 import ExEntity from "../entity/ExEntity.js";
 import Vector3 from "../../math/Vector3.js";
+import { MinecraftEntityTypes } from "../../../vanilla-data/lib/index.js";
 export default class ExClientEvents {
     _subscribe(arg0, callback) {
         ExClientEvents.eventHandlers.subscribe(this._client.player, arg0, callback);
@@ -39,7 +39,7 @@ export default class ExClientEvents {
             [ExOtherEventNames.afterPlayerHurt]: new Listener(this, ExOtherEventNames.afterPlayerHurt),
             [ExOtherEventNames.afterItemOnHandChange]: new Listener(this, ExOtherEventNames.afterItemOnHandChange),
             [ExOtherEventNames.afterPlayerShootProj]: new Listener(this, ExOtherEventNames.afterPlayerShootProj),
-            [ExEventNames.afterBlockBreak]: new Listener(this, ExEventNames.afterBlockBreak),
+            [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
             [ExEventNames.afterPlayerSpawn]: new Listener(this, ExEventNames.afterPlayerSpawn),
             [ExEventNames.afterEntityHealthChanged]: new Listener(this, ExEventNames.afterEntityHealthChanged),
             [ExEventNames.afterEffectAdd]: new Listener(this, ExEventNames.afterEffectAdd)
@@ -261,7 +261,7 @@ ExClientEvents.exEventSetting = {
             });
         }
     },
-    [ExEventNames.afterBlockBreak]: {
+    [ExEventNames.afterPlayerBreakBlock]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "player"

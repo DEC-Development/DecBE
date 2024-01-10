@@ -1,4 +1,4 @@
-import { MinecraftDimensionTypes, world, Direction, GameMode } from '@minecraft/server';
+import { MinecraftDimensionTypes, world, Direction, GameMode, ScriptEventSource, system, EntityDamageCause } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
@@ -16,11 +16,11 @@ import GZIPUtil from '../../modules/exmc/utils/GZIPUtil.js';
 import IStructureSettle from './data/structure/IStructureSettle.js';
 import IStructureDriver from './data/structure/IStructureDriver.js';
 import ExTaskRunner from '../../modules/exmc/server/ExTaskRunner.js';
-import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import DecNukeController from './entities/DecNukeController.js';
 import GlobalScoreBoardCache from '../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js';
 import MathUtil from '../../modules/exmc/math/MathUtil.js';
 import ExGame from '../../modules/exmc/server/ExGame.js';
+import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -34,6 +34,7 @@ export default class DecServer extends ExGameServer {
         this.i_heavy = new Objective("i_heavy").create("i_heavy");
         this.bullet_type = new Objective("bullet_type").create("bullet_type");
         this.skill_count = new Objective("skill_count").create("skill_count");
+        let place_block_wait_tick = 0;
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
@@ -181,9 +182,28 @@ export default class DecServer extends ExGameServer {
                 e.cancel = true;
             }
         });
-        this.getEvents().events.afterBlockBreak.subscribe(e => {
+        let multiple_blocks_items;
+        multiple_blocks_items = {
+            'dec:patterned_vase_red': 'dec:patterned_vase_red_block',
+            'dec:golden_fence': 'dec:golden_fence_block'
+        };
+        let multiple_blocks;
+        multiple_blocks = {
+            'dec:patterned_vase_red_block': {
+                'height': 2,
+                'sound': 'stone',
+                'facing': false
+            },
+            'dec:golden_fence_block': {
+                'height': 2,
+                'sound': 'stone',
+                'facing': true
+            }
+        };
+        this.getEvents().events.afterPlayerBreakBlock.subscribe(e => {
             var _a;
             const entity = ExPlayer.getInstance(e.player);
+            const block_before_id = e.brokenBlockPermutation.type.id;
             //防破坏方块 i_inviolable计分板控制
             if (entity.getScoresManager().getScore(this.i_inviolable) > 1) {
                 (_a = e.dimension.getBlock(e.block.location)) === null || _a === void 0 ? void 0 : _a.setType(e.brokenBlockPermutation.type);
@@ -200,12 +220,27 @@ export default class DecServer extends ExGameServer {
             //种植架
             const block = e.block;
             function print(s) {
+                s = String(s);
                 world.getDimension('overworld').runCommandAsync('say ' + s);
             }
-            if (e.brokenBlockPermutation.type.id == 'dec:trellis') {
+            if (block_before_id == 'dec:trellis') {
                 const bottom_block = block.dimension.getBlock(new Vector3(block.location.x, block.location.y - 1, block.location.z));
                 if (bottom_block.typeId == 'dec:trellis') {
                     state_set_keep(bottom_block, { 'dec:is_top': true });
+                }
+            }
+            else if (block_before_id in multiple_blocks) {
+                let block_test_below = e.block.location.y - e.brokenBlockPermutation.getAllStates()['dec:location'];
+                let loc = 0;
+                let block_test = e.block.dimension.getBlock(new Vector3(e.block.location.x, block_test_below, e.block.location.z));
+                let repeat_times = multiple_blocks[block_before_id]['height'] + 1;
+                while (repeat_times > 0) {
+                    if (block_test.typeId == block_before_id && block_test.permutation.getAllStates()['dec:location'] == loc) {
+                        block_test.transTo('minecraft:air');
+                    }
+                    block_test = e.block.dimension.getBlock(new Vector3(e.block.location.x, block_test.location.y + 1, e.block.location.z));
+                    loc += 1;
+                    repeat_times -= 1;
                 }
             }
         });
@@ -244,9 +279,11 @@ export default class DecServer extends ExGameServer {
                     }
                 }
             }
-            else {
-                //三格的方块
+            else if (e.itemStack.typeId in multiple_blocks_items && place_block_wait_tick <= 0) {
                 let b = e.block;
+                place_block_wait_tick = 2;
+                //e.source.playAnimation('')
+                b.dimension.runCommandAsync('playsound use.stone @a ' + String(e.block.location.x) + ' ' + String(e.block.location.y) + ' ' + String(e.block.location.z));
                 if (e.blockFace == Direction.East) {
                     b = e.block.dimension.getBlock(new Vector3(b.location.x + 1, b.location.y, b.location.z));
                 }
@@ -254,32 +291,69 @@ export default class DecServer extends ExGameServer {
                     b = e.block.dimension.getBlock(new Vector3(b.location.x - 1, b.location.y, b.location.z));
                 }
                 else if (e.blockFace == Direction.North) {
-                    b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y, b.location.z + 1));
+                    b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y, b.location.z - 1));
                 }
                 else if (e.blockFace == Direction.South) {
-                    b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y, b.location.z - 1));
+                    b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y, b.location.z + 1));
                 }
                 else if (e.blockFace == Direction.Up) {
                     b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y + 1, b.location.z));
                 }
                 if (e.blockFace != Direction.Down) {
-                    let b_p1 = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y + 1, b.location.z));
-                    let b_p2 = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y + 2, b.location.z));
-                    if (e.itemStack.typeId == 'dec:patterned_vase_red') {
-                        if (b.isAir() && (b_p1 === null || b_p1 === void 0 ? void 0 : b_p1.isAir()) && (b_p2 === null || b_p2 === void 0 ? void 0 : b_p2.isAir())) {
-                            let p = ExPlayer.getInstance(e.source);
-                            if (p.getGameMode() == GameMode.survival && p.getGameMode() == GameMode.adventure) {
-                                p.getBag().clearItem('dec:patterned_vase_red', 1);
+                    let repeat_times = multiple_blocks[multiple_blocks_items[e.itemStack.typeId]]['height'] + 1;
+                    let repeat_times_jud = repeat_times;
+                    let place_admit = true;
+                    let test_block = b;
+                    while (repeat_times_jud > 0) {
+                        if (!test_block.isAir) {
+                            place_admit = false;
+                            break;
+                        }
+                        else {
+                            test_block = test_block.dimension.getBlock(new Vector3(test_block.location.x, test_block.location.y + 1, test_block.location.z));
+                            repeat_times_jud -= 1;
+                        }
+                    }
+                    test_block = b;
+                    let loc = 0;
+                    if (place_admit) {
+                        while (repeat_times > 0) {
+                            let states_str = '';
+                            if (multiple_blocks[multiple_blocks_items[e.itemStack.typeId]]['facing']) {
+                                states_str = ' ["dec:location"=' + String(loc) + ',"dec:facing"="' + get_direction_str(e.source) + '"]';
                             }
-                            b.dimension.runCommandAsync('setblock ' + String(b.location.x) + ' ' + String(b.location.y) + ' ' + String(b.location.z) + ' dec:patterned_vase_red_block ["dec:location"="bottom"]');
-                            b.dimension.runCommandAsync('setblock ' + String(b.location.x) + ' ' + String(b.location.y + 1) + ' ' + String(b.location.z) + ' dec:patterned_vase_red_block ["dec:location"="middle"]');
-                            b.dimension.runCommandAsync('setblock ' + String(b.location.x) + ' ' + String(b.location.y + 2) + ' ' + String(b.location.z) + ' dec:patterned_vase_red_block ["dec:location"="top"]');
+                            else {
+                                states_str = ' ["dec:location"=' + String(loc) + ']';
+                            }
+                            test_block.dimension.runCommandAsync('setblock ' + String(test_block.location.x) + ' ' + String(test_block.location.y) + ' ' + String(test_block.location.z) + ' ' + multiple_blocks_items[e.itemStack.typeId] + states_str);
+                            test_block = test_block.dimension.getBlock(new Vector3(test_block.location.x, test_block.location.y + 1, test_block.location.z));
+                            loc += 1;
+                            repeat_times -= 1;
+                        }
+                        let p = ExPlayer.getInstance(e.source);
+                        if (p.getGameMode() == GameMode.survival || p.getGameMode() == GameMode.adventure) {
+                            p.getBag().clearItem(e.itemStack.typeId, 1);
                         }
                     }
                 }
             }
         });
-        this.getEvents().events.afterBlockPlace.subscribe(e => {
+        const get_direction_str = (p) => {
+            let r = p.getRotation().y;
+            if (-45 < r && r <= 45) {
+                return 'south';
+            }
+            else if (45 < r && r <= 135) {
+                return 'west';
+            }
+            else if (-135 < r && r <= -45) {
+                return 'east';
+            }
+            else {
+                return 'north';
+            }
+        };
+        this.getEvents().events.afterPlayerPlaceBlock.subscribe(e => {
             const block = e.block;
             //种植架
             if (e.block.typeId == 'dec:trellis') {
@@ -305,6 +379,9 @@ export default class DecServer extends ExGameServer {
             ]);
         });
         this.getEvents().exEvents.onLongTick.subscribe(e => {
+            if (place_block_wait_tick > 0) {
+                place_block_wait_tick -= 1;
+            }
             let night_event = this.globalscores.getNumber("NightRandom");
             const nightEvent = (fog, eventEntity, maxSpawn) => {
                 this.getExDimension(MinecraftDimensionTypes.overworld).command.run(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
@@ -410,11 +487,11 @@ export default class DecServer extends ExGameServer {
                 //种植架
                 const block = e.sourceBlock;
                 const tmpV = new Vector3();
-                const block_above = e.sourceBlock.dimension.getBlock(tmpV.set(block.location.x, block.location.y + 1, block.location.z));
-                const block_xp = e.sourceBlock.dimension.getBlock(tmpV.set(block.location.x + 1, block.location.y, block.location.z));
-                const block_xn = e.sourceBlock.dimension.getBlock(tmpV.set(block.location.x - 1, block.location.y, block.location.z));
-                const block_zp = e.sourceBlock.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z + 1));
-                const block_zn = e.sourceBlock.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z - 1));
+                const block_above = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y + 1, block.location.z));
+                const block_xp = block.dimension.getBlock(tmpV.set(block.location.x + 1, block.location.y, block.location.z));
+                const block_xn = block.dimension.getBlock(tmpV.set(block.location.x - 1, block.location.y, block.location.z));
+                const block_zp = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z + 1));
+                const block_zn = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z - 1));
                 if ((block_above === null || block_above === void 0 ? void 0 : block_above.typeId) == 'dec:trellis' && e.message == 'wither') {
                     let block_above_n = block_above;
                     while (block_above_n.typeId == 'dec:trellis') {
@@ -440,7 +517,86 @@ export default class DecServer extends ExGameServer {
                     trellis_cover_wither_spread(block_zn);
                 }
             }
+            else if (e.id == 'dec:sprint') {
+                let power = Number(e.message);
+                let p = e.sourceEntity;
+                let r = p.getViewDirection();
+                if (power < 0) {
+                    p.applyKnockback(r.x, r.z, power, 0);
+                }
+                else {
+                    p.applyKnockback(-r.x, -r.z, -power, 0);
+                }
+            }
+            else if (e.id == 'dec:sustain_particle') {
+                //格式：粒子id;重复生成次数;生成间隔刻
+                let para_arr = message_split(e.message);
+                let dim = script_event_location(e)[0];
+                let i = 0;
+                while (i < Number(para_arr[1])) {
+                    system.runTimeout(() => {
+                        let loc = script_event_location(e)[1];
+                        dim.spawnParticle(para_arr[0].toString(), loc);
+                    }, i * Number(para_arr[2]));
+                    i++;
+                }
+            }
+            else if (e.id == 'dec:sustain_damage') {
+                //格式：伤害类型;伤害大小;重复判断次数;判断间隔刻
+                let para_arr = message_split(e.message);
+                let dim = script_event_location(e)[0];
+                let damege_type_string = para_arr[0].toString();
+                let damage_type = EntityDamageCause[damege_type_string];
+                const damage_option = {
+                    cause: damage_type,
+                    damagingEntity: e.sourceEntity
+                };
+                let i = 0;
+                while (i < Number(para_arr[2])) {
+                    system.runTimeout(() => {
+                        let loc = script_event_location(e)[1];
+                        const attackable_entity_option = {
+                            location: loc,
+                            maxDistance: 2,
+                            excludeTypes: ['minecraft:item', 'minecraft:painting', 'minecraft:armor_stand']
+                        };
+                        dim.getEntities(attackable_entity_option).forEach(ent => {
+                            ent.applyDamage(Number(para_arr[1]), damage_option);
+                        });
+                    }, i * Number(para_arr[3]));
+                    i++;
+                }
+            }
         });
+        const script_event_location = (source) => {
+            var _a, _b, _c, _d;
+            let loc;
+            let dim = world.getDimension('overworld');
+            if (source.sourceType == ScriptEventSource.Block) {
+                loc = (_a = source.sourceBlock) === null || _a === void 0 ? void 0 : _a.location;
+                dim = (_b = source.sourceBlock) === null || _b === void 0 ? void 0 : _b.dimension;
+            }
+            else {
+                loc = (_c = source.sourceEntity) === null || _c === void 0 ? void 0 : _c.location;
+                dim = (_d = source.sourceEntity) === null || _d === void 0 ? void 0 : _d.dimension;
+            }
+            return [dim, loc];
+        };
+        const message_split = (message) => {
+            let arr = new Array;
+            let cache = '';
+            for (let m of message) {
+                if (m == ';') {
+                    arr.push(cache);
+                    cache = '';
+                }
+                else {
+                    cache += m;
+                }
+            }
+            arr.push(cache);
+            return arr;
+        };
     }
     newClient(id, player) {
         return new DecClient(this, id, player);

@@ -5,8 +5,17 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "dec:patterned_vase_red",
-                    "weight": 1
+                    "name": "minecraft:brick",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 7
+                            }
+                        }
+                    ]
                 }
             ]
         }

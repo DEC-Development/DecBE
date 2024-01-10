@@ -20,7 +20,7 @@ export default class WorldCache {
         }
     }
     deleteNumber(name) {
-        world.removeDynamicProperty(name);
+        world.setDynamicProperty(name, undefined);
     }
 }
 //# sourceMappingURL=WorldCache.js.map

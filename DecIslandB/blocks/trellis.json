@@ -59,7 +59,7 @@
         },
         "permutations": [
             {
-                "condition": "query.block_property('dec:is_bottom')",
+                "condition": "query.block_state('dec:is_bottom')",
                 "components": {
                     "minecraft:material_instances": {
                         "trellis_bottom": {
@@ -95,7 +95,7 @@
                 }
             },
             {
-                "condition": "!query.block_property('dec:is_bottom')",
+                "condition": "!query.block_state('dec:is_bottom')",
                 "components": {
                     "minecraft:material_instances": {
                         "trellis_bottom": {
@@ -131,7 +131,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "trellis": {
@@ -146,7 +146,7 @@
                 }
             },
             {
-                "condition": "!query.block_property('dec:is_top')",
+                "condition": "!query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "trellis": {
@@ -161,7 +161,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'empty' && query.block_property('dec:is_bottom')",
+                "condition": "query.block_state('dec:crop_type') == 'empty' && query.block_state('dec:is_bottom')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -179,7 +179,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') != 'empty'",
+                "condition": "query.block_state('dec:crop_type') != 'empty'",
                 "components": {
                     "minecraft:on_interact": {
                         "event": "interact"
@@ -187,7 +187,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') != 'empty' && query.block_property('dec:crop_type') != 'wither'",
+                "condition": "query.block_state('dec:crop_type') != 'empty' && query.block_state('dec:crop_type') != 'wither'",
                 "components": {
                     "minecraft:on_interact": {
                         "event": "interact"
@@ -200,7 +200,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'wither' && query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'wither' && query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -215,7 +215,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'wither' && !query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'wither' && !query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -230,7 +230,7 @@
                 }
             }, 
             {
-                "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') == 0 && query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 0 && query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -245,7 +245,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') == 0 && !query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 0 && !query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -260,7 +260,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') == 1 && query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 1 && query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -275,7 +275,7 @@
                 }
             },
             {
-                "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') == 1 && !query.block_property('dec:is_top')",
+                "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 1 && !query.block_state('dec:is_top')",
                 "components": {
                     "minecraft:material_instances": {
                         "crop": {
@@ -304,7 +304,7 @@
                                         "scriptevent dec:trellis wither"
                                     ]
                                 },
-                                "set_block_property": {
+                                "set_block_state": {
                                     "dec:crop_type": "'empty'"
                                 }
                             }
@@ -335,7 +335,7 @@
                         "sequence": [
                             {
                                 "decrement_stack": {},
-                                "set_block_property": {
+                                "set_block_state": {
                                     "dec:crop_type": "'grape'",
                                     "dec:may_wither": false,
                                     "dec:growth_stage": 0
@@ -348,23 +348,23 @@
             "grow": {
                 "sequence": [
                     {
-                        "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') < 1",//作物多了这里写三元运算符
+                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') < 1",//作物多了这里写三元运算符
                         "sequence": [
                             {
-                                "condition": "!query.block_property('dec:may_wither')",
+                                "condition": "!query.block_state('dec:may_wither')",
                                 "sequence": [
                                     {
-                                        "set_block_property": {
-                                            "dec:growth_stage": "query.block_property('dec:growth_stage') + 1"
+                                        "set_block_state": {
+                                            "dec:growth_stage": "query.block_state('dec:growth_stage') + 1"
                                         }
                                     }
                                 ]
                             },
                             {
-                                "condition": "query.block_property('dec:may_wither')",
+                                "condition": "query.block_state('dec:may_wither')",
                                 "sequence": [
                                     {
-                                        "set_block_property": {
+                                        "set_block_state": {
                                             "dec:crop_type": "'wither'",
                                             "dec:growth_stage": 0
                                         },
@@ -379,13 +379,13 @@
                         ]
                     },
                     {
-                        "condition": "query.block_property('dec:crop_type') == 'grape' && query.block_property('dec:growth_stage') == 1",//作物多了这里写三元运算符
+                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 1",//作物多了这里写三元运算符
                         "sequence": [
                             {
-                                "condition": "query.block_property('dec:may_wither')",
+                                "condition": "query.block_state('dec:may_wither')",
                                 "sequence": [
                                     {
-                                        "set_block_property": {
+                                        "set_block_state": {
                                             "dec:crop_type": "'wither'",
                                             "dec:growth_stage": 0
                                         },
@@ -398,7 +398,7 @@
                                 ]
                             },
                             {
-                                "condition": "!query.block_property('dec:may_wither')",
+                                "condition": "!query.block_state('dec:may_wither')",
                                 "sequence": [
                                     {
                                         "run_command": {

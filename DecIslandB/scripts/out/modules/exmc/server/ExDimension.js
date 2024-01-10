@@ -1,4 +1,4 @@
-import { MolangVariableMap, MinecraftBlockTypes } from '@minecraft/server';
+import { MolangVariableMap, BlockTypes } from '@minecraft/server';
 import ExGameConfig from './ExGameConfig.js';
 import ExCommand from './env/ExCommand.js';
 export default class ExDimension {
@@ -40,13 +40,13 @@ export default class ExDimension {
     fillBlocks(start, end, blockId, option) {
         // console.warn("fillBlocks", start, end, blockId);
         if (typeof blockId === "string")
-            blockId = MinecraftBlockTypes.get(blockId);
+            blockId = BlockTypes.get(blockId);
         this.dimension.fillBlocks(start, end, blockId, option);
         //b?.permutation;
     }
     setBlock(vec, blockId) {
         if (typeof blockId === "string")
-            blockId = MinecraftBlockTypes.get(blockId);
+            blockId = BlockTypes.get(blockId);
         let b = this.getBlock(vec);
         b === null || b === void 0 ? void 0 : b.setType(blockId);
         //b?.permutation;

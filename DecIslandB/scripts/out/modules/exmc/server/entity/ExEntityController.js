@@ -11,8 +11,7 @@ import ExEntity from "./ExEntity.js";
 import { EntityHurtAfterEvent } from '@minecraft/server';
 import ExEntityEvents from "./ExEntityEvents.js";
 import { eventDecoratorFactory, registerEvent } from "../events/eventDecoratorFactory.js";
-import { ExOtherEventNames } from "../events/events.js";
-import { falseIfError } from "../../utils/tool.js";
+import { ExEventNames, ExOtherEventNames } from "../events/events.js";
 export default class ExEntityController {
     get entity() {
         return this._entity;
@@ -32,10 +31,14 @@ export default class ExEntityController {
         this._entity = e;
         this.server = server;
         this._events = new ExEntityEvents(this);
+        this._id = e.id;
         this.init(server);
         this.onSpawn();
         eventDecoratorFactory(this.getEvents(), this);
         // console.warn("track " + e.typeId);
+    }
+    getId() {
+        return this._id;
     }
     setTimeout(fun, timeout) {
         let time = 0;
@@ -76,8 +79,8 @@ export default class ExEntityController {
     }
 }
 __decorate([
-    registerEvent(ExOtherEventNames.beforeTick, (ctrl, e) => {
-        return !falseIfError(() => ctrl.entity.dimension);
+    registerEvent(ExEventNames.afterEntityRemove, (ctrl, e) => {
+        return e.removedEntityId === ctrl.getId();
     }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
