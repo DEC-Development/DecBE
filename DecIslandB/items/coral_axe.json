@@ -1093,13 +1093,13 @@
                 "repair_items": [
                     {
                         "items": [
-                            "minecraft:dec:sharp_coral"
+                            "dec:sharp_coral"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  1"
                     },
                     {
                         "items": [
-                            "minecraft:dec:coral_ingot"
+                            "dec:coral_ingot"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.3"
                     }

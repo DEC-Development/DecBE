@@ -43,6 +43,16 @@ export default class GlobalScoreBoardCache {
         this.entity.nameTag = name;
         return this.scores.hasScore(this.objective);
     }
+    initializeNumber(name, value) {
+        //这是lly写的，用来初始化计分板上某一项的值。若未初始化返回true，初始化了返回false
+        if (!this.has(name)) {
+            this.setNumber(name, value);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 GlobalScoreBoardCache.varMap = new Map();
 //# sourceMappingURL=GlobalScoreBoardCache.js.map

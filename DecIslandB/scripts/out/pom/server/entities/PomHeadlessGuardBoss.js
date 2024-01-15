@@ -2,7 +2,7 @@ import PomBossController from './PomBossController.js';
 export default class PomHeadlessGuardBoss extends PomBossController {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getSound("music.wb.unknown_world", "2:16");
+        this.music = server.getMusic("music.wb.unknown_world", "2:16");
     }
     initBossEntity() {
         for (let c of this.barrier.clientsByPlayer()) {

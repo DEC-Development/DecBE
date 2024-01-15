@@ -152,6 +152,13 @@ export default class PomTalentSystem extends GameController {
         this.movementChanger.force();
     }
     onJoin() {
+        if (this.data.pointRecord == undefined)
+            this.data.pointRecord = {
+                deathPoint: [],
+                point: []
+            };
+        if (this.data.talent == undefined)
+            this.data.talent = new TalentData();
         this.getEvents().exEvents.onLongTick.subscribe(e => {
             if (e.currentTick % 20 === 0) {
                 const bag = this.exPlayer.getBag();

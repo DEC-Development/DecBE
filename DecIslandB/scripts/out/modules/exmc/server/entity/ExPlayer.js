@@ -8,7 +8,7 @@ export default class ExPlayer extends ExEntity {
     set entity(e) {
         super.entity = e;
     }
-    setGameMode(mode) {
+    set gamemode(mode) {
         switch (mode) {
             case GameMode.survival:
                 this.runCommandAsync(`gamemode 0`);
@@ -24,34 +24,16 @@ export default class ExPlayer extends ExEntity {
                 break;
         }
     }
-    getGameMode() {
-        var _a, _b, _c, _d;
-        let c = GameMode.creative;
-        c = (((_a = Array.from(this.dimension.getPlayers({
-            location: this.entity.location,
-            closest: 1,
-            maxDistance: 1,
-            gameMode: GameMode.adventure
-        }))) === null || _a === void 0 ? void 0 : _a[0]) === this.entity ? GameMode.adventure : c);
-        c = (((_b = Array.from(this.dimension.getPlayers({
-            location: this.entity.location,
-            closest: 1,
-            maxDistance: 1,
-            gameMode: GameMode.creative
-        }))) === null || _b === void 0 ? void 0 : _b[0]) === this.entity ? GameMode.creative : c);
-        c = (((_c = Array.from(this.dimension.getPlayers({
-            location: this.entity.location,
-            closest: 1,
-            maxDistance: 1,
-            gameMode: GameMode.spectator
-        }))) === null || _c === void 0 ? void 0 : _c[0]) === this.entity ? GameMode.spectator : c);
-        c = (((_d = Array.from(this.dimension.getPlayers({
-            location: this.entity.location,
-            closest: 1,
-            maxDistance: 1,
-            gameMode: GameMode.survival
-        }))) === null || _d === void 0 ? void 0 : _d[0]) === this.entity ? GameMode.survival : c);
-        return c;
+    get gamemode() {
+        let c = [GameMode.adventure, GameMode.creative, GameMode.spectator, GameMode.survival];
+        for (let g of c) {
+            if (this.entity.matches({
+                gameMode: g
+            })) {
+                return g;
+            }
+        }
+        return GameMode.creative;
     }
     title(title, subtitle) {
         // this.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${title}"}]}`);

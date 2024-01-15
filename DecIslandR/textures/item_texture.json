@@ -1501,6 +1501,24 @@
 		},
 		"moon_jellyfish": {
 			"textures": "textures/items/moon_jellyfish"
+		},
+		"scarecrow": {
+			"textures": "textures/items/scarecrow"
+		},
+		"archer_hat": {
+			"textures": "textures/items/archer_hat"
+		},
+		"black_courtesy": {
+			"textures": "textures/items/black_courtesy"
+		},
+		"blue_gem_hat": {
+			"textures": "textures/items/blue_gem_hat"
+		},
+		"farmer_hat": {
+			"textures": "textures/items/farmer_hat"
+		},
+		"red_gem_hat": {
+			"textures": "textures/items/red_gem_hat"
 		}
   }
 }

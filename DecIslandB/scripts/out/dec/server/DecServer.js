@@ -34,7 +34,25 @@ export default class DecServer extends ExGameServer {
         this.i_heavy = new Objective("i_heavy").create("i_heavy");
         this.bullet_type = new Objective("bullet_type").create("bullet_type");
         this.skill_count = new Objective("skill_count").create("skill_count");
+        this.gametime = new Objective("gametime").create("gametime");
+        this.magicpoint = new Objective("magicpoint").create("magicpoint");
+        this.maxmagic = new Objective("maxmagic").create("maxmagic");
+        this.magicgain = new Objective("magicgain").create("magicgain");
+        this.story_random = new Objective("story_random").create("story_random");
+        this.magicreckon = new Objective("magicreckon").create("magicreckon");
+        this.random = new Objective("random").create("random");
+        this.global = new Objective("global").create("global");
         let place_block_wait_tick = 0;
+        this.globalscores.setNumber('zero', 0);
+        this.globalscores.setNumber('one', 1);
+        this.globalscores.setNumber('two', 2);
+        this.globalscores.setNumber('four', 4);
+        this.globalscores.initializeNumber('FirstEnter', 0);
+        this.globalscores.initializeNumber('AlreadyDie', 0);
+        this.globalscores.initializeNumber('AlreadyGmCheat', 0);
+        this.globalscores.initializeNumber('DieMode', 0);
+        this.globalscores.initializeNumber('MagicDisplay', 0);
+        this.globalscores.initializeNumber('tens', 20);
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
@@ -57,6 +75,56 @@ export default class DecServer extends ExGameServer {
         // this.getEvents().events.beforePistonActivate.subscribe(e => {
         //     e.piston
         // });
+        this.getEvents().events.afterPlayerJoin.subscribe(e => {
+            system.runTimeout(() => {
+                world.getAllPlayers().forEach(p => {
+                    if (p.id === e.playerId) {
+                        let player = p;
+                        let exPlayer = ExPlayer.getInstance(player);
+                        if (this.globalscores.getNumber('FirstEnter') === 0) {
+                            exPlayer.addTag('owner');
+                            this.globalscores.setNumber('FirstEnter', 1);
+                            exPlayer.runCommandAsync('gamerule commandblockoutput false');
+                            exPlayer.runCommandAsync('function test/creator_list');
+                            exPlayer.runCommandAsync('function test/load_ok');
+                            exPlayer.runCommandAsync('tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:command_help.name\" } ] }');
+                        }
+                        if (player.getDynamicProperty('has_initalized') === undefined) {
+                            const score_init = (obj_str, value) => {
+                                let obj = world.scoreboard.getObjective(obj_str);
+                                try {
+                                    if ((obj === null || obj === void 0 ? void 0 : obj.getScore(p.name)) === undefined) {
+                                        obj === null || obj === void 0 ? void 0 : obj.setScore(p, value);
+                                    }
+                                }
+                                catch (error) {
+                                    obj === null || obj === void 0 ? void 0 : obj.setScore(p, value);
+                                }
+                            };
+                            score_init('i_inviolable', 0);
+                            score_init('i_damp', 0);
+                            score_init('i_soft', 0);
+                            score_init('i_heavy', 0);
+                            score_init('skill_count', 0);
+                            if (DecGlobal.isDec()) {
+                                score_init('magicpoint', 20);
+                                score_init('maxmagic', 20);
+                                score_init('magicgain', 0);
+                                score_init('magicreckon', 0);
+                            }
+                            if (exPlayer.hasTag('mok')) {
+                                //将原来用于标记已初始化的mok去除
+                                exPlayer.removeTag('mok');
+                            }
+                            else if (DecGlobal.isDec()) {
+                                exPlayer.addTag('hpl1');
+                            }
+                            player.setDynamicProperty('has_initalized', true);
+                        }
+                    }
+                });
+            }, 200);
+        });
         this.getEvents().events.beforeChatSend.subscribe(e => {
             var _a;
             let cmdRunner = this.getExDimension(MinecraftDimensionTypes.overworld);
@@ -331,7 +399,7 @@ export default class DecServer extends ExGameServer {
                             repeat_times -= 1;
                         }
                         let p = ExPlayer.getInstance(e.source);
-                        if (p.getGameMode() == GameMode.survival || p.getGameMode() == GameMode.adventure) {
+                        if (p.gamemode == GameMode.survival || p.gamemode == GameMode.adventure) {
                             p.getBag().clearItem(e.itemStack.typeId, 1);
                         }
                     }
@@ -483,6 +551,7 @@ export default class DecServer extends ExGameServer {
             }
         };
         ExGame.scriptEventReceive.addMonitor(e => {
+            var _a;
             if (e.id == 'dec:trellis') {
                 //种植架
                 const block = e.sourceBlock;
@@ -542,23 +611,24 @@ export default class DecServer extends ExGameServer {
                 }
             }
             else if (e.id == 'dec:sustain_damage') {
-                //格式：伤害类型;伤害大小;重复判断次数;判断间隔刻
+                //格式：伤害类型;伤害大小;重复判断次数;判断间隔刻;排除tag
                 let para_arr = message_split(e.message);
                 let dim = script_event_location(e)[0];
-                let damege_type_string = para_arr[0].toString();
-                let damage_type = EntityDamageCause[damege_type_string];
+                let damage_type = EntityDamageCause[para_arr[0].toString()];
                 const damage_option = {
                     cause: damage_type,
                     damagingEntity: e.sourceEntity
                 };
                 let i = 0;
+                (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.addTag(para_arr[4].toString());
                 while (i < Number(para_arr[2])) {
                     system.runTimeout(() => {
                         let loc = script_event_location(e)[1];
                         const attackable_entity_option = {
                             location: loc,
                             maxDistance: 2,
-                            excludeTypes: ['minecraft:item', 'minecraft:painting', 'minecraft:armor_stand']
+                            excludeTypes: ['minecraft:item', 'minecraft:painting', 'minecraft:armor_stand'],
+                            excludeTags: [para_arr[4].toString()]
                         };
                         dim.getEntities(attackable_entity_option).forEach(ent => {
                             ent.applyDamage(Number(para_arr[1]), damage_option);
@@ -566,6 +636,10 @@ export default class DecServer extends ExGameServer {
                     }, i * Number(para_arr[3]));
                     i++;
                 }
+                system.runTimeout(() => {
+                    var _a;
+                    (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.removeTag(para_arr[4].toString());
+                }, Number(para_arr[2]) * Number(para_arr[3]));
             }
         });
         const script_event_location = (source) => {

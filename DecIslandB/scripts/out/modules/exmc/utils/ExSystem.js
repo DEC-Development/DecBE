@@ -49,6 +49,18 @@ export default class ExSystem {
             return new ExServerTickDelayTask(tasks);
         }
     }
+    static deepEqual(obj1, obj2) {
+        if (typeof obj1 !== typeof obj2) {
+            return false;
+        }
+        if (typeof obj1 === 'number' || typeof obj1 === 'string' || typeof obj1 === 'boolean') {
+            return obj1 === obj2;
+        }
+        return JSON.stringify(obj1) === JSON.stringify(obj2);
+    }
+    static deepClone(obj1) {
+        return JSON.parse(JSON.stringify(obj1));
+    }
 }
 ExSystem.idMap = new WeakMap();
 ExSystem.chineseCharMatcher = /([\u4E00-\u9FA5])+/;

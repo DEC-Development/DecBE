@@ -502,6 +502,12 @@ item.dec:rapier.name=刺剑
 item.dec:dead_wood_rapier.name=枯木之握
 item.dec:dead_wood_dagger.name=枯蔓
 item.dec:moon_jellyfish.name=海月水母
+item.dec:scarecrow.name=稻草人
+item.dec:archer_hat.name=射手帽
+item.dec:black_courtesy.name=黑礼帽
+item.dec:blue_gem_hat.name=蓝宝石帽
+item.dec:farmer_hat.name=草帽
+item.dec:red_gem_hat.name=红宝石帽
 
 tile.dec:ancient_ice.name=远古冰块
 tile.dec:lava_ore.name=岩浆矿石
@@ -919,6 +925,7 @@ entity.dec:ash_sword.name=灰烬之刃
 entity.dec:ash_horse_head.name=灰烬马的头
 entity.dec:ash_knight_head.name=灰烬之首
 entity.dec:frozen_man.name=冰人
+entity.dec:scarecrow.name=稻草人
 
 entity.dec:thrown_bomb.name=炸药包
 entity.dec:saucer_ray.name=飞碟射线
@@ -1022,6 +1029,7 @@ action.hint.exit.dec:simple_glider=简单滑翔机，蹲下或跳跃离开
 action.hint.exit.dec:brown_bear=棕熊，蹲下或跳跃离开
 action.interact.collect=采集
 action.interact.ride.brown_bear=骑乘
+action.interact.scarecrow_resort=回收
 
 boss.dec:leaves_golem.name=绿叶精华
 boss.dec:ash_knight.name=灰烬骑士
@@ -1092,6 +1100,7 @@ text.dec:creator_list_35.name=§b纸盒Alifang - 生物动画
 text.dec:creator_list_36.name=§bKale - 美工、建筑、设计、物品和技术支持等
 text.dec:creator_list_37.name=§bLolktype - 建筑、介绍
 text.dec:creator_list_38.name=§bKoffyt93 - 建筑
+text.dec:creator_list_39.name=§b幻想贝壳 - 建筑、贴图
 text.dec:qq_group.name=§e反馈和测试群号 - 486864907
 text.dec:thanks.name=§e最后,衷心感谢所有为此addon做出贡献的人以及群内的所有小伙伴
 text.dec:omit.name=§b......

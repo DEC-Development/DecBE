@@ -75,9 +75,7 @@
               {
                 "run_command": {
                   "command": [
-                    "playsound random.explode @a ~~~",
-                    "camerashake add @s 3 0.05",
-                    "clear @s dec:bomber_bullet 0 1"
+                    "function item/bomber"
                   ],
                   "target": "holder"
                 }

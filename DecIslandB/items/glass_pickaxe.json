@@ -1919,31 +1919,31 @@
                 "repair_items": [
                     {
                         "items": [
-                            "minecraft:minecraft:glass"
+                            "minecraft:glass"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.7"
                     },
                     {
                         "items": [
-                            "minecraft:minecraft:glass_pane"
+                            "minecraft:glass_pane"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.5"
                     },
                     {
                         "items": [
-                            "minecraft:minecraft:stained_glass"
+                            "minecraft:stained_glass"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.7"
                     },
                     {
                         "items": [
-                            "minecraft:minecraft:stained_glass_pane"
+                            "minecraft:stained_glass_pane"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.5"
                     },
                     {
                         "items": [
-                            "minecraft:dec:glass_ingot"
+                            "dec:glass_ingot"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  1"
                     }

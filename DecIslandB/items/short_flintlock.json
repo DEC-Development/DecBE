@@ -67,9 +67,7 @@
               {
                 "run_command": {
                   "command": [
-                    "playsound random.explode @a ~~~",
-                    "camerashake add @s 4 0.05",
-                    "clear @s dec:flintlock_bullet 0 1"
+                    "function item/general_flintlock"
                   ],
                   "target": "holder"
                 }

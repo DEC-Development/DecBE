@@ -52,6 +52,9 @@
           }
         ]
       },
+      "minecraft:fuel": {
+        "duration": 7.0
+      },
       "minecraft:hand_equipped": true,
       "minecraft:cooldown": {
         "category": "katana",

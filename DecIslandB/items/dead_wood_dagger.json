@@ -69,21 +69,8 @@
                     "target": "self"
                 }
             },
-            "minecraft:repairable": {
-                "repair_items": [
-                    {
-                        "items": [
-                            "minecraft:minecraft:iron_ingot"
-                        ],
-                        "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.3"
-                    },
-                    {
-                        "items": [
-                            "minecraft:minecraft:iron_nugget"
-                        ],
-                        "repair_amount": "context.other->query.remaining_durability + query.max_durability *  0.03"
-                    }
-                ]
+            "minecraft:fuel": {
+              "duration": 4.0
             },
             "minecraft:on_use": {
                 "on_use": {

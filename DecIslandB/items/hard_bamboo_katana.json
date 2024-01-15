@@ -57,6 +57,9 @@
         "category": "katana",
         "duration": 2.2
       },
+      "minecraft:fuel": {
+        "duration": 14.0
+      },
       "tag:comp:equipment_type:melee_weapon":{}
     },
     "events": {

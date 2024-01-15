@@ -22,7 +22,7 @@ import ExEntityEvents from "./entity/ExEntityEvents.js";
 import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory, registerEvent } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
-import ExSound from "./env/ExSound.js";
+import ExMusic from "./env/ExMusic.js";
 import { ExEventNames } from "./events/events.js";
 import ExSystem from "../utils/ExSystem.js";
 export default class ExGameServer {
@@ -99,12 +99,12 @@ export default class ExGameServer {
     getEvents() {
         return this._events;
     }
-    getSound(id, t) {
+    getMusic(id, t) {
         if (ExGameServer.musicMap.has(id)) {
             return ExGameServer.musicMap.get(id);
         }
         else {
-            let m = new ExSound(this, id, t);
+            let m = new ExMusic(this, id, t);
             ExGameServer.musicMap.set(id, m);
             return m;
         }

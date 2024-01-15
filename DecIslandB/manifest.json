@@ -4,9 +4,9 @@
         "script_eval"
     ],
     "header": {
-        "name": "DecIsland[B]V1.9.1",
+        "name": "DecIsland[B]V1.9.2B1",
         "description": "/function test/creator_list",
-        "uuid": "6d4ede5c-5ac6-49ba-ab2b-44be7fbaa757",
+        "uuid": "fb8e1981-c3e2-4f87-9c17-134f51c8f765",
         "min_engine_version": [
             1,
             20,
@@ -15,37 +15,37 @@
         "version": [
             1,
             9,
-            1
+            2
         ]
     },
     "modules": [
         {
             "type": "data",
-            "uuid": "12c57925-7ddc-4ac9-a9ec-e4d2133c05ef",
+            "uuid": "06269bdf-c1f2-4409-b533-e00251c90196",
             "version": [
                 1,
                 9,
-                1
+                2
             ]
         },
         {
             "type": "script",
-            "uuid": "5686fb88-fad9-440b-ac02-ccc9133aabd0",
+            "uuid": "646a3fba-7361-4abd-8b04-0abe2d2d54d7",
             "version": [
                 1,
                 9,
-                1
+                2
             ],
             "entry": "scripts/out/dec.js"
         }
     ],
     "dependencies": [
         {
-            "uuid": "10379c2a-0e2e-46e3-9964-e374afde31df",
+            "uuid": "2d84b598-cc52-4b80-9c94-c5e01acd110f",
             "version": [
                 1,
                 9,
-                1
+                2
             ]
         },
         {

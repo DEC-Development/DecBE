@@ -170,6 +170,11 @@
                 },
                 {
                     "type": "item",
+                    "name": "dec:rapier",
+                    "weight": 3
+                },
+                {
+                    "type": "item",
                     "name": "dec:village_guardian",
                     "weight": 1
                 }

@@ -1,6 +1,17 @@
 {
 	"entity_sounds": {
 		"entities": {
+			"dec:scarecrow": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"hurt": "use.cloth",
+					"death": "use.cloth"
+				}
+			},
 			"dec:frozen_man": {
 				"volume": 1.0,
 				"pitch": [

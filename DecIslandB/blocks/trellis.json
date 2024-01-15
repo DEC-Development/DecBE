@@ -37,6 +37,12 @@
             },
             "minecraft:breathability": "air",
             "minecraft:entity_collision": true,
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "empty",
+                    "render_method": "alpha_test"
+                }
+            },
             "minecraft:placement_filter": {
                 "conditions": [
                     {

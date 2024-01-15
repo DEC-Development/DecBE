@@ -41,7 +41,7 @@ export default class PomAncientStoneBoss extends PomBossController {
             else {
             }
         }, false);
-        this.music = server.getSound("music.wb.anger_of_ancient", "2:24");
+        this.music = server.getMusic("music.wb.anger_of_ancient", "2:24");
     }
     initBossEntity() {
         for (let c of this.barrier.clientsByPlayer()) {
