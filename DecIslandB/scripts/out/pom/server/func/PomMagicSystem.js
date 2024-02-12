@@ -88,7 +88,13 @@ export default class PomMagicSystem extends GameController {
                 this.data.gameGrade,
                 [this.data.gameExperience / (this.getGradeNeedExperience(1 + this.data.gameGrade) - this.getGradeNeedExperience(this.data.gameGrade))],
                 [(grade), grade.length * 3],
-                [this.magicReduce / this.gameMaxHealth]
+                [this.magicReduce / this.gameMaxHealth],
+                [this.data.uiCustomSetting.topLeftMessageBarLayer1 / 100],
+                [this.data.uiCustomSetting.topLeftMessageBarLayer2 / 100],
+                [this.data.uiCustomSetting.topLeftMessageBarLayer3 / 100],
+                [this.data.uiCustomSetting.topLeftMessageBarLayer4 / 100],
+                [this.data.uiCustomSetting.topLeftMessageBarLayer5 / 100],
+                [this.data.uiCustomSetting.topLeftMessageBarStyle]
             ];
             this.lastFromData = fromData;
             let arr1 = fromData.map((e, index) => {
@@ -125,7 +131,7 @@ export default class PomMagicSystem extends GameController {
                 }
                 return v + "x".repeat(Math.max(0, 10 - v.length));
             });
-            // console.warn(arr);
+            // console.warn(arr1);
             let arr2 = [];
             for (let i = 0; i < 50; i++) {
                 arr2.push("");
@@ -135,6 +141,8 @@ export default class PomMagicSystem extends GameController {
         }).delay(8);
         this.damageAbsorbed = 0;
         this.magicReduce = 0;
+        this.hurtState = false;
+        this.hurtMaxNum = 0;
     }
     registActionbarPass(name) {
         this._mapShow.set(name, []);
@@ -160,24 +168,43 @@ export default class PomMagicSystem extends GameController {
         return s;
     }
     onJoin() {
-        var _a, _b;
+        var _a, _b, _c;
         const health = this.exPlayer.getComponent("minecraft:health");
         // let healthListener = new VarOnChangeListener((n, l) => {
         //     if (this.gameHealth === this.gameMaxHealth && this.gameHealth + (n - (l ?? 0)) > this.gameMaxHealth) return;
         //     // if (n < 40000) {
-        //     //     health.setCurrentValue(50000 + this.gameHealth);
+        //     //     health.setCurrentValue(25000 + this.gameHealth);
         //     // }
-        //     if (50000 + this.gameHealth !== n) {
+        //     if (25000 + this.gameHealth !== n) {
         //         // console.warn(n,l);
         //         let change = n - (l ?? 0);
         //         this.gameHealth = MathUtil.clamp(this.gameHealth + change, -1, this.gameMaxHealth);
         //         console.warn(healthListener.value,health.currentValue);
-        //         healthListener.value = 50000 + this.gameHealth;
-        //         health.setCurrentValue(50000 + this.gameHealth);
+        //         healthListener.value = 25000 + this.gameHealth;
+        //         health.setCurrentValue(25000 + this.gameHealth);
         //     }
         // }, health!.currentValue);
+        let hurtTimeId = 0;
         let healthListener = new VarOnChangeListener((n, l) => {
             let change = n - (l !== null && l !== void 0 ? l : 0);
+            // if (change < 0 && this.hurtState) {
+            //     if (this.hurtMaxNum <= -change) return;//build-in method
+            //     ExGame.clearRun(hurtTimeId);
+            //     hurtTimeId = ExGame.runTimeout(() => {
+            //         this.hurtState = false;
+            //         this.hurtMaxNum = 0;
+            //     }, 9);
+            //     change += this.hurtMaxNum;
+            //     this.hurtMaxNum = -(n - (l ?? 0));
+            // }
+            // if (!this.hurtState && change < 0) {
+            //     hurtTimeId = ExGame.runTimeout(() => {
+            //         this.hurtState = false;
+            //         this.hurtMaxNum = 0;
+            //     }, 9);
+            //     this.hurtState = true;
+            //     this.hurtMaxNum = change;
+            // }
             if (n === 1) {
                 //不死图腾
                 this.gameHealth = 1;
@@ -185,8 +212,8 @@ export default class PomMagicSystem extends GameController {
             else {
                 this.gameHealth = Math.min(this.gameHealth + change, this.gameMaxHealth);
             }
-            healthListener.value = 50000;
-            health.setCurrentValue(50000);
+            healthListener.value = 25000;
+            health.setCurrentValue(25000);
         }, health.currentValue);
         // this.getEvents().exEvents.tick.subscribe(e => {
         //     healthListener.upDate(health!.currentValue);
@@ -200,13 +227,14 @@ export default class PomMagicSystem extends GameController {
         this.healthSaver.start();
         let n;
         this.getEvents().exEvents.afterPlayerSpawn.subscribe(e => {
-            this.exPlayer.triggerEvent("hp:100000");
+            var _a;
+            this.exPlayer.triggerEvent("hp:50000");
             //设置默认游戏血量
             //绕开常规逻辑设置血量
-            healthListener.value = 50000;
-            health.setCurrentValue(50000);
+            healthListener.value = 25000;
+            health.setCurrentValue(25000);
             if (e.initialSpawn) {
-                this.gameHealth = Math.min(this.gameMaxHealth, ((n = this.player.getDynamicProperty("health")) <= 0) || n === undefined ? this.gameMaxHealth : n);
+                this.gameHealth = MathUtil.clamp((_a = this.player.getDynamicProperty("health")) !== null && _a !== void 0 ? _a : this.gameMaxHealth, 1, this.gameMaxHealth);
             }
             else {
                 this.gameHealth = this.gameMaxHealth;
@@ -214,6 +242,7 @@ export default class PomMagicSystem extends GameController {
         });
         this.magicReduce = (_a = this.player.getDynamicProperty("magicReduce")) !== null && _a !== void 0 ? _a : 0;
         this.damageAbsorbed = (_b = this.player.getDynamicProperty("damageAbsorbed")) !== null && _b !== void 0 ? _b : 0;
+        this.gameHealth = MathUtil.clamp((_c = this.player.getDynamicProperty("health")) !== null && _c !== void 0 ? _c : this.gameMaxHealth, 1, this.gameMaxHealth);
         this.actionbarShow.delay(this.globalSettings.uiUpdateDelay);
         this.getEvents().exEvents.afterEffectAdd.subscribe(e => {
             if (e.effect.typeId === MinecraftEffectTypes.Absorption) {

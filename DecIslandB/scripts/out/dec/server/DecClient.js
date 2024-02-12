@@ -1,4 +1,4 @@
-import { EntityDamageCause, EquipmentSlot, GameMode, MinecraftDimensionTypes } from "@minecraft/server";
+import { EntityDamageCause, GameMode, MinecraftDimensionTypes } from '@minecraft/server';
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
 import MathUtil from "../../modules/exmc/math/MathUtil.js";
@@ -14,7 +14,6 @@ import { MinecraftEffectTypes } from "../../modules/vanilla-data/lib/index.js";
 export default class DecClient extends ExGameClient {
     constructor(server, id, player) {
         super(server, id, player);
-        this.useArmor = undefined;
         this.tmpV = new Vector3(0, 0, 0);
         this.globalscores = new GlobalScoreBoardCache(new Objective("global"), false);
     }
@@ -47,32 +46,40 @@ export default class DecClient extends ExGameClient {
             }
             ;
             if (e.currentTick % 4 === 0) {
-                const item = this.exPlayer.getBag().itemOnOffHand;
+                const item_offhand = this.exPlayer.getBag().itemOnOffHand;
+                const item_head = this.exPlayer.getBag().equipmentOnHead;
                 this.totemEffect('dec:energy_totem', ['function item/energy_totem']);
-                if (item) {
-                    this.decreaseCooldownEqu(item, 'gun', 9, 'dec:archer_bullet_bag');
-                    this.decreaseCooldownEqu(item, 'gun', 7, 'dec:lava_bullet_bag');
-                    this.decreaseCooldownEqu(item, 'gun', 4, 'dec:blood_bullet_bag');
-                    this.decreaseCooldownEqu(item, 'gun', 3, 'dec:hunter_bullet_bag');
-                    this.decreaseCooldownEqu(item, 'gun', 3, 'dec:pirate_bullet_bag');
-                    this.decreaseCooldownEqu(item, 'gun', 2, 'dec:bullet_bag');
-                    this.decreaseCooldownEqu(item, 'catapult', 5, 'dec:stones_bag');
-                    this.decreaseCooldownEqu(item, 'catapult', 13, 'dec:archer_stones_bag');
-                    this.decreaseCooldownEqu(item, 'staff', 4, 'dec:magic_surge_core');
-                    this.decreaseCooldownEqu(item, 'staff', 3, 'dec:alchemic_stone');
-                    this.decreaseCooldownEqu(item, 'katana', 6, 'dec:fire_heart');
-                    this.decreaseCooldownEqu(item, 'magic_book', 4, 'dec:herb_bag');
-                    this.decreaseCooldownEqu(item, 'magic_book', 7, 'dec:shadow_feather');
-                    this.decreaseCooldownEqu(item, 'staff', 8, 'dec:tear_from_dream');
-                    this.decreaseCooldownEqu(item, 'staff', 6, 'dec:time_compass');
-                    this.decreaseCooldownEqu(item, 'missile', 3, 'dec:diamond_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 4, 'dec:emerald_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 7, 'dec:ender_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 6, 'dec:fire_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 4, 'dec:gold_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 5, 'dec:heart_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 3, 'dec:natural_ring');
-                    this.decreaseCooldownEqu(item, 'missile', 7, 'dec:dust_ring');
+                if (item_offhand) {
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 9, 'dec:archer_bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 7, 'dec:lava_bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 4, 'dec:blood_bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 3, 'dec:hunter_bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 3, 'dec:pirate_bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'gun', 2, 'dec:bullet_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'catapult', 5, 'dec:stones_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'catapult', 13, 'dec:archer_stones_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'staff', 4, 'dec:magic_surge_core');
+                    this.decreaseCooldownEqu(item_offhand, 'staff', 3, 'dec:alchemic_stone');
+                    this.decreaseCooldownEqu(item_offhand, 'katana', 6, 'dec:fire_heart');
+                    this.decreaseCooldownEqu(item_offhand, 'magic_book', 4, 'dec:herb_bag');
+                    this.decreaseCooldownEqu(item_offhand, 'magic_book', 7, 'dec:shadow_feather');
+                    this.decreaseCooldownEqu(item_offhand, 'staff', 8, 'dec:tear_from_dream');
+                    this.decreaseCooldownEqu(item_offhand, 'staff', 6, 'dec:time_compass');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 3, 'dec:diamond_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 4, 'dec:emerald_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 7, 'dec:ender_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 6, 'dec:fire_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 4, 'dec:gold_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 5, 'dec:heart_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 3, 'dec:natural_ring');
+                    this.decreaseCooldownEqu(item_offhand, 'missile', 7, 'dec:dust_ring');
+                }
+                if (item_head) {
+                    this.decreaseCooldownEqu(item_head, 'staff', 1, 'dec:blue_gem_hat');
+                    this.decreaseCooldownEqu(item_head, 'magic_book', 2, 'dec:blue_gem_hat');
+                    this.decreaseCooldownEqu(item_head, 'staff', 2, 'dec:red_gem_hat');
+                    this.decreaseCooldownEqu(item_head, 'magic_book', 2, 'dec:red_gem_hat');
+                    this.decreaseCooldownEqu(item_head, 'gun', 2, 'dec:archer_hat');
                 }
             }
         });
@@ -100,6 +107,8 @@ export default class DecClient extends ExGameClient {
         this.getEvents().exEvents.afterPlayerHurt.subscribe(e => {
             //这里写死亡事件
             if (this.exPlayer.health <= 0) {
+                if (this.bossBarrier)
+                    this.bossBarrier.notifyDeathAdd();
                 this.exPlayer.command.run('function die/normal');
                 if (this.globalscores.getNumber('DieMode') === 1) {
                     //死亡模式
@@ -257,7 +266,7 @@ export default class DecClient extends ExGameClient {
                         lor.push(numTranToTask(Random.choice(t).id));
                     }
                     c_n.setLore(lor);
-                    bag.itemOnMainHand = (c_n);
+                    return (c_n);
                 }
             }
         });
@@ -277,7 +286,7 @@ export default class DecClient extends ExGameClient {
             }
         }
         this.getEvents().exEvents.tick.subscribe(e => {
-            var _a;
+            var _a, _b;
             const p = this.player;
             const ep = this.exPlayer;
             const scores = this.exPlayer.getScoresManager();
@@ -322,12 +331,8 @@ export default class DecClient extends ExGameClient {
             }
             if (e.currentTick % 20 === 0) {
                 //深渊之翼
-                if (this.exPlayer.getBag().getSlot(EquipmentSlot.Chest).typeId == 'dec:wings_from_deep') {
+                if (((_a = this.exPlayer.getBag().equipmentOnChest) === null || _a === void 0 ? void 0 : _a.typeId) == 'dec:wings_from_deep') {
                     ep.addEffect(MinecraftEffectTypes.JumpBoost, 6 * 20, 1, true);
-                    ep.addEffect(MinecraftEffectTypes.SlowFalling, 6 * 20, 0, true);
-                }
-                //巨型蝙蝠翅
-                if (this.exPlayer.getBag().getSlot(EquipmentSlot.Chest).typeId == 'dec:giant_bat_wings') {
                     ep.addEffect(MinecraftEffectTypes.SlowFalling, 6 * 20, 0, true);
                 }
                 //紫水晶套装效果
@@ -356,10 +361,10 @@ export default class DecClient extends ExGameClient {
                 //海龟套效果
                 if (p.isSneaking) {
                     if (this.useArmor === ArmorPlayerDec.turtle) {
-                        if (((_a = ep.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === "dec:turtle_sword") {
-                            ep.addEffect(MinecraftEffectTypes.Slowness, 5 * 20, 5);
-                            ep.addEffect(MinecraftEffectTypes.Slowness, 2 * 20, 3);
-                            ep.addEffect(MinecraftEffectTypes.Slowness, 2 * 20, 50);
+                        if (((_b = ep.getBag().itemOnMainHand) === null || _b === void 0 ? void 0 : _b.typeId) === "dec:turtle_sword") {
+                            ep.addEffect(MinecraftEffectTypes.Slowness, 5 * 20, 2);
+                            ep.addEffect(MinecraftEffectTypes.Resistance, 2 * 20, 3);
+                            ep.addEffect(MinecraftEffectTypes.Regeneration, 2 * 20, 0);
                         }
                     }
                 }
@@ -470,12 +475,183 @@ export default class DecClient extends ExGameClient {
                     this.exPlayer.command.run(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }',
                         'tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
                         'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }',
-                        'xp ' + Math.floor(5000 + Math.random() * 4000) + ' @s',
+                        'xp ' + (5000 + Math.random() * 4000) + ' @s',
                         'loot give @s loot "items/hunter_book"']);
                 }
                 else {
                     this.exPlayer.command.run(['tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }',
                         'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }']);
+                }
+            }
+        });
+        this.getEvents().exEvents.afterItemUse.subscribe(e => {
+            var _a, _b;
+            if (e.itemStack.hasComponent('minecraft:cooldown') && this.player.getItemCooldown((_a = e.itemStack.getComponent('minecraft:cooldown')) === null || _a === void 0 ? void 0 : _a.cooldownCategory) == 0) {
+                let item_name = e.itemStack.typeId;
+                let p = this.exPlayer;
+                let bag = p.getBag();
+                let bullet_cur = p.getBag().searchItems([
+                    'dec:bomber_bullet',
+                    'dec:flintlock_bullet',
+                    'dec:small_stone',
+                    'dec:exploding_pellets',
+                ]);
+                let suc = false;
+                let has_bullet = (bullet_id) => {
+                    return bullet_cur[bullet_id] !== undefined;
+                };
+                let ex_e = this.exPlayer;
+                if (item_name == 'dec:bomber' && bag.searchProjectile('dec:bomber_bullet')) {
+                    let shoot_opt = {
+                        speed: 3,
+                        uncertainty: 5
+                    };
+                    ex_e.shootProj('dec:fake_fireball', shoot_opt);
+                    ex_e.shootProj('dec:fake_fireball', shoot_opt);
+                    ex_e.shootProj('dec:fake_fireball', shoot_opt);
+                    p.command.run('function item/bomber');
+                    //e.source.playSound('random.explode')
+                    //e.source.playAnimation('animation.humanoid.shoot')
+                    //e.source.spawnParticle('flintlock_smoke_particle',lo)
+                    suc = true;
+                }
+                else if (item_name == 'dec:catapult' && bag.searchProjectile(['dec:small_stone', 'dec:exploding_pellets']) !== undefined) {
+                    e.source.playAnimation('animation.humanoid.catapult');
+                    e.source.playSound('mob.snowgolem.shoot');
+                    let shoot_opt = {
+                        speed: 0.9,
+                        uncertainty: 3
+                    };
+                    switch (bag.searchProjectile(['dec:small_stone', 'dec:exploding_pellets'])) {
+                        case 'dec:exploding_pellets':
+                            ex_e.shootProj('dec:bullet_by_catapult_explode', shoot_opt);
+                            p.getBag().clearItem('dec:exploding_pellets', 1);
+                            break;
+                        case 'dec:small_stone':
+                            ex_e.shootProj('dec:bullet_by_catapult_normal', shoot_opt);
+                            p.getBag().clearItem('dec:small_stone', 1);
+                            break;
+                    }
+                    suc = true;
+                }
+                else if (item_name == 'dec:everlasting_winter_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt_1 = {
+                        speed: 6,
+                        uncertainty: 0
+                    };
+                    let shoot_opt_2 = {
+                        speed: 5,
+                        uncertainty: 0.5
+                    };
+                    ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_1);
+                    ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_2);
+                    ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_2);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:flintlock_pro' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt_1 = {
+                        speed: 5.4,
+                        uncertainty: 0
+                    };
+                    let shoot_opt_2 = {
+                        speed: 4.8,
+                        uncertainty: 3
+                    };
+                    ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_1);
+                    ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_2);
+                    ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_2);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt_1 = {
+                        speed: 5,
+                        uncertainty: 0.1
+                    };
+                    let shoot_opt_2 = {
+                        speed: 4.3,
+                        uncertainty: 3
+                    };
+                    ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_1);
+                    ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_2);
+                    ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_2);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:ghost_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt = {
+                        speed: 7.2,
+                        uncertainty: 0
+                    };
+                    ex_e.shootProj('dec:bullet_by_ghost_flintlock', shoot_opt);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:lava_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt = {
+                        speed: 4.8,
+                        uncertainty: 6
+                    };
+                    ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:short_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt = {
+                        speed: 4.8,
+                        uncertainty: 10
+                    };
+                    ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:star_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt = {
+                        speed: 5,
+                        uncertainty: 4
+                    };
+                    ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
+                    ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                else if (item_name == 'dec:storm_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                    let shoot_opt_1 = {
+                        speed: 4.2,
+                        uncertainty: 0
+                    };
+                    let shoot_opt_2 = {
+                        speed: 3,
+                        uncertainty: 3
+                    };
+                    ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_1);
+                    ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_2);
+                    ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_2);
+                    e.source.runCommandAsync('function item/general_flintlock');
+                    suc = true;
+                }
+                if (suc) {
+                    let new_item = e.itemStack;
+                    let dur = new_item.getComponent('minecraft:durability');
+                    (_b = e.itemStack.getComponent('minecraft:cooldown')) === null || _b === void 0 ? void 0 : _b.startCooldown(e.source);
+                    if (p.gamemode != GameMode.creative) {
+                        if (dur.damage + 1 < dur.maxDurability) {
+                            dur.damage += 1;
+                            p.getBag().setItem(e.source.selectedSlot, new_item);
+                        }
+                        else {
+                            e.source.playSound('random.break');
+                            p.getBag().clearItem(e.itemStack.typeId, 1);
+                        }
+                    }
                 }
             }
         });

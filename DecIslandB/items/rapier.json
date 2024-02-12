@@ -67,6 +67,16 @@
           }
         ]
       },
+      "minecraft:cooldown": {
+          "category": "rapier",
+          "duration": 3.3
+      },
+      "minecraft:on_use": {
+        "on_use": {
+          "event": "rapier_skill",
+          "target": "self"
+        }
+      },
       "minecraft:hand_equipped": true,
       "tag:comp:equipment_type:melee_weapon":{}
     },
@@ -118,6 +128,14 @@
             ]
           }
         ]
+      },
+      "rapier_skill": {
+        "run_command": {
+          "command": [
+            "function item/rapier"
+          ],
+          "target": "holder"
+        }
       }
     }
   }

@@ -22,7 +22,8 @@ export default class ExTaskRunner {
         this.tick.start();
         return pro;
     }
-    run(r) {
+    setTasks(r) {
+        // ExGame.runJob(r)
         this.tasks = r();
     }
 }

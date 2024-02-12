@@ -61,8 +61,7 @@ export default class PomServer extends ExGameServer {
             this.setting.playerCanTp = true;
         if (!this.setting.has("tpPointRecord"))
             this.setting.tpPointRecord = true;
-        if (!this.setting.has("chainMining"))
-            this.setting.chainMining = true;
+        // if(!this.setting.has("chainMining")) this.setting.chainMining = true;
         //实体清理
         (this.clearEntityNumUpdate = new TimeLoopTask(this.getEvents(), () => {
             this.updateClearEntityNum();
@@ -427,7 +426,7 @@ export default class PomServer extends ExGameServer {
             if (e.entity.typeId === MinecraftEntityTypes.Enderman) {
                 if (e.entity.dimension === this.getDimension(MinecraftDimensionTypes.theEnd) &&
                     (RuinsLoaction.isInProtectArea(e.entity.location))) {
-                    e.entity.triggerEvent("minecraft:despawn");
+                    e.entity.remove();
                 }
             }
         });
@@ -438,6 +437,20 @@ export default class PomServer extends ExGameServer {
         this.addEntityController(PomIntentionsBoss1.typeId, PomIntentionsBoss1);
         this.addEntityController(PomIntentionsBoss2.typeId, PomIntentionsBoss2);
         this.addEntityController(PomIntentionsBoss3.typeId, PomIntentionsBoss3);
+        // //清理留下的boss
+        // let bossIds = [
+        //     PomMagicStoneBoss.typeId,
+        //     PomHeadlessGuardBoss.typeId,
+        //     PomAncientStoneBoss.typeId,
+        //     PomIntentionsBoss1.typeId,
+        //     PomIntentionsBoss2.typeId,
+        //     PomIntentionsBoss3.typeId
+        // ];
+        // for (let id of bossIds) {
+        //     this.getExDimension(MinecraftDimensionTypes.overworld).getEntities({
+        //         type: id
+        //     }).forEach(e => { if (e.isValid()) e.remove() });
+        // }
         // gt.register("Pom", "fakeplayer", (test) => {
         //     this.fakeplayers.push(new PomFakePlayer(
         //         test.spawnSimulatedPlayer(this.fakePlayerSpawnLoc, "Steve1025", GameMode.survival), this)

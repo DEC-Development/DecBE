@@ -1,13 +1,13 @@
 {
     "format_version": 2,
     "header": {
-        "name": "DecIsland[R]V1.9.2B1",
+        "name": "DecIsland[R]V1.9.3",
         "description": "/function test/creator_list",
         "uuid": "2d84b598-cc52-4b80-9c94-c5e01acd110f",
         "version": [
             1,
             9,
-            2
+            3
         ],
         "min_engine_version": [
             1,
@@ -22,7 +22,7 @@
             "version": [
                 1,
                 9,
-                2
+                3
             ]
         }
     ]

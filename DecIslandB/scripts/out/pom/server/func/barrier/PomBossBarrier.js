@@ -50,6 +50,7 @@ export default class PomBossBarrier {
         PomBossBarrier.map.delete(this.id);
         this.manager.cancel("onLongTick", this.tickEvent);
         for (let c of this.clientsByPlayer()) {
+            c.ruinsSystem.causeDamageShow = false;
             c.ruinsSystem.barrier = undefined;
         }
     }

@@ -13,8 +13,8 @@ export default class PomDesertRuinBasicRule extends GameControllerRuinRule {
         const spos = this.client.exPlayer.position.sub(RuinsLoaction.DESERT_RUIN_LOCATION_START).div(16).floor();
         spos.div(mapSize, 1, mapSize).floor().scl(mapSize, 1, mapSize);
         const playerPos = this.client.exPlayer.position.sub(RuinsLoaction.DESERT_RUIN_LOCATION_START).div(16).floor();
-        const spos2 = spos.clone();
-        const epos = spos.clone().add(mapSize, 0, mapSize);
+        const spos2 = spos.cpy();
+        const epos = spos.cpy().add(mapSize, 0, mapSize);
         const ruin = this.client.getServer().ruin_desertBoss;
         //ExGameConfig.console.warn(this.client.getServer());
         // console.warn(spos);
@@ -120,7 +120,7 @@ export default class PomDesertRuinBasicRule extends GameControllerRuinRule {
                     maxDistance: 16,
                     location: lastVec
                 })) {
-                    if (lastVec.clone().sub(tmpV.set(e.location)).abs().toArray().every(i => i <= 8)) {
+                    if (lastVec.cpy().sub(tmpV.set(e.location)).abs().toArray().every(i => i <= 8)) {
                         unclearList.push(e.id);
                         this.client.magicSystem.additionHealth -= 1;
                         e.kill();

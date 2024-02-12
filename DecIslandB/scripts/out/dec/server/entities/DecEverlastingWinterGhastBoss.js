@@ -1,16 +1,22 @@
+import { EntityDamageCause } from "@minecraft/server";
 import DecBossController from "./DecBossController.js";
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecEverlastingWinterGhastBoss1 extends DecBossController {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getMusic("music.wb.ghost_tears", "2:16");
-        this.setTimeout(() => {
-            this.music.loop(this.exEntity.exDimension, this.entity.location);
-        }, 500);
+        this.music = server.getMusic("music.wb.ghost_tears");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
+        this.music.loop();
     }
-    onDestroy() {
+    onKilled(e) {
+        super.onKilled(e);
+        if (e.damageSource.cause === EntityDamageCause.suicide) {
+            this.music.stop();
+        }
+    }
+    onFail() {
         this.music.stop();
-        super.onDestroy();
+        super.onFail();
     }
     onSpawn() {
         super.onSpawn();
@@ -19,10 +25,9 @@ export class DecEverlastingWinterGhastBoss1 extends DecBossController {
 export class DecEverlastingWinterGhastBoss2 extends DecCommonBossLastStage {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getMusic("music.wb.the_peotry_of_ghost", "3:12");
-        this.setTimeout(() => {
-            this.music.loop(this.exEntity.exDimension, this.entity.location);
-        }, 500);
+        this.music = server.getMusic("music.wb.the_peotry_of_ghost");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
+        this.music.loop();
     }
     onDestroy() {
         this.music.stop();

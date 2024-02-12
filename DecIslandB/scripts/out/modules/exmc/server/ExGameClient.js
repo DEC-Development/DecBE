@@ -120,7 +120,6 @@ export default class ExGameClient {
     }
     onLeave() {
         this._events.cancelAll();
-        ExPlayer.deleteInstance(this.player);
     }
     getEvents() {
         return this._events;

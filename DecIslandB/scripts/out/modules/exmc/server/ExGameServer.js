@@ -72,6 +72,9 @@ export default class ExGameServer {
     addEntityController(id, ec) {
         this.entityControllers.set(id, ec);
     }
+    _onEntitySpawn(e) {
+        this.onEntitySpawn(e);
+    }
     onEntitySpawn(e) {
         if (!e.entity.isValid())
             return;
@@ -99,15 +102,8 @@ export default class ExGameServer {
     getEvents() {
         return this._events;
     }
-    getMusic(id, t) {
-        if (ExGameServer.musicMap.has(id)) {
-            return ExGameServer.musicMap.get(id);
-        }
-        else {
-            let m = new ExMusic(this, id, t);
-            ExGameServer.musicMap.set(id, m);
-            return m;
-        }
+    getMusic(id) {
+        return new ExMusic(this, id);
     }
     getClients() {
         return this.clients.values();
@@ -197,6 +193,12 @@ ExGameServer.dimensionMap = new Map();
 ExGameServer.musicMap = new Map();
 __decorate([
     registerEvent(ExEventNames.afterEntitySpawn),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [EntitySpawnAfterEvent]),
+    __metadata("design:returntype", void 0)
+], ExGameServer.prototype, "_onEntitySpawn", null);
+__decorate([
+    registerEvent(ExEventNames.afterEntityLoad),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [EntitySpawnAfterEvent]),
     __metadata("design:returntype", void 0)

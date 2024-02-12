@@ -24,20 +24,6 @@ export default class PomTaskSystem extends GameController {
         ui.showPage(page, subpage);
     }
     onJoin() {
-        if (!this.data.tasks) {
-            this.data.tasks = {
-                daily: {
-                    complete: [[], [], [], []],
-                    all: [[], [], [], []],
-                    date: "1970-2-31",
-                    cache: {}
-                },
-                progress: {
-                    complete: [],
-                    data: {}
-                }
-            };
-        }
         let date = new Date();
         let nDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
         console.warn(nDate);

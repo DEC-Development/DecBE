@@ -67,17 +67,23 @@ export default class GlobalSettings extends GlobalScoreBoardCache {
     set damageShow(value) {
         this.setBoolean("damageShow", value);
     }
-    get chainMining() {
-        return this.getBoolean("chainMining");
-    }
-    set chainMining(value) {
-        this.setBoolean("chainMining", value);
-    }
+    // public get chainMining() {
+    //     return this.getBoolean("chainMining");
+    // }
+    // public set chainMining(value: boolean) {
+    //     this.setBoolean("chainMining", value);
+    // }
     get initialMagicPickaxe() {
         return this.getBoolean("initialMagicPickaxe");
     }
     set initialMagicPickaxe(value) {
         this.setBoolean("initialMagicPickaxe", value);
+    }
+    get smallMapMode() {
+        return this.getBoolean("smallMapMode");
+    }
+    set smallMapMode(value) {
+        this.setBoolean("smallMapMode", value);
     }
     get ownerExists() {
         return this.getBoolean("ownerExists");

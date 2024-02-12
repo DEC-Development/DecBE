@@ -68,7 +68,9 @@
               {
                 "run_command": {
                   "command": [
+                    "particle dec:fire_powering_particle ~~0.5~",
                     "playsound fire.fire @a ~~~",
+                    "playsound mob.blaze.shoot @a ~~~",
                     "scoreboard players remove @s magicpoint 6",
                     "playanimation @s animation.humanoid.staff_use"
                   ],

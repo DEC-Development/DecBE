@@ -35,9 +35,10 @@ import PomTalentSystem from "./func/PomTalentSystem.js";
 import PomTaskSystem from "./func/PomTaskSystem.js";
 import SimpleItemUseFunc from "./func/SimpleItemUseFunc.js";
 import WarningAlertUI from "./ui/WarningAlertUI.js";
-import EntityPropCache from "../../modules/exmc/server/storage/cache/EntityPropCache.js";
+import ExPropCache from "../../modules/exmc/server/storage/cache/ExPropCache.js";
 import { ArmorData } from "../../dec/server/items/ArmorData.js";
 import { pomDifficultyMap } from "./data/GameDifficulty.js";
+import TalentData from "./cache/TalentData.js";
 export default class PomClient extends ExGameClient {
     // net;
     constructor(server, id, player) {
@@ -51,7 +52,7 @@ export default class PomClient extends ExGameClient {
         this.taskSystem = new PomTaskSystem(this);
         this.interactSystem = new PomInteractSystem(this);
         this.globalSettings = new GlobalSettings(new Objective("wpsetting"));
-        this.cache = new EntityPropCache(this.exPlayer.entity);
+        this.cache = new ExPropCache(this.exPlayer.entity);
         this.looper = ExSystem.tickTask(() => {
             this.cache.save();
         });
@@ -73,6 +74,43 @@ export default class PomClient extends ExGameClient {
             eventDecoratorFactory(this.getEvents(), controller);
             controller.onJoin();
         });
+        if (!this.data.pointRecord) {
+            this.data.pointRecord = {
+                deathPoint: [],
+                point: []
+            };
+        }
+        if (!this.data.talent)
+            this.data.talent = new TalentData();
+        if (!this.data.tasks) {
+            this.data.tasks = {
+                daily: {
+                    complete: [[], [], [], []],
+                    all: [[], [], [], []],
+                    date: "1970-2-31",
+                    cache: {}
+                },
+                progress: {
+                    complete: [],
+                    data: {}
+                }
+            };
+        }
+        if (!this.data.uiCustomSetting) {
+            this.data.uiCustomSetting = {
+                topLeftMessageBarStyle: 0,
+                topLeftMessageBarLayer1: 100,
+                topLeftMessageBarLayer2: 100,
+                topLeftMessageBarLayer3: 100,
+                topLeftMessageBarLayer4: 100,
+                topLeftMessageBarLayer5: 100,
+            };
+        }
+        if (!this.data.gamePreferrence) {
+            this.data.gamePreferrence = {
+                chainMining: true
+            };
+        }
         // this.net = new NeuralNetwork<{a:number,b:number},{c:number}>();
     }
     onJoin() {

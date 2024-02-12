@@ -17,33 +17,6 @@
       }
     },
     "component_groups": {
-      "minecraft:accurate": {
-        "minecraft:projectile": {
-          "onHit": {
-            "impact_damage": {
-              "damage": 13,
-              "knockback": true,
-              "catchFire": false,
-              "semirandomdiffdamage": false
-            },
-            "remove_on_hit": {}
-          },
-          "power": 2.7,
-          "gravity": 0.02,
-          "inertia": 1.15,
-          "liquid_inertia": 0.95,
-          "anchor": 1,
-          "offset": [
-            0,
-            0,
-            1
-          ],
-          "semirandomdiffdamage": true,
-          "uncertaintyBase": 0,
-          "uncertaintyMultiplier": 0,
-          "reflectOnHurt": true
-        }
-      }
     },
     "components": {
       "minecraft:collision_box": {
@@ -81,13 +54,6 @@
       }
     },
     "events": {
-      "minecraft:accurate": {
-        "add": {
-          "component_groups": [
-            "minecraft:accurate"
-          ]
-        }
-      }
     }
   }
 }

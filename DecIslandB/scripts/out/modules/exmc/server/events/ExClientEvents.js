@@ -37,7 +37,7 @@ export default class ExClientEvents {
             [ExOtherEventNames.afterPlayerHitBlock]: new Listener(this, ExOtherEventNames.afterPlayerHitBlock),
             [ExOtherEventNames.afterPlayerHitEntity]: new Listener(this, ExOtherEventNames.afterPlayerHitEntity),
             [ExOtherEventNames.afterPlayerHurt]: new Listener(this, ExOtherEventNames.afterPlayerHurt),
-            [ExOtherEventNames.afterItemOnHandChange]: new Listener(this, ExOtherEventNames.afterItemOnHandChange),
+            [ExOtherEventNames.afterItemOnHandChange]: new CallBackListener(this, ExOtherEventNames.afterItemOnHandChange),
             [ExOtherEventNames.afterPlayerShootProj]: new Listener(this, ExOtherEventNames.afterPlayerShootProj),
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
             [ExEventNames.afterPlayerSpawn]: new Listener(this, ExEventNames.afterPlayerSpawn),
@@ -191,10 +191,14 @@ ExClientEvents.exEventSetting = {
                         let lastItem = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[0];
                         let nowItem = ExPlayer.getInstance(i[0]).getBag().itemOnMainHand;
                         if ((lastItem === null || lastItem === void 0 ? void 0 : lastItem.typeId) !== (nowItem === null || nowItem === void 0 ? void 0 : nowItem.typeId) || i[0].selectedSlot !== (lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1])) {
+                            let res = undefined;
                             i[1].forEach((f) => {
                                 var _b;
-                                f(new ItemOnHandChangeEvent(lastItem, (_b = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]) !== null && _b !== void 0 ? _b : 0, nowItem, i[0].selectedSlot, i[0]));
+                                res = res !== null && res !== void 0 ? res : f(new ItemOnHandChangeEvent(lastItem, (_b = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]) !== null && _b !== void 0 ? _b : 0, nowItem, i[0].selectedSlot, i[0]));
                             });
+                            if (res !== undefined) {
+                                ExPlayer.getInstance(i[0]).getBag().itemOnMainHand = res;
+                            }
                             _a.onHandItemMap.set(i[0], [nowItem, i[0].selectedSlot]);
                         }
                     }
@@ -254,7 +258,8 @@ ExClientEvents.exEventSetting = {
                 func(e.source, e);
             });
             ExClientEvents.eventHandlers.server.getEvents().events.afterItemReleaseUse.subscribe((e) => {
-                func(e.source, e);
+                if (e.itemStack)
+                    func(e.source, { "itemStack": e.itemStack });
             });
             ExClientEvents.eventHandlers.server.getEvents().events.afterItemUse.subscribe((e) => {
                 func(e.source, e);
@@ -289,6 +294,16 @@ ExClientEvents.exEventSetting = {
 ExClientEvents.onHandItemMap = new Map();
 ExClientEvents.onceItemUseOnMap = new Map();
 class Listener {
+    constructor(e, name) {
+        this.subscribe = (callback) => {
+            e._subscribe(name, callback);
+        };
+        this.unsubscribe = (callback) => {
+            e._unsubscribe(name, callback);
+        };
+    }
+}
+class CallBackListener {
     constructor(e, name) {
         this.subscribe = (callback) => {
             e._subscribe(name, callback);

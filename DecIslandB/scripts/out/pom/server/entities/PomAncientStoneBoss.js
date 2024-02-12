@@ -41,18 +41,14 @@ export default class PomAncientStoneBoss extends PomBossController {
             else {
             }
         }, false);
-        this.music = server.getMusic("music.wb.anger_of_ancient", "2:24");
     }
     initBossEntity() {
-        for (let c of this.barrier.clientsByPlayer()) {
-            c.ruinsSystem.causeDamageShow = true;
-            c.ruinsSystem.causeDamageType.add(this.entity.typeId);
-        }
+        super.initBossEntity();
+        this.music = this.server.getMusic("music.wb.anger_of_ancient");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         if (!this.exEntity.hasComponent("minecraft:is_baby") && this.isFisrtCall) {
             this.server.say({ rawtext: [{ translate: "text.wb:summon_ancient_stone.name" }] });
-            this.setTimeout(() => {
-                this.music.loop(this.exEntity.exDimension, this.entity.location);
-            }, 500);
+            this.music.loop();
         }
         this.getEvents().exEvents.onLongTick.subscribe(e => {
             this.cannonView.upDate(this.exEntity.hasTag("cannon"));

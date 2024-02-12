@@ -57,7 +57,7 @@ export default class IStructureSettle {
             const t = this;
             const tmpV = new Vector3();
             const tmpP = new Vector3();
-            runner.run((function* () {
+            runner.setTasks((function* () {
                 var _a;
                 for (let c of t.cmds) {
                     s.set(...c.start);

@@ -10,7 +10,7 @@ export default class PomBossController extends ExEntityController {
         let barrier = PomBossBarrier.find(this.startPos);
         if (!barrier) {
             this.isFisrtCall = true;
-            barrier = new PomBossBarrier(server, this.exEntity.exDimension, new ExBlockArea(this.startPos.clone().sub(32, 32, 32), this.startPos.clone().add(32, 32, 32), true), this);
+            barrier = new PomBossBarrier(server, this.exEntity.exDimension, new ExBlockArea(this.startPos.cpy().sub(32, 32, 32), this.startPos.cpy().add(32, 32, 32), true), this);
         }
         else {
             barrier.setBoss(this);
@@ -54,6 +54,10 @@ export default class PomBossController extends ExEntityController {
     destroyBossEntity() {
     }
     initBossEntity() {
+        for (let c of this.barrier.clientsByPlayer()) {
+            c.ruinsSystem.causeDamageShow = true;
+            c.ruinsSystem.causeDamageType.add(this.entity.typeId);
+        }
     }
 }
 //# sourceMappingURL=PomBossController.js.map

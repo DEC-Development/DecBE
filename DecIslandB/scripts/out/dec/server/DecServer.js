@@ -1,4 +1,4 @@
-import { MinecraftDimensionTypes, world, Direction, GameMode, ScriptEventSource, system, EntityDamageCause } from '@minecraft/server';
+import { MinecraftDimensionTypes, world, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
@@ -21,6 +21,7 @@ import GlobalScoreBoardCache from '../../modules/exmc/server/storage/cache/Globa
 import MathUtil from '../../modules/exmc/math/MathUtil.js';
 import ExGame from '../../modules/exmc/server/ExGame.js';
 import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
+import { DecLeavesGolemBoss } from './entities/DecLeavesGolemBoss.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -32,7 +33,6 @@ export default class DecServer extends ExGameServer {
         this.i_damp = new Objective("i_damp").create("i_damp");
         this.i_soft = new Objective("i_soft").create("i_soft");
         this.i_heavy = new Objective("i_heavy").create("i_heavy");
-        this.bullet_type = new Objective("bullet_type").create("bullet_type");
         this.skill_count = new Objective("skill_count").create("skill_count");
         this.gametime = new Objective("gametime").create("gametime");
         this.magicpoint = new Objective("magicpoint").create("magicpoint");
@@ -52,7 +52,6 @@ export default class DecServer extends ExGameServer {
         this.globalscores.initializeNumber('AlreadyGmCheat', 0);
         this.globalscores.initializeNumber('DieMode', 0);
         this.globalscores.initializeNumber('MagicDisplay', 0);
-        this.globalscores.initializeNumber('tens', 20);
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
@@ -187,7 +186,7 @@ export default class DecServer extends ExGameServer {
                         let data = [];
                         let task = new ExTaskRunner();
                         const mthis = this;
-                        task.run((function* () {
+                        task.setTasks((function* () {
                             var _a;
                             for (let i of new IStructureDriver().save(mthis.getExDimension(MinecraftDimensionTypes.overworld), start, end)) {
                                 let res = i.toData();
@@ -447,6 +446,22 @@ export default class DecServer extends ExGameServer {
             ]);
         });
         this.getEvents().exEvents.onLongTick.subscribe(e => {
+            //Dec魔法显示
+            if (DecGlobal.isDec() && this.globalscores.getNumber('MagicDisplay') === 1) {
+                try {
+                    world.scoreboard.removeObjective('magicdisplay');
+                    let magic_display = world.scoreboard.addObjective('magicdisplay', '§bMagicPoint§r');
+                    world.getAllPlayers().forEach(p => {
+                        magic_display.setScore(p, world.scoreboard.getObjective('magicpoint').getScore(p));
+                    });
+                    let dec_magic_display = {
+                        objective: magic_display
+                    };
+                    world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, dec_magic_display);
+                }
+                catch (error) {
+                }
+            }
             if (place_block_wait_tick > 0) {
                 place_block_wait_tick -= 1;
             }
@@ -499,7 +514,7 @@ export default class DecServer extends ExGameServer {
             }
         });
         //实体监听器，用于播放bgm、完成任务判断
-        this.addEntityController("dec:leaves_golem", DecCommonBossLastStage);
+        this.addEntityController("dec:leaves_golem", DecLeavesGolemBoss);
         this.addEntityController("dec:king_of_pillager", DecCommonBossLastStage);
         this.addEntityController("dec:abyssal_controller", DecCommonBossLastStage);
         this.addEntityController("dec:predators", DecCommonBossLastStage);
@@ -512,6 +527,28 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:everlasting_winter_ghast", DecEverlastingWinterGhastBoss1);
         this.addEntityController("dec:everlasting_winter_ghast_1", DecEverlastingWinterGhastBoss2);
         this.addEntityController("dec:nuke", DecNukeController);
+        // //清理留下的boss，防止作弊
+        // let bossIds = [
+        //     "dec:leaves_golem",
+        //     "dec:king_of_pillager",
+        //     "dec:abyssal_controller",
+        //     "dec:predators",
+        //     "dec:enchant_illager",
+        //     "dec:enchant_illager_1",
+        //     "dec:enchant_illager_2",
+        //     "dec:escaped_soul_entity",
+        //     "dec:host_of_deep",
+        //     "dec:host_of_deep_1",
+        //     "dec:host_of_deep_2",
+        //     "dec:ash_knight",
+        //     "dec:everlasting_winter_ghast",
+        //     "dec:everlasting_winter_ghast_1"
+        // ];
+        // for (let id of bossIds) {
+        //     this.getExDimension(MinecraftDimensionTypes.overworld).getEntities({
+        //         type: id
+        //     }).forEach(e => { if (e.isValid()) e.remove() });
+        // }
         //植物
         const block_around_judge = (arr, block, targetId, stateMatchMap) => {
             if (block.typeId == targetId) {
@@ -545,6 +582,27 @@ export default class DecServer extends ExGameServer {
             states_string += ']';
             this.getExDimension(block.dimension).command.run('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
         };
+        // //@AAswordman在这进行了修改
+        // const state_set_keep = (block: Block, stateMatchMap: { [x: string]: (string | number | boolean) }) => {
+        //     let permutation = block.permutation;
+        //     for (let k in stateMatchMap) {
+        //         permutation = permutation.withState(k,stateMatchMap[k]);
+        //     }
+        //     block.trySetPermutation(permutation);
+        //     // let states_string = '['
+        //     // Object.keys(states).forEach(k => {
+        //     //     let new_st = '"' + k + '"='
+        //     //     if (typeof (states[k]) == 'boolean' || typeof (states[k]) == 'number') {
+        //     //         new_st += (states[k]) + ','
+        //     //     } else if (typeof (states[k]) == 'string') {
+        //     //         new_st += '"' + (states[k]) + '",'
+        //     //     }
+        //     //     states_string += new_st;
+        //     // })
+        //     // states_string = states_string.slice(0, states_string.length - 1)
+        //     // states_string += ']'
+        //     // this.getExDimension(block.dimension).command.run('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
+        // }
         const trellis_cover_wither_spread = (block) => {
             if (block.typeId == 'dec:trellis_cover' && block.permutation.getAllStates()['dec:crop_type'] != 'empty') {
                 state_set_keep(block, { 'dec:may_wither': true });
@@ -657,7 +715,7 @@ export default class DecServer extends ExGameServer {
             return [dim, loc];
         };
         const message_split = (message) => {
-            let arr = new Array;
+            let arr = new Array();
             let cache = '';
             for (let m of message) {
                 if (m == ';') {

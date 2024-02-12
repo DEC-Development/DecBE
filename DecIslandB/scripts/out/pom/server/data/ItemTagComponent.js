@@ -14,6 +14,8 @@ const itemTagComponentType = {
     armor_physical_reduction: [0],
     armor_magic_reduction: [0],
     armor_type: [new ItemTagComponentGroup("", "")],
+    final_physical_reduction: [0],
+    final_magic_reduction: [0],
     equipment_type: [new ItemTagComponentGroup("", "")],
     movement_addition: [0],
     underwater_movement_addition: [0],

@@ -4,7 +4,7 @@
         "script_eval"
     ],
     "header": {
-        "name": "DecIsland[B]V1.9.2B1",
+        "name": "DecIsland[B]V1.9.3",
         "description": "/function test/creator_list",
         "uuid": "fb8e1981-c3e2-4f87-9c17-134f51c8f765",
         "min_engine_version": [
@@ -15,7 +15,7 @@
         "version": [
             1,
             9,
-            2
+            3
         ]
     },
     "modules": [
@@ -25,7 +25,7 @@
             "version": [
                 1,
                 9,
-                2
+                3
             ]
         },
         {
@@ -34,7 +34,7 @@
             "version": [
                 1,
                 9,
-                2
+                3
             ],
             "entry": "scripts/out/dec.js"
         }
@@ -45,12 +45,12 @@
             "version": [
                 1,
                 9,
-                2
+                3
             ]
         },
         {
             "module_name": "@minecraft/server",
-            "version": "1.8.0-beta"
+            "version": "1.9.0-beta"
         },
         {
             "module_name": "@minecraft/server-ui",

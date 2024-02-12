@@ -1,6 +1,7 @@
 import { MolangVariableMap, BlockTypes } from '@minecraft/server';
 import ExGameConfig from './ExGameConfig.js';
 import ExCommand from './env/ExCommand.js';
+import { ignorn } from './ExErrorQueue.js';
 export default class ExDimension {
     spawnParticle(p, v, varMap = new MolangVariableMap()) {
         try {
@@ -23,19 +24,19 @@ export default class ExDimension {
         this._dimension = dimension;
     }
     getPlayers(entityQueryOptions) {
-        return Array.from(this._dimension.getPlayers(entityQueryOptions));
+        return this._dimension.getPlayers(entityQueryOptions);
     }
     getEntities(entityQueryOptions) {
         let entities = this._dimension.getEntities(entityQueryOptions);
         let res = [];
         for (let entity of entities) {
-            if (entity && entity.dimension === this._dimension)
+            if (entity && entity.dimension == this._dimension)
                 res.push(entity);
         }
         return res;
     }
     getBlock(vec) {
-        return this._dimension.getBlock(vec);
+        return ignorn(() => this._dimension.getBlock(vec));
     }
     fillBlocks(start, end, blockId, option) {
         // console.warn("fillBlocks", start, end, blockId);

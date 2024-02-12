@@ -2,7 +2,7 @@ export default class ExConfig {
     constructor() {
         this.addonName = "";
         this.gameVersion = "1.9.20";
-        this.addonVersion = "1.8.1B1";
+        this.addonVersion = "1.8.2B1";
         this.debug = false;
         this.watchDog = false;
     }

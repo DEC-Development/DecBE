@@ -5,6 +5,8 @@ import { system } from "@minecraft/server";
 import MonitorManager from "../utils/MonitorManager.js";
 import ExErrorQueue from "./ExErrorQueue.js";
 export default class ExGame {
+    static runJob(r) {
+    }
     static createServer(serverCons, config) {
         let server = new serverCons(config);
         this.serverMap.set(serverCons, server);

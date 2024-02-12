@@ -25,98 +25,124 @@ export default class Vector2 {
         }
         return this;
     }
-    add(x, y) {
-        if (typeof x === 'number') {
-            if (typeof y === 'number') {
-                this.x += x;
-                this.y += y;
-            }
-        }
-        else {
-            this.add(x.x, x.y);
-        }
+    cpy() {
+        return new Vector2(this.x, this.y);
+    }
+    add(vector) {
+        this.x += vector.x;
+        this.y += vector.y;
         return this;
     }
-    sub(x, y) {
-        if (typeof x === 'number') {
-            if (typeof y === 'number') {
-                this.x -= x;
-                this.y -= y;
-            }
-        }
-        else {
-            this.sub(x.x, x.y);
-        }
+    sub(vector) {
+        this.x -= vector.x;
+        this.y -= vector.y;
         return this;
     }
-    scl(x, y, z) {
-        if (typeof x === 'number') {
-            if (typeof y === 'number' && typeof z === 'number') {
-                this.x *= x;
-                this.y *= y;
-            }
-            else if (y === undefined && z === undefined) {
-                this.x *= x;
-                this.y *= x;
-            }
-        }
-        else {
-            this.sub(x.x, x.y);
-        }
+    scl(scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
         return this;
     }
-    div(n) {
-        this.x /= n;
-        this.y /= n;
+    sclX(scalar) {
+        this.x *= scalar;
+        return this;
+    }
+    sclY(scalar) {
+        this.y *= scalar;
         return this;
     }
     len() {
-        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
     len2() {
-        return Math.pow(this.x, 2) + Math.pow(this.y, 2);
-    }
-    equals(other) {
-        return this.x === other.x && this.y === other.y;
-    }
-    distance(vec) {
-        return this.clone().sub(vec).len();
-    }
-    toString() {
-        return `(${this.x}, ${this.y})`;
-    }
-    [Symbol.toStringTag]() {
-        return this.toString();
-    }
-    floor() {
-        this.x = Math.floor(this.x);
-        this.y = Math.floor(this.y);
-        return this;
-    }
-    round() {
-        this.x = Math.round(this.x);
-        this.y = Math.round(this.y);
-        return this;
-    }
-    ceil() {
-        this.x = Math.ceil(this.x);
-        this.y = Math.ceil(this.y);
-        return this;
-    }
-    abs() {
-        this.x = Math.abs(this.x);
-        this.y = Math.abs(this.y);
-        return this;
-    }
-    mul(n) {
-        return n.x * this.x + n.y * this.y;
+        return this.x * this.x + this.y * this.y;
     }
     normalize() {
-        this.div(this.len());
+        let len = this.len();
+        if (len != 0) {
+            this.x /= len;
+            this.y /= len;
+        }
         return this;
     }
-    clone() {
-        return new Vector2(this.x, this.y);
+    dot(vector) {
+        return this.x * vector.x + this.y * vector.y;
+    }
+    dst(vector) {
+        let x_d = this.x - vector.x;
+        let y_d = this.y - vector.y;
+        return Math.sqrt(x_d * x_d + y_d * y_d);
+    }
+    dst2(vector) {
+        let x_d = this.x - vector.x;
+        let y_d = this.y - vector.y;
+        return x_d * x_d + y_d * y_d;
+    }
+    angle() {
+        let angle = Math.atan2(this.y, this.x);
+        if (angle < 0)
+            angle += Math.PI * 2;
+        return angle;
+    }
+    angleRad() {
+        return Math.atan2(this.y, this.x);
+    }
+    angleDeg() {
+        return Math.atan2(this.y, this.x) * Math.PI / 180;
+    }
+    rotate(angle) {
+        let cos = Math.cos(angle);
+        let sin = Math.sin(angle);
+        let newX = this.x * cos - this.y * sin;
+        let newY = this.x * sin + this.y * cos;
+        this.x = newX;
+        this.y = newY;
+        return this;
+    }
+    rotateRad(angle) {
+        return this.rotate(angle * Math.PI / 180);
+    }
+    rotateDeg(angle) {
+        return this.rotate(angle * 180 / Math.PI);
+    }
+    limit(limit) {
+        if (this.len2() > limit * limit) {
+            this.normalize();
+            this.scl(limit);
+        }
+        return this;
+    }
+    setLength(length) {
+        this.normalize();
+        this.scl(length);
+        return this;
+    }
+    lerp(target, alpha) {
+        let x = this.x + (target.x - this.x) * alpha;
+        let y = this.y + (target.y - this.y) * alpha;
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+    mul(matrix) {
+        let m00 = matrix.val[0];
+        let m01 = matrix.val[1];
+        let m10 = matrix.val[3];
+        let m11 = matrix.val[4];
+        let x = this.x * m00 + this.y * m01;
+        let y = this.x * m10 + this.y * m11;
+        this.x = x + matrix.val[2];
+        this.y = y + matrix.val[5];
+        return this;
+    }
+    unrotateRad(matrix) {
+        return this.mul(matrix);
+    }
+    unrotateDeg(matrix) {
+        return this.mul(matrix);
+    }
+    toString() {
+        return "(" + this.x + ", " + this.y + ")";
     }
 }
 Vector2.back = new Vector2(0, -1);

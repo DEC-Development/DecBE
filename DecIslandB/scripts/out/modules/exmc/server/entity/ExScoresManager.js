@@ -70,8 +70,11 @@ export default class ExScoresManager {
         (_a = world.scoreboard.getObjective(name)) === null || _a === void 0 ? void 0 : _a.removeParticipant(identity);
         return true;
     }
-    initializeNumber(name, value) {
-        //这是lly写的，用来初始化计分板上某一项的值。若未初始化返回true，初始化了返回false
+    /**
+     * @LiLeyi
+     * 用来初始化计分板上某一项的值。若未初始化返回true，初始化了返回false
+     * */
+    initializeScore(name, value) {
         if (!this.hasScore(name)) {
             this.setScore(name, value);
             return true;

@@ -18,9 +18,17 @@ import ExGameConfig from "../../../modules/exmc/server/ExGameConfig.js";
 import getCharByNum, { PROGRESS_CHAR, TALENT_CHAR } from "./getCharByNum.js";
 import POMLICENSE from "./POMLICENSE.js";
 import MathUtil from "../../../modules/exmc/math/MathUtil.js";
+import ExActionAlert from "../../../modules/exmc/server/ui/ExActionAlert.js";
 import WarningAlertUI from "../ui/WarningAlertUI.js";
 import { pomDifficultyMap } from "./GameDifficulty.js";
 import { getArmorData, hasArmorData } from "../items/getArmorData.js";
+import Canvas from "../../../modules/exmc/canvas/Canvas.js";
+import Bitmap from "../../../modules/exmc/canvas/Bitmap.js";
+import Paint, { Style } from "../../../modules/exmc/canvas/Paint.js";
+import ExTerrain from "../../../modules/exmc/server/block/ExTerrain.js";
+import getBlockThemeColor from '../../../modules/exmc/server/block/blockThemeColor.js';
+import ExTaskRunner from "../../../modules/exmc/server/ExTaskRunner.js";
+import ColorHSV from "../../../modules/exmc/canvas/ColorHSV.js";
 export default function menuFunctionUI(lang) {
     return {
         "main": {
@@ -232,14 +240,14 @@ BunBun不是笨笨    在矿里的小金呀
                         ];
                         let armorData = 0;
                         armors.forEach(v => {
-                            if (v != undefined) {
-                                let id = ((v === null || v === void 0 ? void 0 : v.manager).type.id);
-                                if (hasArmorData(id)) {
-                                    armorData += getArmorData(id);
-                                }
-                                else if (v === null || v === void 0 ? void 0 : v.hasComponent("armor_protection")) {
-                                    armorData += v.getComponentWithGroup("armor_protection");
-                                }
+                            if (!v)
+                                return;
+                            let id = ((v === null || v === void 0 ? void 0 : v.manager).type.id);
+                            if (hasArmorData(id)) {
+                                armorData += getArmorData(id);
+                            }
+                            else if (v === null || v === void 0 ? void 0 : v.hasComponent("armor_protection")) {
+                                armorData += v.getComponentWithGroup("armor_protection");
                             }
                         });
                         let msg = [`   ${lang.menuUIMsgBailan94}: ${client.gameId}`,
@@ -739,11 +747,20 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
         "setting": {
             "img": "textures/items/artificial_meat_creator_on.png",
             "text": lang.menuUIMsgBailan75,
-            "default": "op",
+            "default": "personal",
             "page": {
                 "personal": {
                     "text": lang.menuUIMsgBailan101,
                     "page": [
+                        {
+                            "type": "toggle",
+                            "msg": "连锁挖矿",
+                            "state": (client, ui) => client.data.gamePreferrence.chainMining,
+                            "function": (client, ui) => {
+                                client.data.gamePreferrence.chainMining = !client.data.gamePreferrence.chainMining;
+                                return true;
+                            }
+                        },
                         {
                             "type": "button",
                             "msg": lang.menuUIMsgBailan102,
@@ -754,6 +771,34 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                     .show(client.player).then((e) => {
                                     if (!e.canceled) {
                                         client.data.lang = (e.formValues && e.formValues[0] == 0) ? "en" : "zh";
+                                    }
+                                })
+                                    .catch((e) => {
+                                    ExErrorQueue.throwError(e);
+                                });
+                                return false;
+                            }
+                        },
+                        {
+                            "type": "button",
+                            "msg": "玩家界面自定义",
+                            "function": (client, ui) => {
+                                new ModalFormData()
+                                    .title("UI显示设置")
+                                    .dropdown("左上面板样式", ["标准", "简约", "新春"], client.data.uiCustomSetting.topLeftMessageBarStyle)
+                                    .slider("左上面板第一层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer1)
+                                    .slider("左上面板第二层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer2)
+                                    .slider("左上面板第三层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer3)
+                                    .slider("左上面板第四层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer4)
+                                    .slider("左上面板第五层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer5)
+                                    .show(client.player).then((e) => {
+                                    if (!e.canceled && e.formValues) {
+                                        client.data.uiCustomSetting.topLeftMessageBarStyle = e.formValues[0];
+                                        client.data.uiCustomSetting.topLeftMessageBarLayer1 = e.formValues[1];
+                                        client.data.uiCustomSetting.topLeftMessageBarLayer2 = e.formValues[2];
+                                        client.data.uiCustomSetting.topLeftMessageBarLayer3 = e.formValues[3];
+                                        client.data.uiCustomSetting.topLeftMessageBarLayer4 = e.formValues[4];
+                                        client.data.uiCustomSetting.topLeftMessageBarLayer5 = e.formValues[5];
                                     }
                                 })
                                     .catch((e) => {
@@ -840,20 +885,20 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 },
                                 {
                                     "type": "toggle",
-                                    "msg": "魔能镐连锁挖矿",
-                                    "state": (client, ui) => client.globalSettings.chainMining,
-                                    "function": (client, ui) => {
-                                        client.globalSettings.chainMining = !client.globalSettings.chainMining;
-                                        return true;
-                                    }
-                                },
-                                {
-                                    "type": "toggle",
                                     "msg": "初始魔能镐",
                                     "state": (client, ui) => client.globalSettings.initialMagicPickaxe,
                                     "function": (client, ui) => {
                                         client.globalSettings.initialMagicPickaxe = !client.globalSettings.initialMagicPickaxe;
                                         client.runMethodOnEveryClient(c => c.itemUseFunc.initialMagicPickaxe());
+                                        return true;
+                                    }
+                                },
+                                {
+                                    "type": "toggle",
+                                    "msg": "服务器内耗模式(你猜这是啥)",
+                                    "state": (client, ui) => client.globalSettings.smallMapMode,
+                                    "function": (client, ui) => {
+                                        client.globalSettings.smallMapMode = !client.globalSettings.smallMapMode;
                                         return true;
                                     }
                                 },
@@ -986,6 +1031,103 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                             "function": (client, ui) => {
                                 new WarningAlertUI(client, ExErrorQueue.getError(), [["我知道了", (client, ui) => {
                                         }]]).showPage();
+                                return false;
+                            }
+                        }
+                    ]
+                },
+                "canvas": {
+                    "text": "地图",
+                    "page": [
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "padding"
+                        },
+                        {
+                            "type": "button",
+                            "msg": "test",
+                            "function": (client, ui) => {
+                                const canvas = new Canvas(new Bitmap(200, 200));
+                                const paint = new Paint();
+                                const terrain = new ExTerrain(client.getDimension());
+                                const pos = client.exPlayer.position.floor();
+                                paint.strokeWidth = 1;
+                                paint.style = Style.FILL;
+                                const num = client.globalSettings.smallMapMode ? 128 : 32;
+                                const step = 2;
+                                let centerX = 100, centerY = 100;
+                                let perSize = centerX / num * Math.pow(2, 0.5);
+                                canvas.rotateRad(180 - client.exPlayer.rotation.y, centerX, centerY);
+                                const task = new ExTaskRunner();
+                                task.setTasks(function* () {
+                                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+                                    const highMap = new Map();
+                                    for (let x = -num; x <= num; x += step) {
+                                        for (let y = -num; y <= num; y += step) {
+                                            try {
+                                                let block = terrain.getSurfaceBlock(pos.x + x, pos.z + y);
+                                                let b = getBlockThemeColor((_a = block === null || block === void 0 ? void 0 : block.typeId) !== null && _a !== void 0 ? _a : '');
+                                                highMap.set(x + "|" + y, [(_b = block === null || block === void 0 ? void 0 : block.y) !== null && _b !== void 0 ? _b : 0, b]);
+                                                yield 0;
+                                            }
+                                            catch (_l) {
+                                            }
+                                        }
+                                    }
+                                    for (let x = -num; x <= num; x += step) {
+                                        for (let y = -num; y <= num; y += step) {
+                                            if (!highMap.has(x + "|" + y))
+                                                continue;
+                                            let [high, b] = highMap.get(x + "|" + y);
+                                            let fhsv = b.toHSV();
+                                            let hsv;
+                                            if (((_d = (_c = highMap.get((x - step) + "|" + y)) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : 0) > high ||
+                                                ((_f = (_e = highMap.get(x + "|" + (y - step))) === null || _e === void 0 ? void 0 : _e[0]) !== null && _f !== void 0 ? _f : 0) > high) {
+                                                hsv = new ColorHSV(fhsv.h, fhsv.s, Math.max(fhsv.v - 20, 0));
+                                            }
+                                            else if (((_h = (_g = highMap.get((x - step) + "|" + y)) === null || _g === void 0 ? void 0 : _g[0]) !== null && _h !== void 0 ? _h : 0) < high ||
+                                                ((_k = (_j = highMap.get(x + "|" + (y - step))) === null || _j === void 0 ? void 0 : _j[0]) !== null && _k !== void 0 ? _k : 0) < high) {
+                                                hsv = new ColorHSV(fhsv.h, Math.max(fhsv.s - 20, 0), Math.min(fhsv.v + 20, 100));
+                                            }
+                                            else {
+                                                hsv = fhsv;
+                                            }
+                                            paint.color = hsv.toRGB();
+                                            canvas.drawRect(centerX + perSize * x - 1, centerY + perSize * y - 1, step * perSize + 1, step * perSize + 1, paint);
+                                            yield 0;
+                                        }
+                                    }
+                                });
+                                task.start(1, 10000).then(() => {
+                                    const layers = canvas.draw();
+                                    let xui = new ExActionAlert()
+                                        .title("__pomAlertCanvas")
+                                        .button("canvasLayer1", () => { }, layers.layer1)
+                                        .button("canvasLayer2", () => { }, layers.layer2)
+                                        .button("canvasLayer3", () => { }, layers.layer3)
+                                        .button("canvasLayer4", () => { }, layers.layer4)
+                                        .button("canvasLayer5", () => { }, layers.layer5)
+                                        .button("canvasLayer6", () => { }, layers.layer6)
+                                        .body("_uiBody");
+                                    xui.show(client.player);
+                                });
                                 return false;
                             }
                         }

@@ -24,7 +24,7 @@ export default class ExEntityEvents {
             [ExEventNames.afterEntityHitBlock]: new Listener(this, ExEventNames.afterEntityHitBlock),
             [ExEventNames.afterEntityHitEntity]: new Listener(this, ExEventNames.afterEntityHitEntity),
             [ExOtherEventNames.afterOnHurt]: new Listener(this, ExOtherEventNames.afterOnHurt),
-            [ExOtherEventNames.afterItemOnHandChange]: new Listener(this, ExOtherEventNames.afterItemOnHandChange),
+            [ExOtherEventNames.afterItemOnHandChange]: new CallBackListener(this, ExOtherEventNames.afterItemOnHandChange),
             [ExOtherEventNames.onLongTick]: new Listener(this, ExOtherEventNames.onLongTick),
             [ExOtherEventNames.beforeTick]: new Listener(this, ExOtherEventNames.beforeTick),
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
@@ -122,6 +122,16 @@ ExEntityEvents.exEventSetting = {
 ExEntityEvents.onHandItemMap = new Map();
 ExEntityEvents.onceItemUseOnMap = new Map();
 class Listener {
+    constructor(e, name) {
+        this.subscribe = (callback) => {
+            e._subscribe(name, callback);
+        };
+        this.unsubscribe = (callback) => {
+            e._unsubscribe(name, callback);
+        };
+    }
+}
+class CallBackListener {
     constructor(e, name) {
         this.subscribe = (callback) => {
             e._subscribe(name, callback);

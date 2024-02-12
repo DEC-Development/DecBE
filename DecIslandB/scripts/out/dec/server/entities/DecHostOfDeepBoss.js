@@ -1,50 +1,52 @@
+import { EntityDamageCause } from "@minecraft/server";
 import DecBossController from "./DecBossController.js";
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecHostOfDeepBoss1 extends DecBossController {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getMusic("music.wb.from_the_burning_deep", "4:18");
-        this.setTimeout(() => {
-            this.music.loop(this.exEntity.exDimension, this.entity.location);
-        }, 500);
-    }
-    onDestroy() {
-        this.music.delayStop(800);
-        super.onDestroy();
+        this.music = server.getMusic("music.wb.from_the_burning_deep");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
+        this.music.loop();
     }
     onSpawn() {
         super.onSpawn();
     }
+    onFail() {
+        this.music.stop();
+        super.onFail();
+    }
     onKilled(e) {
         super.onKilled(e);
+        if (e.damageSource.cause === EntityDamageCause.suicide) {
+            this.music.stop();
+        }
     }
 }
 export class DecHostOfDeepBoss2 extends DecBossController {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getMusic("music.wb.from_the_burning_deep", "4:18");
-        this.setTimeout(() => {
-            this.music.loop(this.exEntity.exDimension, this.entity.location);
-        }, 500);
-    }
-    onDestroy() {
-        this.music.delayStop(500);
-        super.onDestroy();
+        this.music = server.getMusic("music.wb.from_the_burning_deep");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
     }
     onSpawn() {
         super.onSpawn();
     }
+    onFail() {
+        this.music.stop();
+        super.onFail();
+    }
     onKilled(e) {
         super.onKilled(e);
+        if (e.damageSource.cause === EntityDamageCause.suicide) {
+            this.music.stop();
+        }
     }
 }
 export class DecHostOfDeepBoss3 extends DecCommonBossLastStage {
     constructor(e, server) {
         super(e, server);
-        this.music = server.getMusic("music.wb.from_the_burning_deep", "4:18");
-        this.setTimeout(() => {
-            this.music.loop(this.exEntity.exDimension, this.entity.location);
-        }, 500);
+        this.music = server.getMusic("music.wb.from_the_burning_deep");
+        this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
     }
     onDestroy() {
         this.music.stop();

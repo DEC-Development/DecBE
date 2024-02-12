@@ -1,96 +1,389 @@
+import Vector3 from "./Vector3.js";
+/**
+ * Represents a 4x4 matrix.
+ */
 export default class Matrix4 {
-    constructor(mat) {
-        this.val = mat !== null && mat !== void 0 ? mat : [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ];
+    constructor(val, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+        this.set(...arguments);
     }
-    clone() {
-        return new Matrix4(this.val.map(v => v.map(i => i)));
-    }
-    mul(mat) {
-        const nmat = new Matrix4();
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                let num = 0;
-                this.val[i].forEach((e, index) => num += e * mat.val[index][j]);
-                nmat.val[i][j] = num;
-            }
+    set(val, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+        if (val instanceof Matrix4) {
+            this.val = new Float32Array(val.val);
         }
-        return nmat;
-    }
-    add(mat) {
-        const nmat = this.clone();
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                this.val[i][j] = this.val[i][j] + mat.val[i][j];
-            }
+        else if (val instanceof Float32Array) {
+            this.val = new Float32Array(val);
         }
-        return nmat;
-    }
-    subtract(mat) {
-        const nmat = this.clone();
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                nmat.val[i][j] = this.val[i][j] - mat.val[i][j];
-            }
+        else if (!val) {
+            this.val = new Float32Array(16);
+            this.idt();
         }
-        return nmat;
+        else {
+            this.val[0] = val;
+            this.val[1] = m01;
+            this.val[2] = m02;
+            this.val[3] = m03;
+            this.val[4] = m10;
+            this.val[5] = m11;
+            this.val[6] = m12;
+            this.val[7] = m13;
+            this.val[8] = m20;
+            this.val[9] = m21;
+            this.val[10] = m22;
+            this.val[11] = m23;
+            this.val[12] = m30;
+            this.val[13] = m31;
+            this.val[14] = m32;
+            this.val[15] = m33;
+        }
+        return this;
     }
+    /**
+       * Sets the matrix to the identity matrix.
+       * @returns {Matrix4} The modified matrix.
+       */
+    idt() {
+        this.val.set([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        ]);
+        return this;
+    }
+    /**
+       * Sets the translation component of the matrix.
+       * @param {number} x - The translation along the x-axis.
+       * @param {number} y - The translation along the y-axis.
+       * @param {number} z - The translation along the z-axis.
+       * @returns {Matrix4} The modified matrix.
+       */
+    setTranslation(x, y, z) {
+        this.idt();
+        this.val[12] = x;
+        this.val[13] = y;
+        this.val[14] = z;
+        return this;
+    }
+    /**
+       * Sets the rotation around the x-axis.
+       * @param {number} angle - The rotation angle in radians.
+       * @returns {Matrix4} The modified matrix.
+       */
+    setRotationX(angle) {
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        this.idt();
+        this.val[5] = c;
+        this.val[6] = -s;
+        this.val[9] = s;
+        this.val[10] = c;
+        return this;
+    }
+    /**
+       * Sets the rotation around the y-axis.
+       * @param {number} angle - The rotation angle in radians.
+       * @returns {Matrix4} The modified matrix.
+       */
+    setRotationY(angle) {
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        this.idt();
+        this.val[0] = c;
+        this.val[2] = s;
+        this.val[8] = -s;
+        this.val[10] = c;
+        return this;
+    }
+    /**
+       * Sets the rotation around the z-axis.
+       * @param {number} angle - The rotation angle in radians.
+       * @returns {Matrix4} The modified matrix.
+       */
+    setRotationZ(angle) {
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        this.idt();
+        this.val[0] = c;
+        this.val[1] = -s;
+        this.val[4] = s;
+        this.val[5] = c;
+        return this;
+    }
+    /**
+       * Sets the scale component of the matrix.
+       * @param {number} x - The scale along the x-axis.
+       * @param {number} y - The scale along the y-axis.
+       * @param {number} z - The scale along the z-axis.
+       * @returns {Matrix4} The modified matrix.
+       */
+    setScale(x, y, z) {
+        this.idt();
+        this.val[0] = x;
+        this.val[5] = y;
+        this.val[10] = z;
+        return this;
+    }
+    /**
+       * Translates the matrix.
+       * @param {number} x - The translation along the x-axis.
+       * @param {number} y - The translation along the y-axis.
+       * @param {number} z - The translation along the z-axis.
+       * @returns {Matrix4} The modified matrix.
+       */
+    translate(x, y, z) {
+        const translationMatrix = new Matrix4().setTranslation(x, y, z);
+        return this.mul(translationMatrix);
+    }
+    /**
+      * Rotates the matrix around the x-axis.
+      * @param {number} angle - The rotation angle in radians.
+      * @returns {Matrix4} The modified matrix.
+      */
+    rotateX(angle) {
+        const rotationMatrix = new Matrix4().setRotationX(angle);
+        return this.mul(rotationMatrix);
+    }
+    /**
+       * Rotates the matrix around the y-axis.
+       * @param {number} angle - The rotation angle in radians.
+       * @returns {Matrix4} The modified matrix.
+       */
+    rotateY(angle) {
+        const rotationMatrix = new Matrix4().setRotationY(angle);
+        return this.mul(rotationMatrix);
+    }
+    /**
+       * Rotates the matrix around the z-axis.
+       * @param {number} angle - The rotation angle in radians.
+       * @returns {Matrix4} The modified matrix.
+       */
+    rotateZ(angle) {
+        const rotationMatrix = new Matrix4().setRotationZ(angle);
+        return this.mul(rotationMatrix);
+    }
+    /**
+       * Scales the matrix.
+       * @param {number} x - The scale along the x-axis.
+       * @param {number} y - The scale along the y-axis.
+       * @param {number} z - The scale along the z-axis.
+       * @returns {Matrix4} The modified matrix.
+       */
+    scl(x, y, z) {
+        const scaleMatrix = new Matrix4().setScale(x, y, z);
+        return this.mul(scaleMatrix);
+    }
+    /**
+       * Multiplies this matrix with another matrix.
+       * @param {Matrix4} matrix - The matrix to multiply with.
+       * @returns {Matrix4} The modified matrix.
+       */
+    mul(matrix) {
+        const result = new Matrix4();
+        const a = this.val;
+        const b = matrix.val;
+        const out = result.val;
+        const a11 = a[0], a12 = a[4], a13 = a[8], a14 = a[12];
+        const a21 = a[1], a22 = a[5], a23 = a[9], a24 = a[13];
+        const a31 = a[2], a32 = a[6], a33 = a[10], a34 = a[14];
+        const a41 = a[3], a42 = a[7], a43 = a[11], a44 = a[15];
+        const b11 = b[0], b12 = b[4], b13 = b[8], b14 = b[12];
+        const b21 = b[1], b22 = b[5], b23 = b[9], b24 = b[13];
+        const b31 = b[2], b32 = b[6], b33 = b[10], b34 = b[14];
+        const b41 = b[3], b42 = b[7], b43 = b[11], b44 = b[15];
+        out[0] = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+        out[4] = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+        out[8] = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+        out[12] = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+        out[1] = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+        out[5] = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+        out[9] = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+        out[13] = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+        out[2] = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+        out[6] = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+        out[10] = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+        out[14] = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+        out[3] = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
+        out[7] = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
+        out[11] = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
+        out[15] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
+        this.val = out;
+        return this;
+    }
+    /**
+      * Transforms a vector by this matrix.
+      * @param {Vector3} vector - The vector to transform.
+      * @returns {Vector3} The transformed vector.
+      */
+    transformVector(vector) {
+        const x = vector.x;
+        const y = vector.y;
+        const z = vector.z;
+        const m = this.val;
+        const newX = m[0] * x + m[4] * y + m[8] * z + m[12];
+        const newY = m[1] * x + m[5] * y + m[9] * z + m[13];
+        const newZ = m[2] * x + m[6] * y + m[10] * z + m[14];
+        return vector.set(newX, newY, newZ);
+    }
+    /**
+       * Calculates the determinant of the matrix.
+       * @returns {number} The determinant.
+       */
+    determinant() {
+        const a = this.val;
+        const a11 = a[0], a12 = a[4], a13 = a[8], a14 = a[12];
+        const a21 = a[1], a22 = a[5], a23 = a[9], a24 = a[13];
+        const a31 = a[2], a32 = a[6], a33 = a[10], a34 = a[14];
+        const a41 = a[3], a42 = a[7], a43 = a[11], a44 = a[15];
+        const detA = a11 * a22 * a33 * a44 - a11 * a22 * a34 * a43 +
+            a11 * a23 * a34 * a42 - a11 * a23 * a32 * a44 +
+            a11 * a24 * a32 * a43 - a11 * a24 * a33 * a42 -
+            a12 * a23 * a34 * a41 + a12 * a23 * a31 * a44 -
+            a12 * a24 * a31 * a43 + a12 * a24 * a33 * a41 -
+            a12 * a21 * a33 * a44 + a12 * a21 * a34 * a43 +
+            a13 * a24 * a31 * a42 - a13 * a24 * a32 * a41 +
+            a13 * a21 * a32 * a44 - a13 * a21 * a34 * a42 +
+            a13 * a22 * a34 * a41 - a13 * a22 * a31 * a44 -
+            a14 * a21 * a32 * a43 + a14 * a21 * a33 * a42 -
+            a14 * a22 * a33 * a41 + a14 * a22 * a31 * a43 -
+            a14 * a23 * a31 * a42 + a14 * a23 * a32 * a41;
+        return detA;
+    }
+    /**
+       * Diagonalizes the matrix.
+       * @returns {Object} An object containing the eigenvalues and eigenvectors.
+       */
+    diagonalize() {
+        const a = this.val;
+        const a11 = a[0], a12 = a[4], a13 = a[8], a14 = a[12];
+        const a21 = a[1], a22 = a[5], a23 = a[9], a24 = a[13];
+        const a31 = a[2], a32 = a[6], a33 = a[10], a34 = a[14];
+        const a41 = a[3], a42 = a[7], a43 = a[11], a44 = a[15];
+        const eigenvalues = new Vector3();
+        const eigenvectors = new Matrix4();
+        // 计算特征值
+        const detA = this.determinant();
+        const traceA = a11 + a22 + a33;
+        const p1 = Math.pow(a11, 2) + Math.pow(a12, 2) + Math.pow(a13, 2) + Math.pow(a14, 2);
+        const p2 = Math.pow(a21, 2) + Math.pow(a22, 2) + Math.pow(a23, 2) + Math.pow(a24, 2);
+        const p3 = Math.pow(a31, 2) + Math.pow(a32, 2) + Math.pow(a33, 2) + Math.pow(a34, 2);
+        const p4 = Math.pow(a41, 2) + Math.pow(a42, 2) + Math.pow(a43, 2) + Math.pow(a44, 2);
+        const q = (p1 + p2 + p3 - Math.pow(traceA, 2)) / 6;
+        const r = (traceA * (p1 * p2 + p1 * p3 + p2 * p3 - Math.pow(traceA, 2) - p4)) / 6 + (detA / 2);
+        const s = detA / 2;
+        const phi = Math.acos(r / Math.sqrt(Math.pow(q, 3)));
+        const eigenvalue1 = 2 * Math.sqrt(q) * Math.cos(phi / 3) - traceA / 3;
+        const eigenvalue2 = 2 * Math.sqrt(q) * Math.cos((phi + (2 * Math.PI)) / 3) - traceA / 3;
+        const eigenvalue3 = 2 * Math.sqrt(q) * Math.cos((phi + (4 * Math.PI)) / 3) - traceA / 3;
+        eigenvalues.x = eigenvalue1;
+        eigenvalues.y = eigenvalue2;
+        eigenvalues.z = eigenvalue3;
+        // 计算特征向量
+        const eps = 1e-6; // 迭代停止的阈值
+        const maxIterations = 100; // 最大迭代次数
+        const v1 = new Vector3(1, 0, 0);
+        const v2 = new Vector3(0, 1, 0);
+        const v3 = new Vector3(0, 0, 1);
+        const subtractVectors = (v1, v2) => {
+            return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+        };
+        const normalizeVector = (v) => {
+            const length = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+            v.x /= length;
+            v.y /= length;
+            v.z /= length;
+        };
+        const eigenVectorIterations = (v, eigenvalue) => {
+            let iteration = 0;
+            let prevV = new Vector3();
+            while (iteration < maxIterations) {
+                prevV.x = v.x;
+                prevV.y = v.y;
+                prevV.z = v.z;
+                v.x = a11 * prevV.x + a12 * prevV.y + a13 * prevV.z;
+                v.y = a21 * prevV.x + a22 * prevV.y + a23 * prevV.z;
+                v.z = a31 * prevV.x + a32 * prevV.y + a33 * prevV.z;
+                normalizeVector(v);
+                const diff = subtractVectors(v, prevV);
+                const diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
+                if (diffLength < eps) {
+                    break;
+                }
+                iteration++;
+            }
+            return v;
+        };
+        const eigenvector1 = eigenVectorIterations(v1, eigenvalue1);
+        const eigenvector2 = eigenVectorIterations(v2, eigenvalue2);
+        const eigenvector3 = eigenVectorIterations(v3, eigenvalue3);
+        eigenvectors.val.set([
+            eigenvector1.x, eigenvector2.x, eigenvector3.x, 0,
+            eigenvector1.y, eigenvector2.y, eigenvector3.y, 0,
+            eigenvector1.z, eigenvector2.z, eigenvector3.z, 0,
+            0, 0, 0, 1,
+        ]);
+        return { eigenvalues, eigenvectors };
+    }
+    /**
+       * Inverts the matrix.
+       * @returns {Matrix4} The inverted matrix.
+       * @throws {Error} If the matrix is not invertible.
+       */
     invert() {
         const a = this.val;
-        const b = new Matrix4();
-        const a00 = a[0][0], a01 = a[0][1], a02 = a[0][2], a03 = a[0][3];
-        const a10 = a[1][0], a11 = a[1][1], a12 = a[1][2], a13 = a[1][3];
-        const a20 = a[2][0], a21 = a[2][1], a22 = a[2][2], a23 = a[2][3];
-        const a30 = a[3][0], a31 = a[3][1], a32 = a[3][2], a33 = a[3][3];
-        const b0 = a00 * a11 - a01 * a10;
-        const b1 = a00 * a12 - a02 * a10;
-        const b2 = a00 * a13 - a03 * a10;
-        const b3 = a01 * a12 - a02 * a11;
-        const b4 = a01 * a13 - a03 * a11;
-        const b5 = a02 * a13 - a03 * a12;
-        const b6 = a20 * a31 - a21 * a30;
-        const b7 = a20 * a32 - a22 * a30;
-        const b8 = a20 * a33 - a23 * a30;
-        const b9 = a21 * a32 - a22 * a31;
-        const b10 = a21 * a33 - a23 * a31;
-        const b11 = a22 * a33 - a23 * a32;
-        const determinant = b0 * b11 - b1 * b10 + b2 * b9 + b3 * b8 - b4 * b7 + b5 * b6;
-        if (determinant === 0) {
-            console.error("Cannot invert a matrix with zero determinant");
-            return this.clone();
+        const out = new Matrix4();
+        const inv = out.val;
+        const a11 = a[0], a12 = a[4], a13 = a[8], a14 = a[12];
+        const a21 = a[1], a22 = a[5], a23 = a[9], a24 = a[13];
+        const a31 = a[2], a32 = a[6], a33 = a[10], a34 = a[14];
+        const a41 = a[3], a42 = a[7], a43 = a[11], a44 = a[15];
+        const det = a11 * a22 * a33 * a44 - a11 * a22 * a34 * a43 +
+            a11 * a23 * a34 * a42 - a11 * a23 * a32 * a44 +
+            a11 * a24 * a32 * a43 - a11 * a24 * a33 * a42 -
+            a12 * a23 * a34 * a41 + a12 * a23 * a31 * a44 -
+            a12 * a24 * a31 * a43 + a12 * a24 * a33 * a41 -
+            a12 * a21 * a33 * a44 + a12 * a21 * a34 * a43 +
+            a13 * a24 * a31 * a42 - a13 * a24 * a32 * a41 +
+            a13 * a21 * a32 * a44 - a13 * a21 * a34 * a42 +
+            a13 * a22 * a34 * a41 - a13 * a22 * a31 * a44 -
+            a14 * a21 * a32 * a43 + a14 * a21 * a33 * a42 -
+            a14 * a22 * a33 * a41 + a14 * a22 * a31 * a43 -
+            a14 * a23 * a31 * a42 + a14 * a23 * a32 * a41;
+        if (det === 0) {
+            throw new Error('Matrix is not invertible.');
         }
-        const invDet = 1 / determinant;
-        b.val[0][0] = (a11 * b11 - a12 * b10 + a13 * b9) * invDet;
-        b.val[0][1] = (a02 * b10 - a01 * b11 - a03 * b9) * invDet;
-        b.val[0][2] = (a31 * b5 - a32 * b4 + a33 * b3) * invDet;
-        b.val[0][3] = (a22 * b4 - a21 * b5 - a23 * b3) * invDet;
-        b.val[1][0] = (a12 * b8 - a10 * b11 - a13 * b7) * invDet;
-        b.val[1][1] = (a00 * b11 - a02 * b8 + a03 * b7) * invDet;
-        b.val[1][2] = (a32 * b2 - a30 * b5 - a33 * b1) * invDet;
-        b.val[1][3] = (a20 * b5 - a22 * b2 + a23 * b1) * invDet;
-        b.val[2][0] = (a10 * b10 - a11 * b8 + a13 * b6) * invDet;
-        b.val[2][1] = (a01 * b8 - a00 * b10 - a03 * b6) * invDet;
-        b.val[2][2] = (a30 * b4 - a31 * b2 + a33 * b0) * invDet;
-        b.val[2][3] = (a21 * b2 - a20 * b4 - a23 * b0) * invDet;
-        b.val[3][0] = (a11 * b7 - a10 * b9 - a12 * b6) * invDet;
-        b.val[3][1] = (a00 * b9 - a01 * b7 + a02 * b6) * invDet;
-        b.val[3][2] = (a31 * b1 - a30 * b3 - a32 * b0) * invDet;
-        b.val[3][3] = (a20 * b3 - a21 * b1 + a22 * b0) * invDet;
-        return b;
+        const invDet = 1 / det;
+        inv[0] = (a22 * a33 * a44 - a22 * a34 * a43 - a23 * a32 * a44 + a23 * a34 * a42 + a24 * a32 * a43 - a24 * a33 * a42) * invDet;
+        inv[1] = (-a12 * a33 * a44 + a12 * a34 * a43 + a13 * a32 * a44 - a13 * a34 * a42 - a14 * a32 * a43 + a14 * a33 * a42) * invDet;
+        inv[2] = (a12 * a23 * a44 - a12 * a24 * a43 - a13 * a22 * a44 + a13 * a24 * a42 + a14 * a22 * a43 - a14 * a23 * a42) * invDet;
+        inv[3] = (-a12 * a23 * a34 + a12 * a24 * a33 + a13 * a22 * a34 - a13 * a24 * a32 - a14 * a22 * a33 + a14 * a23 * a32) * invDet;
+        inv[4] = (-a21 * a33 * a44 + a21 * a34 * a43 + a23 * a31 * a44 - a23 * a34 * a41 - a24 * a31 * a43 + a24 * a33 * a41) * invDet;
+        inv[5] = (a11 * a33 * a44 - a11 * a34 * a43 - a13 * a31 * a44 + a13 * a34 * a41 + a14 * a31 * a43 - a14 * a33 * a41) * invDet;
+        inv[6] = (-a11 * a23 * a44 + a11 * a24 * a43 + a13 * a21 * a44 - a13 * a24 * a41 - a14 * a21 * a43 + a14 * a23 * a41) * invDet;
+        inv[7] = (a11 * a23 * a34 - a11 * a24 * a33 - a13 * a21 * a34 + a13 * a24 * a31 + a14 * a21 * a33 - a14 * a23 * a31) * invDet;
+        inv[8] = (a21 * a32 * a44 - a21 * a34 * a42 - a22 * a31 * a44 + a22 * a34 * a41 + a24 * a31 * a42 - a24 * a32 * a41) * invDet;
+        inv[9] = (-a11 * a32 * a44 + a11 * a34 * a42 + a12 * a31 * a44 - a12 * a34 * a41 - a14 * a31 * a42 + a14 * a32 * a41) * invDet;
+        inv[10] = (a11 * a22 * a44 - a11 * a24 * a42 - a12 * a21 * a44 + a12 * a24 * a41 + a14 * a21 * a42 - a14 * a22 * a41) * invDet;
+        inv[11] = (-a11 * a22 * a34 + a11 * a24 * a32 + a12 * a21 * a34 - a12 * a24 * a31 - a14 * a21 * a32 + a14 * a22 * a31) * invDet;
+        inv[12] = (-a21 * a32 * a43 + a21 * a33 * a42 + a22 * a31 * a43 - a22 * a33 * a41 - a23 * a31 * a42 + a23 * a32 * a41) * invDet;
+        inv[13] = (a11 * a32 * a43 - a11 * a33 * a42 - a12 * a31 * a43 + a12 * a33 * a41 + a13 * a31 * a42 - a13 * a32 * a41) * invDet;
+        inv[14] = (-a11 * a22 * a43 + a11 * a23 * a42 + a12 * a21 * a43 - a12 * a23 * a41 - a13 * a21 * a42 + a13 * a22 * a41) * invDet;
+        inv[15] = (a11 * a22 * a33 - a11 * a23 * a32 - a12 * a21 * a33 + a12 * a23 * a31 + a13 * a21 * a32 - a13 * a22 * a31) * invDet;
+        this.val = inv;
+        return this;
     }
-    get(row, col) {
-        return this.val[row][col];
+    /**
+       * Creates a copy of this matrix.
+       * @returns {Matrix4} The copied matrix.
+       */
+    cpy() {
+        return new Matrix4(this);
     }
-    set(row, col, val) {
-        this.val[row][col] = val;
-    }
-    print() {
-        console.log(this);
+    /**
+       * Returns the value of the matrix.
+       * @returns {Float32Array} The value of the matrix.
+       */
+    getValue() {
+        return this.val;
     }
 }
-// console.log(new Matrix4([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]).invert());
 //# sourceMappingURL=Matrix4.js.map
