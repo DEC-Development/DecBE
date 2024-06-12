@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:spell_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:spell_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "spell_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:spell_flower_crop"
+            }
+        }
+    }
+}

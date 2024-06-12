@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:dandelion"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:dandelion.name"
+            },
+            "minecraft:icon": {
+                "texture": "dandelion"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:dandelion_crop"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:wither_cone"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:wither_cone.name"
+            },
+            "minecraft:icon": {
+                "texture": "wither_cone"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:wither_cone_crop"
+            }
+        }
+    }
+}

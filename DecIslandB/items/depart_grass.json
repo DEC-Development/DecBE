@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:depart_grass"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:depart_grass.name"
+            },
+            "minecraft:icon": {
+                "texture": "depart_grass"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:depart_grass_crop"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:butterfly_pea"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:butterfly_pea.name"
+            },
+            "minecraft:icon": {
+                "texture": "butterfly_pea"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:butterfly_pea_crop"
+            }
+        }
+    }
+}

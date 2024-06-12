@@ -61,16 +61,19 @@ export default class ExEntity {
     constructor(entity) {
         this.command = new ExCommand(this);
         this._entity = entity;
-    }
-    static getInstance(source) {
-        if (ExEntity.idMap.has(source)) {
-            return ExEntity.idMap.get(source);
+        if (ExEntity.propertyNameCache in entity) {
+            throw new Error("Already have a instance in entity.please use ExEntity.getInstance to get it.");
         }
         else {
-            let entity = new ExEntity(source);
-            ExEntity.idMap.set(source, entity);
-            return entity;
+            Reflect.set(entity, ExEntity.propertyNameCache, this);
         }
+    }
+    static getInstance(source) {
+        let entity = source;
+        if (this.propertyNameCache in entity) {
+            return Reflect.get(entity, this.propertyNameCache);
+        }
+        return (new ExEntity(entity));
     }
     get exDimension() {
         return ExDimension.getInstance(this.dimension);
@@ -275,5 +278,5 @@ export default class ExEntity {
         return (_b = (_a = this.getComponent("minecraft:variant")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : 0;
     }
 }
-ExEntity.idMap = new WeakMap();
+ExEntity.propertyNameCache = "exCache";
 //# sourceMappingURL=ExEntity.js.map

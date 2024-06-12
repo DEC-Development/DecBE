@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:butter_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:butter_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "butter_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:butter_flower_crop"
+            }
+        }
+    }
+}

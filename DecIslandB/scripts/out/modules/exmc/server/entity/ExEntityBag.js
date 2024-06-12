@@ -1,4 +1,4 @@
-import { EquipmentSlot } from "@minecraft/server";
+import { ContainerSlot, EquipmentSlot } from "@minecraft/server";
 export default class ExEntityBag {
     constructor(entity) {
         this._entity = entity;
@@ -19,50 +19,36 @@ export default class ExEntityBag {
         return search.getItem();
     }
     searchItem(id) {
-        let slots = this.getAllSlots();
-        for (let i of slots) {
+        var _a;
+        if (typeof id === "string")
+            id = [id];
+        for (let i of this.generateAllSlots()) {
             if (i.getItem() === undefined) {
                 continue;
             }
-            if (i.typeId === id) {
+            if (id.includes((_a = i.typeId) !== null && _a !== void 0 ? _a : "")) {
                 return i;
             }
         }
         return undefined;
     }
-    searchItems(items) {
-        let slots = this.getAllSlots();
-        let result;
-        result = {};
-        for (let i of items) {
-            result[i] = undefined;
-        }
-        for (let i of slots) {
-            if (i.getItem() !== undefined && items.indexOf(i.typeId) !== -1 && result[i.typeId] === undefined) {
-                result[i.typeId] = i;
+    searchItems(id) {
+        let from = new Set(id);
+        let res = new Map();
+        if (typeof id === "string")
+            id = [id];
+        for (let i of this.generateAllSlots()) {
+            if (i.getItem() === undefined) {
+                continue;
+            }
+            if (from.has(i.typeId)) {
+                from.delete(i.typeId);
+                res.set(i.typeId, i);
+                if (from.size === 0)
+                    break;
             }
         }
-        return result;
-    }
-    searchProjectile(arg) {
-        if (typeof (arg) === 'string') {
-            let slots = this.getAllSlots();
-            for (let i of slots) {
-                if (i.getItem() !== undefined && i.typeId === arg) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        else {
-            let slots = this.getAllSlots();
-            for (let i of slots) {
-                if (i.getItem() !== undefined && arg.indexOf(i.typeId) !== -1) {
-                    return i.typeId;
-                }
-            }
-            return undefined;
-        }
+        return res;
     }
     indexOf(id) {
         var _a;
@@ -103,6 +89,19 @@ export default class ExEntityBag {
         items.push(this.getSlot(EquipmentSlot.Feet));
         return items;
     }
+    *generateAllSlots() {
+        yield this.getSlot(EquipmentSlot.Offhand);
+        if (this.bagComponent.container) {
+            for (let i = 0; i < this.size(); i++) {
+                yield this.bagComponent.container.getSlot(i);
+            }
+            ;
+        }
+        yield this.getSlot(EquipmentSlot.Head);
+        yield this.getSlot(EquipmentSlot.Chest);
+        yield this.getSlot(EquipmentSlot.Legs);
+        yield this.getSlot(EquipmentSlot.Feet);
+    }
     countAllItems() {
         var _a;
         let items = new Map();
@@ -115,19 +114,12 @@ export default class ExEntityBag {
         return items;
     }
     clearItem(msg, amount) {
-        //lly写完后发现，好像不用把副手弄成-1，不然每次都会检测是不是-1，似乎刚开始检测一下就好（但不知道怎么改qwq
+        var _a;
         if (typeof msg === 'string') {
             let id = msg;
             let res = 0;
-            for (let i = -1; i < this.size(); i++) {
-                let item;
-                if (i === -1) {
-                    item = this.itemOnOffHand;
-                }
-                else {
-                    item = this.getItem(i);
-                }
-                if ((item === null || item === void 0 ? void 0 : item.typeId) === id) {
+            for (let i of this.generateAllSlots()) {
+                if (((_a = i.getItem()) === null || _a === void 0 ? void 0 : _a.typeId) === id) {
                     let suc = this.clearItem(i, amount);
                     res += suc;
                     amount -= suc;
@@ -138,26 +130,23 @@ export default class ExEntityBag {
             }
             return res;
         }
-        else {
-            let item;
-            if (msg === -1) {
-                item = this.itemOnOffHand;
-            }
-            else {
-                item = this.getItem(msg);
-            }
+        else if (msg instanceof ContainerSlot) {
+            let item = msg.getItem();
             if (item) {
                 if (amount >= item.amount) {
-                    this.setItem(msg === -1 ? EquipmentSlot.Offhand : msg, undefined);
+                    msg.setItem(undefined);
                     return item.amount;
                 }
                 else {
                     item.amount -= amount;
-                    this.setItem(msg === -1 ? EquipmentSlot.Offhand : msg, item);
+                    msg.setItem(item);
                     return amount;
                 }
             }
             return 0;
+        }
+        else {
+            return this.clearItem(this.getSlot(msg), amount);
         }
     }
     size() {

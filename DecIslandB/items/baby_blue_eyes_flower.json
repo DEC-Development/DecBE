@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:baby_blue_eyes_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:baby_blue_eyes_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "baby_blue_eyes_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:baby_blue_eyes_flower_crop"
+            }
+        }
+    }
+}

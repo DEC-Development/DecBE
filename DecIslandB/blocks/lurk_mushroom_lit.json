@@ -8,7 +8,9 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "lurk_mushroom_lit",
-                    "render_method": "alpha_test"
+                    "render_method": "alpha_test",
+                    "face_dimming": false,
+                    "ambient_occlusion": false
                 }
             },
             "minecraft:geometry": "geometry.crop.sparse.on_dirt",

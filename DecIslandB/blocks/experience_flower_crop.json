@@ -140,7 +140,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "experience_flower_stage_0",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -164,7 +166,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "experience_flower_stage_1",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -191,7 +195,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "experience_flower_stage_2",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {

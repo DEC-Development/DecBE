@@ -144,6 +144,20 @@
             }
           ],
           "name": "minecraft:sapling"
+        },
+        {
+          "type": "item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4,
+                "max": 7
+              }
+            }
+          ],
+          "name": "dec:corn_seeds"
         }
       ]
     }

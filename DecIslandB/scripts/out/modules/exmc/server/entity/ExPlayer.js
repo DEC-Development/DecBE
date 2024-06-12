@@ -85,18 +85,20 @@ export default class ExPlayer extends ExEntity {
         return this.bag;
     }
     static getInstance(source) {
-        if (ExPlayer.idMap.has(source)) {
-            return ExPlayer.idMap.get(source);
+        let entity = source;
+        if (this.propertyNameCache in entity) {
+            // ExGameConfig.console.log("Property id " + (entity as Player).name + "//" + (ExSystem.getId((entity[this.propertyNameCache] as ExPlayer).entity) == ExSystem.getId(entity)))
+            // ExGameConfig.console.log("Property == " + (entity[this.propertyNameCache] as ExPlayer).entity == entity)
+            // if((entity[this.propertyNameCache] as ExPlayer).entity != entity) (entity[this.propertyNameCache] as ExPlayer).entity = entity;
+            return entity[this.propertyNameCache];
         }
-        else {
-            let entity = new ExPlayer(source);
-            ExPlayer.idMap.set(source, entity);
-            return entity;
-        }
+        return (entity[this.propertyNameCache] = new ExPlayer(entity));
+    }
+    static deleteInstance(source) {
+        delete source[this.propertyNameCache];
     }
     getScoresManager() {
         return this.scoresManager;
     }
 }
-ExPlayer.idMap = new WeakMap();
 //# sourceMappingURL=ExPlayer.js.map

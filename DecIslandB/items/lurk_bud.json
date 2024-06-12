@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:lurk_bud"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:lurk_bud.name"
+            },
+            "minecraft:icon": {
+                "texture": "lurk_bud"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:lurk_bud_crop"
+            }
+        }
+    }
+}

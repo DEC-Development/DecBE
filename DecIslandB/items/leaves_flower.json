@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:leaves_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:leaves_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "leaves_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:leaves_flower_crop"
+            }
+        }
+    }
+}

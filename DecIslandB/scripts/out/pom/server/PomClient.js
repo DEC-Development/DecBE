@@ -70,10 +70,6 @@ export default class PomClient extends ExGameClient {
         this.addCtrller(this.ruinsSystem);
         this.addCtrller(this.taskSystem);
         this.addCtrller(this.interactSystem);
-        this.gameControllers.forEach(controller => {
-            eventDecoratorFactory(this.getEvents(), controller);
-            controller.onJoin();
-        });
         if (!this.data.pointRecord) {
             this.data.pointRecord = {
                 deathPoint: [],
@@ -111,6 +107,10 @@ export default class PomClient extends ExGameClient {
                 chainMining: true
             };
         }
+        this.gameControllers.forEach(controller => {
+            eventDecoratorFactory(this.getEvents(), controller);
+            controller.onJoin();
+        });
         // this.net = new NeuralNetwork<{a:number,b:number},{c:number}>();
     }
     onJoin() {

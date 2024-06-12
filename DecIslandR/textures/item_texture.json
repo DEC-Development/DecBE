@@ -1519,6 +1519,123 @@
 		},
 		"red_gem_hat": {
 			"textures": "textures/items/red_gem_hat"
+		},
+		"glass_tank": {
+			"textures": "textures/items/glass_tank"
+		},
+		"autumn_leaves": {
+			"textures": "textures/items/autumn_leaves"
+		},
+		"baby_blue_eyes_flower": {
+			"textures": "textures/items/baby_blue_eyes_flower"
+		},
+		"balloon_flower": {
+			"textures": "textures/items/balloon_flower"
+		},
+		"breeze_flower": {
+			"textures": "textures/items/breeze_flower"
+		},
+		"butter_flower": {
+			"textures": "textures/items/butter_flower"
+		},
+		"butterfly_pea": {
+			"textures": "textures/items/butterfly_pea"
+		},
+		"cloud_flower": {
+			"textures": "textures/items/cloud_flower"
+		},
+		"crinum": {
+			"textures": "textures/items/crinum"
+		},
+		"dandelion": {
+			"textures": "textures/items/dandelion"
+		},
+		"deep_dandelion": {
+			"textures": "textures/items/deep_dandelion"
+		},
+		"depart_grass": {
+			"textures": "textures/items/depart_grass"
+		},
+		"desert_fan_flower": {
+			"textures": "textures/items/desert_fan_flower"
+		},
+		"fan_flower": {
+			"textures": "textures/items/fan_flower"
+		},
+		"frozen_mirror_flower": {
+			"textures": "textures/items/frozen_mirror_flower"
+		},
+		"gold_flower": {
+			"textures": "textures/items/gold_flower"
+		},
+		"hammer_flower": {
+			"textures": "textures/items/hammer_flower"
+		},
+		"lamp_flower": {
+			"textures": "textures/items/lamp_flower"
+		},
+		"leaves_flower": {
+			"textures": "textures/items/leaves_flower"
+		},
+		"lurk_bud": {
+			"textures": "textures/items/lurk_bud"
+		},
+		"lurk_fruit": {
+			"textures": "textures/items/lurk_fruit"
+		},
+		"lurk_orchid": {
+			"textures": "textures/items/lurk_orchid"
+		},
+		"maple_flower": {
+			"textures": "textures/items/maple_flower"
+		},
+		"mock_strawberry": {
+			"textures": "textures/items/mock_strawberry"
+		},
+		"mouth_flower": {
+			"textures": "textures/items/mouth_flower"
+		},
+		"nether_dandelion": {
+			"textures": "textures/items/nether_dandelion"
+		},
+		"nether_stick_flower": {
+			"textures": "textures/items/nether_stick_flower"
+		},
+		"pink_dandelion": {
+			"textures": "textures/items/pink_dandelion"
+		},
+		"pink_fan_flower": {
+			"textures": "textures/items/pink_fan_flower"
+		},
+		"rosemary": {
+			"textures": "textures/items/rosemary"
+		},
+		"russet_grass": {
+			"textures": "textures/items/russet_grass"
+		},
+		"snow_flower": {
+			"textures": "textures/items/snow_flower"
+		},
+		"spark_flower": {
+			"textures": "textures/items/spark_flower"
+		},
+		"spell_flower": {
+			"textures": "textures/items/spell_flower"
+		},
+		"star_flower": {
+			"textures": "textures/items/star_flower"
+		},
+		"stick_flower": {
+			"textures": "textures/items/stick_flower"
+		},
+		"thyme": {
+			"textures": "textures/items/thyme"
+		},
+		"wither_cone": {
+			"textures": "textures/items/wither_cone"
+		},
+		"yellow_butterfly_flower": {
+			"textures": "textures/items/yellow_butterfly_flower"
 		}
   }
 }

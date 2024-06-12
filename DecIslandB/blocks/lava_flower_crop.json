@@ -105,7 +105,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "lava_flower_crop_0",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -134,7 +136,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "lava_flower_crop_1",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -163,7 +167,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "lava_flower_crop_2",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -192,7 +198,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "lava_flower_crop_3",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {
@@ -217,7 +225,9 @@
                     "minecraft:material_instances": {
                         "*": {
                             "texture": "lava_flower_crop_4",
-                            "render_method": "alpha_test"
+                            "render_method": "alpha_test",
+                            "face_dimming": false,
+                            "ambient_occlusion": false
                         }
                     },
                     "minecraft:pick_collision": {

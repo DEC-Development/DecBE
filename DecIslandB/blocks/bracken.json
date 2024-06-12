@@ -27,7 +27,9 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "bracken_crop",
-                    "render_method": "alpha_test"
+                    "render_method": "alpha_test",
+                    "face_dimming": false,
+                    "ambient_occlusion": false
                 }
             },
             "minecraft:placement_filter": {

@@ -1,0 +1,20 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:autumn_leaves"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.crop"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:autumn_leaves.name"
+            },
+            "minecraft:icon": {
+                "texture": "autumn_leaves"
+            }
+        }
+    }
+}

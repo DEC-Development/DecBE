@@ -12,6 +12,7 @@ import ExClientEvents from "./events/ExClientEvents.js";
 import { world } from '@minecraft/server';
 import ExPlayer from "./entity/ExPlayer.js";
 import ExDimension from "./ExDimension.js";
+import ExErrorQueue from "./ExErrorQueue.js";
 import ExActionAlert from "./ui/ExActionAlert.js";
 import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory } from "./events/eventDecoratorFactory.js";
@@ -27,6 +28,9 @@ export default class ExGameClient {
         new ExActionAlert().title("aaa").body("bbbb").button("alert", () => { })
             .button("alert", () => { })
             .show(this.player);
+    }
+    debug_error() {
+        return ExErrorQueue.getError();
     }
     constructor(server, id, player) {
         this.debuggerChatTest = (e) => {
@@ -120,6 +124,7 @@ export default class ExGameClient {
     }
     onLeave() {
         this._events.cancelAll();
+        ExPlayer.deleteInstance(this.player);
     }
     getEvents() {
         return this._events;

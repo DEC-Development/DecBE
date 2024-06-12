@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:lurk_orchid"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:lurk_orchid.name"
+            },
+            "minecraft:icon": {
+                "texture": "lurk_orchid"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:lurk_orchid_crop"
+            }
+        }
+    }
+}

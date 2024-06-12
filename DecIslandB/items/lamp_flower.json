@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:lamp_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:lamp_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "lamp_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:lamp_flower_crop"
+            }
+        }
+    }
+}

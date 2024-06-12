@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:maple_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:maple_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "maple_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:maple_flower_crop"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:mock_strawberry"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:mock_strawberry.name"
+            },
+            "minecraft:icon": {
+                "texture": "mock_strawberry"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:mock_strawberry_crop"
+            }
+        }
+    }
+}

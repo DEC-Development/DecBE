@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:pink_dandelion"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:pink_dandelion.name"
+            },
+            "minecraft:icon": {
+                "texture": "pink_dandelion"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:pink_dandelion_crop"
+            }
+        }
+    }
+}

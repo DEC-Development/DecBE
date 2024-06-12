@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:mouth_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:mouth_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "mouth_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:mouth_flower_crop"
+            }
+        }
+    }
+}

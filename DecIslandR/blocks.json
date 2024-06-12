@@ -483,5 +483,153 @@
   "dec:lampshade": {
     "textures": "lampshade",
     "sound": "stone"
+  },
+  "dec:baby_blue_eyes_flower_crop": {
+    "textures": "baby_blue_eyes_flower_crop",
+    "sound": "grass"
+  },
+  "dec:balloon_flower_crop": {
+    "textures": "balloon_flower_crop",
+    "sound": "grass"
+  },
+  "dec:breeze_flower_crop": {
+    "textures": "breeze_flower_crop",
+    "sound": "grass"
+  },
+  "dec:butter_flower_crop": {
+    "textures": "butter_flower_crop",
+    "sound": "grass"
+  },
+  "dec:butterfly_pea_crop": {
+    "textures": "butterfly_pea_crop",
+    "sound": "grass"
+  },
+  "dec:cloud_flower_crop": {
+    "textures": "cloud_flower_crop",
+    "sound": "grass"
+  },
+  "dec:crinum_crop": {
+    "textures": "crinum_crop",
+    "sound": "grass"
+  },
+  "dec:dandelion_crop": {
+    "textures": "dandelion_crop",
+    "sound": "grass"
+  },
+  "dec:deep_dandelion_crop": {
+    "textures": "deep_dandelion_crop",
+    "sound": "grass"
+  },
+  "dec:depart_grass_crop": {
+    "textures": "depart_grass_crop",
+    "sound": "grass"
+  },
+  "dec:desert_fan_flower_crop": {
+    "textures": "desert_fan_flower_crop",
+    "sound": "grass"
+  },
+  "dec:fan_flower_crop": {
+    "textures": "fan_flower_crop",
+    "sound": "grass"
+  },
+  "dec:frozen_mirror_flower_crop": {
+    "textures": "frozen_mirror_flower_crop",
+    "sound": "grass"
+  },
+  "dec:gold_flower_crop": {
+    "textures": "gold_flower_crop",
+    "sound": "grass"
+  },
+  "dec:hammer_flower_crop": {
+    "textures": "hammer_flower_crop",
+    "sound": "grass"
+  },
+  "dec:lamp_flower_crop": {
+    "textures": "lamp_flower_crop",
+    "sound": "grass"
+  },
+  "dec:leaves_flower_crop": {
+    "textures": "leaves_flower_crop",
+    "sound": "grass"
+  },
+  "dec:lurk_bud_crop": {
+    "textures": "lurk_bud_crop",
+    "sound": "grass"
+  },
+  "dec:lurk_fruit_crop": {
+    "textures": "lurk_fruit_crop",
+    "sound": "grass"
+  },
+  "dec:lurk_orchid_crop": {
+    "textures": "lurk_orchid_crop",
+    "sound": "grass"
+  },
+  "dec:maple_flower_crop": {
+    "textures": "maple_flower_crop",
+    "sound": "grass"
+  },
+  "dec:mock_strawberry_crop": {
+    "textures": "mock_strawberry_crop",
+    "sound": "grass"
+  },
+  "dec:mouth_flower_crop": {
+    "textures": "mouth_flower_crop",
+    "sound": "grass"
+  },
+  "dec:nether_dandelion_crop": {
+    "textures": "nether_dandelion_crop",
+    "sound": "grass"
+  },
+  "dec:nether_stick_flower_crop": {
+    "textures": "nether_stick_flower_crop",
+    "sound": "grass"
+  },
+  "dec:pink_dandelion_crop": {
+    "textures": "pink_dandelion_crop",
+    "sound": "grass"
+  },
+  "dec:pink_fan_flower_crop": {
+    "textures": "pink_fan_flower_crop",
+    "sound": "grass"
+  },
+  "dec:rosemary_crop": {
+    "textures": "rosemary_crop",
+    "sound": "grass"
+  },
+  "dec:russet_grass_crop": {
+    "textures": "russet_grass_crop",
+    "sound": "grass"
+  },
+  "dec:snow_flower_crop": {
+    "textures": "snow_flower_crop",
+    "sound": "grass"
+  },
+  "dec:spark_flower_crop": {
+    "textures": "spark_flower_crop",
+    "sound": "grass"
+  },
+  "dec:spell_flower_crop": {
+    "textures": "spell_flower_crop",
+    "sound": "grass"
+  },
+  "dec:star_flower_crop": {
+    "textures": "star_flower_crop",
+    "sound": "grass"
+  },
+  "dec:stick_flower_crop": {
+    "textures": "stick_flower_crop",
+    "sound": "grass"
+  },
+  "dec:thyme_crop": {
+    "textures": "thyme_crop",
+    "sound": "grass"
+  },
+  "dec:wither_cone_crop": {
+    "textures": "wither_cone_crop",
+    "sound": "grass"
+  },
+  "dec:yellow_butterfly_flower_crop": {
+    "textures": "yellow_butterfly_flower_crop",
+    "sound": "grass"
   }
 }

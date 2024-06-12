@@ -19,10 +19,6 @@
       "minecraft:render_offsets": "cookie",
       "minecraft:use_duration": 3.2,
       "minecraft:food": {
-        "on_consume": {
-          "event": "consumed",
-          "target": "self"
-        },
         "nutrition": 4,
         "saturation_modifier": "normal",
         "using_converts_to": "dec:cob"

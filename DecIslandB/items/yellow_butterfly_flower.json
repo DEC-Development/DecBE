@@ -1,0 +1,23 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:item": {
+        "description": {
+            "category": "nature",
+            "identifier": "dec:yellow_butterfly_flower"
+        },
+        "components": {
+            "minecraft:creative_category": {
+                "parent": "itemGroup.name.flower"
+            },
+            "minecraft:display_name": {
+                "value": "item.dec:yellow_butterfly_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "yellow_butterfly_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:yellow_butterfly_flower_crop"
+            }
+        }
+    }
+}

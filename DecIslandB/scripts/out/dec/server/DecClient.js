@@ -11,6 +11,7 @@ import GlobalScoreBoardCache from "../../modules/exmc/server/storage/cache/Globa
 import { Objective } from "../../modules/exmc/server/entity/ExScoresManager.js";
 import Random from "../../modules/exmc/utils/Random.js";
 import { MinecraftEffectTypes } from "../../modules/vanilla-data/lib/index.js";
+import ExEntity from '../../modules/exmc/server/entity/ExEntity.js';
 export default class DecClient extends ExGameClient {
     constructor(server, id, player) {
         super(server, id, player);
@@ -87,12 +88,6 @@ export default class DecClient extends ExGameClient {
             //切换物品清除skill_count
             this.exPlayer.getScoresManager().setScore('skill_count', 0);
         });
-        /*this.getEvents().exEvents.afterItemReleaseUse.subscribe((e) => {
-            //物品使用后清除skill_count
-            if(e.itemStack.getTags().includes('use_skill_count')){
-                this.exPlayer.getScoresManager().setScore('skill_count',0)
-            }
-        })*/
         this.getEvents().exEvents.afterItemUse.subscribe((e) => {
             if (e.itemStack.hasComponentById('minecraft:cooldown')) {
                 //这里写有饰品时触发的东西
@@ -105,6 +100,7 @@ export default class DecClient extends ExGameClient {
             }
         });
         this.getEvents().exEvents.afterPlayerHurt.subscribe(e => {
+            var _a;
             //这里写死亡事件
             if (this.exPlayer.health <= 0) {
                 if (this.bossBarrier)
@@ -143,9 +139,7 @@ export default class DecClient extends ExGameClient {
             }
             //哭泣套受伤效果
             if (this.useArmor === ArmorPlayerDec.crying) {
-                if (ra < 1) {
-                }
-                else if (1 <= ra && ra <= 10) {
+                if (1 <= ra && ra <= 10) {
                     this.player.addEffect(MinecraftEffectTypes.Weakness, 5 * 20);
                 }
                 else if (ra <= 20) {
@@ -173,6 +167,9 @@ export default class DecClient extends ExGameClient {
                     this.tmpV.set(this.player.location);
                     this.getExDimension().spawnParticle("dec:everlasting_winter_spurt_particle", this.tmpV);
                 }
+            }
+            if (ra <= 50 && ((_a = ExEntity.getInstance(e.hurtEntity).getBag().equipmentOnHead) === null || _a === void 0 ? void 0 : _a.typeId) === 'dec:glass_tank') {
+                e.hurtEntity.runCommandAsync('playsound random.glass @a ~~1~');
             }
             if (!DecGlobal.isDec() && !this.player.hasTag("wbkjlq")) {
                 const tmpV = new Vector3();
@@ -261,8 +258,6 @@ export default class DecClient extends ExGameClient {
                     let lor = [];
                     let t = DecGlobal.isDec() ? DecTasks : PomTasks;
                     for (let i = 0; i < t_n; i++) {
-                        //lor.push(numTranToTask(randonNumber(0, 9)) + numTranToTask(randonNumber(0, 9)) + numTranToTask(randonNumber(0, 9)))
-                        //lor.push("Ao Ao " + numTranToTask(MathUtil.randomInteger(0, 9)));
                         lor.push(numTranToTask(Random.choice(t).id));
                     }
                     c_n.setLore(lor);
@@ -388,9 +383,6 @@ export default class DecClient extends ExGameClient {
                     }
                 }
             }
-            /*if (p.getItemCooldown("village_portal") > 10) {
-                p.startItemCooldown("village_portal",p.getItemCooldown("village_portal")-10)
-            }*/
             if (scores.getScore('i_heavy') > 0) { //防末影珍珠的放function/global里的
                 this.exPlayer.command.run('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
             }
@@ -485,7 +477,7 @@ export default class DecClient extends ExGameClient {
             }
         });
         this.getEvents().exEvents.afterItemUse.subscribe(e => {
-            var _a, _b;
+            var _a, _b, _c;
             if (e.itemStack.hasComponent('minecraft:cooldown') && this.player.getItemCooldown((_a = e.itemStack.getComponent('minecraft:cooldown')) === null || _a === void 0 ? void 0 : _a.cooldownCategory) == 0) {
                 let item_name = e.itemStack.typeId;
                 let p = this.exPlayer;
@@ -497,11 +489,11 @@ export default class DecClient extends ExGameClient {
                     'dec:exploding_pellets',
                 ]);
                 let suc = false;
-                let has_bullet = (bullet_id) => {
-                    return bullet_cur[bullet_id] !== undefined;
+                let hasBullet = (bullet_id) => {
+                    return bullet_cur.has(bullet_id);
                 };
                 let ex_e = this.exPlayer;
-                if (item_name == 'dec:bomber' && bag.searchProjectile('dec:bomber_bullet')) {
+                if (item_name == 'dec:bomber' && hasBullet('dec:bomber_bullet')) {
                     let shoot_opt = {
                         speed: 3,
                         uncertainty: 5
@@ -515,14 +507,14 @@ export default class DecClient extends ExGameClient {
                     //e.source.spawnParticle('flintlock_smoke_particle',lo)
                     suc = true;
                 }
-                else if (item_name == 'dec:catapult' && bag.searchProjectile(['dec:small_stone', 'dec:exploding_pellets']) !== undefined) {
+                else if (item_name == 'dec:catapult' && (hasBullet('dec:small_stone') || hasBullet('dec:exploding_pellets'))) {
                     e.source.playAnimation('animation.humanoid.catapult');
                     e.source.playSound('mob.snowgolem.shoot');
                     let shoot_opt = {
                         speed: 0.9,
                         uncertainty: 3
                     };
-                    switch (bag.searchProjectile(['dec:small_stone', 'dec:exploding_pellets'])) {
+                    switch ((_b = bag.searchItem(['dec:small_stone', 'dec:exploding_pellets'])) === null || _b === void 0 ? void 0 : _b.typeId) {
                         case 'dec:exploding_pellets':
                             ex_e.shootProj('dec:bullet_by_catapult_explode', shoot_opt);
                             p.getBag().clearItem('dec:exploding_pellets', 1);
@@ -534,7 +526,7 @@ export default class DecClient extends ExGameClient {
                     }
                     suc = true;
                 }
-                else if (item_name == 'dec:everlasting_winter_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:everlasting_winter_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt_1 = {
                         speed: 6,
                         uncertainty: 0
@@ -549,7 +541,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:flintlock_pro' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:flintlock_pro' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt_1 = {
                         speed: 5.4,
                         uncertainty: 0
@@ -564,7 +556,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt_1 = {
                         speed: 5,
                         uncertainty: 0.1
@@ -579,7 +571,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:ghost_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:ghost_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt = {
                         speed: 7.2,
                         uncertainty: 0
@@ -588,7 +580,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:lava_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:lava_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt = {
                         speed: 4.8,
                         uncertainty: 6
@@ -600,7 +592,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:short_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:short_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt = {
                         speed: 4.8,
                         uncertainty: 10
@@ -610,7 +602,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:star_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:star_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt = {
                         speed: 5,
                         uncertainty: 4
@@ -623,7 +615,7 @@ export default class DecClient extends ExGameClient {
                     e.source.runCommandAsync('function item/general_flintlock');
                     suc = true;
                 }
-                else if (item_name == 'dec:storm_flintlock' && bag.searchProjectile('dec:flintlock_bullet')) {
+                else if (item_name == 'dec:storm_flintlock' && hasBullet('dec:flintlock_bullet')) {
                     let shoot_opt_1 = {
                         speed: 4.2,
                         uncertainty: 0
@@ -641,7 +633,7 @@ export default class DecClient extends ExGameClient {
                 if (suc) {
                     let new_item = e.itemStack;
                     let dur = new_item.getComponent('minecraft:durability');
-                    (_b = e.itemStack.getComponent('minecraft:cooldown')) === null || _b === void 0 ? void 0 : _b.startCooldown(e.source);
+                    (_c = e.itemStack.getComponent('minecraft:cooldown')) === null || _c === void 0 ? void 0 : _c.startCooldown(e.source);
                     if (p.gamemode != GameMode.creative) {
                         if (dur.damage + 1 < dur.maxDurability) {
                             dur.damage += 1;
