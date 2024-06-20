@@ -54,7 +54,7 @@ export class PomGameHellDifficulty {
     constructor() {
         this.name = "Human play???";
         this.id = "5";
-        this.healthAddionion = -20;
+        this.healthAddionion = -15;
         this.physicalDefenseAddFactor = -0.2;
         this.magicDefenseAddFactor = -0.2;
         this.damageAddFactor = 0.5;

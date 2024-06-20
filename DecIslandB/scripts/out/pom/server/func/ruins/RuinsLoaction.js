@@ -1,5 +1,5 @@
 var _a;
-import Vector3 from "../../../../modules/exmc/math/Vector3.js";
+import Vector3 from "../../../../modules/exmc/utils/math/Vector3.js";
 import { ExBlockArea } from '../../../../modules/exmc/server/block/ExBlockArea.js';
 export default class RuinsLoaction {
     static isInProtectArea(v) {

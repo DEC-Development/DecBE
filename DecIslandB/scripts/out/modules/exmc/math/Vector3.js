@@ -195,6 +195,15 @@ export default class Vector3 {
             this.z.toFixed(2) === other.z.toFixed(2);
     }
     /**
+     * 计算两个向量的叉积。
+     *
+     * @param other 另一个向量，与当前向量进行叉积计算。
+     * @returns 返回一个新的向量，表示两个向量的叉积。
+     */
+    crs(other) {
+        return new Vector3(this.y * other.z - this.z * other.y, this.z * other.x - this.x * other.z, this.x * other.y - this.y * other.x);
+    }
+    /**
      * Calculates the distance between this vector and another vector.
      * @param {Vector3} vec - The other vector to calculate the distance to.
      * @returns {number} The distance between the two vectors.
@@ -258,7 +267,7 @@ export default class Vector3 {
     }
     mul(n) {
         if (n instanceof Matrix4) {
-            return n.transformVector(this);
+            return n.rmulVector(this);
         }
         else {
             return n.x * this.x + n.y * this.y + n.z * this.z;

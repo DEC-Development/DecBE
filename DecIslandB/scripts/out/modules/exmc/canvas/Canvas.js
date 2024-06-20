@@ -1,4 +1,4 @@
-import Matrix3 from "../math/Matrix3.js";
+import Matrix3 from "../utils/math/Matrix3.js";
 import Paint, { Style } from "./Paint.js";
 import PixelFilter from "./PixelFilter.js";
 export default class Canvas {
@@ -6,10 +6,10 @@ export default class Canvas {
         return this.mat;
     }
     translate(x, y) {
-        this.getMatrix().mul(new Matrix3(1, 0, x, 0, 1, y, 0, 0, 1));
+        this.getMatrix().lmul(new Matrix3(1, 0, x, 0, 1, y, 0, 0, 1));
     }
     scale(x, y) {
-        this.getMatrix().mul(new Matrix3(x, 0, 0, 0, y, 0, 0, 0, 1));
+        this.getMatrix().lmul(new Matrix3(x, 0, 0, 0, y, 0, 0, 0, 1));
     }
     scaleX(x) {
         this.scale(x, 1);
@@ -18,9 +18,9 @@ export default class Canvas {
         this.scale(1, y);
     }
     rotate(r, x, y) {
-        this.translate(x, y);
-        this.getMatrix().mul(new Matrix3(Math.cos(r), -Math.sin(r), 0, Math.sin(r), Math.cos(r), 0, 0, 0, 1));
         this.translate(-x, -y);
+        this.getMatrix().lmul(new Matrix3(Math.cos(r), -Math.sin(r), 0, Math.sin(r), Math.cos(r), 0, 0, 0, 1));
+        this.translate(x, y);
     }
     rotateRad(r, x, y) {
         this.rotate(r * Math.PI / 180, x, y);

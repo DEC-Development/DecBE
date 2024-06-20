@@ -273,7 +273,7 @@ item.dec:stone_chestplate.name=Stone Chestplate
 item.dec:stone_helmet.name=Stone Helmet
 item.dec:stone_leggings.name=Stone Leggings
 item.dec:cudgel.name=Cudgel
-item.dec:mace.name=Mace
+item.dec:fang_mace.name=Fang Mace
 item.dec:witch_hat.name=Witch Hat
 item.dec:following_particle.name=Following Particle
 item.dec:stray_chestplate.name=Stray Chestplate
@@ -1107,6 +1107,7 @@ action.hint.exit.dec:simple_glider=Tap jump or sneak to exit the simple glider
 action.hint.exit.dec:brown_bear=Tap jump or sneak to exit the brown bear
 action.interact.collect=Collect
 action.interact.ride.brown_bear=Ride
+action.interact.ride.polar_wolf=Ride
 action.interact.scarecrow_resort=Resort
 
 boss.dec:leaves_golem.name=Leaves Golem

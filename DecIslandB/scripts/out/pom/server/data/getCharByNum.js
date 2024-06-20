@@ -1,4 +1,4 @@
-import MathUtil from "../../../modules/exmc/math/MathUtil.js";
+import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 export default function getCharByNum(num, long, useChr) {
     num = MathUtil.clamp(num, 0, 1);
     num = Math.floor(num * 4 * long);

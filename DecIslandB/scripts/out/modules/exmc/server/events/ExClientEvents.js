@@ -3,7 +3,7 @@ import ExPlayer from '../entity/ExPlayer.js';
 import { ExEventNames, ExOtherEventNames, ItemOnHandChangeEvent, PlayerShootProjectileEvent } from "./events.js";
 import EventHandle from './EventHandle.js';
 import ExEntity from "../entity/ExEntity.js";
-import Vector3 from "../../math/Vector3.js";
+import Vector3 from "../../utils/math/Vector3.js";
 import { MinecraftEntityTypes } from "../../../vanilla-data/lib/index.js";
 export default class ExClientEvents {
     _subscribe(arg0, callback) {
@@ -21,8 +21,6 @@ export default class ExClientEvents {
     }
     constructor(client) {
         this.exEvents = {
-            [ExEventNames.beforeItemDefinitionEvent]: new Listener(this, ExEventNames.beforeItemDefinitionEvent),
-            [ExEventNames.afterItemDefinitionEvent]: new Listener(this, ExEventNames.afterItemDefinitionEvent),
             [ExEventNames.beforeItemUse]: new Listener(this, ExEventNames.beforeItemUse),
             [ExEventNames.afterItemUse]: new Listener(this, ExEventNames.afterItemUse),
             [ExEventNames.afterItemStopUse]: new Listener(this, ExEventNames.afterItemStopUse),
@@ -42,7 +40,8 @@ export default class ExClientEvents {
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
             [ExEventNames.afterPlayerSpawn]: new Listener(this, ExEventNames.afterPlayerSpawn),
             [ExEventNames.afterEntityHealthChanged]: new Listener(this, ExEventNames.afterEntityHealthChanged),
-            [ExEventNames.afterEffectAdd]: new Listener(this, ExEventNames.afterEffectAdd)
+            [ExEventNames.afterEffectAdd]: new Listener(this, ExEventNames.afterEffectAdd),
+            [ExEventNames.afterItemStartUse]: new Listener(this, ExEventNames.afterItemStartUse)
         };
         this._client = client;
     }
@@ -62,18 +61,6 @@ export default class ExClientEvents {
 _a = ExClientEvents;
 ExClientEvents.eventHandlers = new EventHandle();
 ExClientEvents.exEventSetting = {
-    [ExEventNames.beforeItemDefinitionEvent]: {
-        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
-        filter: {
-            "name": "source"
-        }
-    },
-    [ExEventNames.afterItemDefinitionEvent]: {
-        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
-        filter: {
-            "name": "source"
-        }
-    },
     [ExEventNames.beforeItemUse]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
@@ -185,21 +172,26 @@ ExClientEvents.exEventSetting = {
         pattern: (registerName, k) => {
             _a.onHandItemMap = new Map();
             ExClientEvents.eventHandlers.server.getEvents().register(registerName, (e) => {
-                for (let i of ExClientEvents.eventHandlers.monitorMap[k]) {
+                for (let i of (ExClientEvents.eventHandlers.monitorMap[k])) {
                     let lastItemCache = _a.onHandItemMap.get(i[0]);
-                    if (e.currentTick % 4 === 0 || (i[0].selectedSlot !== (lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]))) {
+                    if (e.currentTick % 4 === 0 || (i[0].selectedSlotIndex !== (lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]))) {
                         let lastItem = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[0];
                         let nowItem = ExPlayer.getInstance(i[0]).getBag().itemOnMainHand;
-                        if ((lastItem === null || lastItem === void 0 ? void 0 : lastItem.typeId) !== (nowItem === null || nowItem === void 0 ? void 0 : nowItem.typeId) || i[0].selectedSlot !== (lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1])) {
-                            let res = undefined;
+                        if ((lastItem === null || lastItem === void 0 ? void 0 : lastItem.typeId) !== (nowItem === null || nowItem === void 0 ? void 0 : nowItem.typeId) || i[0].selectedSlotIndex !== (lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1])) {
+                            let res = nowItem;
                             i[1].forEach((f) => {
-                                var _b;
-                                res = res !== null && res !== void 0 ? res : f(new ItemOnHandChangeEvent(lastItem, (_b = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]) !== null && _b !== void 0 ? _b : 0, nowItem, i[0].selectedSlot, i[0]));
+                                var _b, _c;
+                                res = (_c = f(new ItemOnHandChangeEvent(lastItem, (_b = lastItemCache === null || lastItemCache === void 0 ? void 0 : lastItemCache[1]) !== null && _b !== void 0 ? _b : 0, res, i[0].selectedSlotIndex, i[0]))) !== null && _c !== void 0 ? _c : res;
                             });
                             if (res !== undefined) {
-                                ExPlayer.getInstance(i[0]).getBag().itemOnMainHand = res;
+                                if (res.isWillBeRemoved) {
+                                    ExPlayer.getInstance(i[0]).getBag().itemOnMainHand = undefined;
+                                }
+                                else {
+                                    ExPlayer.getInstance(i[0]).getBag().itemOnMainHand = res;
+                                }
                             }
-                            _a.onHandItemMap.set(i[0], [nowItem, i[0].selectedSlot]);
+                            _a.onHandItemMap.set(i[0], [res, i[0].selectedSlotIndex]);
                         }
                     }
                 }
@@ -254,9 +246,6 @@ ExClientEvents.exEventSetting = {
                     }
                 }
             };
-            ExClientEvents.eventHandlers.server.getEvents().events.afterItemDefinitionEvent.subscribe((e) => {
-                func(e.source, e);
-            });
             ExClientEvents.eventHandlers.server.getEvents().events.afterItemReleaseUse.subscribe((e) => {
                 if (e.itemStack)
                     func(e.source, { "itemStack": e.itemStack });
@@ -289,7 +278,13 @@ ExClientEvents.exEventSetting = {
         filter: {
             "name": "entity"
         }
-    }
+    },
+    [ExEventNames.afterItemStartUse]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "source"
+        }
+    },
 };
 ExClientEvents.onHandItemMap = new Map();
 ExClientEvents.onceItemUseOnMap = new Map();

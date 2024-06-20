@@ -1,4 +1,4 @@
-import { MinecraftEntityTypes, MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
+import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_b(lang) {
     return {
         "name": "每日任务-稀有级",
@@ -157,19 +157,19 @@ export default function taskDaily_b(lang) {
                 "conditions": [
                     {
                         "name": "猪",
-                        "typeId": MinecraftEntityTypes.Pig,
+                        "typeId": "minecraft:pig",
                         "count": 10,
                         "type": "kill"
                     },
                     {
                         "name": "牛",
-                        "typeId": MinecraftEntityTypes.Cow,
+                        "typeId": "minecraft:cow",
                         "count": 12,
                         "type": "kill"
                     },
                     {
                         "name": "羊",
-                        "typeId": MinecraftEntityTypes.Sheep,
+                        "typeId": "minecraft:sheep",
                         "count": 9,
                         "type": "kill"
                     }

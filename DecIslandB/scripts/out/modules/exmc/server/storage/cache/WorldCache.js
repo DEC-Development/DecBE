@@ -11,6 +11,9 @@ export default class WorldCache {
     setNumber(name, value) {
         world.setDynamicProperty(name, value);
     }
+    setString(name, value) {
+        world.setDynamicProperty(name, value);
+    }
     getNumber(name) {
         try {
             return world.getDynamicProperty(name);

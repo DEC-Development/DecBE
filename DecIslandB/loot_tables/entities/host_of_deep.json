@@ -78,6 +78,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "item",
+          "name": "dec:deep_dandelion_crop",
+          "weight": 1
         }
       ]
     }

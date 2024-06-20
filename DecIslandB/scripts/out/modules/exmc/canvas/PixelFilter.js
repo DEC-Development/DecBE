@@ -1,5 +1,5 @@
-import Matrix3 from "../math/Matrix3.js";
-import Vector2 from "../math/Vector2.js";
+import Matrix3 from "../utils/math/Matrix3.js";
+import Vector2 from "../utils/math/Vector2.js";
 export default class PixelFilter {
     constructor(mat = new Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1)) {
         this.pixels = new Map();

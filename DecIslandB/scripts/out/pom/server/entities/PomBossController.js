@@ -26,7 +26,7 @@ export default class PomBossController extends ExEntityController {
         }
     }
     despawn() {
-        this.entity.triggerEvent("minecraft:despawn");
+        this.entity.remove();
     }
     onFail() {
         console.warn("onFail");

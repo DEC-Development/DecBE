@@ -1,10 +1,10 @@
-import { EntityDamageCause, Vector } from '@minecraft/server';
+import { EntityDamageCause } from '@minecraft/server';
 import ExScoresManager from './ExScoresManager.js';
-import Vector3 from '../../math/Vector3.js';
+import Vector3 from '../../utils/math/Vector3.js';
 import ExEntityBag from './ExEntityBag.js';
 import ExCommand from '../env/ExCommand.js';
 import ExDimension from '../ExDimension.js';
-import Matrix4 from '../../math/Matrix4.js';
+import Matrix4 from '../../utils/math/Matrix4.js';
 export default class ExEntity {
     damage(d, source) {
         this.entity.applyDamage(d, source);
@@ -250,9 +250,9 @@ export default class ExEntity {
         return v_c;
     }
     getViewVectorBase() {
-        let c = this._entity.getViewDirection();
-        let b = Vector.cross(new Vector3(0, 1, 0), c);
-        let a = Vector.cross(c, b);
+        let c = this.viewDirection;
+        let b = new Vector3(0, 1, 0).crs(c);
+        let a = c.crs(b);
         let base = [
             a, b, c
         ];

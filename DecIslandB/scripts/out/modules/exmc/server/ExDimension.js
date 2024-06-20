@@ -38,13 +38,12 @@ export default class ExDimension {
     getBlock(vec) {
         return ignorn(() => this._dimension.getBlock(vec));
     }
-    fillBlocks(start, end, blockId, option) {
-        // console.warn("fillBlocks", start, end, blockId);
-        if (typeof blockId === "string")
-            blockId = BlockTypes.get(blockId);
-        this.dimension.fillBlocks(start, end, blockId, option);
-        //b?.permutation;
-    }
+    // fillBlocks(start: IVector3, end: IVector3, blockId: string | BlockType, option?: BlockFillOptions) {
+    //     // console.warn("fillBlocks", start, end, blockId);
+    //     if (typeof blockId === "string") blockId = <BlockType>BlockTypes.get(blockId);
+    //     this.dimension.fillBlocks(start, end, blockId, option);
+    //     //b?.permutation;
+    // }
     setBlock(vec, blockId) {
         if (typeof blockId === "string")
             blockId = BlockTypes.get(blockId);

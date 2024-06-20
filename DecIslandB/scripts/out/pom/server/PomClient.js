@@ -24,7 +24,7 @@ import { eventDecoratorFactory } from "../../modules/exmc/server/events/eventDec
 import ExSystem from "../../modules/exmc/utils/ExSystem.js";
 import Random from "../../modules/exmc/utils/Random.js";
 import GlobalSettings from "./cache/GlobalSettings.js";
-import PomData from "./cache/PomData.js";
+import PomClientData from "./cache/PomClientData.js";
 import POMLICENSE from "./data/POMLICENSE.js";
 import lang from "./data/lang.js";
 import PomDimRuinsSystem from "./func/PomDimRuinsSystem.js";
@@ -39,6 +39,7 @@ import ExPropCache from "../../modules/exmc/server/storage/cache/ExPropCache.js"
 import { ArmorData } from "../../dec/server/items/ArmorData.js";
 import { pomDifficultyMap } from "./data/GameDifficulty.js";
 import TalentData from "./cache/TalentData.js";
+import PomTerritorySystem from "./func/PomTerritorySystem.js";
 export default class PomClient extends ExGameClient {
     // net;
     constructor(server, id, player) {
@@ -51,14 +52,15 @@ export default class PomClient extends ExGameClient {
         this.ruinsSystem = new PomDimRuinsSystem(this);
         this.taskSystem = new PomTaskSystem(this);
         this.interactSystem = new PomInteractSystem(this);
+        this.territorySystem = new PomTerritorySystem(this);
         this.globalSettings = new GlobalSettings(new Objective("wpsetting"));
-        this.cache = new ExPropCache(this.exPlayer.entity);
+        this.cache = new ExPropCache(this.getDynamicPropertyManager());
         this.looper = ExSystem.tickTask(() => {
             this.cache.save();
         });
         this.looper.delay(10 * 20);
         this.looper.start();
-        this.data = this.cache.get(new PomData());
+        this.data = this.cache.get(new PomClientData());
         if (!this.globalSettings.ownerExists) {
             player.addTag("owner");
             this.globalSettings.ownerExists = true;
@@ -70,6 +72,7 @@ export default class PomClient extends ExGameClient {
         this.addCtrller(this.ruinsSystem);
         this.addCtrller(this.taskSystem);
         this.addCtrller(this.interactSystem);
+        this.addCtrller(this.territorySystem);
         if (!this.data.pointRecord) {
             this.data.pointRecord = {
                 deathPoint: [],
@@ -91,6 +94,20 @@ export default class PomClient extends ExGameClient {
                     data: {}
                 }
             };
+        }
+        if (!this.data.socialList) {
+            this.data.socialList = {
+                refuseList: [],
+                acceptList: []
+            };
+        }
+        if (!this.data.territory) {
+            this.data.territory = {
+                data: []
+            };
+        }
+        if (!this.data.redemptionCode) {
+            this.data.redemptionCode = {};
         }
         if (!this.data.uiCustomSetting) {
             this.data.uiCustomSetting = {
@@ -134,6 +151,10 @@ export default class PomClient extends ExGameClient {
             this.gameId = Math.floor(Math.random() * Random.MAX_VALUE);
             scores.setScore("wbldid", this.gameId);
         }
+        if (this.data.socialList.acceptList.filter(e => e[0] === this.gameId).length === 0) {
+            this.data.socialList.acceptList.push([this.gameId, this.playerName]);
+        }
+        this.territorySystem.updateGlobalList();
         this.gameControllers.forEach(controller => controller.onLoad());
         if (!this.data.lang) {
             this.exPlayer.runCommandAsync("mojang nmsl").catch((e) => {
@@ -200,6 +221,9 @@ export default class PomClient extends ExGameClient {
     }
     getServer() {
         return super.getServer();
+    }
+    getGlobalData() {
+        return this.getServer().data;
     }
     getDifficulty() {
         return (pomDifficultyMap).get(this.globalSettings.gameDifficulty + "");

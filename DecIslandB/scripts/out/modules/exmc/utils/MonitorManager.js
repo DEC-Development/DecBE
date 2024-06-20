@@ -27,5 +27,23 @@ export default class MonitorManager {
             }
         }
     }
+    get length() {
+        return this.mixer.length;
+    }
+    *[Symbol.iterator]() {
+        for (let e of this.mixer) {
+            yield e;
+        }
+    }
+    forEach(arg0) {
+        for (let e of this.mixer) {
+            try {
+                arg0(e);
+            }
+            catch (err) {
+                ExErrorQueue.throwError(err);
+            }
+        }
+    }
 }
 //# sourceMappingURL=MonitorManager.js.map

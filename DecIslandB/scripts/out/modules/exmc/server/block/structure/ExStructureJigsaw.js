@@ -1,4 +1,4 @@
-import Vector3 from '../../../math/Vector3.js';
+import Vector3 from '../../../utils/math/Vector3.js';
 import ExStructure from './ExStructure.js';
 export default class ExStructureJigsaw {
     constructor(girdSize, gridWidthNum, gridHeightNum = 1) {

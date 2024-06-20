@@ -1,4 +1,4 @@
-import MathUtil from "../../../modules/exmc/math/MathUtil.js";
+import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 import format from '../../../modules/exmc/utils/format.js';
 import ExColorLoreUtil from "../../../modules/exmc/server/item/ExColorLoreUtil.js";
 export default class TalentData {

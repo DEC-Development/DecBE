@@ -2,20 +2,16 @@ import { MinecraftDimensionTypes } from '@minecraft/server';
 import GameController from "./GameController.js";
 import RuinsLoaction from "./ruins/RuinsLoaction.js";
 import { ExBlockArea } from '../../../modules/exmc/server/block/ExBlockArea.js';
-import Vector3 from '../../../modules/exmc/math/Vector3.js';
+import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
 import PomDesertRuinBasicRule from './ruins/desert/PomDesertRuinBasicRule.js';
 import VarOnChangeListener from '../../../modules/exmc/utils/VarOnChangeListener.js';
 import ExMessageAlert from '../../../modules/exmc/server/ui/ExMessageAlert.js';
 import ExActionAlert from '../../../modules/exmc/server/ui/ExActionAlert.js';
 import PomBossBarrier from './barrier/PomBossBarrier.js';
-import { Objective } from '../../../modules/exmc/server/entity/ExScoresManager.js';
 import { MinecraftBlockTypes, MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
 export default class PomDimRuinsSystem extends GameController {
     constructor() {
         super(...arguments);
-        this.i_inviolable = new Objective("i_inviolable");
-        this.i_damp = new Objective("i_damp");
-        this.i_soft = new Objective("i_soft");
         this.desertRuinRules = new PomDesertRuinBasicRule(this);
         this.isInRuinJudge = false;
         this.causeDamage = 0;
@@ -274,6 +270,7 @@ export default class PomDimRuinsSystem extends GameController {
                 let show = [];
                 show = this.desertRuinRules.getShowMap();
                 this.client.magicSystem.setActionbarByPass("desertRuinMap", show);
+                // this.exPlayer.command.run(`fog @s push wb:ruin_desert_boss "ruin_fog"`);
             }
             this.desertRuinRules.inRuinsListener.upDate(isInGuardRuin);
             //处于石头遗迹

@@ -1,5 +1,4 @@
-import ExDimension from '../../ExDimension.js';
-import { to } from '../../ExErrorQueue.js';
+import { StructureRotation, world } from '@minecraft/server';
 export default class ExStructure {
     constructor(id, pos, rotation = 0) {
         this.mirror = "none";
@@ -8,9 +7,14 @@ export default class ExStructure {
         this.rotation = rotation;
     }
     generate(dim) {
-        let rot = this.rotation;
-        let exdim = ExDimension.getInstance(dim);
-        to(exdim.command.run(`structure load ${this.structureId} ${this.position.x} ${this.position.y} ${this.position.z} ${Math.round(rot)}_degrees ${this.mirror}`));
+        world.structureManager.place(this.structureId, dim, this.position, {
+            rotation: ({
+                "0": StructureRotation.None,
+                "90": StructureRotation.Rotate90,
+                "180": StructureRotation.Rotate180,
+                "270": StructureRotation.Rotate270
+            })[this.rotation + ""]
+        });
     }
 }
 //# sourceMappingURL=ExStructure.js.map

@@ -7,6 +7,7 @@ export class ItemTagComponentGroup {
 }
 const itemTagComponentType = {
     use_data_group: [new ItemTagComponentGroup("", [])],
+    base_attack: [0],
     armor_protection: [0],
     armor_resilience: [0],
     armor_physical_protection: [0],
@@ -61,6 +62,9 @@ export default class ItemTagComponent {
     }
     getComponent(key) {
         return this.components.get(key);
+    }
+    isEmpty() {
+        return this.components.size === 0;
     }
     getComponentWithGroup(key, group = this.currentGroup) {
         const c = this.getComponent(key);

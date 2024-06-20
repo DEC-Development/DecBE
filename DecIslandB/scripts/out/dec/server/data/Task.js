@@ -8,13 +8,14 @@ export class DecTask {
                 this.commands = this.commands.concat(respond);
             }
             else {
-                this.commands.push("tellraw @s[tag=task_complete] { \"rawtext\" : [ { \"translate\" : \"text.dec:task_" + id + "_complete.name\" } ] }", "tellraw @s[tag=!task_complete] { \"rawtext\" : [ { \"translate\" : \"text.dec:task_fail.name\" } ] }", "loot give @s[tag=task_complete] loot \"tasks/" + id + "\"", "xp " + xp_change.toString() + " @s[tag=task_complete]", "replaceitem entity @s[tag=task_complete] slot.weapon.mainhand 0 air", "tag @s remove task_complete");
+                this.commands.push("tellraw @s[tag=task_complete] { \"rawtext\" : [ { \"translate\" : \"text.dec:task_" + id + "_complete.name\" } ] }", "tellraw @s[tag=!task_complete] { \"rawtext\" : [ { \"translate\" : \"text.dec:task_fail.name\" } ] }", "loot give @s[tag=task_complete] loot \"tasks/" + id + "\"", "xp " + xp_change.toString() + " @s[tag=task_complete]", "replaceitem entity @s[tag=task_complete] slot.weapon.mainhand 0 air");
             }
         }
         else if (respond && !(respond instanceof Array)) {
             this.conditions = condition;
             this.respond = respond;
         }
+        this.xps = xp_change;
     }
     title() {
         let title = "text.dec:task_" + this.id + "_title.name";
@@ -24,7 +25,27 @@ export class DecTask {
         let body = "text.dec:task_" + this.id + "_body.name";
         return body;
     }
-    detect(ep) {
+    detect(c, lor) {
+        let item = c.exPlayer.getBag().itemOnMainHand;
+        if (!item || lor.toString() !== item.getLore().toString()) {
+            return;
+        }
+        if (this.commands) {
+            c.exPlayer.command.run(this.commands);
+            c.setTimeout(() => {
+                if (c.exPlayer.hasTag('task_complete')) {
+                    c.data.gameExperience += this.xps;
+                    c.exPlayer.removeTag("task_complete");
+                }
+            }, 800);
+        }
+        if (this.conditions && this.respond) {
+            if (this.conditions(c.exPlayer)) {
+                this.respond(c.exPlayer);
+            }
+        }
+    }
+    dec_detect(ep) {
         if (this.commands) {
             ep.command.run(this.commands);
         }
@@ -91,8 +112,8 @@ export let DecTasks = [
         "execute if entity @s[tag=task_complete] run clear @s yellow_flower 0 14"
     ]),
     new DecTask("016", 471, [
-        "execute if entity @s[hasitem={item=log,data=1,quantity=64..}] run tag @s add task_complete",
-        "execute if entity @s[tag=task_complete] run clear @s log 0 64"
+        "execute if entity @s[hasitem={item=spruce_log,quantity=64..}] run tag @s add task_complete",
+        "execute if entity @s[tag=task_complete] run clear @s spruce_log 0 64"
     ]),
     new DecTask("017", 512, [
         "execute if entity @s[hasitem={item=snow,quantity=12..}] if entity @s[hasitem={item=water_bucket}] run tag @s add task_complete",
@@ -211,7 +232,7 @@ export let DecTasks = [
         "execute if entity @s[tag=task_complete] run clear @s log -1 64"
     ]),
     new DecTask("043", 562, [
-        "execute if entity @s[hasitem={item=log,quantity=73..}] run tag @s add task_complete",
+        "execute if entity @s[hasitem={item=oak_log,quantity=73..}] run tag @s add task_complete",
         "execute if entity @s[tag=task_complete] run clear @s log -1 73"
     ]),
     new DecTask("044", 741, [
@@ -458,7 +479,7 @@ export let DecTasks = [
         "execute if entity @s[hasitem={item=cooked_cod,quantity=72..}] run tag @s add task_complete",
         "execute if entity @s[tag=task_complete] run clear @s cooked_cod 0 72"
     ]),
-    new DecTask("104", 1542, [
+    new DecTask("105", 1542, [
         "execute if entity @s[hasitem={item=cooked_porkchop,quantity=71..}] run tag @s add task_complete",
         "execute if entity @s[tag=task_complete] run clear @s cooked_porkchop 0 71"
     ]),
@@ -531,7 +552,7 @@ export function taskUiChoose(p, id) {
         .body(DecTasks[index].body())
         .show(p.player).then(s => {
         if (s.selection == 0) {
-            DecTasks[index].detect(p.exPlayer);
+            DecTasks[index].dec_detect(p.exPlayer);
         }
     });
 }

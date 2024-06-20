@@ -1,0 +1,19 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:multiface_feature": {
+    "description": {
+      "identifier": "dec:nether_dandelion_crop_feature"
+    },
+    "places_block": "dec:nether_dandelion_crop",
+    "search_range": 64,
+    "can_place_on_floor": true,
+    "can_place_on_ceiling": false,
+    "can_place_on_wall": false,
+    "chance_of_spreading": 0.2,
+    "can_place_on": [
+      "minecraft:netherrack",
+      "minecraft:nether_wart_block",
+      "minecraft:crimson_nylium"
+    ]
+  }
+}

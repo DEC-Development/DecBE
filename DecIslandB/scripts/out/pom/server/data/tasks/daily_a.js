@@ -96,13 +96,13 @@ export default function taskDaily_a(lang) {
                 "conditions": [
                     {
                         "name": "僵尸",
-                        "typeId": MinecraftEntityTypes.Zombie,
+                        "typeId": "minecraft:zombie",
                         "count": 8,
                         "type": "kill"
                     },
                     {
                         "name": "苦力怕",
-                        "typeId": MinecraftEntityTypes.Creeper,
+                        "typeId": "minecraft:creeper",
                         "count": 2,
                         "type": "kill"
                     },
@@ -123,42 +123,23 @@ export default function taskDaily_a(lang) {
                 ]
             },
             {
-                "name": "初级升级台杀手",
-                "conditions": [
-                    {
-                        "name": "初级升级台",
-                        "typeId": "wb:station_upgrade_a",
-                        "count": 1,
-                        "type": "kill"
-                    }
-                ],
-                "rewards": [
-                    {
-                        "name": "模组经验",
-                        "count": 700,
-                        "unit": "点",
-                        "type": "integral"
-                    }
-                ]
-            },
-            {
                 "name": "狩猎愉快",
                 "conditions": [
                     {
                         "name": "猪",
-                        "typeId": MinecraftEntityTypes.Pig,
+                        "typeId": "minecraft:pig",
                         "count": 3,
                         "type": "kill"
                     },
                     {
                         "name": "牛",
-                        "typeId": MinecraftEntityTypes.Cow,
+                        "typeId": "minecraft:cow",
                         "count": 3,
                         "type": "kill"
                     },
                     {
                         "name": "羊",
-                        "typeId": MinecraftEntityTypes.Sheep,
+                        "typeId": "minecraft:sheep",
                         "count": 3,
                         "type": "kill"
                     }

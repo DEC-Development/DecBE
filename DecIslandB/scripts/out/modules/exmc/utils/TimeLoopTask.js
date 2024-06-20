@@ -1,26 +1,28 @@
+import Random from "./Random.js";
 export default class TimeLoopTask {
     getDelay() {
-        return this.time;
+        return this.targetDelay;
     }
     constructor(timeOut, looper) {
-        this.time = 1000;
+        this.targetDelay = 1000;
+        this.times = 0;
         this.timeOut = timeOut;
         this.looper = looper;
     }
     delay(time) {
-        this.time = time;
+        this.targetDelay = time;
         return this;
     }
     isStarted() {
         return this.func !== undefined;
     }
     startOnce() {
-        let times = 0;
         if (this.isStarted())
             return;
+        this.times = 0;
         this.func = (e) => {
-            times += e.deltaTime * 1000;
-            if (times >= this.time) {
+            this.times += e.deltaTime * 1000;
+            if (this.times >= this.targetDelay) {
                 this.stop();
                 this.looper();
             }
@@ -28,17 +30,21 @@ export default class TimeLoopTask {
         this.timeOut.register("tick", this.func);
     }
     start() {
-        let times = 0;
         if (this.isStarted())
             return;
+        this.times = 0;
         this.func = (e) => {
-            times += e.deltaTime * 1000;
-            if (times >= this.time) {
+            this.times += e.deltaTime * 1000;
+            if (this.times >= this.targetDelay) {
                 this.looper();
-                times = 0;
+                this.times = 0;
             }
         };
         this.timeOut.register("tick", this.func);
+    }
+    trigger() {
+        if (this.isStarted())
+            this.times = Random.MAX_VALUE;
     }
     stop() {
         if (!this.func)

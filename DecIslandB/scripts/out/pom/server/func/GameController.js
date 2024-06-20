@@ -18,6 +18,12 @@ export default class GameController {
     get data() {
         return this._client.data;
     }
+    get globalData() {
+        return this._client.getServer().data;
+    }
+    get gameId() {
+        return this._client.gameId;
+    }
     runCommandAsync(str) {
         return ExGameConfig.runCommandAsync(str);
     }

@@ -25,6 +25,7 @@ import notUtillTask from "../utils/notUtillTask.js";
 import ExMusic from "./env/ExMusic.js";
 import { ExEventNames } from "./events/events.js";
 import ExSystem from "../utils/ExSystem.js";
+import Vector3 from "../utils/math/Vector3.js";
 export default class ExGameServer {
     constructor(config) {
         this.entityControllers = new Map();
@@ -71,6 +72,12 @@ export default class ExGameServer {
     }
     addEntityController(id, ec) {
         this.entityControllers.set(id, ec);
+    }
+    getDefaultSpawnLocation() {
+        return new Vector3(world.getDefaultSpawnLocation());
+    }
+    getDynamicPropertyManager() {
+        return world;
     }
     _onEntitySpawn(e) {
         this.onEntitySpawn(e);

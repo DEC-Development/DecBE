@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import ExEntity from '../entity/ExEntity.js';
 import format from '../../utils/format.js';
 import UUID from '../../utils/UUID.js';
-import Queue from '../../utils/Queue.js';
+import Queue from '../../utils/queue/Queue.js';
 import ExSystem from '../../utils/ExSystem.js';
 export default class ExCommand {
     constructor(runner) {

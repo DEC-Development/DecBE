@@ -1,8 +1,8 @@
 import { EntityDamageCause, GameMode, MinecraftDimensionTypes } from '@minecraft/server';
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
-import MathUtil from "../../modules/exmc/math/MathUtil.js";
-import Vector3 from "../../modules/exmc/math/Vector3.js";
+import MathUtil from "../../modules/exmc/utils/math/MathUtil.js";
+import Vector3 from "../../modules/exmc/utils/math/Vector3.js";
 import DecGlobal from "./DecGlobal.js";
 import { DecTasks, PomTasks, numTranToTask, taskUi } from "./data/Task.js";
 import ExGame from "../../modules/exmc/server/ExGame.js";
@@ -168,6 +168,39 @@ export default class DecClient extends ExGameClient {
                     this.getExDimension().spawnParticle("dec:everlasting_winter_spurt_particle", this.tmpV);
                 }
             }
+            //EPIC
+            //日光套装受伤效果
+            if (!DecGlobal.isDec() && !this.player.hasTag("wbkjlq")) {
+                const tmpV = new Vector3();
+                switch (this.useArmor) {
+                    case ArmorPlayerPom.sunlight:
+                        this.exPlayer.addTag("skill_user");
+                        for (let e of this.getExDimension().getEntities({
+                            "maxDistance": 5,
+                            "excludeTags": ["skill_user", "wbmsyh"],
+                            "excludeFamilies": [],
+                            "excludeTypes": ["item"],
+                            "location": this.player.location
+                        })) {
+                            try {
+                                e.applyDamage(15, {
+                                    "cause": EntityDamageCause.magic,
+                                    "damagingEntity": this.player
+                                });
+                                e.setOnFire(5, false);
+                                let direction = tmpV.set(e.location).sub(this.player.location).normalize();
+                                e.applyKnockback(direction.x, direction.z, 1.2, 0.6);
+                            }
+                            catch (e) { }
+                        }
+                        this.exPlayer.addEffect(MinecraftEffectTypes.FireResistance, 5 * 20, 0);
+                        this.exPlayer.addEffect(MinecraftEffectTypes.Absorption, 1 * 20, 0);
+                        this.exPlayer.command.run("function EPIC/armor/sunlight");
+                        this.exPlayer.removeTag("skill_user");
+                        break;
+                }
+            }
+            //WB
             if (ra <= 50 && ((_a = ExEntity.getInstance(e.hurtEntity).getBag().equipmentOnHead) === null || _a === void 0 ? void 0 : _a.typeId) === 'dec:glass_tank') {
                 e.hurtEntity.runCommandAsync('playsound random.glass @a ~~1~');
             }
@@ -292,6 +325,7 @@ export default class DecClient extends ExGameClient {
                 this.globalscores.setNumber("AlreadyGmCheat", 1);
                 if (this.globalscores.getNumber('DieMode')) {
                     p.addTag('diemode_gmcheat');
+                    this.globalscores.setNumber("DieModeGmCheat", 1);
                 }
             }
             else if (p.hasTag('gaming')) {
@@ -637,7 +671,7 @@ export default class DecClient extends ExGameClient {
                     if (p.gamemode != GameMode.creative) {
                         if (dur.damage + 1 < dur.maxDurability) {
                             dur.damage += 1;
-                            p.getBag().setItem(e.source.selectedSlot, new_item);
+                            p.getBag().setItem(e.source.selectedSlotIndex, new_item);
                         }
                         else {
                             e.source.playSound('random.break');

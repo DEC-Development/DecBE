@@ -1,6 +1,6 @@
 import { ExBlockArea } from "../../../../../modules/exmc/server/block/ExBlockArea.js";
 import ExStructureJigsaw from "../../../../../modules/exmc/server/block/structure/ExStructureJigsaw.js";
-import Vector3 from "../../../../../modules/exmc/math/Vector3.js";
+import Vector3 from "../../../../../modules/exmc/utils/math/Vector3.js";
 export default class PomStoneBossRuin {
     constructor(seed) {
         this.structure_area1 = "mystructure:boss_stone_area_b1";

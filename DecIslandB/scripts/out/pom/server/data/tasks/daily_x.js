@@ -1,4 +1,4 @@
-import { MinecraftEntityTypes, MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
+import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_x(lang) {
     return {
         "name": "每日任务-传说级",
@@ -224,7 +224,7 @@ export default function taskDaily_x(lang) {
                 "conditions": [
                     {
                         "name": "觉醒末影龙",
-                        "typeId": MinecraftEntityTypes.EnderDragon,
+                        "typeId": "minecraft:ender_dragon",
                         "count": 1,
                         "type": "kill"
                     }

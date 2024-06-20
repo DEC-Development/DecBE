@@ -1,4 +1,4 @@
-import { MinecraftEntityTypes, MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
+import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_c(lang) {
     return {
         "name": "每日任务-精锐级",
@@ -193,7 +193,7 @@ export default function taskDaily_c(lang) {
                 "conditions": [
                     {
                         "name": "凋零",
-                        "typeId": MinecraftEntityTypes.Wither,
+                        "typeId": "minecraft:wither",
                         "count": 1,
                         "type": "kill"
                     }
@@ -212,19 +212,19 @@ export default function taskDaily_c(lang) {
                 "conditions": [
                     {
                         "name": "猪",
-                        "typeId": MinecraftEntityTypes.Pig,
+                        "typeId": "minecraft:pig",
                         "count": 16,
                         "type": "kill"
                     },
                     {
                         "name": "牛",
-                        "typeId": MinecraftEntityTypes.Cow,
+                        "typeId": "minecraft:cow",
                         "count": 20,
                         "type": "kill"
                     },
                     {
                         "name": "羊",
-                        "typeId": MinecraftEntityTypes.Sheep,
+                        "typeId": "minecraft:sheep",
                         "count": 16,
                         "type": "kill"
                     }

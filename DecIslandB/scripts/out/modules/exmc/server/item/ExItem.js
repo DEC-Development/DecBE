@@ -18,6 +18,7 @@ Object.assign(ItemStack.prototype, {
     },
     getComponentById(key) {
         return this.getComponent(key);
-    }
+    },
+    isWillBeRemoved: false
 });
 //# sourceMappingURL=ExItem.js.map

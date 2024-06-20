@@ -1,3 +1,5 @@
+import MonitorManager from '../../utils/MonitorManager.js';
+import { falseIfError } from '../../utils/tool.js';
 export default class EventHandle {
     constructor() {
         this.monitorMap = {};
@@ -12,9 +14,7 @@ export default class EventHandle {
                     }
                     let fArr = this.monitorMap[k].get(player);
                     if (fArr) {
-                        fArr.forEach((f) => {
-                            f(e);
-                        });
+                        fArr.trigger(e);
                     }
                 }
             });
@@ -22,9 +22,9 @@ export default class EventHandle {
         this.registerToServerByServerEvent = (registerName, k) => {
             this.server.getEvents().register(registerName, (e) => {
                 for (let [key, value] of this.monitorMap[k]) {
-                    value.forEach((f) => {
-                        f(e);
-                    });
+                    if (falseIfError(() => key.isValid())) {
+                        value.trigger(e);
+                    }
                 }
             });
         };
@@ -50,23 +50,30 @@ export default class EventHandle {
         var _a;
         let e = this.monitorMap[name];
         if (!e.has(entity)) {
-            e.set(entity, []);
+            e.set(entity, new MonitorManager());
         }
-        (_a = e.get(entity)) === null || _a === void 0 ? void 0 : _a.push(callback);
+        (_a = e.get(entity)) === null || _a === void 0 ? void 0 : _a.addMonitor(callback);
     }
     unsubscribe(entity, name, callback) {
         let e = this.monitorMap[name];
         let arr = e.get(entity);
-        if (arr) {
-            let index = arr.indexOf(callback);
-            if (index !== -1)
-                arr.splice(index, 1);
-        }
+        arr === null || arr === void 0 ? void 0 : arr.removeMonitor(callback);
     }
     unsubscribeAll(e) {
         for (let m in this.monitorMap) {
             this.monitorMap[m].delete(e);
         }
     }
+}
+export function eventGetter(lis, filter) {
+    return new Promise((resolve, reject) => {
+        const f = (e) => {
+            if (filter(e)) {
+                lis.unsubscribe(f);
+                resolve(e);
+            }
+        };
+        lis.subscribe(f);
+    });
 }
 //# sourceMappingURL=EventHandle.js.map

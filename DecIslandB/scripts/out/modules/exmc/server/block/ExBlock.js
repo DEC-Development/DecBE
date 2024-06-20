@@ -1,5 +1,5 @@
 import { Block, BlockTypes } from '@minecraft/server';
-import Vector3 from "../../math/Vector3.js";
+import Vector3 from "../../utils/math/Vector3.js";
 if (Block.prototype === undefined)
     Block.prototype = {};
 const compId = {};

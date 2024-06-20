@@ -1,5 +1,5 @@
 import ExDimension from '../ExDimension.js';
-import Vector3 from '../../math/Vector3.js';
+import Vector3 from '../../utils/math/Vector3.js';
 export default class ExTerrain {
     constructor(dimension) {
         this.dimension = dimension;

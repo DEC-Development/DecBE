@@ -1,13 +1,23 @@
-import Matrix4 from '../../math/Matrix4.js';
-import Vector3 from '../../math/Vector3.js';
+import Matrix4 from '../../utils/math/Matrix4.js';
+import Vector3 from '../../utils/math/Vector3.js';
 export class ExBlockArea {
     center() {
         return this.end.cpy().sub(this.start).scl(1 / 2).add(this.start);
     }
     contains(tmpV) {
-        return this.start.x <= tmpV.x && this.start.z <= tmpV.z &&
-            tmpV.x <= this.end.x && tmpV.z <= this.end.z &&
-            this.start.y <= tmpV.y && tmpV.y <= this.end.y;
+        if (tmpV instanceof ExBlockArea) {
+            return this.start.x <= tmpV.end.x &&
+                this.start.z <= tmpV.end.z &&
+                this.end.x >= tmpV.start.x &&
+                this.end.z >= tmpV.start.z &&
+                this.start.y <= tmpV.end.y &&
+                this.end.y >= tmpV.start.y;
+        }
+        else {
+            return this.start.x <= tmpV.x && this.start.z <= tmpV.z &&
+                tmpV.x <= this.end.x && tmpV.z <= this.end.z &&
+                this.start.y <= tmpV.y && tmpV.y <= this.end.y;
+        }
     }
     constructor(a, b, usePoint) {
         this._width = new Vector3();
@@ -15,8 +25,8 @@ export class ExBlockArea {
         this._tmpC = new Vector3();
         this._judgeWidth = new Vector3();
         this._tmpD = new Vector3();
-        this.start = a.cpy();
-        this.end = b.cpy();
+        this.start = new Vector3(a);
+        this.end = new Vector3(b);
         if (!usePoint) {
             if (this.end.x < 0 || this.end.y < 0 || this.end.z < 0)
                 throw new Error("Invalid value (x,y,z < 0)");
@@ -37,13 +47,13 @@ export class ExBlockArea {
         this.setMatrix4(new Matrix4().idt());
     }
     turnUp() {
-        this.setMatrix4(this.mat.mul(new Matrix4(1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1)));
+        this.setMatrix4(this.mat.lmul(new Matrix4(1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1)));
     }
     turnRight() {
-        this.setMatrix4(this.mat = this.mat.mul(new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1)));
+        this.setMatrix4(this.mat = this.mat.lmul(new Matrix4(0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1)));
     }
     turnFrontClockwise() {
-        this.setMatrix4(this.mat.mul(new Matrix4(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)));
+        this.setMatrix4(this.mat.lmul(new Matrix4(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)));
     }
     pointAtStart(vec) {
         this.end.sub(this.start).add(vec);
@@ -104,6 +114,9 @@ export class ExBlockArea {
         }
         ExBlockArea.tempP.set(ExBlockArea.tempP.x * Math.random(), ExBlockArea.tempP.y * Math.random(), ExBlockArea.tempP.z * Math.random());
         return ExBlockArea.tempV.add(ExBlockArea.tempP).cpy();
+    }
+    toString() {
+        return `ExBlockArea(${this.start},${this.end},${this.mat})`;
     }
 }
 ExBlockArea.tempV = new Vector3();

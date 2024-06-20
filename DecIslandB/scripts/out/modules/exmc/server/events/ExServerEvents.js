@@ -2,23 +2,21 @@ import { world } from '@minecraft/server';
 import ExErrorQueue from '../ExErrorQueue.js';
 import ExGame from '../ExGame.js';
 import { ExOtherEventNames } from './events.js';
+import MonitorManager from '../../utils/MonitorManager.js';
 //顶层事件分发
 export default class ExServerEvents {
     _subscribe(name, callback) {
         let e = ExServerEvents.monitorMap.get(name);
         if (e === undefined) {
-            e = [];
+            e = new MonitorManager();
             ExServerEvents.monitorMap.set(name, e);
         }
-        e.push(callback);
+        e.addMonitor(callback);
     }
     _unsubscribe(name, callback) {
-        var _a;
-        let arr = (_a = ExServerEvents.monitorMap.get(name)) !== null && _a !== void 0 ? _a : [];
-        arr.splice(arr.findIndex((v, i) => {
-            if (v === callback)
-                return true;
-        }), 1);
+        let arr = ExServerEvents.monitorMap.get(name);
+        if (arr)
+            arr.removeMonitor(callback);
     }
     constructor(server) {
         this.exEvents = {
@@ -32,9 +30,7 @@ export default class ExServerEvents {
                 pattern: () => {
                     ExGame.tickMonitor.addMonitor((e) => {
                         var _a;
-                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.tick)) === null || _a === void 0 ? void 0 : _a.forEach((fun) => {
-                            fun(e);
-                        });
+                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.tick)) === null || _a === void 0 ? void 0 : _a.trigger(e);
                     });
                 }
             },
@@ -48,9 +44,7 @@ export default class ExServerEvents {
                 pattern: () => {
                     ExGame.beforeTickMonitor.addMonitor((e) => {
                         var _a;
-                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.beforeTick)) === null || _a === void 0 ? void 0 : _a.forEach((fun) => {
-                            fun(e);
-                        });
+                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.beforeTick)) === null || _a === void 0 ? void 0 : _a.trigger(e);
                     });
                 }
             },
@@ -64,9 +58,7 @@ export default class ExServerEvents {
                 pattern: () => {
                     ExGame.longTickMonitor.addMonitor((e) => {
                         var _a;
-                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.onLongTick)) === null || _a === void 0 ? void 0 : _a.forEach((fun) => {
-                            fun(e);
-                        });
+                        (_a = ExServerEvents.monitorMap.get(ExOtherEventNames.onLongTick)) === null || _a === void 0 ? void 0 : _a.trigger(e);
                     });
                 }
             }
@@ -156,7 +148,7 @@ export default class ExServerEvents {
         }
     }
 }
-ExServerEvents.monitorMap = new Map;
+ExServerEvents.monitorMap = new Map();
 ExServerEvents.init = false;
 ExServerEvents.interceptor = new Map();
 //# sourceMappingURL=ExServerEvents.js.map

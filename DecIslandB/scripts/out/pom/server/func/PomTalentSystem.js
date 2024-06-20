@@ -1,5 +1,5 @@
 import { EntityDamageCause } from '@minecraft/server';
-import MathUtil from "../../../modules/exmc/math/MathUtil.js";
+import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 import ExDimension from '../../../modules/exmc/server/ExDimension.js';
 import ExGame from '../../../modules/exmc/server/ExGame.js';
 import ExEntity from "../../../modules/exmc/server/entity/ExEntity.js";
@@ -15,6 +15,7 @@ import ItemTagComponent from '../data/ItemTagComponent.js';
 import PomOccupationSkillTrack from '../entities/PomOccupationSkillTrack.js';
 import damageShow from "../helper/damageShow.js";
 import GameController from "./GameController.js";
+import { MinecraftItemTypes } from '../../../modules/vanilla-data/lib/index.js';
 export default class PomTalentSystem extends GameController {
     constructor() {
         super(...arguments);
@@ -100,7 +101,7 @@ export default class PomTalentSystem extends GameController {
             this.skillLoop.stop();
         }
         //this.exPlayer.triggerEvent("hp:" + Math.round((20 + (this.talentRes.get(Talent.VIENTIANE) ?? 0))));
-        this.client.magicSystem.gameMaxHealth = Math.round(this.client.getDifficulty().healthAddionion + (40 + ((_a = this.talentRes.get(Talent.VIENTIANE)) !== null && _a !== void 0 ? _a : 0)));
+        this.client.magicSystem.gameMaxHealth = Math.round(this.client.getDifficulty().healthAddionion + (30 + ((_a = this.talentRes.get(Talent.VIENTIANE)) !== null && _a !== void 0 ? _a : 0)));
     }
     //更新盔甲属性（在不换甲的情况下）
     updateArmorData() {
@@ -121,7 +122,9 @@ export default class PomTalentSystem extends GameController {
                 + ((_f = (_e = this.legComp) === null || _e === void 0 ? void 0 : _e.getComponentWithGroup(e)) !== null && _f !== void 0 ? _f : 0)
                 + ((_h = (_g = this.feetComp) === null || _g === void 0 ? void 0 : _g.getComponentWithGroup(e)) !== null && _h !== void 0 ? _h : 0);
         });
-        this.armor_protection = ["armor_magic_protection", "armor_physical_protection", "armor_magic_reduction", "armor_physical_reduction", "armor_magic_reduction", "armor_resilience",
+        this.armor_protection = ["armor_magic_protection", "armor_physical_protection",
+            "armor_magic_reduction", "armor_physical_reduction",
+            "armor_resilience",
             "final_magic_reduction", "final_physical_reduction"]
             .map(e => {
             var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -212,11 +215,21 @@ export default class PomTalentSystem extends GameController {
         //玩家减伤
         this.getEvents().exEvents.afterPlayerHurt.subscribe((e) => {
             var _a, _b;
+            if (this.client.magicSystem.isDied) {
+                this.setTimeout(() => {
+                    this.client.magicSystem.isDied = false;
+                }, 2500);
+                return;
+            }
+            ;
+            if (this.client.magicSystem.isProtected)
+                return;
             if (e.damage > 10000000 || e.damage < 0)
                 return;
             // console.warn("hurt"+e.damage,"now"+this.exPlayer.health);
             let damage = ((_a = this.exPlayer.getPreRemoveHealth()) !== null && _a !== void 0 ? _a : 0) + e.damage;
             let willdamage = damage;
+            // console.warn(willdamage);
             willdamage *= 1 - this.armor_protection[4];
             if (PomTalentSystem.magicDamageType.has(e.damageSource.cause)) {
                 willdamage -= this.armor_protection[2];
@@ -227,13 +240,15 @@ export default class PomTalentSystem extends GameController {
                 willdamage *= (1 - this.armor_protection[1] / 100);
             }
             willdamage *= (1 - (((_b = this.talentRes.get(Talent.DEFENSE)) !== null && _b !== void 0 ? _b : 0) / 100));
-            willdamage *= (1 - this.client.getDifficulty().magicDefenseAddFactor);
             if (PomTalentSystem.magicDamageType.has(e.damageSource.cause)) {
+                willdamage *= (1 - this.client.getDifficulty().magicDefenseAddFactor);
                 willdamage -= this.armor_protection[5];
             }
             else if (PomTalentSystem.physicalDamageType.has(e.damageSource.cause)) {
+                willdamage *= (1 - this.client.getDifficulty().physicalDefenseAddFactor);
                 willdamage -= this.armor_protection[6];
             }
+            // console.warn(willdamage);
             let add = Math.min(damage - willdamage, damage - 1);
             // console.warn(actualDamageFactor);
             // console.warn(add);
@@ -258,6 +273,18 @@ export default class PomTalentSystem extends GameController {
                 const clnE = Object.assign({}, e.damageSource);
                 ExGame.run(() => {
                     var _a, _b;
+                    try {
+                        let bag = this.exPlayer.getBag();
+                        const armor_pitch = [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet];
+                        const item_main = bag.itemOnMainHand;
+                        const item_off = bag.itemOnOffHand;
+                        if ((item_main === null || item_main === void 0 ? void 0 : item_main.typeId) == MinecraftItemTypes.TotemOfUndying || (item_off === null || item_off === void 0 ? void 0 : item_off.typeId) == MinecraftItemTypes.TotemOfUndying) {
+                            this.setTimeout(() => {
+                                [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet] = armor_pitch;
+                            }, 100);
+                        }
+                    }
+                    catch (e) { }
                     if (clnE.cause === EntityDamageCause.projectile) {
                         if (clnE.damagingEntity) {
                             this.player.applyDamage(99999999, {
@@ -276,6 +303,7 @@ export default class PomTalentSystem extends GameController {
                             "cause": clnE.cause
                         });
                     }
+                    this.client.magicSystem.isDied = true;
                 });
                 return;
             }
@@ -292,76 +320,78 @@ export default class PomTalentSystem extends GameController {
                 const lore = new ExColorLoreUtil(e.afterItem);
                 //TalentData.calculateTalentToLore(this.data.talent.talents, this.data.talent.occupation, ExItem.getInstance(e.afterItem), this.getLang());
                 let comp = new ItemTagComponent(e.afterItem);
-                comp.setGroup(comp.dataGroupJudge(this.client));
-                let base = [];
-                if (comp.hasComponent("actual_level"))
-                    base.push(`§r§e基础属性` + "  §r§6LV." + comp.getComponentWithGroup("actual_level"));
-                if (comp.hasComponent("armor_protection"))
-                    base.push((_a = "§r§7•护甲值§6+" + comp.getComponentWithGroup("armor_protection") + "§r§7 | 护甲韧性§6+" + comp.getComponentWithGroup("armor_resilience")) !== null && _a !== void 0 ? _a : 0);
-                if (comp.hasComponent("armor_type")) {
-                    //let typeMsg = comp.getComponentWithGroup("armor_type");
-                    //lore.setValueUseDefault("盔甲类型", typeMsg.tagName + ": " + typeMsg.data);
-                    // if (comp.hasComponent("armor_physical_protection")) base.push("§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 受到的物理伤害§6-" + comp.getComponentWithGroup("armor_physical_reduction") ?? 0);
-                    // if (comp.hasComponent("armor_magic_protection")) base.push("§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 受到的魔法伤害§6-" + comp.getComponentWithGroup("armor_magic_reduction") ?? 0);
-                    if (comp.hasComponent("armor_physical_protection"))
-                        base.push((_b = "§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 物理防御§6+" + comp.getComponentWithGroup("armor_physical_reduction")) !== null && _b !== void 0 ? _b : 0);
-                    if (comp.hasComponent("armor_magic_protection"))
-                        base.push((_c = "§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 魔法防御§6+" + comp.getComponentWithGroup("armor_magic_reduction")) !== null && _c !== void 0 ? _c : 0);
-                }
-                let smove = (_d = comp.getComponentWithGroup("sneak_movement_addition")) !== null && _d !== void 0 ? _d : 0;
-                if (comp.hasComponent("movement_addition")) {
-                    base.push("§r§7•移动速度§6+" + comp.getComponentWithGroup("movement_addition"));
-                    if (comp.hasComponent("sneak_movement_addition"))
-                        base[base.length - 1] += ("§r§7 | 潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
-                }
-                else if (comp.hasComponent("sneak_movement_addition"))
-                    base.push("§r§7•潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
-                if (comp.hasComponent("attack_addition")) {
-                    base.push("§r§7•攻击伤害§6+" + comp.getComponentWithGroup("attack_addition"));
-                }
-                if (comp.hasComponent("equipment_type")) {
-                    if (e.afterItem.typeId.startsWith("dec:")) {
-                        base.push("§r§7•在主手时: +20％§7攻击伤害");
+                if (!comp.isEmpty()) {
+                    comp.setGroup(comp.dataGroupJudge(this.client));
+                    let base = [];
+                    if (comp.hasComponent("actual_level"))
+                        base.push(`§r§e基础属性` + "  §r§6LV." + comp.getComponentWithGroup("actual_level"));
+                    if (comp.hasComponent("armor_protection"))
+                        base.push((_a = "§r§7•护甲值§6+" + comp.getComponentWithGroup("armor_protection") + "§r§7 | 护甲韧性§6+" + comp.getComponentWithGroup("armor_resilience")) !== null && _a !== void 0 ? _a : 0);
+                    if (comp.hasComponent("armor_type")) {
+                        //let typeMsg = comp.getComponentWithGroup("armor_type");
+                        //lore.setValueUseDefault("盔甲类型", typeMsg.tagName + ": " + typeMsg.data);
+                        // if (comp.hasComponent("armor_physical_protection")) base.push("§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 受到的物理伤害§6-" + comp.getComponentWithGroup("armor_physical_reduction") ?? 0);
+                        // if (comp.hasComponent("armor_magic_protection")) base.push("§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 受到的魔法伤害§6-" + comp.getComponentWithGroup("armor_magic_reduction") ?? 0);
+                        if (comp.hasComponent("armor_physical_protection"))
+                            base.push((_b = "§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 物理防御§6+" + comp.getComponentWithGroup("armor_physical_reduction")) !== null && _b !== void 0 ? _b : 0);
+                        if (comp.hasComponent("armor_magic_protection"))
+                            base.push((_c = "§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 魔法防御§6+" + comp.getComponentWithGroup("armor_magic_reduction")) !== null && _c !== void 0 ? _c : 0);
                     }
-                    // let typeMsg = comp.getComponentWithGroup("equipment_type");
-                    // lore.setValueUseDefault("武器类型", typeMsg.tagName + ": " + typeMsg.data);
-                }
-                if (base.length > 0) {
-                    base[base.length - 1] = base[base.length - 1] + "§r";
-                    lore.setTags(base);
-                }
-                lore.sort();
-                this.itemOnHandComp = comp;
-                //武器特殊项
-                if (comp.hasComponent("equipment_type")) {
-                    let maxSingleDamage = parseFloat((_e = lore.getValueUseMap("total", this.getLang().maxSingleDamage)) !== null && _e !== void 0 ? _e : "0");
-                    let maxSecondaryDamage = parseFloat((_f = lore.getValueUseMap("total", this.getLang().maxSecondaryDamage)) !== null && _f !== void 0 ? _f : "0");
-                    let damage = 0;
-                    this.hasCauseDamage.removeMonitor(lastListener);
-                    lastListener = (d) => {
-                        damage += d;
-                        maxSingleDamage = Math.ceil(Math.max(d, maxSingleDamage));
-                    };
-                    this.hasCauseDamage.addMonitor(lastListener);
-                    (_g = this.equiTotalTask) === null || _g === void 0 ? void 0 : _g.stop();
-                    (this.equiTotalTask = ExSystem.tickTask(() => {
-                        var _a, _b, _c, _d;
-                        let shouldUpstate = false;
-                        maxSecondaryDamage = Math.ceil(Math.max(maxSecondaryDamage, damage / 5));
-                        damage = 0;
-                        if (((_a = lore.getValueUseMap("total", this.getLang().maxSingleDamage)) !== null && _a !== void 0 ? _a : "0") !== maxSingleDamage + "") {
-                            lore.setValueUseMap("total", this.getLang().maxSingleDamage, maxSingleDamage + "");
-                            shouldUpstate = true;
+                    let smove = (_d = comp.getComponentWithGroup("sneak_movement_addition")) !== null && _d !== void 0 ? _d : 0;
+                    if (comp.hasComponent("movement_addition")) {
+                        base.push("§r§7•移动速度§6+" + comp.getComponentWithGroup("movement_addition"));
+                        if (comp.hasComponent("sneak_movement_addition"))
+                            base[base.length - 1] += ("§r§7 | 潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
+                    }
+                    else if (comp.hasComponent("sneak_movement_addition"))
+                        base.push("§r§7•潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
+                    if (comp.hasComponent("attack_addition")) {
+                        base.push("§r§7•攻击伤害§6+" + comp.getComponentWithGroup("attack_addition"));
+                    }
+                    if (comp.hasComponent("equipment_type")) {
+                        if (e.afterItem.typeId.startsWith("dec:")) {
+                            base.push("§r§7•在主手时: +20％§7攻击伤害");
                         }
-                        if (((_b = lore.getValueUseMap("total", this.getLang().maxSecondaryDamage)) !== null && _b !== void 0 ? _b : "0") !== maxSecondaryDamage + "") {
-                            lore.setValueUseMap("total", this.getLang().maxSecondaryDamage, maxSecondaryDamage + "");
-                            shouldUpstate = true;
-                        }
-                        if (shouldUpstate && ((_c = bag.itemOnMainHand) === null || _c === void 0 ? void 0 : _c.typeId) === ((_d = e === null || e === void 0 ? void 0 : e.afterItem) === null || _d === void 0 ? void 0 : _d.typeId)) {
-                            lore.sort();
-                            bag.itemOnMainHand = e.afterItem;
-                        }
-                    }).delay(5 * 20)).start(); //
+                        // let typeMsg = comp.getComponentWithGroup("equipment_type");
+                        // lore.setValueUseDefault("武器类型", typeMsg.tagName + ": " + typeMsg.data);
+                    }
+                    if (base.length > 0) {
+                        base[base.length - 1] = base[base.length - 1] + "§r";
+                        lore.setTags(base);
+                    }
+                    lore.sort();
+                    this.itemOnHandComp = comp;
+                    //武器特殊项
+                    if (comp.hasComponent("equipment_type")) {
+                        let maxSingleDamage = parseFloat((_e = lore.getValueUseMap("total", this.getLang().maxSingleDamage)) !== null && _e !== void 0 ? _e : "0");
+                        let maxSecondaryDamage = parseFloat((_f = lore.getValueUseMap("total", this.getLang().maxSecondaryDamage)) !== null && _f !== void 0 ? _f : "0");
+                        let damage = 0;
+                        this.hasCauseDamage.removeMonitor(lastListener);
+                        lastListener = (d) => {
+                            damage += d;
+                            maxSingleDamage = Math.ceil(Math.max(d, maxSingleDamage));
+                        };
+                        this.hasCauseDamage.addMonitor(lastListener);
+                        (_g = this.equiTotalTask) === null || _g === void 0 ? void 0 : _g.stop();
+                        (this.equiTotalTask = ExSystem.tickTask(() => {
+                            var _a, _b, _c, _d;
+                            let shouldUpstate = false;
+                            maxSecondaryDamage = Math.ceil(Math.max(maxSecondaryDamage, damage / 5));
+                            damage = 0;
+                            if (((_a = lore.getValueUseMap("total", this.getLang().maxSingleDamage)) !== null && _a !== void 0 ? _a : "0") !== maxSingleDamage + "") {
+                                lore.setValueUseMap("total", this.getLang().maxSingleDamage, maxSingleDamage + "");
+                                shouldUpstate = true;
+                            }
+                            if (((_b = lore.getValueUseMap("total", this.getLang().maxSecondaryDamage)) !== null && _b !== void 0 ? _b : "0") !== maxSecondaryDamage + "") {
+                                lore.setValueUseMap("total", this.getLang().maxSecondaryDamage, maxSecondaryDamage + "");
+                                shouldUpstate = true;
+                            }
+                            if (shouldUpstate && ((_c = bag.itemOnMainHand) === null || _c === void 0 ? void 0 : _c.typeId) === ((_d = e === null || e === void 0 ? void 0 : e.afterItem) === null || _d === void 0 ? void 0 : _d.typeId)) {
+                                lore.sort();
+                                bag.itemOnMainHand = e.afterItem;
+                            }
+                        }).delay(5 * 20)).start(); //
+                    }
                 }
             }
             else {
@@ -395,7 +425,7 @@ export default class PomTalentSystem extends GameController {
         this.getEvents().exEvents.afterItemOnHandChange.subscribe(e => {
             var _a;
             if (((_a = e.afterItem) === null || _a === void 0 ? void 0 : _a.typeId) === "wb:skill_tracking_arrow") {
-                this.exPlayer.selectedSlot = e.beforeSlot;
+                this.exPlayer.selectedSlotIndex = e.beforeSlot;
                 if (this.player.getItemCooldown("occupation_skill_1") == 0) {
                     this.player.startItemCooldown("occupation_skill_1", 5 * 20);
                     if (this.skill_stateNum[0] <= 0) {
@@ -491,6 +521,7 @@ PomTalentSystem.magicDamageType = new Set([
     EntityDamageCause.wither
 ]);
 PomTalentSystem.physicalDamageType = new Set([
+    EntityDamageCause.none,
     EntityDamageCause.anvil,
     EntityDamageCause.contact,
     EntityDamageCause.magma,

@@ -159,7 +159,7 @@ export default function menuTaskUI(ctrl) {
                         "type": "button",
                         "msg": "text.dec:task_complete_button.name",
                         "function": (client, ui) => {
-                            task.detect(client.exPlayer);
+                            task.detect(client, lor);
                             return false;
                         }
                     });

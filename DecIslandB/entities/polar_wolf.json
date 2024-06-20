@@ -240,6 +240,43 @@
             "target": "self"
           }
         }
+      },
+      "minecraft:polar_wolf_unsaddled": {
+        "minecraft:interact": {
+          "interactions": [
+            {
+              "on_interact": {
+                "filters": { "test": "has_equipment", "subject": "other", "domain": "hand", "value": "saddle"},
+                "event": "minecraft:on_saddled"
+              },
+              "use_item": true,
+              "play_sounds": "saddle",
+              "interact_text": "action.interact.saddle"
+            }
+          ]
+        }
+      },
+      "minecraft:polar_wolf_saddled": {
+        "minecraft:is_saddled": {
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/entities/polar_wolf_saddled.json"
+        },
+        "minecraft:input_ground_controlled": {
+        },
+        "minecraft:behavior.controlled_by_player": {
+          "priority": 0
+        },
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "family_types": [
+            "player"
+          ],
+          "interact_text": "action.interact.ride.polar_wolf",
+          "seats": {
+            "position": [ 0.0, 1, -0.2 ]
+          }
+        }
       }
     },
 
@@ -488,7 +525,8 @@
         },
         "add": {
           "component_groups": [
-            "minecraft:wolf_tame"
+            "minecraft:wolf_tame",
+            "minecraft:polar_wolf_unsaddled"
           ]
         }
       },
@@ -513,6 +551,18 @@
         "add": {
           "component_groups": [
             "minecraft:wolf_wild"
+          ]
+        }
+      },
+      "minecraft:on_saddled": {
+        "remove": {
+          "component_groups": [
+            "minecraft:polar_wolf_unsaddled"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:polar_wolf_saddled"
           ]
         }
       }

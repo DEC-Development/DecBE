@@ -273,7 +273,7 @@ item.dec:stone_chestplate.name=石头胸甲
 item.dec:stone_helmet.name=石头头盔
 item.dec:stone_leggings.name=石头护腿
 item.dec:cudgel.name=木棒
-item.dec:mace.name=狼牙棒
+item.dec:fang_mace.name=狼牙棒
 item.dec:witch_hat.name=女巫帽
 item.dec:following_particle.name=跟随粒子
 item.dec:stray_chestplate.name=流浪者胸甲
@@ -1105,6 +1105,7 @@ action.hint.exit.dec:simple_glider=简单滑翔机，蹲下或跳跃离开
 action.hint.exit.dec:brown_bear=棕熊，蹲下或跳跃离开
 action.interact.collect=采集
 action.interact.ride.brown_bear=骑乘
+action.interact.ride.polar_wolf=骑乘
 action.interact.scarecrow_resort=回收
 
 boss.dec:leaves_golem.name=绿叶精华

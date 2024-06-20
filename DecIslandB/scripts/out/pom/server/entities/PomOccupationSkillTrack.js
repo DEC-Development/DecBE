@@ -1,5 +1,5 @@
 import ExEntityController from "../../../modules/exmc/server/entity/ExEntityController.js";
-import Vector3 from "../../../modules/exmc/math/Vector3.js";
+import Vector3 from "../../../modules/exmc/utils/math/Vector3.js";
 export default class PomOccupationSkillTrack extends ExEntityController {
     onSpawn() {
         super.onSpawn();

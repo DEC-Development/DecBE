@@ -1,4 +1,4 @@
-import Vector3 from "../../../math/Vector3.js";
+import Vector3 from "../../../utils/math/Vector3.js";
 import ExDimension from "../../ExDimension.js";
 import { ExBlockArea } from "../ExBlockArea.js";
 import ExGame from "../../ExGame.js";

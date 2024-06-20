@@ -81,6 +81,14 @@ export default class ExGameClient {
     getServer() {
         return this._server;
     }
+    getClient(name) {
+        if (typeof name === "string") {
+            return this.getServer().findClientByName(name);
+        }
+        else {
+            return this.getServer().findClientByPlayer(name);
+        }
+    }
     setInterworkingPool(pool) {
         this._pool = pool;
         this._poolCache = {};
@@ -135,6 +143,12 @@ export default class ExGameClient {
     }
     notDebugger() {
         this.player.removeTag("debugger");
+    }
+    getDefaultSpawnLocation() {
+        return this.getServer().getDefaultSpawnLocation();
+    }
+    getDynamicPropertyManager() {
+        return this.player;
     }
     runMethodOnEveryClient(fun) {
         for (let c of this.getServer().getClients()) {

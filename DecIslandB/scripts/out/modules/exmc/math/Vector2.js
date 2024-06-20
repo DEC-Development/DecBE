@@ -127,12 +127,14 @@ export default class Vector2 {
     mul(matrix) {
         let m00 = matrix.val[0];
         let m01 = matrix.val[1];
+        let m02 = matrix.val[2];
         let m10 = matrix.val[3];
         let m11 = matrix.val[4];
-        let x = this.x * m00 + this.y * m01;
-        let y = this.x * m10 + this.y * m11;
-        this.x = x + matrix.val[2];
-        this.y = y + matrix.val[5];
+        let m12 = matrix.val[5];
+        let x = this.x * m00 + this.y * m01 + m02;
+        let y = this.x * m10 + this.y * m11 + m12;
+        this.x = x;
+        this.y = y;
         return this;
     }
     unrotateRad(matrix) {

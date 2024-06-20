@@ -1,5 +1,5 @@
-import { ItemStack, ItemTypes } from "@minecraft/server";
-import Vector3 from "../../../modules/exmc/math/Vector3.js";
+import { EnchantmentTypes, ItemStack, ItemTypes } from "@minecraft/server";
+import Vector3 from "../../../modules/exmc/utils/math/Vector3.js";
 import "../../../modules/exmc/server/block/ExBlock.js";
 import ExColorLoreUtil from "../../../modules/exmc/server/item/ExColorLoreUtil.js";
 import "../../../modules/exmc/server/item/ExItem.js";
@@ -19,8 +19,8 @@ export default class PomEnChantSystem extends GameController {
                         if (item.hasComponentById("minecraft:enchantable")) {
                             const comp = item.getComponentById("minecraft:enchantable");
                             for (let i of lore.entries("enchants")) {
-                                if (comp.canAddEnchantment({ "level": parseInt(i[1]), "type": i[0] })) {
-                                    comp.addEnchantment({ "level": parseInt(i[1]), "type": i[0] });
+                                if (comp.canAddEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(i[0]) })) {
+                                    comp.addEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(i[0]) });
                                 }
                             }
                         }
@@ -54,6 +54,7 @@ export default class PomEnChantSystem extends GameController {
             else if (block.typeId === "wb:block_translate_book") {
                 e.cancel = true;
                 let bag = this.exPlayer.getBag();
+                const armor_pitch = [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet];
                 const item = e.itemStack;
                 const saveItem = PomEnChantSystem.blockTranslateData.get(new Vector3(block).toString());
                 if (!saveItem) {
@@ -107,8 +108,9 @@ export default class PomEnChantSystem extends GameController {
                                 exSaveItem.getComponentById("minecraft:enchantable").removeAllEnchantments();
                             }
                             block.transTo("wb:block_translate");
-                            bag.setItem(this.exPlayer.selectedSlot, item);
+                            bag.setItem(this.exPlayer.selectedSlotIndex, item);
                             this.getDimension().spawnItem(exNewItem, pos.add(0, 1, 0));
+                            [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet] = armor_pitch;
                         }, 0);
                     }
                 }

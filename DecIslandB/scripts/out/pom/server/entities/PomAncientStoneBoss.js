@@ -1,7 +1,7 @@
 import { EntityDamageCause } from '@minecraft/server';
 import PomBossController from './PomBossController.js';
 import VarOnChangeListener from '../../../modules/exmc/utils/VarOnChangeListener.js';
-import Vector3 from '../../../modules/exmc/math/Vector3.js';
+import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
 export default class PomAncientStoneBoss extends PomBossController {
     constructor(e, server) {
         super(e, server);

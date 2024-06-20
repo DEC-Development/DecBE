@@ -53,6 +53,9 @@ export default class GlobalScoreBoardCache {
             return false;
         }
     }
+    initializeBoolean(name, value) {
+        return this.initializeNumber(name, value ? 1 : 0);
+    }
 }
 GlobalScoreBoardCache.varMap = new Map();
 //# sourceMappingURL=GlobalScoreBoardCache.js.map

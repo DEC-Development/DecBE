@@ -1,0 +1,51 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:leaves_flower_crop"
+        },
+        "components": {
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "leaves_flower_crop",
+                    "render_method": "alpha_test",
+                    "face_dimming": false,
+                    "ambient_occlusion": false
+                }
+            },
+            "minecraft:geometry": "geometry.crop.sparse.on_dirt",
+            "minecraft:entity_collision": false,
+            "minecraft:pick_collision": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    15,
+                    12
+                ]
+            },
+            "minecraft:destroy_time": 0.001,
+            "minecraft:map_color": "#59c135",
+            "minecraft:light_dampening": 0.0,
+            "minecraft:loot": "loot_tables/blocks/leaves_flower_crop.json",
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "grass",
+                            "dirt",
+                            "clay",
+                            "moss_block"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
