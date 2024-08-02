@@ -1,4 +1,6 @@
 import { ItemCooldownComponent, ItemDurabilityComponent, ItemEnchantableComponent, ItemStack } from "@minecraft/server";
+import ExColorLoreUtil from "./ExColorLoreUtil.js";
+import ExLoreUtil from "./ExLoreUtil.js";
 if (ItemStack.prototype === undefined)
     ItemStack.prototype = {};
 const compId = {
@@ -18,6 +20,12 @@ Object.assign(ItemStack.prototype, {
     },
     getComponentById(key) {
         return this.getComponent(key);
+    },
+    getColorLoreUtil() {
+        return new ExColorLoreUtil(this);
+    },
+    getLoreUtil() {
+        return new ExLoreUtil(this);
     },
     isWillBeRemoved: false
 });

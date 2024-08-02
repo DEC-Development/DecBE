@@ -2,6 +2,7 @@ import { ignorn } from "../../../modules/exmc/server/ExErrorQueue.js";
 import UUID from "../../../modules/exmc/utils/UUID.js";
 import VarOnChangeListener from "../../../modules/exmc/utils/VarOnChangeListener.js";
 import { MinecraftEffectTypes } from "../../../modules/vanilla-data/lib/index.js";
+import { GameMode } from "@minecraft/server";
 export default class DecBossBarrier {
     particle(arg0) {
         this.dim.spawnParticle(arg0, this.center);
@@ -52,6 +53,12 @@ export default class DecBossBarrier {
         for (let c of this.clientsByPlayer()) {
             c.bossBarrier = undefined;
         }
+        for (let c of this.server.getExPlayers()) {
+            if (c.entity.getDynamicProperty('InBoundary') === this.id) {
+                c.entity.setDynamicProperty('InBoundary', undefined);
+                c.gameModeCode = c.getScoresManager().getScore("pre_gamemode");
+            }
+        }
     }
     *clientsByPlayer() {
         for (let e of this.players) {
@@ -75,7 +82,6 @@ export default class DecBossBarrier {
         for (let e of this.server.getExPlayers()) {
             if (!e.entity.location)
                 continue;
-            // console.warn(this.area.contains(e.location))
             if (this.players.has(e.entity)) {
                 if (!this.area.contains(e.entity.location)) {
                     if (this.players.get(e.entity)) {
@@ -97,7 +103,17 @@ export default class DecBossBarrier {
             }
             else {
                 if (this.area.contains(e.entity.location)) {
-                    e.entity.kill();
+                    if (!e.entity.getDynamicProperty('InBoundary')) {
+                        e.entity.setDynamicProperty('InBoundary', this.id);
+                        e.getScoresManager().setScore("pre_gamemode", e.gameModeCode);
+                        e.gamemode = GameMode.spectator;
+                    }
+                }
+                else {
+                    if (e.entity.getDynamicProperty('InBoundary') === this.id) {
+                        e.entity.setDynamicProperty('InBoundary', undefined);
+                        e.gameModeCode = e.getScoresManager().getScore("pre_gamemode");
+                    }
                 }
             }
         }

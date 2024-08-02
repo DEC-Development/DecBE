@@ -10,7 +10,7 @@ export class DecEverlastingWinterGhastBoss1 extends DecBossController {
     }
     onKilled(e) {
         super.onKilled(e);
-        if (e.damageSource.cause === EntityDamageCause.suicide) {
+        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
             this.music.stop();
         }
     }

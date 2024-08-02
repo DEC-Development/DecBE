@@ -8,32 +8,17 @@ export default class ExPlayer extends ExEntity {
     set entity(e) {
         super.entity = e;
     }
+    set gameModeCode(gameMode) {
+        this.gamemode = this.gamemodeMap[gameMode];
+    }
+    get gameModeCode() {
+        return this.gamemodeMap[this.gamemode];
+    }
     set gamemode(mode) {
-        switch (mode) {
-            case GameMode.survival:
-                this.runCommandAsync(`gamemode 0`);
-                break;
-            case GameMode.creative:
-                this.runCommandAsync(`gamemode 1`);
-                break;
-            case GameMode.adventure:
-                this.runCommandAsync(`gamemode 2`);
-                break;
-            case GameMode.spectator:
-                this.runCommandAsync(`gamemode 3`);
-                break;
-        }
+        this.entity.setGameMode(mode);
     }
     get gamemode() {
-        let c = [GameMode.adventure, GameMode.creative, GameMode.spectator, GameMode.survival];
-        for (let g of c) {
-            if (this.entity.matches({
-                gameMode: g
-            })) {
-                return g;
-            }
-        }
-        return GameMode.creative;
+        return this.entity.getGameMode();
     }
     title(title, subtitle) {
         // this.runCommandAsync(`titleraw @s title {"rawtext":[{"text":"${title}"}]}`);
@@ -78,6 +63,16 @@ export default class ExPlayer extends ExEntity {
     }
     constructor(player) {
         super(player);
+        this.gamemodeMap = {
+            "0": GameMode.survival,
+            "1": GameMode.creative,
+            "2": GameMode.adventure,
+            "3": GameMode.spectator,
+            [GameMode.survival]: 0,
+            [GameMode.creative]: 1,
+            [GameMode.adventure]: 2,
+            [GameMode.spectator]: 3
+        };
         this.bag = new ExPlayerBag(this);
         this.scoresManager = super.getScoresManager();
     }

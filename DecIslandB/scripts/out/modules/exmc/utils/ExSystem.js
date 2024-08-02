@@ -1,4 +1,5 @@
 import ExServerTickDelayTask from '../server/ExServerTickDelayTask.js';
+import ExTimeLine from './ExTimeLine.js';
 import Random from './Random.js';
 export default class ExSystem {
     static getId(x) {
@@ -47,6 +48,14 @@ export default class ExSystem {
         }
         else {
             return new ExServerTickDelayTask(tasks);
+        }
+    }
+    static timeLine(tasks) {
+        if (this.isServer()) {
+            return new ExTimeLine(tasks);
+        }
+        else {
+            return new ExTimeLine(tasks);
         }
     }
     static deepEqual(obj1, obj2) {

@@ -28,6 +28,13 @@ export default class EventHandle {
                 }
             });
         };
+        this.registerToServerByServerEventCanErr = (registerName, k) => {
+            this.server.getEvents().register(registerName, (e) => {
+                for (let [key, value] of this.monitorMap[k]) {
+                    value.trigger(e);
+                }
+            });
+        };
     }
     setEventLiseners(e) {
         this.listeners = e;

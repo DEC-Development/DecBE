@@ -230,7 +230,9 @@ export default class PomTalentSystem extends GameController {
             let damage = ((_a = this.exPlayer.getPreRemoveHealth()) !== null && _a !== void 0 ? _a : 0) + e.damage;
             let willdamage = damage;
             // console.warn(willdamage);
-            willdamage *= 1 - this.armor_protection[4];
+            if (PomTalentSystem.physicalDamageType.has(e.damageSource.cause)) {
+                willdamage *= 1 - this.armor_protection[4];
+            }
             if (PomTalentSystem.magicDamageType.has(e.damageSource.cause)) {
                 willdamage -= this.armor_protection[2];
                 willdamage *= (1 - this.armor_protection[0] / 100);
@@ -392,6 +394,9 @@ export default class PomTalentSystem extends GameController {
                             }
                         }).delay(5 * 20)).start(); //
                     }
+                }
+                else {
+                    this.itemOnHandComp = undefined;
                 }
             }
             else {

@@ -1,4 +1,4 @@
-import { EntityDamageCause, GameMode, MinecraftDimensionTypes } from '@minecraft/server';
+import { EntityDamageCause, GameMode, MinecraftDimensionTypes, world } from '@minecraft/server';
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
 import MathUtil from "../../modules/exmc/utils/math/MathUtil.js";
@@ -106,6 +106,8 @@ export default class DecClient extends ExGameClient {
                 if (this.bossBarrier)
                     this.bossBarrier.notifyDeathAdd();
                 this.exPlayer.command.run('function die/normal');
+                world.setDynamicProperty('AlreadyDie', true);
+                this.exPlayer.entity.setDynamicProperty('AlreadyDie', true);
                 if (this.globalscores.getNumber('DieMode') === 1) {
                     //死亡模式
                     this.exPlayer.command.run('function die/die_mode');
@@ -320,16 +322,17 @@ export default class DecClient extends ExGameClient {
             const scores = this.exPlayer.getScoresManager();
             //生存，冒险玩家添加gaming标签
             const gamemode = ep.gamemode;
-            if (!p.hasTag('gaming') && (gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
-                p.addTag('gaming');
-                this.globalscores.setNumber("AlreadyGmCheat", 1);
-                if (this.globalscores.getNumber('DieMode')) {
-                    p.addTag('diemode_gmcheat');
-                    this.globalscores.setNumber("DieModeGmCheat", 1);
+            if ((gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
+                if (!p.hasTag('gaming')) {
+                    p.addTag('gaming');
                 }
             }
-            else if (p.hasTag('gaming')) {
-                p.removeTag('gaming');
+            else {
+                if (p.hasTag('gaming')) {
+                    p.removeTag('gaming');
+                }
+                p.setDynamicProperty('GmCheat', true);
+                world.setDynamicProperty('GmCheat', true);
             }
             //潜行获得tag is_sneaking
             if (p.isSneaking) {
@@ -724,6 +727,44 @@ export default class DecClient extends ExGameClient {
     }
     onLoad() {
         super.onLoad();
+        if (this.globalscores.getNumber('FirstEnter') === 0) {
+            this.exPlayer.addTag('owner');
+            this.globalscores.setNumber('FirstEnter', 1);
+            this.exPlayer.runCommandAsync('gamerule commandblockoutput false');
+            if (DecGlobal.isDec())
+                this.exPlayer.runCommandAsync('function test/creator_list');
+            this.exPlayer.runCommandAsync('function test/load_ok');
+            this.exPlayer.runCommandAsync('tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:command_help.name\" } ] }');
+        }
+        if (this.player.getDynamicProperty('has_initalized') === undefined) {
+            const score_init = (obj_str, value) => {
+                new Objective(obj_str).initScore(this.player, value);
+            };
+            score_init('i_inviolable', 0);
+            score_init('i_damp', 0);
+            score_init('i_soft', 0);
+            score_init('i_heavy', 0);
+            score_init('skill_count', 0);
+            score_init('pre_gamemode', 0);
+            if (DecGlobal.isDec()) {
+                score_init('magicpoint', 20);
+                score_init('maxmagic', 20);
+                score_init('magicgain', 0);
+                score_init('magicreckon', 0);
+            }
+            if (this.exPlayer.hasTag('mok')) {
+                //将原来用于标记已初始化的mok去除
+                this.exPlayer.removeTag('mok');
+            }
+            else if (DecGlobal.isDec()) {
+                this.exPlayer.addTag('hpl1');
+            }
+            this.player.setDynamicProperty('has_initalized', true);
+        }
+        if (this.player.getDynamicProperty('InBoundary')) {
+            this.player.setDynamicProperty('InBoundary', undefined);
+            this.exPlayer.gameModeCode = this.exPlayer.getScoresManager().getScore("pre_gamemode");
+        }
     }
     onLeave() {
         super.onLeave();

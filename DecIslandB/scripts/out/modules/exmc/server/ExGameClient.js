@@ -18,6 +18,7 @@ import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
 import ExGame from "./ExGame.js";
+import { MinecraftDimensionTypes } from "../../vanilla-data/lib/index.js";
 export default class ExGameClient {
     debug_removeAllTag() {
         for (let i of this.exPlayer.getTags()) {
@@ -28,6 +29,9 @@ export default class ExGameClient {
         new ExActionAlert().title("aaa").body("bbbb").button("alert", () => { })
             .button("alert", () => { })
             .show(this.player);
+    }
+    debug_remove() {
+        return this.getDimension(MinecraftDimensionTypes.Nether).getEntities().forEach(e => e.remove());
     }
     debug_error() {
         return ExErrorQueue.getError();

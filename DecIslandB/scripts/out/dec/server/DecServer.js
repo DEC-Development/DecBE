@@ -22,6 +22,7 @@ import MathUtil from '../../modules/exmc/utils/math/MathUtil.js';
 import ExGame from '../../modules/exmc/server/ExGame.js';
 import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import { DecLeavesGolemBoss } from './entities/DecLeavesGolemBoss.js';
+import { DecEscapeSoulBoss3, DecEscapeSoulBoss4, DecEscapeSoulBoss5 } from './entities/DecEscapeSoulBoss.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -42,17 +43,15 @@ export default class DecServer extends ExGameServer {
         this.story_random = new Objective("story_random").create("story_random");
         this.magicreckon = new Objective("magicreckon").create("magicreckon");
         this.random = new Objective("random").create("random");
+        this.pre_gamemode = new Objective("pre_gamemode").create("pre_gamemode");
         this.global = new Objective("global").create("global");
         let place_block_wait_tick = 0;
         this.globalscores.setNumber('zero', 0);
         this.globalscores.setNumber('one', 1);
         this.globalscores.setNumber('two', 2);
         this.globalscores.setNumber('four', 4);
-        this.globalscores.initializeNumber('FirstEnter', 0);
-        this.globalscores.initializeNumber('AlreadyDie', 0);
-        this.globalscores.initializeNumber('AlreadyGmCheat', 0);
-        this.globalscores.initializeNumber('DieMode', 0);
-        this.globalscores.initializeNumber('MagicDisplay', 0);
+        this.globalscores.initNumber('FirstEnter', 0);
+        this.globalscores.initNumber('MagicDisplay', 0);
         //new Objective("harmless").create("harmless");
         this.nightEventListener = new VarOnChangeListener(e => {
             if (e) {
@@ -75,56 +74,56 @@ export default class DecServer extends ExGameServer {
         // this.getEvents().events.beforePistonActivate.subscribe(e => {
         //     e.piston
         // });
-        this.getEvents().events.afterPlayerJoin.subscribe(e => {
-            system.runTimeout(() => {
-                world.getAllPlayers().forEach(p => {
-                    if (p.id === e.playerId) {
-                        let player = p;
-                        let exPlayer = ExPlayer.getInstance(player);
-                        if (this.globalscores.getNumber('FirstEnter') === 0) {
-                            exPlayer.addTag('owner');
-                            this.globalscores.setNumber('FirstEnter', 1);
-                            exPlayer.runCommandAsync('gamerule commandblockoutput false');
-                            exPlayer.runCommandAsync('function test/creator_list');
-                            exPlayer.runCommandAsync('function test/load_ok');
-                            exPlayer.runCommandAsync('tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:command_help.name\" } ] }');
+        let die_mode_test = (p, open) => {
+            if (open) {
+                if (world.getDynamicProperty('DieMode')) {
+                    if (world.getDynamicProperty('AlreadyDie')) {
+                        p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_cannot_close_already_die.name" }] });
+                    }
+                    else {
+                        p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_cannot_close.name" }] });
+                    }
+                }
+                else {
+                    if (p.hasTag('owner')) {
+                        if (world.getDynamicProperty('AlreadyDie')) {
+                            p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_already_die.name" }] });
                         }
-                        if (player.getDynamicProperty('has_initalized') === undefined) {
-                            const score_init = (obj_str, value) => {
-                                let obj = world.scoreboard.getObjective(obj_str);
-                                try {
-                                    if ((obj === null || obj === void 0 ? void 0 : obj.getScore(p.name)) === undefined) {
-                                        obj === null || obj === void 0 ? void 0 : obj.setScore(p, value);
-                                    }
-                                }
-                                catch (error) {
-                                    obj === null || obj === void 0 ? void 0 : obj.setScore(p, value);
-                                }
-                            };
-                            score_init('i_inviolable', 0);
-                            score_init('i_damp', 0);
-                            score_init('i_soft', 0);
-                            score_init('i_heavy', 0);
-                            score_init('skill_count', 0);
-                            if (DecGlobal.isDec()) {
-                                score_init('magicpoint', 20);
-                                score_init('maxmagic', 20);
-                                score_init('magicgain', 0);
-                                score_init('magicreckon', 0);
+                        else {
+                            if (world.getDynamicProperty('GmCheat')) {
+                                p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_gmcheat.name" }] });
                             }
-                            if (exPlayer.hasTag('mok')) {
-                                //将原来用于标记已初始化的mok去除
-                                exPlayer.removeTag('mok');
+                            else {
+                                p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_open.name" }] });
+                                world.setDynamicProperty('DieMode', true);
                             }
-                            else if (DecGlobal.isDec()) {
-                                exPlayer.addTag('hpl1');
-                            }
-                            player.setDynamicProperty('has_initalized', true);
                         }
                     }
-                });
-            }, 200);
-        });
+                    else {
+                        p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_not_owner.name" }] });
+                    }
+                }
+            }
+            else {
+                if (world.getDynamicProperty('DieMode')) {
+                    p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_test_open.name" }] });
+                    p.runCommandAsync('tellraw @s ');
+                }
+                else {
+                    if (world.getDynamicProperty('AlreadyDie')) {
+                        p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_test_close_cannot_open_die.name" }] });
+                    }
+                    else {
+                        if (world.getDynamicProperty('GmCheat')) {
+                            p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_test_close_cannot_open_gmc.name" }] });
+                        }
+                        else {
+                            p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_test_close.name" }] });
+                        }
+                    }
+                }
+            }
+        };
         this.getEvents().events.beforeChatSend.subscribe(e => {
             var _a;
             let cmdRunner = this.getExDimension(MinecraftDimensionTypes.overworld);
@@ -145,10 +144,10 @@ export default class DecServer extends ExGameServer {
                     }
                     case "diemode": {
                         if (cmds[1] === "open") {
-                            sender.command.run("function diemode/open");
+                            die_mode_test(sender.entity, true);
                         }
                         else if (cmds[1] === "test") {
-                            sender.command.run("function diemode/test");
+                            die_mode_test(sender.entity, false);
                         }
                         else {
                             errMsg = "Invalid command " + cmds[1];
@@ -192,22 +191,14 @@ export default class DecServer extends ExGameServer {
                             for (let i of new IStructureDriver().save(mthis.getExDimension(MinecraftDimensionTypes.overworld), start, end)) {
                                 let res = i.toData();
                                 i.dispose();
-                                //console.warn(JSON.stringify(res));
                                 let com = (_a = GZIPUtil.zipString(JSON.stringify(res))) !== null && _a !== void 0 ? _a : "";
                                 data.push(com);
-                                //console.warn(com);
                                 yield true;
                             }
                         }).bind(this));
                         task.start(2, 1).then(() => {
                             this.compress = data;
-                            console.warn("over");
-                            // for(let i of data){
-                            //     console.warn(i);
-                            // }
-                            console.warn(JSON.stringify(data));
                         });
-                        // console.warn(GZIPUtil.unzipString(com));
                         break;
                     }
                     case "_load": {
@@ -268,22 +259,6 @@ export default class DecServer extends ExGameServer {
                 'facing': true
             }
         };
-        this.getEvents().events.beforePlayerBreakBlock.subscribe(e => {
-            const entity = ExPlayer.getInstance(e.player);
-            //防破坏方块 i_inviolable计分板控制
-            if (entity.getScoresManager().getScore(this.i_inviolable) > 1) {
-                let ep = ExPlayer.getInstance(e.player);
-                ep.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
-                ep.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
-                ep.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
-                ep.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
-                ep.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
-                ep.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
-                entity.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
-                e.cancel = true;
-            }
-            ;
-        });
         this.getEvents().events.afterPlayerBreakBlock.subscribe(e => {
             const block_before_id = e.brokenBlockPermutation.type.id;
             //种植架
@@ -312,6 +287,24 @@ export default class DecServer extends ExGameServer {
                     repeat_times -= 1;
                 }
             }
+        });
+        this.getEvents().events.beforePlayerBreakBlock.subscribe(e => {
+            const entity = ExPlayer.getInstance(e.player);
+            //防破坏方块 i_inviolable计分板控制
+            if (entity.getScoresManager().getScore(this.i_inviolable) > 1) {
+                let ep = ExPlayer.getInstance(e.player);
+                ExGame.run(() => {
+                    ep.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
+                    ep.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
+                    ep.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
+                    ep.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
+                    ep.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
+                    ep.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
+                    entity.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
+                });
+                e.cancel = true;
+            }
+            ;
         });
         this.getEvents().events.beforeExplosion.subscribe(e => {
             if (e.source) {
@@ -345,7 +338,6 @@ export default class DecServer extends ExGameServer {
                     e.cancel = true;
                 }
                 else {
-                    // console.warn(block_except.has(e.block.typeId) || item_except.has(e.itemStack.typeId));
                     if ((block_except.has(e.block.typeId) || item_except.has(e.itemStack.typeId)) == false) {
                         e.cancel = true;
                     }
@@ -356,7 +348,6 @@ export default class DecServer extends ExGameServer {
                     e.cancel = true;
                 }
                 else {
-                    // console.warn(block_except.has(e.block.typeId) || item_except.has(e.itemStack.typeId));
                     if ((block_exceptx.has(e.block.typeId) || item_except.has(e.itemStack.typeId)) == false) {
                         e.cancel = true;
                     }
@@ -462,6 +453,22 @@ export default class DecServer extends ExGameServer {
             ]);
         });
         this.getEvents().exEvents.onLongTick.subscribe(e => {
+            //死亡模式
+            if (world.getDynamicProperty('DieMode')) {
+                world.gameRules.sendCommandFeedback = false;
+                world.gameRules.keepInventory = false;
+                world.getDimension('overworld').runCommandAsync('difficulty hard');
+                world.getAllPlayers().forEach(p => {
+                    if (p.getDynamicProperty('AlreadyDie')) {
+                        p.setGameMode(GameMode.spectator);
+                        ExPlayer.getInstance(p).titleActionBar('{ "rawtext" : [ { "translate" : "text.dec:diemode_spectator.name" } ] }');
+                    }
+                    else if (p.getDynamicProperty('GmCheat')) {
+                        p.setGameMode(GameMode.spectator);
+                        ExPlayer.getInstance(p).titleActionBar('{ "rawtext" : [ { "translate" : "text.dec:diemode_spectator_gmcheat.name" } ] }');
+                    }
+                });
+            }
             //Dec魔法显示
             if (DecGlobal.isDec() && this.globalscores.getNumber('MagicDisplay') === 1) {
                 try {
@@ -535,7 +542,9 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:abyssal_controller", DecCommonBossLastStage);
         this.addEntityController("dec:predators", DecCommonBossLastStage);
         this.addEntityController("dec:enchant_illager_2", DecCommonBossLastStage);
-        this.addEntityController("dec:escaped_soul_entity", DecCommonBossLastStage);
+        this.addEntityController("dec:escaped_soul_1", DecEscapeSoulBoss3);
+        this.addEntityController("dec:escaped_soul_2", DecEscapeSoulBoss4);
+        this.addEntityController("dec:escaped_soul_entity", DecEscapeSoulBoss5);
         this.addEntityController("dec:host_of_deep", DecHostOfDeepBoss1);
         this.addEntityController("dec:host_of_deep_1", DecHostOfDeepBoss2);
         this.addEntityController("dec:host_of_deep_2", DecHostOfDeepBoss3);
@@ -543,28 +552,6 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:everlasting_winter_ghast", DecEverlastingWinterGhastBoss1);
         this.addEntityController("dec:everlasting_winter_ghast_1", DecEverlastingWinterGhastBoss2);
         this.addEntityController("dec:nuke", DecNukeController);
-        // //清理留下的boss，防止作弊
-        // let bossIds = [
-        //     "dec:leaves_golem",
-        //     "dec:king_of_pillager",
-        //     "dec:abyssal_controller",
-        //     "dec:predators",
-        //     "dec:enchant_illager",
-        //     "dec:enchant_illager_1",
-        //     "dec:enchant_illager_2",
-        //     "dec:escaped_soul_entity",
-        //     "dec:host_of_deep",
-        //     "dec:host_of_deep_1",
-        //     "dec:host_of_deep_2",
-        //     "dec:ash_knight",
-        //     "dec:everlasting_winter_ghast",
-        //     "dec:everlasting_winter_ghast_1"
-        // ];
-        // for (let id of bossIds) {
-        //     this.getExDimension(MinecraftDimensionTypes.overworld).getEntities({
-        //         type: id
-        //     }).forEach(e => { if (e.isValid()) e.remove() });
-        // }
         //植物
         const block_around_judge = (arr, block, targetId, stateMatchMap) => {
             if (block.typeId == targetId) {

@@ -39,10 +39,11 @@
             "minecraft:entity_collision": true,
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "empty",
+                    "texture": "empty", 
                     "render_method": "alpha_test"
                 }
             },
+            "minecraft:geometry": "geometry.trellis.bottom",
             "minecraft:placement_filter": {
                 "conditions": [
                     {
@@ -70,6 +71,10 @@
                     "minecraft:material_instances": {
                         "trellis_bottom": {
                             "texture": "trellis",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
                             "render_method": "alpha_test"
                         }
                     },
@@ -105,6 +110,10 @@
                 "components": {
                     "minecraft:material_instances": {
                         "trellis_bottom": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
                             "texture": "empty",
                             "render_method": "alpha_test"
                         }
@@ -147,6 +156,10 @@
                         "trellis_top": {
                             "texture": "trellis",
                             "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
                         }
                     }
                 }
@@ -162,6 +175,10 @@
                         "trellis_top": {
                             "texture": "empty",
                             "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
                         }
                     }
                 }
@@ -175,6 +192,10 @@
                             "render_method": "alpha_test"
                         },
                         "crop_top": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
                             "texture": "empty",
                             "render_method": "alpha_test"
                         }
@@ -216,6 +237,10 @@
                         "crop_top": {
                             "texture": "trellis_crop_wither",
                             "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
                         }
                     }
                 }
@@ -231,10 +256,14 @@
                         "crop_top": {
                             "texture": "empty",
                             "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
                         }
                     }
                 }
-            }, 
+            },
             {
                 "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 0 && query.block_state('dec:is_top')",
                 "components": {
@@ -245,6 +274,10 @@
                         },
                         "crop_top": {
                             "texture": "grape_crop_0",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
                             "render_method": "alpha_test"
                         }
                     }
@@ -259,6 +292,10 @@
                             "render_method": "alpha_test"
                         },
                         "crop_top": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
                             "texture": "empty",
                             "render_method": "alpha_test"
                         }
@@ -276,6 +313,10 @@
                         "crop_top": {
                             "texture": "grape_crop_1",
                             "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
                         }
                     }
                 }
@@ -289,6 +330,10 @@
                             "render_method": "alpha_test"
                         },
                         "crop_top": {
+                            "texture": "empty",
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
                             "texture": "empty",
                             "render_method": "alpha_test"
                         }
@@ -354,7 +399,7 @@
             "grow": {
                 "sequence": [
                     {
-                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') < 1",//作物多了这里写三元运算符
+                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') < 1", //作物多了这里写三元运算符
                         "sequence": [
                             {
                                 "condition": "!query.block_state('dec:may_wither')",
@@ -385,7 +430,7 @@
                         ]
                     },
                     {
-                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 1",//作物多了这里写三元运算符
+                        "condition": "query.block_state('dec:crop_type') == 'grape' && query.block_state('dec:growth_stage') == 1", //作物多了这里写三元运算符
                         "sequence": [
                             {
                                 "condition": "query.block_state('dec:may_wither')",

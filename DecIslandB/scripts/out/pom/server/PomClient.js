@@ -27,19 +27,19 @@ import GlobalSettings from "./cache/GlobalSettings.js";
 import PomClientData from "./cache/PomClientData.js";
 import POMLICENSE from "./data/POMLICENSE.js";
 import lang from "./data/lang.js";
-import PomDimRuinsSystem from "./func/PomDimRuinsSystem.js";
-import PomEnchantSystem from "./func/PomEnchantSystem.js";
-import PomInteractSystem from "./func/PomInteractSystem.js";
-import PomMagicSystem from "./func/PomMagicSystem.js";
-import PomTalentSystem from "./func/PomTalentSystem.js";
-import PomTaskSystem from "./func/PomTaskSystem.js";
-import SimpleItemUseFunc from "./func/SimpleItemUseFunc.js";
+import PomDimRuinsSystem from "./clientFunc/PomDimRuinsSystem.js";
+import PomEnchantSystem from "./clientFunc/PomEnchantSystem.js";
+import PomInteractSystem from "./clientFunc/PomInteractSystem.js";
+import PomMagicSystem from "./clientFunc/PomMagicSystem.js";
+import PomTalentSystem from "./clientFunc/PomTalentSystem.js";
+import PomTaskSystem from "./clientFunc/PomTaskSystem.js";
+import SimpleItemUseFunc from "./clientFunc/SimpleItemUseFunc.js";
 import WarningAlertUI from "./ui/WarningAlertUI.js";
 import ExPropCache from "../../modules/exmc/server/storage/cache/ExPropCache.js";
 import { ArmorData } from "../../dec/server/items/ArmorData.js";
 import { pomDifficultyMap } from "./data/GameDifficulty.js";
 import TalentData from "./cache/TalentData.js";
-import PomTerritorySystem from "./func/PomTerritorySystem.js";
+import PomTerritorySystem from "./clientFunc/PomTerritorySystem.js";
 export default class PomClient extends ExGameClient {
     // net;
     constructor(server, id, player) {
@@ -186,18 +186,15 @@ export default class PomClient extends ExGameClient {
             this.player.nameTag = "§c" + this.player.nameTag;
         }
         this.exPlayer.command.run([
-            "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbef 0",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbdj 0",
             "execute as @s[tag=!wbyzc] at @s run give @s wb:power 1 0 {\"minecraft:keep_on_death\":{}}",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbcsjs -1",
-            "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbnldx 0",
             //wbldid
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbldpd 0",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbldcg 0",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbfl 200",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbwqlq 0",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbkjlqcg 0",
-            "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbkjlqjs 0",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbwqlqjs 100",
             "tag @s[scores={wbdj=-100..}] add wbyzc",
         ]);

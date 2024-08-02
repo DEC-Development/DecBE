@@ -87,16 +87,16 @@ export default class ExScoresManager {
 export class Objective {
     constructor(name) {
         this.name = name;
+        this.scoreboardObjective = world.scoreboard.getObjective(name);
     }
     create(showName) {
-        try {
-            world.scoreboard.addObjective(this.name, showName);
-        }
-        catch (e) { }
+        if (!world.scoreboard.getObjective(this.name))
+            this.scoreboardObjective = world.scoreboard.addObjective(this.name, showName);
         return this;
     }
     delete() {
-        world.scoreboard.removeObjective(this.name);
+        if (world.scoreboard.getObjective(this.name))
+            world.scoreboard.removeObjective(this.name);
     }
     setDisplay(mode = "sidebar", ascending = true) {
         if (mode == "sidebar") {
@@ -106,6 +106,43 @@ export class Objective {
             ExGameConfig.runCommandAsync(`scoreboard objectives setdisplay ${mode} ${this.name}`);
         }
         return this;
+    }
+    addScore(participant, scoreToAdd) {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.addScore(participant, scoreToAdd)) !== null && _b !== void 0 ? _b : 0;
+    }
+    getParticipants() {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.getParticipants()) !== null && _b !== void 0 ? _b : [];
+    }
+    getScore(participant) {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.getScore(participant)) !== null && _b !== void 0 ? _b : undefined;
+    }
+    getScores() {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.getScores()) !== null && _b !== void 0 ? _b : [];
+    }
+    hasParticipant(participant) {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.hasParticipant(participant)) !== null && _b !== void 0 ? _b : false;
+    }
+    isValid() {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.isValid()) !== null && _b !== void 0 ? _b : false;
+    }
+    removeParticipant(participant) {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.removeParticipant(participant)) !== null && _b !== void 0 ? _b : false;
+    }
+    setScore(participant, score) {
+        var _a, _b;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.setScore(participant, score)) !== null && _b !== void 0 ? _b : undefined;
+    }
+    initScore(participant, score) {
+        if (!this.hasParticipant(participant)) {
+            this.setScore(participant, score);
+        }
     }
 }
 //# sourceMappingURL=ExScoresManager.js.map

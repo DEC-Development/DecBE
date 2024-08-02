@@ -5,7 +5,7 @@ import { ignorn } from './ExErrorQueue.js';
 export default class ExDimension {
     spawnParticle(p, v, varMap = new MolangVariableMap()) {
         try {
-            this._dimension.spawnParticle(p, v, varMap);
+            (this._dimension.spawnParticle(p, v, varMap));
             return true;
         }
         catch (e) {
@@ -13,7 +13,6 @@ export default class ExDimension {
         }
     }
     createExplosion(location, radius, explosionOptions) {
-        //console.warn(location, radius, explosionOptions);
         this._dimension.createExplosion(location, radius, explosionOptions);
     }
     get dimension() {
@@ -47,9 +46,7 @@ export default class ExDimension {
     setBlock(vec, blockId) {
         if (typeof blockId === "string")
             blockId = BlockTypes.get(blockId);
-        let b = this.getBlock(vec);
-        b === null || b === void 0 ? void 0 : b.setType(blockId);
-        //b?.permutation;
+        let b = this.dimension.setBlockType(vec, blockId);
     }
     setBlockAsync(vec, blockId) {
         this.runCommandAsync(`setBlock ${vec.x} ${vec.y} ${vec.z} ${blockId}`);
@@ -73,9 +70,9 @@ export default class ExDimension {
         }
         ;
     }
-    spawnEntity(id, v) {
+    spawnEntity(id, v, options) {
         try {
-            return this._dimension.spawnEntity(id, v);
+            return this._dimension.spawnEntity(id, v, options);
         }
         catch (error) {
             ExGameConfig.console.warn(error);

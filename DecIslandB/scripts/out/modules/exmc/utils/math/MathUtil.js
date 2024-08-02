@@ -1,9 +1,15 @@
 export default class MathUtil {
     static clamp(num, low, high) {
+        if (low > high) {
+            return MathUtil.clamp(num, high, low);
+        }
         return Math.max(low, Math.min(high, num));
     }
     static IEEEremainder(dividend, divisor) {
         return dividend - (divisor * Math.round(dividend / divisor));
+    }
+    static remainder(dividend, divisor) {
+        return dividend - (divisor * Math.floor(dividend / divisor));
     }
     static isNumber(val) {
         var regPos = /^\d+(\.\d+)?$/; //非负浮点数

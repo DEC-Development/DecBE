@@ -11,5 +11,8 @@ export default class Queue {
     get length() {
         return this.queue.length;
     }
+    sort(compareFn) {
+        this.queue.sort(compareFn);
+    }
 }
 //# sourceMappingURL=Queue.js.map

@@ -1,6 +1,6 @@
 import { EntityDamageCause } from '@minecraft/server';
 import ExEntityController from '../../../modules/exmc/server/entity/ExEntityController.js';
-import PomBossBarrier from '../func/barrier/PomBossBarrier.js';
+import PomBossBarrier from './barrier/PomBossBarrier.js';
 import { ExBlockArea } from '../../../modules/exmc/server/block/ExBlockArea.js';
 export default class PomBossController extends ExEntityController {
     constructor(e, server) {
@@ -30,18 +30,24 @@ export default class PomBossController extends ExEntityController {
     }
     onFail() {
         console.warn("onFail");
-        for (let c of this.barrier.clientsByPlayer()) {
-            c.ruinsSystem.causeDamageShow = false;
-        }
-        this.stopBarrier();
+        this.stopBattle();
         this.destroyBossEntity();
         this.server.say({ rawtext: [{ translate: "text.dec:killed_by_boss.name" }] });
         this.despawn();
     }
+    onWin() {
+        //设置奖励
+        for (let c of this.barrier.clientsByPlayer()) {
+            c.progressTaskFinish(this.entity.typeId, c.ruinsSystem.causeDamage);
+            c.ruinsSystem.causeDamageShow = false;
+        }
+        this.stopBarrier();
+        console.warn("onWin");
+    }
     onKilled(e) {
         this.destroyBossEntity();
-        if (e.damageSource.cause === EntityDamageCause.suicide) {
-            this.stopBarrier();
+        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
+            this.stopBattle();
         }
         super.onKilled(e);
     }
@@ -50,6 +56,12 @@ export default class PomBossController extends ExEntityController {
     }
     stopBarrier() {
         this.barrier.stop();
+    }
+    stopBattle() {
+        for (let c of this.barrier.clientsByPlayer()) {
+            c.ruinsSystem.causeDamageShow = false;
+        }
+        this.stopBarrier();
     }
     destroyBossEntity() {
     }

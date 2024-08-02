@@ -1,0 +1,20 @@
+{
+    "configs": [
+        {
+            "name": "sample_sync_config",
+            "enabled": true,
+            "sync": [
+                {
+                    "src": "E:\\MCPEAddons\\Dec\\DecIslandB",
+                    "dest": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\Microsoft.MinecraftUWP_8wekyb3d8bbwe\\LocalState\\games\\com.mojang\\development_behavior_packs\\DecIslandB",
+                    "bidir": true
+                },
+                {
+                    "src": "E:\\MCPEAddons\\Dec\\DecIslandR",
+                    "dest": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\Microsoft.MinecraftUWP_8wekyb3d8bbwe\\LocalState\\games\\com.mojang\\development_resource_packs\\DecIslandR",
+                    "bidir": true
+                }
+            ]
+        }
+    ]
+}

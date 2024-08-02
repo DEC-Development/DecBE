@@ -29,13 +29,13 @@ import PomAncientStoneBoss from './entities/PomAncientStoneBoss.js';
 import PomHeadlessGuardBoss from './entities/PomHeadlessGuardBoss.js';
 import { PomIntentionsBoss1, PomIntentionsBoss2, PomIntentionsBoss3 } from './entities/PomIntentionsBoss.js';
 import PomMagicStoneBoss from './entities/PomMagicStoneBoss.js';
-import PomBossBarrier from './func/barrier/PomBossBarrier.js';
-import RuinsLoaction from "./func/ruins/RuinsLoaction.js";
-import PomAncientBossRuin from './func/ruins/ancient/PomAncientBossRuin.js';
-import PomCaveBossRuin from './func/ruins/cave/PomCaveBossRuin.js';
-import PomDesertBossRuin from "./func/ruins/desert/PomDesertBossRuin.js";
-import PomMindBossRuin from './func/ruins/mind/PomMindBossRuin.js';
-import PomStoneBossRuin from './func/ruins/stone/PomStoneBossRuin.js';
+import PomBossBarrier from './entities/barrier/PomBossBarrier.js';
+import RuinsLoaction from "./serverFunc/ruins/RuinsLoaction.js";
+import PomAncientBossRuin from './serverFunc/ruins/ancient/PomAncientBossRuin.js';
+import PomCaveBossRuin from './serverFunc/ruins/cave/PomCaveBossRuin.js';
+import PomDesertBossRuin from "./serverFunc/ruins/desert/PomDesertBossRuin.js";
+import PomMindBossRuin from './serverFunc/ruins/mind/PomMindBossRuin.js';
+import PomStoneBossRuin from './serverFunc/ruins/stone/PomStoneBossRuin.js';
 import damageShow from './helper/damageShow.js';
 import itemCanChangeBlock from './items/itemCanChangeBlock.js';
 import { MinecraftBlockTypes, MinecraftEffectTypes, MinecraftEntityTypes } from '../../modules/vanilla-data/lib/index.js';
@@ -44,7 +44,7 @@ import PomServerData from './cache/PomServerData.js';
 import ExPropCache from '../../modules/exmc/server/storage/cache/ExPropCache.js';
 import BlockPartitioning from './map/BlockPartitioning.js';
 import ExGame from '../../modules/exmc/server/ExGame.js';
-import { PomGodOfGuardBoss1, PomGodOfGuardBoss2, PomGodOfGuardBoss3 } from './entities/PomGodOfGuardBoss.js';
+import { PomGodOfGuardBoss0, PomGodOfGuardBoss1, PomGodOfGuardBoss2, PomGodOfGuardBoss3 } from './entities/PomGodOfGuardBoss.js';
 // import * as b from "brain.js";
 export default class PomServer extends ExGameServer {
     sayTo(str) {
@@ -85,7 +85,6 @@ export default class PomServer extends ExGameServer {
                 vars.setFloat("y", width.y);
                 vars.setFloat("z", width.z);
                 this.getExDimension(MinecraftDimensionTypes.overworld).spawnParticle("wb:territiry_barrier_par", area[0].start, vars);
-                // console.warn("show " + area)
             }
         });
         this.territoryParLooper.delay(1 * 20);
@@ -142,6 +141,7 @@ export default class PomServer extends ExGameServer {
         this.addEntityController(PomIntentionsBoss1.typeId, PomIntentionsBoss1);
         this.addEntityController(PomIntentionsBoss2.typeId, PomIntentionsBoss2);
         this.addEntityController(PomIntentionsBoss3.typeId, PomIntentionsBoss3);
+        this.addEntityController(PomGodOfGuardBoss0.typeId, PomGodOfGuardBoss0);
         this.addEntityController(PomGodOfGuardBoss1.typeId, PomGodOfGuardBoss1);
         this.addEntityController(PomGodOfGuardBoss2.typeId, PomGodOfGuardBoss2);
         this.addEntityController(PomGodOfGuardBoss3.typeId, PomGodOfGuardBoss3);
@@ -250,6 +250,25 @@ export default class PomServer extends ExGameServer {
             }
             ruin_desert_count += 1;
         }).delay(1);
+        this.protectTper = ExSystem.tickTask(() => {
+            let centersAndExc = [
+                [RuinsLoaction.STONE_RUIN_AREA, RuinsLoaction.STONE_RUIN_PROTECT_AREA],
+                [RuinsLoaction.MIND_RUIN_AREA, RuinsLoaction.MIND_RUIN_PROTECT_AREA],
+                [RuinsLoaction.DESERT_RUIN_AREA, RuinsLoaction.DESERT_RUIN_PROTECT_AREA],
+                [RuinsLoaction.ANCIENT_RUIN_AREA, RuinsLoaction.ANCIENT_RUIN_PROTECT_AREA],
+                [RuinsLoaction.CAVE_RUIN_AREA, RuinsLoaction.CAVE_RUIN_PROTECT_AREA]
+            ];
+            let pls = this.getDimension(MinecraftDimensionTypes.theEnd).getPlayers();
+            centersAndExc.forEach(([a, b]) => {
+                for (let p of pls) {
+                    if (b.contains(p.location) && !a.contains(p.location)) {
+                        console.warn(b);
+                        p.teleport(a.center());
+                    }
+                }
+            });
+        }).delay(20 * 4);
+        this.protectTper.start();
         //遗迹功能总监听
         this.ruinFuncLooper = ExSystem.tickTask(() => {
             var _a;
@@ -510,13 +529,13 @@ export default class PomServer extends ExGameServer {
     }
     initGlobalVars() {
         this.setting = new GlobalSettings(new Objective("wpsetting"));
-        this.setting.initializeBoolean("entityShowMsg", true);
-        this.setting.initializeBoolean("damageShow", true);
-        this.setting.initializeBoolean("playerTpListShowPos", true);
-        this.setting.initializeBoolean("playerCanTp", true);
-        this.setting.initializeBoolean("tpPointRecord", true);
-        this.setting.initializeBoolean("chainMining", true);
-        this.setting.initializeBoolean("nuclearBomb", true);
+        this.setting.initBoolean("entityShowMsg", true);
+        this.setting.initBoolean("damageShow", true);
+        this.setting.initBoolean("playerTpListShowPos", true);
+        this.setting.initBoolean("playerCanTp", true);
+        this.setting.initBoolean("tpPointRecord", true);
+        this.setting.initBoolean("chainMining", true);
+        this.setting.initBoolean("nuclearBomb", true);
         this.cache = new ExPropCache(this.getDynamicPropertyManager());
         this.looper = ExSystem.tickTask(() => {
             this.cache.save();
@@ -543,7 +562,6 @@ export default class PomServer extends ExGameServer {
                 }
             };
         }
-        // console.warn(JSON.stringify(this.data));
     }
     clearEntity() {
         let entities = Array.from(ExDimension.getInstance(this.getDimension(MinecraftDimensionTypes.overworld)).getEntities())
@@ -631,7 +649,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PomServer.prototype, "time", null);
 __decorate([
-    registerEvent(ExEventNames.afterEntityHurt, (server, e) => server.setting.damageShow && e.damageSource.cause !== EntityDamageCause.suicide),
+    registerEvent(ExEventNames.afterEntityHurt, (server, e) => server.setting.damageShow && e.damageSource.cause !== EntityDamageCause.suicide && e.damageSource.cause !== EntityDamageCause.selfDestruct),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [EntityHurtAfterEvent]),
     __metadata("design:returntype", void 0)

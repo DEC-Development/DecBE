@@ -1,3 +1,4 @@
+import { StructureMirrorAxis } from '@minecraft/server';
 import Vector2 from '../../../../../modules/exmc/utils/math/Vector2.js';
 import Vector3 from '../../../../../modules/exmc/utils/math/Vector3.js';
 import { ExBlockArea } from '../../../../../modules/exmc/server/block/ExBlockArea.js';
@@ -333,10 +334,10 @@ export default class PomDesertBossRuin {
                 }
             }
         });
-        this.jigsaw.setStructurePlane(14, 14, 0, -1, 0, this.structure_boss, 0, "none", 2, 2);
-        this.jigsaw.setStructurePlane(14, 16, 0, -1, 0, this.structure_boss, 270, "none", 2, 2);
-        this.jigsaw.setStructurePlane(16, 14, 0, -1, 0, this.structure_boss, 90, "none", 2, 2);
-        this.jigsaw.setStructurePlane(16, 16, 0, -1, 0, this.structure_boss, 180, "none", 2, 2);
+        this.jigsaw.setStructurePlane(14, 14, 0, -1, 0, this.structure_boss, 0, StructureMirrorAxis.None, 2, 2);
+        this.jigsaw.setStructurePlane(14, 16, 0, -1, 0, this.structure_boss, 270, StructureMirrorAxis.None, 2, 2);
+        this.jigsaw.setStructurePlane(16, 14, 0, -1, 0, this.structure_boss, 90, StructureMirrorAxis.None, 2, 2);
+        this.jigsaw.setStructurePlane(16, 16, 0, -1, 0, this.structure_boss, 180, StructureMirrorAxis.None, 2, 2);
         this._airMonsterArea = [];
         this._airPathArea = [];
         this._monsterArea = [];

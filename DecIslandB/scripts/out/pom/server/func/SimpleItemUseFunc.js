@@ -1,4 +1,4 @@
-import { EntityDamageCause, ItemStack, ItemTypes, MinecraftDimensionTypes } from '@minecraft/server';
+import { EntityDamageCause, ItemStack, ItemTypes, MinecraftDimensionTypes, BiomeTypes } from '@minecraft/server';
 import { ModalFormData } from "@minecraft/server-ui";
 import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
 import ExDimension from '../../../modules/exmc/server/ExDimension.js';
@@ -8,6 +8,10 @@ import MenuUIAlert from "../ui/MenuUIAlert.js";
 import GameController from "./GameController.js";
 import RuinsLoaction from './ruins/RuinsLoaction.js';
 import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
+import { MinecraftBiomeTypes } from '../../../modules/vanilla-data/lib/index.js';
+import ExEntity from '../../../modules/exmc/server/entity/ExEntity';
+import ExSystem from '../../../modules/exmc/utils/ExSystem.js';
+import { falseIfError } from '../../../modules/exmc/utils/tool.js';
 export default class SimpleItemUseFunc extends GameController {
     onJoin() {
         //连锁挖矿
@@ -74,6 +78,75 @@ export default class SimpleItemUseFunc extends GameController {
                     this.exPlayer.addEffect(MinecraftEffectTypes.Levitation, 2, 100, false);
                     this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 10, 3, false);
                     this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
+                }, 0);
+            }
+            else if (e.itemStack.typeId === "wb:technology_world_explorer") {
+                e.cancel = true;
+                const itemDim = e.source.dimension;
+                this.setTimeout(() => {
+                    var _a;
+                    let boss = [
+                        ["entity.dec:leaves_golem.name", MinecraftBiomeTypes.Forest],
+                        ["entity.dec:king_of_pillager.name", MinecraftBiomeTypes.Plains],
+                        ["entity.dec:abyssal_controller.name", MinecraftBiomeTypes.Ocean],
+                        ["entity.dec:predators.name", MinecraftBiomeTypes.Mesa],
+                        ["entity.dec:enchant_illager.name", MinecraftBiomeTypes.Jungle],
+                        ["entity.dec:everlasting_winter_ghast.name", MinecraftBiomeTypes.IcePlains],
+                        ["entity.dec:escaped_soul.name", MinecraftBiomeTypes.SoulsandValley],
+                        ["entity.dec:host_of_deep.name", MinecraftBiomeTypes.CrimsonForest],
+                        ["entity.dec:ash_knight.name", MinecraftBiomeTypes.BasaltDeltas]
+                    ];
+                    const lore = item.getColorLoreUtil();
+                    if (lore.search("target") && item.typeId === ((_a = this.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId)) {
+                        let bossName = Number(lore.getValueUseDefault("target"));
+                        let boimes = BiomeTypes.get(boss[bossName][1]);
+                        const pos = this.getDimension().findClosestBiome(e.source.location, boimes, {
+                            "boundingSize": new Vector3(4000, 128, 4000)
+                        });
+                        if (pos && !this.worldExploreTimer) {
+                            let pPos = new Vector3(this.player.location);
+                            this.exPlayer.getBag().itemOnMainHand = undefined;
+                            let ball = ExEntity.getInstance(itemDim.spawnEntity("wb:technology_world_explorer", pPos, {
+                                "initialPersistence": true
+                            }));
+                            const dic = new Vector3(pos).sub(pPos).normalize().scl(1 / 10);
+                            this.worldExploreTimer = ExSystem.tickTask(() => {
+                                if (falseIfError(() => ball.entity.isValid())) {
+                                    pPos.add(dic);
+                                    ball.setPosition(pPos.cpy().add(0, 1.5, 0));
+                                    if (pPos.distance(pos) < 2048) {
+                                        itemDim.spawnParticle("dec:magic_increase_particle", pPos);
+                                    }
+                                }
+                            }).delay(1);
+                            this.worldExploreTimer.start();
+                            this.setTimeout(() => {
+                                var _a;
+                                (_a = this.worldExploreTimer) === null || _a === void 0 ? void 0 : _a.stop();
+                                this.worldExploreTimer = undefined;
+                                itemDim.spawnItem(item, pPos);
+                                ball.entity.remove();
+                            }, 5000);
+                        }
+                    }
+                    else {
+                        new ModalFormData()
+                            .title("选择目标boss")
+                            .dropdown("选择列表", boss.map(e => e[0]), 0)
+                            .show(this.player).then((e) => {
+                            var _a, _b, _c;
+                            if (!e.canceled && e.formValues) {
+                                // let boimes = BiomeTypes.get(boss[e.formValues[0] as number ?? 0][1])!;
+                                let bossName = boss[(_a = e.formValues[0]) !== null && _a !== void 0 ? _a : 0][0];
+                                lore.setValueUseDefault("target", (_b = e.formValues[0]) !== null && _b !== void 0 ? _b : 0);
+                                if (((_c = this.exPlayer.getBag().itemOnMainHand) === null || _c === void 0 ? void 0 : _c.typeId) === item.typeId)
+                                    this.exPlayer.getBag().itemOnMainHand = item;
+                            }
+                        })
+                            .catch((e) => {
+                            ExErrorQueue.throwError(e);
+                        });
+                    }
                 }, 0);
             }
         });
@@ -233,6 +306,8 @@ export default class SimpleItemUseFunc extends GameController {
         this.initialMagicPickaxe();
     }
     onLeave() {
+        var _a;
+        (_a = this.worldExploreTimer) === null || _a === void 0 ? void 0 : _a.stop();
     }
     initialMagicPickaxe() {
         if (this.globalSettings.initialMagicPickaxe) {

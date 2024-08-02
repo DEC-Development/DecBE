@@ -10,4 +10,12 @@ export function falseIfError(func) {
         return false;
     }
 }
+export function undefIfError(func) {
+    try {
+        return func();
+    }
+    catch (err) {
+        return undefined;
+    }
+}
 //# sourceMappingURL=tool.js.map

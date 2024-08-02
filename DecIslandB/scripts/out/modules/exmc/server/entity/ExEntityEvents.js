@@ -25,6 +25,7 @@ export default class ExEntityEvents {
             [ExOtherEventNames.onLongTick]: new Listener(this, ExOtherEventNames.onLongTick),
             [ExOtherEventNames.beforeTick]: new Listener(this, ExOtherEventNames.beforeTick),
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
+            [ExEventNames.afterEntityDie]: new Listener(this, ExEventNames.afterEntityDie),
             [ExEventNames.afterEntityRemove]: new Listener(this, ExEventNames.afterEntityRemove)
         };
         this._ctrl = ctrl;
@@ -60,7 +61,7 @@ ExEntityEvents.exEventSetting = {
         pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
     },
     [ExOtherEventNames.beforeTick]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
+        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEventCanErr
     },
     [ExEventNames.afterEntityHitBlock]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
@@ -90,6 +91,9 @@ ExEntityEvents.exEventSetting = {
         filter: {
             "name": "player"
         }
+    },
+    [ExEventNames.afterEntityDie]: {
+        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
     },
     [ExEventNames.afterEntityRemove]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent

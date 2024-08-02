@@ -23,7 +23,6 @@ export default class LoreUtil {
     search(key) {
         let lore = this.getLore();
         for (let i = 0; i < lore.length; i++) {
-            // console.warn("Delete : find" + lore[i]);
             if (lore[i].startsWith(key + " : ")) {
                 return new Piece(this.item, i);
             }
@@ -164,7 +163,6 @@ export default class LoreUtil {
         this.insert(piece.index + 1, tab + use + " : " + value);
     }
     delete(key) {
-        // console.warn("Delete " + key)
         let tab = "  ";
         let piece = this.search(key);
         if (!piece) {

@@ -12,6 +12,7 @@ import { EntityHurtAfterEvent } from '@minecraft/server';
 import ExEntityEvents from "./ExEntityEvents.js";
 import { eventDecoratorFactory, registerEvent } from "../events/eventDecoratorFactory.js";
 import { ExEventNames, ExOtherEventNames } from "../events/events.js";
+import { falseIfError } from "../../utils/tool.js";
 /**
  * 控制实体的控制器类。
  * @implements {DisposeAble}
@@ -58,6 +59,7 @@ export default class ExEntityController {
          * @type {boolean}
          */
         this._isKilled = false;
+        this.lastUsed = false;
         /**
          * 实体是否已被销毁。
          * @type {boolean}
@@ -126,6 +128,7 @@ export default class ExEntityController {
      * 释放资源。
      */
     dispose() {
+        console.warn("dispose " + this._entity.typeId);
         this.getEvents().cancelAll();
     }
     /**
@@ -152,6 +155,14 @@ export default class ExEntityController {
 __decorate([
     registerEvent(ExEventNames.afterEntityRemove, (ctrl, e) => {
         return e.removedEntityId === ctrl.getId();
+    }),
+    registerEvent(ExEventNames.afterEntityDie, (ctrl, e) => {
+        return e.deadEntity.id === ctrl.getId();
+    }),
+    registerEvent(ExOtherEventNames.beforeTick, (ctrl, e) => {
+        let ret = ctrl.lastUsed;
+        ctrl.lastUsed = !falseIfError(() => ctrl.entity.isValid());
+        return ret;
     }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

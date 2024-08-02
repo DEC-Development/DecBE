@@ -29,7 +29,6 @@ export default class ExTerrain {
             }
         }
         else {
-            // console.warn(x+";"+mid+";"+z)
             let res = this.getHightByRange(x, z, mid + 1, maxY, searchTimes == -1 ? -1 : searchTimes - 1);
             return res ? Math.max(res, mid) : mid;
         }

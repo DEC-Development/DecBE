@@ -240,7 +240,6 @@ ExClientEvents.exEventSetting = {
                     }
                 }
                 if (arr.length > 0) {
-                    // console.warn("Entity :"+ arr.map(e => e.typeId).join());
                     for (let i of liss) {
                         i(new PlayerShootProjectileEvent(p, arr[0]));
                     }

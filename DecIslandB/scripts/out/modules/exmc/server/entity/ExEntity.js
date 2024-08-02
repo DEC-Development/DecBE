@@ -1,10 +1,13 @@
-import { EntityDamageCause } from '@minecraft/server';
+import { EntityDamageCause, Player } from '@minecraft/server';
 import ExScoresManager from './ExScoresManager.js';
 import Vector3 from '../../utils/math/Vector3.js';
 import ExEntityBag from './ExEntityBag.js';
 import ExCommand from '../env/ExCommand.js';
 import ExDimension from '../ExDimension.js';
 import Matrix4 from '../../utils/math/Matrix4.js';
+import ExEntityQuery from '../env/ExEntityQuery.js';
+import ExGame from '../ExGame.js';
+import { falseIfError } from '../../utils/tool.js';
 export default class ExEntity {
     damage(d, source) {
         this.entity.applyDamage(d, source);
@@ -121,7 +124,6 @@ export default class ExEntity {
         return new ExScoresManager(this._entity);
     }
     triggerEvent(name) {
-        // console.warn(name+' trigger event');
         this._entity.triggerEvent(name);
     }
     get position() {
@@ -197,25 +199,33 @@ export default class ExEntity {
         var _a;
         (_a = this.getComponent("minecraft:movement")) === null || _a === void 0 ? void 0 : _a.setCurrentValue(num);
     }
-    shootProj(id, option, loc = this._entity.getHeadLocation(), shoot_dir = this.viewDirection) {
+    shootProj(id, option, shoot_dir, loc) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
-        let locx = new Vector3(loc).add(0, 0, -1).add(this.viewDirection.scl((_a = option.spawnDistance) !== null && _a !== void 0 ? _a : 1.5));
+        if (shoot_dir === void 0) { shoot_dir = this.viewDirection; }
+        if (loc === void 0) { loc = new Vector3(this._entity.getHeadLocation()).add(0, 0, this._entity instanceof Player ? -1 : 0)
+            .add(this.viewDirection.scl((_a = option.spawnDistance) !== null && _a !== void 0 ? _a : 1.5)); }
         //这里z-1才是实际的head位置，可能是ojang的bug吧
+        let locx = loc;
+        let q = new ExEntityQuery(this.entity.dimension).at(locx);
         if (option.absPosOffset)
             locx.add(option.absPosOffset);
         if (option.viewPosOffset)
-            locx.add(this.getViewVector(option.viewPosOffset));
-        let proj = this.exDimension.spawnEntity(id, locx);
+            locx = q.facingByLTF(option.viewPosOffset, this.viewDirection).position;
+        let view = new Vector3(shoot_dir);
+        if (option.rotOffset) {
+            // view.add(this.relateRotate(option.rotOffset.x, option.rotOffset.y, false));
+            let mat = ExEntityQuery.getFacingMatrix(this.entity.getViewDirection());
+            mat.cpy().invert().rmulVector(view);
+            new Matrix4().idt().rotateX(option.rotOffset.x / 180 * Math.PI).rotateY(option.rotOffset.y / 180 * Math.PI).rmulVector(view);
+            mat.rmulVector(view);
+        }
+        const proj = this.exDimension.spawnEntity(id, locx);
         if (!proj)
             return false;
-        let proj_comp = proj.getComponent('minecraft:projectile');
+        const proj_comp = proj.getComponent('minecraft:projectile');
         if (!proj_comp) {
             proj.remove();
             return false;
-        }
-        let view = new Vector3(shoot_dir);
-        if (option.rotOffset) {
-            view.add(this.relateRotate(option.rotOffset.x, option.rotOffset.y, false));
         }
         let shootOpt = {
             uncertainty: (_b = option.uncertainty) !== null && _b !== void 0 ? _b : 0
@@ -234,7 +244,17 @@ export default class ExEntity {
         proj_comp.owner = (_p = option.owner) !== null && _p !== void 0 ? _p : this._entity;
         proj_comp.shouldBounceOnHit = (_q = option.shouldBounceOnHit) !== null && _q !== void 0 ? _q : proj_comp.shouldBounceOnHit;
         proj_comp.stopOnHit = (_r = option.stopOnHit) !== null && _r !== void 0 ? _r : proj_comp.stopOnHit;
-        proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
+        let v = new Vector3(view);
+        if (option.delay) {
+            proj_comp.shoot(view.normalize().scl(0.05), shootOpt);
+            ExGame.runTimeout(() => {
+                if (falseIfError(() => proj.isValid()))
+                    proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
+            }, option.delay * 20);
+        }
+        else {
+            proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
+        }
         return true;
     }
     relateRotate(x, y, take_effect = true) {
@@ -248,23 +268,6 @@ export default class ExEntity {
             //这里有时间写个设置玩家视角
         }
         return v_c;
-    }
-    getViewVectorBase() {
-        let c = this.viewDirection;
-        let b = new Vector3(0, 1, 0).crs(c);
-        let a = c.crs(b);
-        let base = [
-            a, b, c
-        ];
-        return base;
-    }
-    getViewVector(v) {
-        let base = this.getViewVectorBase();
-        let x = base[0].x * v.x + base[0].y * v.y + base[0].z * v.z;
-        let y = base[1].x * v.x + base[1].y * v.y + base[1].z * v.z;
-        let z = base[2].x * v.x + base[2].y * v.y + base[2].z * v.z;
-        let new_v = new Vector3(x, y, z);
-        return new_v;
     }
     getBag() {
         return new ExEntityBag(this);

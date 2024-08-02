@@ -172,6 +172,7 @@ export default class ExGameServer {
     // }
     onClientLeave(event) {
         this.playerIsInSet.delete(event.playerName);
+        console.warn("Player " + event.playerName + " leave");
         let client = this.findClientByName(event.playerName);
         if (client === undefined) {
             ExGameConfig.console.error(event.playerName + " client is not exists");

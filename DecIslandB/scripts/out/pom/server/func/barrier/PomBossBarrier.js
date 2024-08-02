@@ -1,4 +1,5 @@
 import UUID from "../../../../modules/exmc/utils/UUID.js";
+import { GameMode } from '@minecraft/server';
 import { ignorn } from "../../../../modules/exmc/server/ExErrorQueue.js";
 import VarOnChangeListener from '../../../../modules/exmc/utils/VarOnChangeListener.js';
 import { MinecraftEffectTypes } from "../../../../modules/vanilla-data/lib/index.js";
@@ -53,6 +54,12 @@ export default class PomBossBarrier {
             c.ruinsSystem.causeDamageShow = false;
             c.ruinsSystem.barrier = undefined;
         }
+        for (let c of this.server.getExPlayers()) {
+            if (c.entity.getDynamicProperty('InBoundary') === this.id) {
+                c.entity.setDynamicProperty('InBoundary', undefined);
+                c.gameModeCode = c.getScoresManager().getScore("pre_gamemode");
+            }
+        }
     }
     *clientsByPlayer() {
         for (let e of this.players) {
@@ -89,8 +96,12 @@ export default class PomBossBarrier {
                         // notUtillTask(this.server,() => ExPlayer.getInstance(e).getHealth()>0,()=>{
                         this.server.setTimeout(() => {
                             if (this.dim.dimension !== e.dimension) {
-                                e.addEffect(MinecraftEffectTypes.Resistance, 14 * 20, 10, false);
-                                e.addEffect(MinecraftEffectTypes.Weakness, 14 * 20, 10, false);
+                                e.addEffect(MinecraftEffectTypes.Resistance, 15 * 20, 10, false);
+                                e.addEffect(MinecraftEffectTypes.Weakness, 15 * 20, 10, false);
+                            }
+                            else {
+                                e.addEffect(MinecraftEffectTypes.Resistance, 5 * 20, 10, false);
+                                e.addEffect(MinecraftEffectTypes.Weakness, 5 * 20, 10, false);
                             }
                             e.setPosition(this.area.center(), this.dim.dimension);
                         }, 2000);
@@ -104,7 +115,17 @@ export default class PomBossBarrier {
             }
             else {
                 if (this.area.contains(e.entity.location)) {
-                    e.entity.kill();
+                    if (!e.entity.getDynamicProperty('InBoundary')) {
+                        e.entity.setDynamicProperty('InBoundary', this.id);
+                        e.getScoresManager().setScore("pre_gamemode", e.gameModeCode);
+                        e.gamemode = GameMode.spectator;
+                    }
+                }
+                else {
+                    if (e.entity.getDynamicProperty('InBoundary') === this.id) {
+                        e.entity.setDynamicProperty('InBoundary', undefined);
+                        e.gameModeCode = e.getScoresManager().getScore("pre_gamemode");
+                    }
                 }
             }
         }
