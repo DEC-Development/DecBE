@@ -141,7 +141,7 @@ export default class SimpleItemUseFunc extends GameController {
                     }
                     else {
                         new ModalFormData()
-                            .title("选择目标boss")
+                            .title("选择目标boss以查找群系")
                             .dropdown("选择列表", boss.map(e => e[0]), 0)
                             .show(this.player).then((e) => {
                             var _a, _b, _c;

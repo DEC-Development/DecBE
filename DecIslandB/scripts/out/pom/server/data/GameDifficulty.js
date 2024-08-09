@@ -6,9 +6,9 @@ export class PomGameFoolDifficulty {
         this.physicalDefenseAddFactor = 0.4;
         this.magicDefenseAddFactor = 0.3;
         this.damageAddFactor = 1.7;
-        this.wbflAddFactor = 2.2;
+        this.wbflAddFactor = 3;
         this.coolingFactor = 1.8;
-        this.LevelFactor = 8;
+        this.LevelFactor = 4;
     }
 }
 export class PomGameEasyDifficulty {
@@ -19,9 +19,9 @@ export class PomGameEasyDifficulty {
         this.physicalDefenseAddFactor = 0.2;
         this.magicDefenseAddFactor = 0.1;
         this.damageAddFactor = 1.3;
-        this.wbflAddFactor = 1.5;
+        this.wbflAddFactor = 2.5;
         this.coolingFactor = 1.3;
-        this.LevelFactor = 4;
+        this.LevelFactor = 2;
     }
 }
 export class PomGameNormalDifficulty {
@@ -32,9 +32,9 @@ export class PomGameNormalDifficulty {
         this.physicalDefenseAddFactor = 0;
         this.magicDefenseAddFactor = 0;
         this.damageAddFactor = 1;
-        this.wbflAddFactor = 1;
+        this.wbflAddFactor = 2;
         this.coolingFactor = 1;
-        this.LevelFactor = 2;
+        this.LevelFactor = 1;
     }
 }
 export class PomGameHardDifficulty {
@@ -45,9 +45,9 @@ export class PomGameHardDifficulty {
         this.physicalDefenseAddFactor = 0;
         this.magicDefenseAddFactor = 0;
         this.damageAddFactor = 0.8;
-        this.wbflAddFactor = 0.8;
+        this.wbflAddFactor = 1.5;
         this.coolingFactor = 0.8;
-        this.LevelFactor = 1.5;
+        this.LevelFactor = 0.75;
     }
 }
 export class PomGameHellDifficulty {
@@ -58,9 +58,9 @@ export class PomGameHellDifficulty {
         this.physicalDefenseAddFactor = -0.2;
         this.magicDefenseAddFactor = -0.2;
         this.damageAddFactor = 0.5;
-        this.wbflAddFactor = 0.6;
+        this.wbflAddFactor = 0.8;
         this.coolingFactor = 0.6;
-        this.LevelFactor = 1;
+        this.LevelFactor = 0.5;
     }
 }
 const _pomDifficultyMap = new Map();

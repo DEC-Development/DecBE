@@ -30,6 +30,9 @@ export default class GameController {
     setTimeout(fun, timeout) {
         this._client.setTimeout(fun, timeout);
     }
+    stop(timeout) {
+        return this._client.stop(timeout);
+    }
     getDimension(type = undefined) {
         return this._client.getDimension(type);
     }

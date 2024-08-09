@@ -1,5 +1,5 @@
 import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
-export default function taskDaily_x(lang) {
+export default function taskDaily_x(client, lang) {
     return {
         "name": "每日任务-传说级",
         "tasks": [
@@ -9,19 +9,19 @@ export default function taskDaily_x(lang) {
                     {
                         "name": "小麦",
                         "typeId": MinecraftItemTypes.Wheat,
-                        "count": 512,
+                        "count": 256,
                         "type": "item"
                     },
                     {
                         "name": "马铃薯",
                         "typeId": MinecraftItemTypes.Potato,
-                        "count": 512,
+                        "count": 256,
                         "type": "item"
                     },
                     {
                         "name": "胡萝卜",
                         "typeId": MinecraftItemTypes.Carrot,
-                        "count": 512,
+                        "count": 256,
                         "type": "item"
                     }
                 ],
@@ -109,25 +109,6 @@ export default function taskDaily_x(lang) {
                     {
                         "name": "模组经验",
                         "count": 2500,
-                        "unit": "点",
-                        "type": "integral"
-                    }
-                ]
-            },
-            {
-                "name": "传说升级台杀手",
-                "conditions": [
-                    {
-                        "name": "传说升级台",
-                        "typeId": "wb:station_upgrade_x",
-                        "count": 1,
-                        "type": "kill"
-                    }
-                ],
-                "rewards": [
-                    {
-                        "name": "模组经验",
-                        "count": 1600,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -232,7 +213,7 @@ export default function taskDaily_x(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 7000,
+                        "count": 4000,
                         "unit": "点",
                         "type": "integral"
                     }

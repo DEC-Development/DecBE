@@ -1,10 +1,12 @@
 var _a;
+import { Player } from '@minecraft/server';
 import ExPlayer from '../entity/ExPlayer.js';
 import { ExEventNames, ExOtherEventNames, ItemOnHandChangeEvent, PlayerShootProjectileEvent } from "./events.js";
 import EventHandle from './EventHandle.js';
 import ExEntity from "../entity/ExEntity.js";
 import Vector3 from "../../utils/math/Vector3.js";
 import { MinecraftEntityTypes } from "../../../vanilla-data/lib/index.js";
+import ExSystem from "../../utils/ExSystem.js";
 export default class ExClientEvents {
     _subscribe(arg0, callback) {
         ExClientEvents.eventHandlers.subscribe(this._client.player, arg0, callback);
@@ -32,6 +34,9 @@ export default class ExClientEvents {
             [ExOtherEventNames.onLongTick]: new Listener(this, ExOtherEventNames.onLongTick),
             [ExEventNames.afterItemUseOn]: new Listener(this, ExEventNames.afterItemUseOn),
             [ExEventNames.beforeItemUseOn]: new Listener(this, ExEventNames.beforeItemUseOn),
+            [ExOtherEventNames.beforeOnceItemUseOn]: new Listener(this, ExOtherEventNames.beforeOnceItemUseOn),
+            [ExEventNames.beforePlayerInteractWithBlock]: new Listener(this, ExEventNames.beforePlayerInteractWithBlock),
+            [ExOtherEventNames.beforeOncePlayerInteractWithBlock]: new Listener(this, ExOtherEventNames.beforeOncePlayerInteractWithBlock),
             [ExOtherEventNames.afterPlayerHitBlock]: new Listener(this, ExOtherEventNames.afterPlayerHitBlock),
             [ExOtherEventNames.afterPlayerHitEntity]: new Listener(this, ExOtherEventNames.afterPlayerHitEntity),
             [ExOtherEventNames.afterPlayerHurt]: new Listener(this, ExOtherEventNames.afterPlayerHurt),
@@ -112,41 +117,84 @@ ExClientEvents.exEventSetting = {
             "name": "source"
         }
     },
+    [ExEventNames.beforePlayerInteractWithBlock]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "player"
+        }
+    },
     [ExEventNames.beforeItemUseOn]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "source"
         }
     },
-    // onceItemUseOn: {
-    //     pattern: (registerName: string, k: string) => {
-    //         this.onceItemUseOnMap = new Map<Entity, [TickDelayTask, boolean]>();
-    //         ExClientEvents.eventHandlers.server.getEvents().register(registerName, (e: ItemUseOnEvent) => {
-    //             if (!(e.source instanceof Player)) return;
-    //             let part = (<Map<Player, ((i: ItemUseOnEvent) => void)[]>>ExClientEvents.eventHandlers.monitorMap[k]);
-    //             if (!this.onceItemUseOnMap.has(e.source)) {
-    //                 const player = e.source;
-    //                 this.onceItemUseOnMap.set(e.source, [ExSystem.tickTask(() => {
-    //                     let res = this.onceItemUseOnMap.get(player);
-    //                     if (res === undefined) return;
-    //                     res[1] = true;
-    //                 }).delay(3), true]);
-    //             }
-    //             let res = this.onceItemUseOnMap.get(e.source);
-    //             if (res === undefined) return;
-    //             if (res[1]) {
-    //                 res[1] = false;
-    //                 part.get(e.source)?.forEach((v) => v(e));
-    //             }
-    //             res[0].stop();
-    //             res[0].startOnce();
-    //         });
-    //     },
-    //     filter: {
-    //         "name": "source"
-    //     },
-    //     name: "itemUseOn"
-    // },
+    [ExOtherEventNames.beforeOnceItemUseOn]: {
+        pattern: (registerName, k) => {
+            _a.onceItemUseOnMap = new Map();
+            ExClientEvents.eventHandlers.server.getEvents().register(registerName, (e) => {
+                var _b;
+                if (!(e.source instanceof Player))
+                    return;
+                let part = (ExClientEvents.eventHandlers.monitorMap[k]);
+                if (!_a.onceItemUseOnMap.has(e.source)) {
+                    const player = e.source;
+                    _a.onceItemUseOnMap.set(e.source, [ExSystem.tickTask(() => {
+                            let res = _a.onceItemUseOnMap.get(player);
+                            if (res === undefined)
+                                return;
+                            res[1] = true;
+                        }).delay(3), true]);
+                }
+                let res = _a.onceItemUseOnMap.get(e.source);
+                if (res === undefined)
+                    return;
+                if (res[1]) {
+                    res[1] = false;
+                    (_b = part.get(e.source)) === null || _b === void 0 ? void 0 : _b.forEach((v) => v(e));
+                }
+                res[0].stop();
+                res[0].startOnce();
+            });
+        },
+        filter: {
+            "name": "source"
+        },
+        name: ExEventNames.beforeItemUseOn
+    },
+    [ExOtherEventNames.beforeOncePlayerInteractWithBlock]: {
+        pattern: (registerName, k) => {
+            _a.onceInteractWithBlockMap = new Map();
+            ExClientEvents.eventHandlers.server.getEvents().register(registerName, (e) => {
+                var _b;
+                if (!(e.player instanceof Player))
+                    return;
+                let part = (ExClientEvents.eventHandlers.monitorMap[k]);
+                if (!_a.onceInteractWithBlockMap.has(e.player)) {
+                    const player = e.player;
+                    _a.onceInteractWithBlockMap.set(e.player, [ExSystem.tickTask(() => {
+                            let res = _a.onceInteractWithBlockMap.get(player);
+                            if (res === undefined)
+                                return;
+                            res[1] = true;
+                        }).delay(3), true]);
+                }
+                let res = _a.onceInteractWithBlockMap.get(e.player);
+                if (res === undefined)
+                    return;
+                if (res[1]) {
+                    res[1] = false;
+                    (_b = part.get(e.player)) === null || _b === void 0 ? void 0 : _b.forEach((v) => v(e));
+                }
+                res[0].stop();
+                res[0].startOnce();
+            });
+        },
+        filter: {
+            "name": "player"
+        },
+        name: ExEventNames.beforePlayerInteractWithBlock
+    },
     [ExOtherEventNames.afterPlayerHitBlock]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
@@ -287,13 +335,16 @@ ExClientEvents.exEventSetting = {
 };
 ExClientEvents.onHandItemMap = new Map();
 ExClientEvents.onceItemUseOnMap = new Map();
+ExClientEvents.onceInteractWithBlockMap = new Map();
 class Listener {
     constructor(e, name) {
         this.subscribe = (callback) => {
             e._subscribe(name, callback);
+            return callback;
         };
         this.unsubscribe = (callback) => {
             e._unsubscribe(name, callback);
+            return callback;
         };
     }
 }
@@ -301,9 +352,11 @@ class CallBackListener {
     constructor(e, name) {
         this.subscribe = (callback) => {
             e._subscribe(name, callback);
+            return callback;
         };
         this.unsubscribe = (callback) => {
             e._unsubscribe(name, callback);
+            return callback;
         };
     }
 }

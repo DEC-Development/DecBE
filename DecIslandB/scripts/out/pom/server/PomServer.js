@@ -45,6 +45,7 @@ import ExPropCache from '../../modules/exmc/server/storage/cache/ExPropCache.js'
 import BlockPartitioning from './map/BlockPartitioning.js';
 import ExGame from '../../modules/exmc/server/ExGame.js';
 import { PomGodOfGuardBoss0, PomGodOfGuardBoss1, PomGodOfGuardBoss2, PomGodOfGuardBoss3 } from './entities/PomGodOfGuardBoss.js';
+import PomGuardBossRuin from './serverFunc/ruins/guard/PomGuardBossRuin.js';
 // import * as b from "brain.js";
 export default class PomServer extends ExGameServer {
     sayTo(str) {
@@ -175,12 +176,12 @@ export default class PomServer extends ExGameServer {
             if (e.dimension === this.getDimension(MinecraftDimensionTypes.theEnd) && (RuinsLoaction.isInProtectArea(e.block))) {
                 let ex = ExPlayer.getInstance(e.player);
                 ExGame.run(() => {
-                    ex.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
-                    ex.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
-                    ex.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
-                    ex.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
-                    ex.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
-                    ex.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
+                    // ex.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
+                    // ex.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
+                    // ex.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
+                    ex.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 4, true);
+                    // ex.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
+                    // ex.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
                     ex.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
                 });
                 e.cancel = true;
@@ -255,6 +256,7 @@ export default class PomServer extends ExGameServer {
                 [RuinsLoaction.STONE_RUIN_AREA, RuinsLoaction.STONE_RUIN_PROTECT_AREA],
                 [RuinsLoaction.MIND_RUIN_AREA, RuinsLoaction.MIND_RUIN_PROTECT_AREA],
                 [RuinsLoaction.DESERT_RUIN_AREA, RuinsLoaction.DESERT_RUIN_PROTECT_AREA],
+                [RuinsLoaction.GUARD_RUIN_AREA, RuinsLoaction.GUARD_RUIN_PROTECT_AREA],
                 [RuinsLoaction.ANCIENT_RUIN_AREA, RuinsLoaction.ANCIENT_RUIN_PROTECT_AREA],
                 [RuinsLoaction.CAVE_RUIN_AREA, RuinsLoaction.CAVE_RUIN_PROTECT_AREA]
             ];
@@ -315,7 +317,7 @@ export default class PomServer extends ExGameServer {
         });
     }
     initRuinsGeneration() {
-        //守卫遗迹
+        //沙漠遗迹
         this.portal_desertBoss = new ExBlockStructureNormal();
         this.portal_desertBoss.setDirection(ExBlockStructureNormal.DIRECTION_LAY)
             .setStructure([
@@ -348,6 +350,40 @@ export default class PomServer extends ExGameServer {
             A: MinecraftBlockTypes.Air,
             S: MinecraftBlockTypes.StoneBlockSlab2,
             C: MinecraftBlockTypes.CobblestoneWall
+        });
+        //守卫遗迹
+        this.portal_guardBoss = new ExBlockStructureNormal();
+        this.portal_guardBoss.setDirection(ExBlockStructureNormal.DIRECTION_LAY)
+            .setStructure([
+            [
+                "XXXXX",
+                "XWWWX",
+                "XWYWX",
+                "XWWWX",
+                "XXXXX"
+            ],
+            [
+                "XSXSX",
+                "SAAAS",
+                "XAAAX",
+                "SAAAS",
+                "XSXSX"
+            ],
+            [
+                "CAAAC",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "CAAAC"
+            ]
+        ])
+            .analysis({
+            X: MinecraftBlockTypes.Sandstone,
+            W: MinecraftBlockTypes.Water,
+            Y: "wb:block_magic_equipment",
+            A: MinecraftBlockTypes.Air,
+            S: MinecraftBlockTypes.StoneBlockSlab2,
+            C: MinecraftBlockTypes.Air
         });
         //石头遗迹
         this.portal_stoneBoss = new ExBlockStructureNormal();
@@ -461,6 +497,7 @@ export default class PomServer extends ExGameServer {
         this.ruin_caveBoss = new PomCaveBossRuin(r.nextInt());
         this.ruin_ancientBoss = new PomAncientBossRuin(r.nextInt());
         this.ruin_mindBoss = new PomMindBossRuin(r.nextInt());
+        this.ruin_guardBoss = new PomGuardBossRuin(r.nextInt());
         //遗迹初始化各个房间位置
         ExTickQueue.push(() => {
             this.ruin_desertBoss.init(RuinsLoaction.DESERT_RUIN_LOCATION_START.x, RuinsLoaction.DESERT_RUIN_LOCATION_START.y, RuinsLoaction.DESERT_RUIN_LOCATION_START.z, this.getDimension(MinecraftDimensionTypes.theEnd));
@@ -473,6 +510,8 @@ export default class PomServer extends ExGameServer {
             this.ruin_ancientBoss.dispose();
             this.ruin_mindBoss.init(RuinsLoaction.MIND_RUIN_LOCATION_START.x, RuinsLoaction.MIND_RUIN_LOCATION_START.y, RuinsLoaction.MIND_RUIN_LOCATION_START.z, this.getDimension(MinecraftDimensionTypes.theEnd));
             this.ruin_ancientBoss.dispose();
+            this.ruin_guardBoss.init(RuinsLoaction.GUARD_RUIN_LOCATION_START.x, RuinsLoaction.GUARD_RUIN_LOCATION_START.y, RuinsLoaction.GUARD_RUIN_LOCATION_START.z, this.getDimension(MinecraftDimensionTypes.theEnd));
+            this.ruin_guardBoss.dispose();
         });
     }
     initEntityCleaner() {

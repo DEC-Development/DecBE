@@ -44,7 +44,8 @@ export default class ItemTagComponent {
                     if (msg[1] in itemTagComponentType) {
                         let use = itemTagComponentType[msg[1]][0];
                         if (use instanceof ItemTagComponentGroup) {
-                            this.components.set(msg[1], msg[2].split("::").map(e => new ItemTagComponentGroup(e.substring(0, e.indexOf("_:")), e.substring(e.indexOf("_:") + 2, e.indexOf(":_")))));
+                            this.components.set(msg[1], msg[2].split("::").map(e => e.includes("_:") ? new ItemTagComponentGroup(e.substring(0, e.indexOf("_:")), e.substring(e.indexOf("_:") + 2, e.indexOf(":_")))
+                                : new ItemTagComponentGroup("", e)));
                         }
                         else if (typeof use === "string") {
                             this.components.set(msg[1], msg[2].split("::"));

@@ -1,34 +1,53 @@
 import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
-export default function taskDaily_c(lang) {
+export default function taskDaily_c(client, lang) {
     return {
         "name": "每日任务-精锐级",
         "tasks": [
             {
-                "name": "大地主",
+                "name": "龙之力",
                 "conditions": [
                     {
-                        "name": "小麦",
-                        "typeId": MinecraftItemTypes.Wheat,
-                        "count": 256,
-                        "type": "item"
-                    },
-                    {
-                        "name": "马铃薯",
-                        "typeId": MinecraftItemTypes.Potato,
-                        "count": 256,
-                        "type": "item"
-                    },
-                    {
-                        "name": "南瓜",
-                        "typeId": MinecraftItemTypes.Pumpkin,
-                        "count": 64,
+                        "name": "末地水晶",
+                        "typeId": MinecraftItemTypes.EndCrystal,
+                        "count": 6,
                         "type": "item"
                     }
                 ],
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 700,
+                        "count": 1400,
+                        "unit": "点",
+                        "type": "integral"
+                    }
+                ]
+            },
+            {
+                "name": "大地主",
+                "conditions": [
+                    {
+                        "name": "小麦",
+                        "typeId": MinecraftItemTypes.Wheat,
+                        "count": 64,
+                        "type": "item"
+                    },
+                    {
+                        "name": "马铃薯",
+                        "typeId": MinecraftItemTypes.Potato,
+                        "count": 64,
+                        "type": "item"
+                    },
+                    {
+                        "name": "南瓜",
+                        "typeId": MinecraftItemTypes.Pumpkin,
+                        "count": 32,
+                        "type": "item"
+                    }
+                ],
+                "rewards": [
+                    {
+                        "name": "模组经验",
+                        "count": 1800,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -40,44 +59,44 @@ export default function taskDaily_c(lang) {
                     {
                         "name": "小麦",
                         "typeId": MinecraftItemTypes.Wheat,
-                        "count": 128,
+                        "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "马铃薯",
                         "typeId": MinecraftItemTypes.Potato,
-                        "count": 128,
+                        "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "胡萝卜",
                         "typeId": MinecraftItemTypes.Carrot,
-                        "count": 128,
+                        "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "甜菜根",
                         "typeId": MinecraftItemTypes.Beetroot,
-                        "count": 128,
+                        "count": 64,
                         "type": "item"
                     },
                     {
                         "name": "西瓜",
                         "typeId": MinecraftItemTypes.MelonBlock,
-                        "count": 64,
+                        "count": 32,
                         "type": "item"
                     },
                     {
                         "name": "南瓜",
                         "typeId": MinecraftItemTypes.Pumpkin,
-                        "count": 64,
+                        "count": 16,
                         "type": "item"
                     }
                 ],
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 900,
+                        "count": 2400,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -120,7 +139,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 900,
+                        "count": 2200,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -163,26 +182,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 900,
-                        "unit": "点",
-                        "type": "integral"
-                    }
-                ]
-            },
-            {
-                "name": "高级升级台杀手",
-                "conditions": [
-                    {
-                        "name": "高级升级台",
-                        "typeId": "wb:station_upgrade_c",
-                        "count": 1,
-                        "type": "kill"
-                    }
-                ],
-                "rewards": [
-                    {
-                        "name": "模组经验",
-                        "count": 900,
+                        "count": 2200,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -201,7 +201,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 1200,
+                        "count": 2400,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -213,26 +213,26 @@ export default function taskDaily_c(lang) {
                     {
                         "name": "猪",
                         "typeId": "minecraft:pig",
-                        "count": 16,
+                        "count": 32,
                         "type": "kill"
                     },
                     {
                         "name": "牛",
                         "typeId": "minecraft:cow",
-                        "count": 20,
+                        "count": 64,
                         "type": "kill"
                     },
                     {
                         "name": "羊",
                         "typeId": "minecraft:sheep",
-                        "count": 16,
+                        "count": 64,
                         "type": "kill"
                     }
                 ],
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 800,
+                        "count": 2200,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -250,7 +250,7 @@ export default function taskDaily_c(lang) {
                     {
                         "name": "煤矿矿石",
                         "typeId": MinecraftItemTypes.CoalOre,
-                        "count": 64,
+                        "count": 32,
                         "type": "break"
                     },
                     {
@@ -263,7 +263,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 1000,
+                        "count": 1800,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -300,7 +300,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 900,
+                        "count": 1400,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -319,7 +319,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 1400,
+                        "count": 2800,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -338,7 +338,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 1200,
+                        "count": 1800,
                         "unit": "点",
                         "type": "integral"
                     }
@@ -350,19 +350,19 @@ export default function taskDaily_c(lang) {
                     {
                         "name": "海胆",
                         "typeId": "dec:sea_urchin",
-                        "count": 4,
+                        "count": 10,
                         "type": "item"
                     },
                     {
                         "name": "末影鱼",
                         "typeId": "dec:ender_fish",
-                        "count": 4,
+                        "count": 8,
                         "type": "item"
                     },
                     {
                         "name": "三文鱼片",
                         "typeId": "dec:a_piece_of_salmon",
-                        "count": 64,
+                        "count": 32,
                         "type": "item"
                     },
                     {
@@ -387,7 +387,7 @@ export default function taskDaily_c(lang) {
                 "rewards": [
                     {
                         "name": "模组经验",
-                        "count": 1200,
+                        "count": 2600,
                         "unit": "点",
                         "type": "integral"
                     }

@@ -109,7 +109,7 @@ export default class PomClient extends ExGameClient {
         if (!this.data.redemptionCode) {
             this.data.redemptionCode = {};
         }
-        if (!this.data.uiCustomSetting) {
+        if (!this.data.uiCustomSetting || !this.data.uiCustomSetting.accuracyCustom) {
             this.data.uiCustomSetting = {
                 topLeftMessageBarStyle: 0,
                 topLeftMessageBarLayer1: 100,
@@ -117,6 +117,7 @@ export default class PomClient extends ExGameClient {
                 topLeftMessageBarLayer3: 100,
                 topLeftMessageBarLayer4: 100,
                 topLeftMessageBarLayer5: 100,
+                accuracyCustom: 60
             };
         }
         if (!this.data.gamePreferrence) {
@@ -214,7 +215,8 @@ export default class PomClient extends ExGameClient {
         return arr;
     }
     sayTo(str, p = this.player) {
-        p.runCommandAsync(`tellraw @s {"rawtext": [{"text": "${str}"}]}`);
+        p.sendMessage({ "rawtext": [{ "text": str }] });
+        // p.runCommandAsync(`tellraw @s {"rawtext": [{"text": "${str}"}]}`);
     }
     getServer() {
         return super.getServer();

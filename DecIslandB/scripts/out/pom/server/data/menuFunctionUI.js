@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import MenuUIAlert from '../ui/MenuUIAlert.js';
 import ExMessageAlert from "../../../modules/exmc/server/ui/ExMessageAlert.js";
+import { EasingType } from '@minecraft/server';
 import TalentData, { Occupation, Talent } from "../cache/TalentData.js";
 import { ModalFormData } from "@minecraft/server-ui";
 import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
@@ -25,6 +26,7 @@ import { getArmorData, hasArmorData } from "../items/getArmorData.js";
 import Canvas from "../../../modules/exmc/canvas/Canvas.js";
 import Bitmap from "../../../modules/exmc/canvas/Bitmap.js";
 import Paint, { Style } from "../../../modules/exmc/canvas/Paint.js";
+import ColorRGBA from "../../../modules/exmc/canvas/ColorRGBA.js";
 import ExTerrain from "../../../modules/exmc/server/block/ExTerrain.js";
 import getBlockThemeColor from '../../../modules/exmc/server/block/blockThemeColor.js';
 import ExTaskRunner from "../../../modules/exmc/server/ExTaskRunner.js";
@@ -34,8 +36,59 @@ import { MinecraftItemTypes } from "../../../modules/vanilla-data/lib/index.js";
 import { ExBlockArea } from "../../../modules/exmc/server/block/ExBlockArea.js";
 import { MinecraftDimensionTypes } from "../../../modules/vanilla-data/lib/index.js";
 import ExEntity from "../../../modules/exmc/server/entity/ExEntity.js";
+import { MinecraftCameraPresetsTypes } from "../../../modules/vanilla-data/lib/index.js";
+import { MinecraftEffectTypes } from "../../../modules/vanilla-data/lib/index.js";
 // import { http } from '@minecraft/server-net';
 export default function menuFunctionUI(lang) {
+    function tpPlayer(client, v, dim) {
+        const off = new Vector3().add(0, 5, 0).add(client.exPlayer.viewDirection.scl(-5));
+        client.player.addEffect(MinecraftEffectTypes.Resistance, 20 * 6, {
+            "amplifier": 3
+        });
+        client.player.camera.setCamera(MinecraftCameraPresetsTypes.Free, {
+            "location": client.exPlayer.position.add(off),
+            "facingLocation": client.exPlayer.position.add(0, 1, 0),
+            "easeOptions": {
+                "easeType": EasingType.InOutSine,
+                "easeTime": 1
+            }
+        });
+        if (v.distance(client.player.location) > 16 * 10) {
+            client.player.camera.fade({
+                "fadeColor": ColorRGBA.BLACK.toGameRGBA(),
+                "fadeTime": {
+                    "fadeInTime": 1,
+                    "fadeOutTime": 1,
+                    "holdTime": 3
+                }
+            });
+        }
+        client.setTimeout(() => {
+            client.exPlayer.setPosition(v, typeof dim === "string" ? client.getDimension(dim) : dim);
+            client.player.camera.setCamera(MinecraftCameraPresetsTypes.Free, {
+                "location": client.exPlayer.position.add(off),
+                "facingLocation": client.exPlayer.position.add(0, 1, 0),
+                "easeOptions": {
+                    "easeType": EasingType.InOutSine,
+                    "easeTime": 3
+                }
+            });
+            client.setTimeout(() => {
+                client.player.camera.setCamera(MinecraftCameraPresetsTypes.Free, {
+                    "easeOptions": {
+                        "easeType": EasingType.InCirc,
+                        "easeTime": 2
+                    },
+                    "facingLocation": client.exPlayer.viewDirection.add(client.exPlayer.position.add(0, 1.2, 0)),
+                    "location": client.exPlayer.position.add(0, 1.2, 0)
+                });
+                client.setTimeout(() => {
+                    client.sayTo(lang.menuUIMsgBailan37);
+                    client.player.camera.clear();
+                }, 2 * 1000);
+            }, 3 * 1000);
+        }, 1 * 1000);
+    }
     return {
         "main": {
             "img": "textures/items/wet_paper",
@@ -468,7 +521,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                         return arr;
                     }
                 },
-                "deathback": {
+                "back": {
                     "text": lang.menuUIMsgBailan32,
                     "page": (client, ui) => {
                         let arr = [
@@ -503,8 +556,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                             if (client.globalSettings.tpNeedItem) {
                                                 bag.clearItem("wb:conveyor_issue", 1);
                                             }
-                                            client.exPlayer.setPosition(v, client.getDimension(i[0]));
-                                            client.sayTo(lang.menuUIMsgBailan37);
+                                            tpPlayer(client, v, i[0]);
                                             return false;
                                         },
                                         (client, ui) => {
@@ -582,6 +634,100 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                         // 			"msg": lang.menuUIMsgBailan45
                         // 		}
                         // 	)
+                        // }
+                        return arr;
+                    }
+                },
+                "deathBack": {
+                    "text": "死亡点回溯",
+                    "page": (client, ui) => {
+                        let arr = [
+                            {
+                                "type": "text_title",
+                                "msg": "死亡点记录"
+                            },
+                            {
+                                "type": "padding"
+                            }
+                        ];
+                        // if (client.globalSettings.tpPointRecord && !client.ruinsSystem.isInRuinJudge && client.territorySystem.inTerritotyLevel !== 0) {
+                        //     for (let j = 0; j < client.data.pointRecord.point.length; j++) {
+                        //         const i = client.data.pointRecord.point[j];
+                        //         const v = new Vector3(i[2]);
+                        //         arr.push(
+                        //             {
+                        //                 "type": "textWithBg",
+                        //                 "msg": lang.menuUIMsgBailan34 + (i[0] + v.toString()) + "\n" + i[1]
+                        //             },
+                        //             {
+                        //                 "type": "buttonList3",
+                        //                 "msgs": [
+                        //                     lang.menuUIMsgBailan35,
+                        //                     lang.menuUIMsgBailan38,
+                        //                     lang.menuUIMsgBailan40
+                        //                 ],
+                        //                 "buttons": [(client, ui) => {
+                        //                     let bag = client.exPlayer.getBag();
+                        //                     if (!bag.hasItem("wb:conveyor_issue") && client.globalSettings.tpNeedItem) {
+                        //                         client.sayTo(lang.menuUIMsgBailan36);
+                        //                         return false;
+                        //                     }
+                        //                     if (client.globalSettings.tpNeedItem) {
+                        //                         bag.clearItem("wb:conveyor_issue", 1);
+                        //                     }
+                        //                     client.exPlayer.setPosition(v, client.getDimension(i[0]));
+                        //                     client.sayTo(lang.menuUIMsgBailan37);
+                        //                     return false;
+                        //                 },
+                        //                 (client, ui) => {
+                        //                     new ModalFormData().textField(lang.menuUIMsgBailan39, (i[0] + v.toString()))
+                        //                         .show(client.player)
+                        //                         .then(e => {
+                        //                             if (e.canceled) return;
+                        //                             i[1] = String(e?.formValues?.[0] || "");
+                        //                         }).catch(e => {
+                        //                             ExErrorQueue.throwError(e);
+                        //                         })
+                        //                     return false;
+                        //                 },
+                        //                 (client, ui) => {
+                        //                     new ExMessageAlert().title("确认")
+                        //                         .body(`是否删除传送点 ${client.data.pointRecord.point[j].map(e => e.toString()).join(" / ")}`)
+                        //                         .button1(lang.menuUIMsgBailan15, () => {
+                        //                             client.data.pointRecord.point.splice(j, 1);
+                        //                         })
+                        //                         .button2(lang.menuUIMsgBailan16, () => {
+                        //                         })
+                        //                         .show(client.player);
+                        //                     return false;
+                        //                 }
+                        //                 ]
+                        //             },
+                        //             {
+                        //                 "type": "padding"
+                        //             }
+                        //         );
+                        //     }
+                        //     arr.push({
+                        //         "msg": lang.menuUIMsgBailan41 + client.exPlayer.position.floor().toString(),
+                        //         "type": "button",
+                        //         "function": (client, ui) => {
+                        //             if ((client.data.pointRecord.point.length ?? 0) <= 10) {
+                        //                 client.data.pointRecord.point.push([client.exPlayer.dimension.id, "", client.exPlayer.position.floor()]);
+                        //                 return true;
+                        //             } else {
+                        //                 client.sayTo("§b传送点不得超过10个");
+                        //                 return false;
+                        //             }
+                        //         }
+                        //     });
+                        // } else {
+                        //     arr.push(
+                        //         {
+                        //             "type": "text",
+                        //             "msg": "禁止记录死亡点"
+                        //         }
+                        //     )
                         // }
                         return arr;
                     }
@@ -905,7 +1051,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                             .button1(lang.menuUIMsgBailan15, () => {
                                             client.sayTo(lang.menuUIMsgBailan37);
                                             client.sayTo(lang.menuUIMsgBailan37, i[0]);
-                                            client.exPlayer.setPosition(p.position, p.dimension);
+                                            tpPlayer(client, p.position, p.dimension);
                                         })
                                             .button2(lang.menuUIMsgBailan16, () => {
                                             client.sayTo(lang.menuUIMsgBailan63);
@@ -952,6 +1098,10 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                             client.sayTo(lang.menuUIMsgBailan37);
                                             client.sayTo(lang.menuUIMsgBailan37, i[0]);
                                             p.setPosition(client.exPlayer.position, client.exPlayer.dimension);
+                                            let c = client.getServer().findClientByPlayer(p.entity);
+                                            if (c) {
+                                                tpPlayer(c, client.exPlayer.position, client.exPlayer.dimension);
+                                            }
                                         })
                                             .button2(lang.menuUIMsgBailan16, () => {
                                             client.sayTo(lang.menuUIMsgBailan73);
@@ -1107,6 +1257,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                     .slider("右侧装饰纹样框", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer3)
                                     .slider("左侧装饰纹样框", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer4)
                                     .slider("背景层", 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer5)
+                                    .slider("中心准心", 0, 100, 1, client.data.uiCustomSetting.accuracyCustom)
                                     .show(client.player).then((e) => {
                                     if (!e.canceled && e.formValues) {
                                         client.data.uiCustomSetting.topLeftMessageBarStyle = e.formValues[0];
@@ -1115,6 +1266,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                         client.data.uiCustomSetting.topLeftMessageBarLayer3 = e.formValues[3];
                                         client.data.uiCustomSetting.topLeftMessageBarLayer4 = e.formValues[4];
                                         client.data.uiCustomSetting.topLeftMessageBarLayer5 = e.formValues[5];
+                                        client.data.uiCustomSetting.accuracyCustom = e.formValues[6];
                                     }
                                 })
                                     .catch((e) => {

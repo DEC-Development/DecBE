@@ -1,6 +1,4 @@
-import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 import format from '../../../modules/exmc/utils/format.js';
-import ExColorLoreUtil from "../../../modules/exmc/server/item/ExColorLoreUtil.js";
 export default class TalentData {
     constructor() {
         this.pointUsed = 0;
@@ -17,7 +15,8 @@ export default class TalentData {
             case Talent.DEFENSE: return format(lang.talentFangyuDesc, `§o§b${s}％§r`);
             case Talent.CHARGING: return format(lang.talentChongnengDesc, `§o§b${s}％§r`);
             case Talent.RELOAD: return format(lang.talentChongzhuangDesc, `§o§b${s}％§r`);
-            case Talent.SOURCE: return format(lang.talentYuanquanDesc, `§o§b${s}％§r`);
+            case Talent.CONVERGE: return format(lang.talentHuiliuDesc, `§o§b${s}％§r`);
+            case Talent.SOURCE: return format(lang.talentYuanquanDesc, `§o§e${s}§r`);
             case Talent.SUDDEN_STRIKE: return format(lang.talentTuxiDesc, `§o§b${s}％§r`);
             case Talent.REGENERATE: return format(lang.talentZaishengDesc, `§o§e${s}§r`);
             default: return "";
@@ -41,8 +40,7 @@ export default class TalentData {
             Talent.ARMOR_BREAKING,
             Talent.SANCTION,
             Talent.DEFENSE,
-            Talent.CHARGING,
-            Talent.RELOAD,
+            Talent.CONVERGE,
             Talent.SOURCE
         ]);
         for (let i of occupation.talentId) {
@@ -56,50 +54,28 @@ export default class TalentData {
         switch (talentId) {
             case Talent.VIENTIANE:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 30 : 15) / 40;
-                break;
             case Talent.CLOAD_PIERCING:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 100 : 50) / 40;
-                break;
             case Talent.ARMOR_BREAKING:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 25 : 10) / 40;
-                break;
             case Talent.SANCTION:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 50 : 25) / 40;
-                break;
             case Talent.DEFENSE:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 30 : 15) / 40;
-                break;
             case Talent.CHARGING:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 35 : 15) / 40;
-                break;
             case Talent.RELOAD:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 35 : 15) / 40;
-                break;
-            case Talent.SOURCE:
+            case Talent.CONVERGE:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 100 : 40) / 40;
-                break;
             case Talent.SUDDEN_STRIKE:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 80 : 0) / 40;
-                break;
             case Talent.REGENERATE:
                 return level * (TalentData.isOccupationTalent(occupation, talentId) ? 20 : 0) / 40;
-                break;
+            case Talent.SOURCE:
+                return level * (TalentData.isOccupationTalent(occupation, talentId) ? 80 : 40) / 40;
             default:
                 return 0;
-                break;
-        }
-    }
-    static calculateTalentToLore(talents, occupation, manager, lang) {
-        let lore = new ExColorLoreUtil(manager);
-        lore.delete("addition");
-        for (let t of talents) {
-            let add = 0;
-            let level = MathUtil.zeroIfNaN(lore.getValueUseMap("enchanting", Talent.getCharacter(lang, t.id))) + t.level;
-            add = TalentData.calculateTalent(occupation, t.id, level);
-            let a = MathUtil.zeroIfNaN(lore.getValueUseMap("enchanting", Talent.getCharacter(lang, t.id)));
-            let b = Math.round(a + add * 10) / 10;
-            if (b !== 0)
-                lore.setValueUseMap("addition", Talent.getCharacter(lang, t.id), a + " -> " + b);
         }
     }
     static isOccupationTalent(occupation, id) {
@@ -127,12 +103,14 @@ export class Talent {
                 return lang.talentChongneng;
             case Talent.RELOAD:
                 return lang.talentChongzhuang;
-            case Talent.SOURCE:
-                return lang.talentYuanquan;
+            case Talent.CONVERGE:
+                return lang.talentHuiliu;
             case Talent.SUDDEN_STRIKE:
                 return lang.talentTuxi;
             case Talent.REGENERATE:
                 return lang.talentZaisheng;
+            case Talent.SOURCE:
+                return lang.talentYuanquan;
             default:
                 return lang.talentWeizhi;
         }
@@ -143,11 +121,14 @@ Talent.CLOAD_PIERCING = 2;
 Talent.ARMOR_BREAKING = 3;
 Talent.SANCTION = 4;
 Talent.DEFENSE = 5;
+/** @deprecated */
 Talent.CHARGING = 6;
+/** @deprecated */
 Talent.RELOAD = 7;
-Talent.SOURCE = 8;
+Talent.CONVERGE = 8;
 Talent.SUDDEN_STRIKE = 9;
 Talent.REGENERATE = 10;
+Talent.SOURCE = 11;
 export class Occupation {
     getCharacter(lang) {
         switch (this.id) {
@@ -178,7 +159,7 @@ Occupation.GUARD = new Occupation(1, [Talent.VIENTIANE, Talent.ARMOR_BREAKING]);
 Occupation.WARRIOR = new Occupation(2, [Talent.SANCTION, Talent.DEFENSE]);
 Occupation.ASSASSIN = new Occupation(3, [Talent.SANCTION, Talent.SUDDEN_STRIKE]);
 Occupation.ARCHER = new Occupation(4, [Talent.CLOAD_PIERCING, Talent.ARMOR_BREAKING]);
-Occupation.WARLOCK = new Occupation(5, [Talent.RELOAD, Talent.SOURCE, Talent.CHARGING]);
-Occupation.PRIEST = new Occupation(6, [Talent.SOURCE, Talent.REGENERATE]);
+Occupation.WARLOCK = new Occupation(5, [Talent.CONVERGE, Talent.SOURCE]);
+Occupation.PRIEST = new Occupation(6, [Talent.CONVERGE, Talent.REGENERATE]);
 Occupation.keys = [Occupation.GUARD, Occupation.WARRIOR, Occupation.ASSASSIN, Occupation.ARCHER, Occupation.WARLOCK, Occupation.PRIEST];
 //# sourceMappingURL=TalentData.js.map

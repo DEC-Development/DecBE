@@ -170,5 +170,12 @@ export default class ExGameClient {
         };
         this.getEvents().exEvents.tick.subscribe(method);
     }
+    stop(timeout) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, timeout);
+        });
+    }
 }
 //# sourceMappingURL=ExGameClient.js.map

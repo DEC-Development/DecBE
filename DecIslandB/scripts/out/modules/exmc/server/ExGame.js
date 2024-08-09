@@ -25,7 +25,7 @@ export default class ExGame {
     }
     static runInterval(callback, tickDelay) {
         var _b;
-        tickDelay = Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1);
+        tickDelay = Math.round(Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1));
         this.idRunSeq = (1 + this.idRunSeq) % this.tickDelayMax;
         const willId = this.idRunSeq;
         this.idToIntevalTrigger.set(willId, tickDelay);
@@ -37,7 +37,7 @@ export default class ExGame {
     }
     static runTimeout(callback, tickDelay) {
         var _b;
-        tickDelay = Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1);
+        tickDelay = Math.round(Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1));
         this.idRunSeq = (1 + this.idRunSeq) % this.tickDelayMax;
         let tar = this.nowTick + tickDelay;
         this.idToTrigger.set(this.idRunSeq, tar);
