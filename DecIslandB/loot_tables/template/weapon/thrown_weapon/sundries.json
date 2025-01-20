@@ -5,6 +5,19 @@
       "entries": [
         {
           "type": "item",
+          "name": "dec:ash_pufferfish",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 16,
+                "max": 32
+              }
+            }
+          ]
+        },
+        {
+          "type": "item",
           "name": "dec:dragon_fireball_by_player",
           "functions": [
             {

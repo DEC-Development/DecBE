@@ -1,9 +1,9 @@
-import ExGame from "./ExGame.js";
 export default class ExServerTickDelayTask {
     getDelay() {
         return this.time;
     }
-    constructor(looper) {
+    constructor(context, looper) {
+        this.context = context;
         this.time = 20;
         this.looper = looper;
     }
@@ -20,19 +20,21 @@ export default class ExServerTickDelayTask {
         if (this.isStarted())
             return this;
         this.func = () => {
-            this.looper();
             this.func = undefined;
+            this.looper();
         };
-        this.id = ExGame.runTimeout(() => { var _a; return (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this); }, this.time);
+        this.id = this.context.runTimeoutByTick(() => { var _a; return (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this); }, this.time);
         return this;
     }
     start() {
         if (this.isStarted())
             return this;
         this.func = () => {
+            if (this.context.interrupt)
+                return;
             this.looper();
         };
-        this.id = ExGame.runInterval(() => { var _a; return (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this); }, this.time);
+        this.id = this.context.runIntervalByTick(() => { var _a; return (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this); }, this.time);
         return this;
     }
     stop() {
@@ -40,7 +42,7 @@ export default class ExServerTickDelayTask {
             return this;
         if (!this.id)
             throw new Error("error id is required");
-        ExGame.clearRun(this.id);
+        this.context.clearRun(this.id);
         this.func = undefined;
         return this;
     }

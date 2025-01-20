@@ -1,0 +1,58 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:item_picker",
+            "menu_category": {
+                "group": "itemGroup.name.outside",
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:light_dampening": 15,
+            "minecraft:light_emission": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 10
+            },
+            "minecraft:map_color": "#858585",
+            "minecraft:loot": "loot_tables/blocks/item_picker.json",
+            "minecraft:on_interact": {
+                "event": "activate",
+                "condition": "query.get_equipped_item_name('main_hand') == 'pulse_stone'"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "stone"
+                ]
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "north": "sides",
+                "south": "sides",
+                "east": "sides",
+                "west": "sides",
+                "sides": {
+                    "texture": "item_picker_side"
+                },
+                "up": {
+                    "texture": "item_picker_up"
+                },
+                "down": {
+                    "texture": "item_picker_down"
+                }
+            }
+        },
+        "events": {
+            "activate": {
+                "run_command": {
+                    "command": [
+                        "tp @e[type=item,r=64] ~~~"
+                    ]
+                }
+            }
+        }
+    }
+}

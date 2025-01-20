@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.50",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dec:gold_flower",
+            "menu_category": {
+                "group": "itemGroup.name.flower",
+                "is_hidden_in_commands": false,
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "item.dec:gold_flower.name"
+            },
+            "minecraft:icon": {
+                "texture": "gold_flower"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:gold_flower_crop"
+            }
+        }
+    }
+}

@@ -34,7 +34,7 @@ export default function menuTaskUI(ctrl) {
                             },
                             {
                                 "type": "text",
-                                "msg": "奖励："
+                                "msg": lang.menuUIMsgBailan216
                             }
                         ];
                         for (let v of taskJson.tasks[i].rewards) {
@@ -52,14 +52,14 @@ export default function menuTaskUI(ctrl) {
                             let textShow = "";
                             if (v.type === "break") {
                                 haveNum = ((_a = daily.cache[v.typeId]) !== null && _a !== void 0 ? _a : 0);
-                                conn = "破坏";
+                                conn = lang.menuUIMsgBailan217;
                             }
                             else if (v.type === "kill") {
                                 haveNum = ((_b = daily.cache[v.typeId]) !== null && _b !== void 0 ? _b : 0);
-                                conn = "击杀";
+                                conn = lang.menuUIMsgBailan218;
                             }
                             else if (v.type === "item") {
-                                conn = "物品";
+                                conn = lang.menuUIMsgBailan219;
                                 haveNum = ((_c = bagItems.get(v.typeId)) !== null && _c !== void 0 ? _c : 0);
                             }
                             if (haveNum < v.count) {
@@ -67,7 +67,7 @@ export default function menuTaskUI(ctrl) {
                             }
                             let mprog = completed ? 1 : Math.min(1, haveNum / v.count);
                             prog += mprog / taskJson.tasks[i].conditions.length;
-                            textShow = (haveNum >= v.count || completed ? "§a" : "§c") + ("需求: " + conn + " " + v.name + " " + (completed ? v.count : haveNum) + "/" + v.count + "个\n");
+                            textShow = (haveNum >= v.count || completed ? "§a" : "§c") + (lang.menuUIMsgBailan220 + conn + " " + v.name + " " + (completed ? v.count : haveNum) + "/" + v.count + lang.menuUIMsgBailan221);
                             textShow += getCharByNum(mprog, 10, PROGRESS_CHAR);
                             page.push({
                                 "type": "textWithBg",
@@ -79,7 +79,7 @@ export default function menuTaskUI(ctrl) {
                                 "type": "padding"
                             }, {
                                 "type": "button",
-                                "msg": "完成任务",
+                                "msg": lang.menuUIMsgBailan222,
                                 "function": (client, ui) => {
                                     var _a;
                                     for (let v of taskJson.tasks[i].rewards) {
@@ -101,7 +101,7 @@ export default function menuTaskUI(ctrl) {
                             });
                         }
                         arr[taskIndex] = {
-                            "text": (completed ? "§a" : (isOk ? "§e" : "§c")) + taskJson.tasks[i].name + ": " + (completed ? "已完成" : Math.round(prog * 100) + "％"),
+                            "text": (completed ? "§a" : (isOk ? "§e" : "§c")) + taskJson.tasks[i].name + ": " + (completed ? lang.menuUIMsgBailan223 : Math.round(prog * 100) + "％"),
                             "page": page
                         };
                         taskIndex++;
@@ -124,11 +124,11 @@ export default function menuTaskUI(ctrl) {
                 if (!item || item.getLore().length === 0) {
                     return {
                         "1": {
-                            "text": "空",
+                            "text": lang.menuUIMsgBailan224,
                             "page": [
                                 {
                                     "type": "text",
-                                    "msg": "你的手上未持有蓝魔法卷轴"
+                                    "msg": lang.menuUIMsgBailan225
                                 }
                             ]
                         }
@@ -192,7 +192,7 @@ export default function menuTaskUI(ctrl) {
                         },
                         {
                             "type": "text",
-                            "msg": "奖励："
+                            "msg": lang.menuUIMsgBailan226
                         }
                     ];
                     for (let v of task.rewards) {
@@ -211,25 +211,25 @@ export default function menuTaskUI(ctrl) {
                         if (v.type === "boss") {
                             v.damage = (_a = v.damage) !== null && _a !== void 0 ? _a : 1;
                             haveNum = ((_b = taskList.data[v.typeId]) !== null && _b !== void 0 ? _b : 0);
-                            conn = "击杀并造成伤害";
+                            conn = lang.menuUIMsgBailan227;
                             if (haveNum < v.damage) {
                                 isOk = false;
                             }
                             let mprog = completed ? 1 : Math.min(1, haveNum / v.damage);
                             prog += mprog / task.conditions.length;
-                            textShow = (haveNum >= v.damage || completed ? "§a" : "§c") + ("需求: " + conn + " " + v.name + " " + (completed ? v.damage : haveNum) + "/" + v.damage + "点\n");
+                            textShow = (haveNum >= v.damage || completed ? "§a" : "§c") + (lang.menuUIMsgBailan228 + conn + " " + v.name + " " + (completed ? v.damage : haveNum) + "/" + v.damage + lang.menuUIMsgBailan229);
                             textShow += getCharByNum(mprog, 10, PROGRESS_CHAR);
                         }
                         else if (v.type === "boss_tag") {
                             v.tagName = (_c = v.tagName) !== null && _c !== void 0 ? _c : "undefined";
                             haveNum = client.player.hasTag(v.tagName) ? 1 : 0;
-                            conn = "击杀";
+                            conn = lang.menuUIMsgBailan230;
                             if (haveNum < 1) {
                                 isOk = false;
                             }
                             let mprog = completed ? 1 : Math.min(1, haveNum / 1);
                             prog += mprog / task.conditions.length;
-                            textShow = (haveNum >= 1 || completed ? "§a" : "§c") + ("需求: " + conn + " " + v.name + " " + (completed ? 1 : haveNum) + "/" + 1 + "个\n");
+                            textShow = (haveNum >= 1 || completed ? "§a" : "§c") + (lang.menuUIMsgBailan231 + conn + " " + v.name + " " + (completed ? 1 : haveNum) + "/" + 1 + lang.menuUIMsgBailan232);
                             textShow += getCharByNum(mprog, 10, PROGRESS_CHAR);
                         }
                         page.push({
@@ -242,7 +242,7 @@ export default function menuTaskUI(ctrl) {
                             "type": "padding"
                         }, {
                             "type": "button",
-                            "msg": "完成任务",
+                            "msg": lang.menuUIMsgBailan233,
                             "function": (client, ui) => {
                                 for (let v of task.rewards) {
                                     if (v.type === "integral") {
@@ -263,7 +263,7 @@ export default function menuTaskUI(ctrl) {
                         });
                     }
                     arr[i] = {
-                        "text": (completed ? "§a" : (isOk ? "§e" : "§c")) + task.name + ": " + (completed ? "已完成" : Math.round(prog * 100) + "％"),
+                        "text": (completed ? "§a" : (isOk ? "§e" : "§c")) + task.name + ": " + (completed ? lang.menuUIMsgBailan234 : Math.round(prog * 100) + "％"),
                         "page": page
                     };
                 }

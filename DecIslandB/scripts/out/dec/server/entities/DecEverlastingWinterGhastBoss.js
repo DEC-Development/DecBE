@@ -2,8 +2,8 @@ import { EntityDamageCause } from "@minecraft/server";
 import DecBossController from "./DecBossController.js";
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecEverlastingWinterGhastBoss1 extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.ghost_tears");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -18,13 +18,13 @@ export class DecEverlastingWinterGhastBoss1 extends DecBossController {
         this.music.stop();
         super.onFail();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 export class DecEverlastingWinterGhastBoss2 extends DecCommonBossLastStage {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.the_peotry_of_ghost");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -33,8 +33,8 @@ export class DecEverlastingWinterGhastBoss2 extends DecCommonBossLastStage {
         this.music.stop();
         super.onDestroy();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 //# sourceMappingURL=DecEverlastingWinterGhastBoss.js.map

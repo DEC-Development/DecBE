@@ -1,0 +1,55 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:radiate_stonebrick",
+            "menu_category": {
+                "group": "itemGroup.name.stoneBrick",
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:light_dampening": 15,
+            "minecraft:light_emission": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 15
+            },
+            "minecraft:map_color": "#747474",
+            "minecraft:loot": "loot_tables/blocks/radiate_stone.json",
+            "minecraft:on_step_on": {
+                "event": "step_on",
+                "target": "other"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "stone"
+                ]
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "radiate_stonebrick",
+                    "render_method": "alpha_test"
+                }
+            }
+        },
+        "events": {
+            "step_on": {
+                "add_mob_effect": {
+                    "effect": "poison",
+                    "duration": 5,
+                    "amplifier": 1,
+                    "target": "other"
+                },
+                "run_command": {
+                    "command": [
+                        "scoreboard players remove @a[x=~,y=~1,z=~,r=1]  1"
+                    ]
+                }
+            }
+        }
+    }
+}

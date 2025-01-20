@@ -2,8 +2,8 @@ import { EntityDamageCause } from "@minecraft/server";
 import DecBossController from "./DecBossController.js";
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecEscapeSoulBoss3 extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.chasing_stage1");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -18,13 +18,13 @@ export class DecEscapeSoulBoss3 extends DecBossController {
         this.music.stop();
         super.onFail();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 export class DecEscapeSoulBoss4 extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.chasing_stage2");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -39,13 +39,13 @@ export class DecEscapeSoulBoss4 extends DecBossController {
         this.music.stop();
         super.onFail();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 export class DecEscapeSoulBoss5 extends DecCommonBossLastStage {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.chasing_stage3");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -54,8 +54,8 @@ export class DecEscapeSoulBoss5 extends DecCommonBossLastStage {
         this.music.stop();
         super.onDestroy();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 //# sourceMappingURL=DecEscapeSoulBoss.js.map

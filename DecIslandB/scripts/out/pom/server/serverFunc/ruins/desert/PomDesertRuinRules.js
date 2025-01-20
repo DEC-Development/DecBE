@@ -34,7 +34,7 @@ export default class PomDesertRuinRules {
     }
     show() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.game.setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            this.game.runTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 let cmdArr = [];
                 outerLoop: for (let loop of [1]) {
                     let showCmd = "/ ";
@@ -209,13 +209,13 @@ export default class PomDesertRuinRules {
                         break outerLoop;
                     const delay = Number(r.formValues[0]) * 1000;
                     const tmpV = new Vector3();
-                    const skillLoop = ExSystem.tickTask(() => {
+                    const skillLoop = ExSystem.tickTask(this.game, () => {
                         tmpV.set(this.game.player.location).add(addPos);
                         this.game.getExDimension().spawnParticle("wb:ruin_desert_rulepre", tmpV);
                     }).delay(1);
                     skillLoop.start();
                     //i+=1;
-                    this.game.setTimeout(() => {
+                    this.game.runTimeout(() => {
                         skillLoop.stop();
                         switch (mainCmd) {
                             case desertCommand.MAIN.BLAST: {

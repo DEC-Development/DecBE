@@ -1,25 +1,25 @@
 import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_x(client, lang) {
     return {
-        "name": "每日任务-传说级",
+        "name": lang.menuUIMsgBailan394,
         "tasks": [
             {
-                "name": "食物不过如此",
+                "name": lang.menuUIMsgBailan395,
                 "conditions": [
                     {
-                        "name": "小麦",
+                        "name": lang.menuUIMsgBailan396,
                         "typeId": MinecraftItemTypes.Wheat,
                         "count": 256,
                         "type": "item"
                     },
                     {
-                        "name": "马铃薯",
+                        "name": lang.menuUIMsgBailan397,
                         "typeId": MinecraftItemTypes.Potato,
                         "count": 256,
                         "type": "item"
                     },
                     {
-                        "name": "胡萝卜",
+                        "name": lang.menuUIMsgBailan398,
                         "typeId": MinecraftItemTypes.Carrot,
                         "count": 256,
                         "type": "item"
@@ -27,36 +27,36 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 2500,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "排宴!!!",
+                "name": lang.menuUIMsgBailan399,
                 "conditions": [
                     {
-                        "name": "熟鸡肉",
+                        "name": lang.menuUIMsgBailan400,
                         "typeId": MinecraftItemTypes.CookedChicken,
                         "count": 256,
                         "type": "item"
                     },
                     {
-                        "name": "熟羊肉",
+                        "name": lang.menuUIMsgBailan401,
                         "typeId": MinecraftItemTypes.CookedMutton,
                         "count": 256,
                         "type": "item"
                     },
                     {
-                        "name": "熟牛肉",
+                        "name": lang.menuUIMsgBailan402,
                         "typeId": MinecraftItemTypes.CookedBeef,
                         "count": 256,
                         "type": "item"
                     },
                     {
-                        "name": "熟兔肉",
+                        "name": lang.menuUIMsgBailan403,
                         "typeId": MinecraftItemTypes.CookedRabbit,
                         "count": 64,
                         "type": "item"
@@ -64,42 +64,42 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 2500,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "清缴怪物",
+                "name": lang.menuUIMsgBailan404,
                 "conditions": [
                     {
-                        "name": "僵尸战士",
+                        "name": lang.menuUIMsgBailan405,
                         "typeId": "dec:zombie_warrior",
                         "count": 64,
                         "type": "kill"
                     },
                     {
-                        "name": "末影女巫",
+                        "name": lang.menuUIMsgBailan406,
                         "typeId": "dec:ender_witch",
                         "count": 32,
                         "type": "kill"
                     },
                     {
-                        "name": "石头傀儡",
+                        "name": lang.menuUIMsgBailan407,
                         "typeId": "dec:stone_golem",
                         "count": 4,
                         "type": "kill"
                     },
                     {
-                        "name": "黑曜石傀儡",
+                        "name": lang.menuUIMsgBailan408,
                         "typeId": "dec:obsidian_golem",
                         "count": 2,
                         "type": "kill"
                     },
                     {
-                        "name": "骷髅战士",
+                        "name": lang.menuUIMsgBailan409,
                         "typeId": "dec:skeleton_warrior",
                         "count": 64,
                         "type": "kill"
@@ -107,36 +107,36 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 2500,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "传说矿工",
+                "name": lang.menuUIMsgBailan410,
                 "conditions": [
                     {
-                        "name": "钻石矿石",
+                        "name": lang.menuUIMsgBailan411,
                         "typeId": MinecraftItemTypes.DiamondOre,
                         "count": 16,
                         "type": "break"
                     },
                     {
-                        "name": "煤矿矿石",
+                        "name": lang.menuUIMsgBailan412,
                         "typeId": MinecraftItemTypes.CoalOre,
                         "count": 64,
                         "type": "break"
                     },
                     {
-                        "name": "金矿矿石",
+                        "name": lang.menuUIMsgBailan413,
                         "typeId": MinecraftItemTypes.GoldOre,
                         "count": 64,
                         "type": "break"
                     },
                     {
-                        "name": "铁矿矿石",
+                        "name": lang.menuUIMsgBailan414,
                         "typeId": MinecraftItemTypes.IronOre,
                         "count": 64,
                         "type": "break"
@@ -144,48 +144,48 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 3000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "海鲜美食家",
+                "name": lang.menuUIMsgBailan415,
                 "conditions": [
                     {
-                        "name": "海胆",
+                        "name": lang.menuUIMsgBailan416,
                         "typeId": "dec:sea_urchin",
                         "count": 8,
                         "type": "item"
                     },
                     {
-                        "name": "末影鱼",
+                        "name": lang.menuUIMsgBailan417,
                         "typeId": "dec:ender_fish",
                         "count": 12,
                         "type": "item"
                     },
                     {
-                        "name": "三文鱼片",
+                        "name": lang.menuUIMsgBailan418,
                         "typeId": "dec:a_piece_of_salmon",
                         "count": 64,
                         "type": "item"
                     },
                     {
-                        "name": "金矿鱼",
+                        "name": lang.menuUIMsgBailan419,
                         "typeId": "dec:gold_fish",
                         "count": 12,
                         "type": "item"
                     },
                     {
-                        "name": "煤矿鱼",
+                        "name": lang.menuUIMsgBailan420,
                         "typeId": "dec:coal_fish",
                         "count": 16,
                         "type": "item"
                     },
                     {
-                        "name": "钻石鱼",
+                        "name": lang.menuUIMsgBailan421,
                         "typeId": "dec:diamond_fish",
                         "count": 6,
                         "type": "item"
@@ -193,18 +193,18 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 2100,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "觉醒龙之力",
+                "name": lang.menuUIMsgBailan422,
                 "conditions": [
                     {
-                        "name": "觉醒末影龙",
+                        "name": lang.menuUIMsgBailan423,
                         "typeId": "minecraft:ender_dragon",
                         "count": 1,
                         "type": "kill"
@@ -212,9 +212,9 @@ export default function taskDaily_x(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 4000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]

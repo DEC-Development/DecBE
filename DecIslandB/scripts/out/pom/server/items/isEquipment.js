@@ -21,4 +21,7 @@ export default function isEquipment(id) {
     }
     return false;
 }
+export function canSweep(id) {
+    return id.includes("sword") || id.includes("katana");
+}
 //# sourceMappingURL=isEquipment.js.map

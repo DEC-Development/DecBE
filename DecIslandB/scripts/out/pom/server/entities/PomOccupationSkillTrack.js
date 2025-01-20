@@ -1,8 +1,8 @@
 import ExEntityController from "../../../modules/exmc/server/entity/ExEntityController.js";
 import Vector3 from "../../../modules/exmc/utils/math/Vector3.js";
 export default class PomOccupationSkillTrack extends ExEntityController {
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
         this.speed = this.exEntity.getVelocity().len();
         const tmpV = new Vector3();
         const tmpP = new Vector3();
@@ -30,9 +30,6 @@ export default class PomOccupationSkillTrack extends ExEntityController {
             this.entity.applyImpulse(tmpP.scl(0.2));
         };
         this.getEvents().exEvents.tick.subscribe(this.speedListener);
-    }
-    onDespawn() {
-        super.onDespawn();
     }
     setTarget(target) {
         this.target = target;

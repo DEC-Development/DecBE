@@ -2,11 +2,11 @@ import ExPlayer from './ExPlayer.js';
 import ExEntityController from "./ExEntityController.js";
 import "../../../reflect-metadata/Reflect.js";
 export default class ExPlayerController extends ExEntityController {
-    constructor(e, server) {
-        super(e, server);
-        this.init(server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
+        this._init(server);
     }
-    init(server) {
+    _init(server) {
         this.exEntity = ExPlayer.getInstance(this.entity);
     }
     get entity() {

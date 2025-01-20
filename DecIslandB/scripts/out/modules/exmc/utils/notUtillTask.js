@@ -20,7 +20,7 @@ export default function notUtillTask(m, f, run, tryDelay = 1000, maxTimes = 60) 
             else {
                 if (maxTimes > 0) {
                     maxTimes--;
-                    m.setTimeout((func), tryDelay);
+                    m.runTimeout((func), tryDelay);
                 }
             }
         }
@@ -28,6 +28,6 @@ export default function notUtillTask(m, f, run, tryDelay = 1000, maxTimes = 60) 
             ExErrorQueue.throwError(e);
         }
     });
-    m.setTimeout(func, 0);
+    m.runTimeout(func, 0);
 }
 //# sourceMappingURL=notUtillTask.js.map

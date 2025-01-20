@@ -18,7 +18,7 @@ export default class SimpleItemUseFunc extends GameController {
     constructor() {
         super(...arguments);
         this.inkSwordsSkill = false;
-        this.inkSwordsSkillTask = ExSystem.tickTask(() => {
+        this.inkSwordsSkillTask = ExSystem.tickTask(this, () => {
             this.inkSwordsSkill = false;
         }).delay(2 * 20);
     }
@@ -64,7 +64,7 @@ export default class SimpleItemUseFunc extends GameController {
             const item = e.itemStack;
             if (item.typeId == "wb:power") {
                 if (!this.data.lang) {
-                    this.setTimeout(() => {
+                    this.runTimeout(() => {
                         new ModalFormData()
                             .title("Choose a language")
                             .dropdown("Language List", ["English", "简体中文"], 0)
@@ -82,18 +82,10 @@ export default class SimpleItemUseFunc extends GameController {
                     new MenuUIAlert(this.client, menuFunctionUI(this.getLang())).showPage("main", "notice");
                 }
             }
-            else if (item.typeId === "wb:jet_pack") {
-                //jet pack
-                this.setTimeout(() => {
-                    this.exPlayer.addEffect(MinecraftEffectTypes.Levitation, 2, 100, false);
-                    this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 10, 3, false);
-                    this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
-                }, 0);
-            }
             else if (e.itemStack.typeId === "wb:technology_world_explorer") {
                 e.cancel = true;
                 const itemDim = e.source.dimension;
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     var _a;
                     let boss = [
                         ["entity.dec:leaves_golem.name", MinecraftBiomeTypes.Forest],
@@ -120,7 +112,7 @@ export default class SimpleItemUseFunc extends GameController {
                                 "initialPersistence": true
                             }));
                             const dic = new Vector3(pos).sub(pPos).normalize().scl(1 / 10);
-                            this.worldExploreTimer = ExSystem.tickTask(() => {
+                            this.worldExploreTimer = ExSystem.tickTask(this, () => {
                                 if (falseIfError(() => ball.entity.isValid())) {
                                     pPos.add(dic);
                                     ball.setPosition(pPos.cpy().add(0, 1.5, 0));
@@ -130,7 +122,7 @@ export default class SimpleItemUseFunc extends GameController {
                                 }
                             }).delay(1);
                             this.worldExploreTimer.start();
-                            this.setTimeout(() => {
+                            this.runTimeout(() => {
                                 var _a;
                                 (_a = this.worldExploreTimer) === null || _a === void 0 ? void 0 : _a.stop();
                                 this.worldExploreTimer = undefined;
@@ -141,8 +133,8 @@ export default class SimpleItemUseFunc extends GameController {
                     }
                     else {
                         new ModalFormData()
-                            .title("选择目标boss以查找群系")
-                            .dropdown("选择列表", boss.map(e => e[0]), 0)
+                            .title(this.lang.chooseBossToFindBiomes)
+                            .dropdown(this.lang.chooseBoss, boss.map(e => e[0]), 0)
                             .show(this.player).then((e) => {
                             var _a, _b, _c;
                             if (!e.canceled && e.formValues) {
@@ -161,7 +153,7 @@ export default class SimpleItemUseFunc extends GameController {
             }
             else if (((_a = this.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === "wb:sword_ink_g" && !this.inkSwordsSkill) {
                 e.cancel = true;
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     this.inkSwordsSkill = true;
                     this.inkSwordsSkillTask.startOnce();
                     let dic = this.player.getViewDirection();
@@ -193,7 +185,7 @@ export default class SimpleItemUseFunc extends GameController {
                         });
                     };
                     this.getEvents().exEvents.tick.subscribe(func);
-                    this.setTimeout(() => {
+                    this.runTimeout(() => {
                         this.getEvents().exEvents.tick.unsubscribe(func);
                     }, 500);
                 }, 0);
@@ -224,7 +216,7 @@ export default class SimpleItemUseFunc extends GameController {
                 const base_atk = 8 + sharpness * 1.25;
                 let multipler = (use_time > 0.5) ? 2 * use_time : 1;
                 let dam = Math.round(multipler * (base_atk + 10));
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     this.exPlayer.addTag("skill_user");
                     // this.exPlayer.command.run("/say " + use_time);
                     for (let e of this.getExDimension().getEntities({
@@ -255,7 +247,7 @@ export default class SimpleItemUseFunc extends GameController {
                         catch (e) { }
                     }
                     if (use_time > 0.5) {
-                        this.exPlayer.command.run("/function EPIC/weapon/sunlight_sword");
+                        this.exPlayer.command.runAsync("/function EPIC/weapon/sunlight_sword");
                         this.player.startItemCooldown("sword", 2 * 20);
                     }
                     this.exPlayer.removeTag("skill_user");
@@ -309,11 +301,11 @@ export default class SimpleItemUseFunc extends GameController {
                     const base_atk = 7 + sharpness * 1.25;
                     //let eff_atk = base_atk*(1.25^strength)/(1.25^weakness)
                     let dam = 2.4 * Math.round(base_atk) + 15;
-                    this.setTimeout(() => {
+                    this.runTimeout(() => {
                         this.exPlayer.addTag("skill_user");
-                        this.exPlayer.command.run("/function EPIC/weapon/echoing_scream_saber");
+                        this.exPlayer.command.runAsync("/function EPIC/weapon/echoing_scream_saber");
                     }, 0);
-                    this.setTimeout(() => {
+                    this.runTimeout(() => {
                         for (let e of this.getExDimension().getEntities({
                             "maxDistance": 5,
                             "excludeTags": ["skill_user", "wbmsyh"],
@@ -395,6 +387,11 @@ export default class SimpleItemUseFunc extends GameController {
                 this.data.initialMagicPickaxe = true;
             }
         }
+    }
+    jetPackSkill() {
+        this.exPlayer.addEffect(MinecraftEffectTypes.Levitation, 2, 100, false);
+        this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 10, 3, false);
+        this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
     }
 }
 //# sourceMappingURL=SimpleItemUseFunc.js.map

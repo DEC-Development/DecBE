@@ -6,8 +6,8 @@ import DecGlobal from '../DecGlobal.js';
 import { ExBlockArea } from "../../../modules/exmc/server/block/ExBlockArea.js";
 import DecBossBarrier from "./DecBossBarrier.js";
 export default class DecBossController extends ExEntityController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.isFisrtCall = false;
         this.startPos = this.exEntity.position;
         let barrier = DecBossBarrier.find(this.startPos);
@@ -31,8 +31,8 @@ export default class DecBossController extends ExEntityController {
     despawn() {
         this.entity.triggerEvent("minecraft:despawn");
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     stopBarrier() {
         this.barrier.stop();

@@ -1,11 +1,12 @@
 var _a;
-import { system } from "@minecraft/server";
+import { Player, system, world } from "@minecraft/server";
 import "../../reflect-metadata/Reflect.js";
 import ExSystem from "../utils/ExSystem.js";
 import MonitorManager from "../utils/MonitorManager.js";
 import ExErrorQueue from "./ExErrorQueue.js";
+import ExContext from '../interface/ExContext.js';
 export default class ExGame {
-    static clearRun(runId) {
+    static _clearRun(runId) {
         if (this.idToTrigger.has(runId)) {
             let time = this.idToTrigger.get(runId);
             let list = this.tickDelayTriggers.get(time);
@@ -23,9 +24,9 @@ export default class ExGame {
             this.idToIntevalTrigger.delete(runId);
         }
     }
-    static runInterval(callback, tickDelay) {
+    static _runInterval(callback, tickDelay) {
         var _b;
-        tickDelay = Math.round(Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1));
+        tickDelay = Math.floor(Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1));
         this.idRunSeq = (1 + this.idRunSeq) % this.tickDelayMax;
         const willId = this.idRunSeq;
         this.idToIntevalTrigger.set(willId, tickDelay);
@@ -35,7 +36,7 @@ export default class ExGame {
         (_b = this.intevalTask.get(tickDelay)) === null || _b === void 0 ? void 0 : _b.push([this.idRunSeq, callback]);
         return willId;
     }
-    static runTimeout(callback, tickDelay) {
+    static _runTimeout(callback, tickDelay) {
         var _b;
         tickDelay = Math.round(Math.max(1, tickDelay !== null && tickDelay !== void 0 ? tickDelay : 1));
         this.idRunSeq = (1 + this.idRunSeq) % this.tickDelayMax;
@@ -47,7 +48,7 @@ export default class ExGame {
         (_b = this.tickDelayTriggers.get(tar)) === null || _b === void 0 ? void 0 : _b.push([this.idRunSeq, callback]);
         return this.idRunSeq;
     }
-    static run(callback) {
+    static _run(callback) {
         return system.run(() => {
             try {
                 callback();
@@ -58,6 +59,9 @@ export default class ExGame {
             }
         });
     }
+    static _sleep(tickDelay) {
+        return system.waitTicks(tickDelay);
+    }
     static runJob(r) {
         system.runJob(r());
     }
@@ -65,14 +69,17 @@ export default class ExGame {
         let server = new serverCons(config);
         this.serverMap.set(serverCons, server);
     }
+    static register(arg0, event, config) {
+        event(config.gameContext);
+    }
     static postMessageBetweenServer() {
     }
     static postMessageBetweenClient(client, s, exportName, args) {
-        ExGame.run(() => {
+        ExGame._run(() => {
             let server = this.serverMap.get(s);
             if (!server)
                 return;
-            let finder = server.findClientByPlayer(client.player);
+            let finder = server.findClientByPlayer(client instanceof Player ? client : client.player);
             if (!finder)
                 return;
             for (let k of ExSystem.keys(finder)) {
@@ -126,6 +133,7 @@ ExGame.tickDelayMax = 2300000000;
         func();
     }, 1);
 })();
+ExGame.gamerules = world.gameRules;
 ExGame.beforeTickMonitor = new MonitorManager();
 ExGame.tickMonitor = new MonitorManager();
 ExGame.longTickMonitor = new MonitorManager();
@@ -143,7 +151,7 @@ ExGame.scriptEventReceive = new MonitorManager();
         _a.beforeTickMonitor.trigger(event);
         _a.tickMonitor.trigger(event);
     };
-    ExGame.runInterval(fun, 1);
+    ExGame._runInterval(fun, 1);
 })();
 (() => {
     let tickNum = 0, tickTime = 0;
@@ -157,7 +165,7 @@ ExGame.scriptEventReceive = new MonitorManager();
         tickNum = (tickNum + 1) % 72000;
         _a.longTickMonitor.trigger(event);
     };
-    ExGame.runInterval(fun, 5);
+    ExGame._runInterval(fun, 5);
 })();
 (() => {
     system.afterEvents.scriptEventReceive.subscribe(e => {
@@ -170,4 +178,48 @@ export function receiveMessage(exportName) {
         Reflect.defineMetadata("exportName", exportName, target, propertyName);
     };
 }
+export const gameContext = new (class extends ExContext {
+    constructor() {
+        super(...arguments);
+        this.interrupt = true;
+        this.parent = undefined;
+        this.tickMonitor = ExGame.tickMonitor;
+        this.beforeTickMonitor = ExGame.beforeTickMonitor;
+        this.longTickMonitor = ExGame.longTickMonitor;
+    }
+    sleep(timeout) {
+        return new Promise((resolve, reject) => {
+            ExGame._runTimeout(() => {
+                resolve();
+            }, timeout);
+        });
+    }
+    sleepByTick(timeout) {
+        return ExGame._sleep(timeout);
+    }
+    run(func) {
+        ExGame._run(func);
+    }
+    runTimeout(fun, timeout) {
+        return this.runTimeoutByTick(fun, timeout / 1000 * 20);
+    }
+    runTimeoutByTick(fun, timeout) {
+        return ExGame._runTimeout(fun, timeout);
+    }
+    runIntervalByTick(fun, timeout) {
+        return ExGame._runInterval(fun, timeout);
+    }
+    clearRun(runId) {
+        ExGame._clearRun(runId);
+    }
+    stopContext() {
+        throw new Error('Top Layer Context Dont support');
+    }
+    startContext() {
+        throw new Error('Top Layer Context Dont support');
+    }
+    waitContext(promise) {
+        throw new Error('Top Layer Context Dont support');
+    }
+})();
 //# sourceMappingURL=ExGame.js.map

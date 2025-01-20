@@ -45,10 +45,14 @@ export default class ExClientEvents {
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
             [ExEventNames.afterPlayerSpawn]: new Listener(this, ExEventNames.afterPlayerSpawn),
             [ExEventNames.afterEntityHealthChanged]: new Listener(this, ExEventNames.afterEntityHealthChanged),
+            [ExEventNames.beforeEffectAdd]: new Listener(this, ExEventNames.beforeEffectAdd),
             [ExEventNames.afterEffectAdd]: new Listener(this, ExEventNames.afterEffectAdd),
             [ExEventNames.afterItemStartUse]: new Listener(this, ExEventNames.afterItemStartUse)
         };
         this._client = client;
+        this.exEvents[ExOtherEventNames.tick] = client.tickMonitor;
+        this.exEvents[ExOtherEventNames.onLongTick] = client.longTickMonitor;
+        this.exEvents[ExOtherEventNames.beforeTick] = client.beforeTickMonitor;
     }
     register(name, fun) {
         let func = fun;
@@ -139,7 +143,7 @@ ExClientEvents.exEventSetting = {
                 let part = (ExClientEvents.eventHandlers.monitorMap[k]);
                 if (!_a.onceItemUseOnMap.has(e.source)) {
                     const player = e.source;
-                    _a.onceItemUseOnMap.set(e.source, [ExSystem.tickTask(() => {
+                    _a.onceItemUseOnMap.set(e.source, [ExSystem.tickTask(ExClientEvents.eventHandlers.server, () => {
                             let res = _a.onceItemUseOnMap.get(player);
                             if (res === undefined)
                                 return;
@@ -172,7 +176,7 @@ ExClientEvents.exEventSetting = {
                 let part = (ExClientEvents.eventHandlers.monitorMap[k]);
                 if (!_a.onceInteractWithBlockMap.has(e.player)) {
                     const player = e.player;
-                    _a.onceInteractWithBlockMap.set(e.player, [ExSystem.tickTask(() => {
+                    _a.onceInteractWithBlockMap.set(e.player, [ExSystem.tickTask(ExClientEvents.eventHandlers.server, () => {
                             let res = _a.onceInteractWithBlockMap.get(player);
                             if (res === undefined)
                                 return;
@@ -321,6 +325,12 @@ ExClientEvents.exEventSetting = {
         }
     },
     [ExEventNames.afterEffectAdd]: {
+        pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "entity"
+        }
+    },
+    [ExEventNames.beforeEffectAdd]: {
         pattern: ExClientEvents.eventHandlers.registerToServerByEntity,
         filter: {
             "name": "entity"

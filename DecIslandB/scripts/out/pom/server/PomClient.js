@@ -55,8 +55,9 @@ export default class PomClient extends ExGameClient {
         this.territorySystem = new PomTerritorySystem(this);
         this.globalSettings = new GlobalSettings(new Objective("wpsetting"));
         this.cache = new ExPropCache(this.getDynamicPropertyManager());
-        this.looper = ExSystem.tickTask(() => {
+        this.looper = ExSystem.tickTask(this, () => {
             this.cache.save();
+            // console.warn("save cache" + Date.now());
         });
         this.looper.delay(10 * 20);
         this.looper.start();
@@ -129,7 +130,6 @@ export default class PomClient extends ExGameClient {
             eventDecoratorFactory(this.getEvents(), controller);
             controller.onJoin();
         });
-        // this.net = new NeuralNetwork<{a:number,b:number},{c:number}>();
     }
     onJoin() {
         this.setInterworkingPool({
@@ -144,6 +144,9 @@ export default class PomClient extends ExGameClient {
     getLang() {
         var _a;
         return lang[(_a = this.data.lang) !== null && _a !== void 0 ? _a : "en"];
+    }
+    get lang() {
+        return this.getLang();
     }
     onLoad() {
         let scores = ExPlayer.getInstance(this.player).getScoresManager();
@@ -168,9 +171,9 @@ export default class PomClient extends ExGameClient {
             });
         }
         if (!this.data.licenseRead) {
-            this.licenseLooper = ExSystem.tickTask(() => {
+            this.licenseLooper = ExSystem.tickTask(this, () => {
                 var _a;
-                new WarningAlertUI(this, POMLICENSE, [["同意并继续", (c, ui) => {
+                new WarningAlertUI(this, POMLICENSE, [[this.getLang().agreeAndContinue, (c, ui) => {
                             var _a;
                             this.data.licenseRead = true;
                             (_a = this.licenseLooper) === null || _a === void 0 ? void 0 : _a.stop();
@@ -186,7 +189,7 @@ export default class PomClient extends ExGameClient {
         else {
             this.player.nameTag = "§c" + this.player.nameTag;
         }
-        this.exPlayer.command.run([
+        this.exPlayer.command.runAsync([
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbdj 0",
             "execute as @s[tag=!wbyzc] at @s run give @s wb:power 1 0 {\"minecraft:keep_on_death\":{}}",
             "execute as @s[tag=!wbyzc] at @s run scoreboard players set @s wbcsjs -1",
@@ -215,7 +218,12 @@ export default class PomClient extends ExGameClient {
         return arr;
     }
     sayTo(str, p = this.player) {
-        p.sendMessage({ "rawtext": [{ "text": str }] });
+        if (typeof str === "string") {
+            p.sendMessage({ "rawtext": [{ "text": str }] });
+        }
+        else {
+            p.sendMessage(str);
+        }
         // p.runCommandAsync(`tellraw @s {"rawtext": [{"text": "${str}"}]}`);
     }
     getServer() {
@@ -236,6 +244,9 @@ export default class PomClient extends ExGameClient {
     chooseArmor(a) {
         this.talentSystem.chooseArmor(a);
     }
+    jetPackSkill() {
+        this.itemUseFunc.jetPackSkill();
+    }
 }
 __decorate([
     receiveMessage("taskUi"),
@@ -255,4 +266,10 @@ __decorate([
     __metadata("design:paramtypes", [ArmorData]),
     __metadata("design:returntype", void 0)
 ], PomClient.prototype, "chooseArmor", null);
+__decorate([
+    receiveMessage("item:jet_pack_skill"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PomClient.prototype, "jetPackSkill", null);
 //# sourceMappingURL=PomClient.js.map

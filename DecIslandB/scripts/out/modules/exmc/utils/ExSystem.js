@@ -42,20 +42,20 @@ export default class ExSystem {
     static isServer() {
         return true;
     }
-    static tickTask(tasks) {
+    static tickTask(context, tasks) {
         if (this.isServer()) {
-            return new ExServerTickDelayTask(tasks);
+            return new ExServerTickDelayTask(context, tasks);
         }
         else {
-            return new ExServerTickDelayTask(tasks);
+            return new ExServerTickDelayTask(context, tasks);
         }
     }
-    static timeLine(tasks) {
+    static timeLine(context, tasks) {
         if (this.isServer()) {
-            return new ExTimeLine(tasks);
+            return new ExTimeLine(context, tasks);
         }
         else {
-            return new ExTimeLine(tasks);
+            return new ExTimeLine(context, tasks);
         }
     }
     static deepEqual(obj1, obj2) {

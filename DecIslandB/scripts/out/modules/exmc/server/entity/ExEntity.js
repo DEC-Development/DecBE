@@ -26,7 +26,7 @@ export default class ExEntity {
     removeHealth(timeout, damage) {
         if (this._damage === undefined) {
             this._damage = damage;
-            timeout.setTimeout(() => {
+            timeout.runTimeout(() => {
                 var _a;
                 if (!this.entity.isValid())
                     return;
@@ -103,6 +103,9 @@ export default class ExEntity {
     }
     runCommandAsync(str) {
         return this._entity.runCommandAsync(str);
+    }
+    runCommand(str) {
+        return this._entity.runCommand(str);
     }
     detectAllArmor(head, chest, legs, boots) {
         var _a, _b, _c, _d;
@@ -200,11 +203,10 @@ export default class ExEntity {
         (_a = this.getComponent("minecraft:movement")) === null || _a === void 0 ? void 0 : _a.setCurrentValue(num);
     }
     shootProj(id, option, shoot_dir, loc) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
         if (shoot_dir === void 0) { shoot_dir = this.viewDirection; }
-        if (loc === void 0) { loc = new Vector3(this._entity.getHeadLocation()).add(0, 0, this._entity instanceof Player ? -1 : 0)
+        if (loc === void 0) { loc = new Vector3(this._entity.getHeadLocation())
             .add(this.viewDirection.scl((_a = option.spawnDistance) !== null && _a !== void 0 ? _a : 1.5)); }
-        //这里z-1才是实际的head位置，可能是ojang的bug吧
         let locx = loc;
         let q = new ExEntityQuery(this.entity.dimension).at(locx);
         if (option.absPosOffset)
@@ -220,34 +222,42 @@ export default class ExEntity {
             mat.rmulVector(view);
         }
         const proj = this.exDimension.spawnEntity(id, locx);
+        let owner = ((_b = option.owner) !== null && _b !== void 0 ? _b : this._entity);
+        if (owner instanceof Player) {
+            let tamemount = proj === null || proj === void 0 ? void 0 : proj.getComponent("tamemount");
+            if (tamemount)
+                tamemount.tameToPlayer(false, owner);
+            let tame = proj === null || proj === void 0 ? void 0 : proj.getComponent("tameable");
+            if (tame)
+                tame.tame(owner);
+        }
         if (!proj)
             return false;
         const proj_comp = proj.getComponent('minecraft:projectile');
         if (!proj_comp) {
-            proj.remove();
             return false;
         }
         let shootOpt = {
-            uncertainty: (_b = option.uncertainty) !== null && _b !== void 0 ? _b : 0
+            uncertainty: (_c = option.uncertainty) !== null && _c !== void 0 ? _c : 0
         };
-        proj_comp.airInertia = (_c = option.airInertia) !== null && _c !== void 0 ? _c : proj_comp.airInertia;
-        proj_comp.catchFireOnHurt = (_d = option.catchFireOnHurt) !== null && _d !== void 0 ? _d : proj_comp.catchFireOnHurt;
-        proj_comp.critParticlesOnProjectileHurt = (_e = option.critParticlesOnProjectileHurt) !== null && _e !== void 0 ? _e : proj_comp.critParticlesOnProjectileHurt;
-        proj_comp.destroyOnProjectileHurt = (_f = option.destroyOnProjectileHurt) !== null && _f !== void 0 ? _f : proj_comp.destroyOnProjectileHurt;
-        proj_comp.gravity = (_g = option.gravity) !== null && _g !== void 0 ? _g : proj_comp.gravity;
-        proj_comp.hitEntitySound = (_h = option.hitEntitySound) !== null && _h !== void 0 ? _h : proj_comp.hitEntitySound;
-        proj_comp.hitGroundSound = (_j = option.hitGroundSound) !== null && _j !== void 0 ? _j : proj_comp.hitGroundSound;
-        proj_comp.hitParticle = (_k = option.hitParticle) !== null && _k !== void 0 ? _k : proj_comp.hitParticle;
-        proj_comp.lightningStrikeOnHit = (_l = option.lightningStrikeOnHit) !== null && _l !== void 0 ? _l : proj_comp.lightningStrikeOnHit;
-        proj_comp.liquidInertia = (_m = option.liquidInertia) !== null && _m !== void 0 ? _m : proj_comp.liquidInertia;
-        proj_comp.onFireTime = (_o = option.onFireTime) !== null && _o !== void 0 ? _o : proj_comp.onFireTime;
-        proj_comp.owner = (_p = option.owner) !== null && _p !== void 0 ? _p : this._entity;
-        proj_comp.shouldBounceOnHit = (_q = option.shouldBounceOnHit) !== null && _q !== void 0 ? _q : proj_comp.shouldBounceOnHit;
-        proj_comp.stopOnHit = (_r = option.stopOnHit) !== null && _r !== void 0 ? _r : proj_comp.stopOnHit;
+        proj_comp.airInertia = (_d = option.airInertia) !== null && _d !== void 0 ? _d : proj_comp.airInertia;
+        proj_comp.catchFireOnHurt = (_e = option.catchFireOnHurt) !== null && _e !== void 0 ? _e : proj_comp.catchFireOnHurt;
+        proj_comp.critParticlesOnProjectileHurt = (_f = option.critParticlesOnProjectileHurt) !== null && _f !== void 0 ? _f : proj_comp.critParticlesOnProjectileHurt;
+        proj_comp.destroyOnProjectileHurt = (_g = option.destroyOnProjectileHurt) !== null && _g !== void 0 ? _g : proj_comp.destroyOnProjectileHurt;
+        proj_comp.gravity = (_h = option.gravity) !== null && _h !== void 0 ? _h : proj_comp.gravity;
+        proj_comp.hitEntitySound = (_j = option.hitEntitySound) !== null && _j !== void 0 ? _j : proj_comp.hitEntitySound;
+        proj_comp.hitGroundSound = (_k = option.hitGroundSound) !== null && _k !== void 0 ? _k : proj_comp.hitGroundSound;
+        proj_comp.hitParticle = (_l = option.hitParticle) !== null && _l !== void 0 ? _l : proj_comp.hitParticle;
+        proj_comp.lightningStrikeOnHit = (_m = option.lightningStrikeOnHit) !== null && _m !== void 0 ? _m : proj_comp.lightningStrikeOnHit;
+        proj_comp.liquidInertia = (_o = option.liquidInertia) !== null && _o !== void 0 ? _o : proj_comp.liquidInertia;
+        proj_comp.onFireTime = (_p = option.onFireTime) !== null && _p !== void 0 ? _p : proj_comp.onFireTime;
+        proj_comp.owner = (_q = option.owner) !== null && _q !== void 0 ? _q : this._entity;
+        proj_comp.shouldBounceOnHit = (_r = option.shouldBounceOnHit) !== null && _r !== void 0 ? _r : proj_comp.shouldBounceOnHit;
+        proj_comp.stopOnHit = (_s = option.stopOnHit) !== null && _s !== void 0 ? _s : proj_comp.stopOnHit;
         let v = new Vector3(view);
         if (option.delay) {
             proj_comp.shoot(view.normalize().scl(0.05), shootOpt);
-            ExGame.runTimeout(() => {
+            ExGame._runTimeout(() => {
                 if (falseIfError(() => proj.isValid()))
                     proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
             }, option.delay * 20);

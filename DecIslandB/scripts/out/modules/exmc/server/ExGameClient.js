@@ -17,9 +17,9 @@ import ExActionAlert from "./ui/ExActionAlert.js";
 import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
-import ExGame from "./ExGame.js";
 import { MinecraftDimensionTypes } from "../../vanilla-data/lib/index.js";
-export default class ExGameClient {
+import ExContext from "./ExGameObject.js";
+export default class ExGameClient extends ExContext {
     debug_removeAllTag() {
         for (let i of this.exPlayer.getTags()) {
             this.exPlayer.removeTag(i);
@@ -37,8 +37,9 @@ export default class ExGameClient {
         return ExErrorQueue.getError();
     }
     constructor(server, id, player) {
+        super(server);
         this.debuggerChatTest = (e) => {
-            ExGame.run(() => {
+            this.run(() => {
                 if (e.message.startsWith("*/"))
                     ExGameConfig.console.info(eval(e.message.substring(2, e.message.length)));
             });
@@ -58,7 +59,7 @@ export default class ExGameClient {
         }
         notUtillTask(this, () => __awaiter(this, void 0, void 0, function* () {
             try {
-                let res = yield this.exPlayer.command.run(`testfor @s`);
+                let res = yield this.exPlayer.command.runAsync(`testfor @s`);
                 return true;
             }
             catch (e) {
@@ -92,6 +93,9 @@ export default class ExGameClient {
         else {
             return this.getServer().findClientByPlayer(name);
         }
+    }
+    getScreen() {
+        return this.player.onScreenDisplay;
     }
     setInterworkingPool(pool) {
         this._pool = pool;
@@ -137,6 +141,7 @@ export default class ExGameClient {
     onLeave() {
         this._events.cancelAll();
         ExPlayer.deleteInstance(this.player);
+        this.dispose();
     }
     getEvents() {
         return this._events;
@@ -158,24 +163,6 @@ export default class ExGameClient {
         for (let c of this.getServer().getClients()) {
             fun(c);
         }
-    }
-    setTimeout(fun, timeout) {
-        let time = 0;
-        let method = (e) => {
-            time += e.deltaTime * 1000;
-            if (time > timeout) {
-                this.getEvents().exEvents.tick.unsubscribe(method);
-                fun();
-            }
-        };
-        this.getEvents().exEvents.tick.subscribe(method);
-    }
-    stop(timeout) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve();
-            }, timeout);
-        });
     }
 }
 //# sourceMappingURL=ExGameClient.js.map

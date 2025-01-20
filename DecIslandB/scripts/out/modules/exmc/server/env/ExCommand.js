@@ -16,7 +16,7 @@ export default class ExCommand {
     constructor(runner) {
         this.runner = runner;
     }
-    run(str, ...entities) {
+    runAsync(str, ...entities) {
         if (typeof str === "string") {
             const p = new Promise((resolve, reject) => {
                 ExCommand.queue.push([this.runner, str, entities, resolve, reject]);
@@ -26,21 +26,21 @@ export default class ExCommand {
         else {
             let arr = [];
             for (let i of str) {
-                this.run(i, ...entities);
+                this.runAsync(i, ...entities);
             }
             return arr;
         }
     }
     static init(server) {
         this.queue = new Queue();
-        this.delay = ExSystem.tickTask(() => {
+        this.delay = ExSystem.tickTask(server, () => {
             let i = 0;
             while (ExCommand.queue.length > 0 && i < 100) {
                 const a = ExCommand.queue.shift();
                 i++;
                 if (a === undefined)
                     continue;
-                ExCommand.run(a[0], a[1], ...a[2]).then(e => {
+                ExCommand.runAsync(a[0], a[1], ...a[2]).then(e => {
                     a[3](e);
                 }).catch(e => {
                     a[4](e);
@@ -49,7 +49,7 @@ export default class ExCommand {
         }).delay(1);
         this.delay.start();
     }
-    static run(runner, cmd, ...entities) {
+    static runAsync(runner, cmd, ...entities) {
         return __awaiter(this, void 0, void 0, function* () {
             const arr = [];
             let p = yield runner.runCommandAsync(entities.length === 0 ? cmd : (format(cmd, entities.map(e => {
@@ -66,6 +66,16 @@ export default class ExCommand {
             }
             return p;
         });
+    }
+    run(str) {
+        if (str instanceof Array) {
+            for (let i of str) {
+                this.run(i);
+            }
+        }
+        else {
+            return this.runner.runCommand(str);
+        }
     }
 }
 //# sourceMappingURL=ExCommand.js.map

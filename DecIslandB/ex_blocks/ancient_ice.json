@@ -1,0 +1,37 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:ancient_ice",
+            "menu_category": {
+                "group": "itemGroup.name.outside",
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:light_dampening": 10,
+            "minecraft:light_emission": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 5
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 15
+            },
+            "minecraft:friction": 0.57,
+            "minecraft:map_color": "#547CC6",
+            "minecraft:loot": "loot_tables/blocks/ancient_ice.json",
+            "minecraft:tags": {
+                "tags": [
+                    "stone"
+                ]
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "ancient_ice",
+                    "render_method": "alpha_test"
+                }
+            }
+        }
+    }
+}

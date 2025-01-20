@@ -1,0 +1,37 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:snow_brick_block",
+            "menu_category": {
+                "group": "itemGroup.name.stoneBrick",
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:light_dampening": 15,
+            "minecraft:light_emission": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 10
+            },
+            "minecraft:friction": 0.5,
+            "minecraft:map_color": "#E0ECEC",
+            "minecraft:loot": "loot_tables/blocks/snow_brick_block.json",
+            "minecraft:tags": {
+                "tags": [
+                    "stone"
+                ]
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "snow_brick_block",
+                    "render_method": "alpha_test"
+                }
+            }
+        }
+    }
+}

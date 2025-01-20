@@ -31,8 +31,8 @@ export class DecTask {
             return;
         }
         if (this.commands) {
-            c.exPlayer.command.run(this.commands);
-            c.setTimeout(() => {
+            c.exPlayer.command.runAsync(this.commands);
+            c.runTimeout(() => {
                 if (c.exPlayer.hasTag('task_complete')) {
                     c.data.gameExperience += this.xps;
                     c.exPlayer.removeTag("task_complete");
@@ -47,7 +47,7 @@ export class DecTask {
     }
     dec_detect(ep) {
         if (this.commands) {
-            ep.command.run(this.commands);
+            ep.command.runAsync(this.commands);
         }
         if (this.conditions && this.respond) {
             if (this.conditions(ep)) {

@@ -9,7 +9,7 @@ export default class WarningAlertUI {
         return this._uiBody;
     }
     showPage() {
-        this._client.setTimeout(() => {
+        this._client.runTimeout(() => {
             let ui = new ExActionAlert()
                 .title("__pomAlertWarning")
                 .body(this._uiBody);

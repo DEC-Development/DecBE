@@ -8,6 +8,7 @@ import { MinecraftBlockTypes } from "../../../modules/vanilla-data/lib/index.js"
 import { MinecraftItemTypes } from "../../../modules/vanilla-data/lib/index.js";
 import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 import Random from "../../../modules/exmc/utils/Random.js";
+import { minecraft } from "../../../modules/exmc/utils/tool.js";
 export default class PomEnChantSystem extends GameController {
     onJoin() {
         this.getEvents().exEvents.afterItemOnHandChange.subscribe((e) => {
@@ -21,8 +22,8 @@ export default class PomEnChantSystem extends GameController {
                         if (item.hasComponentById("minecraft:enchantable")) {
                             const comp = item.getComponentById("minecraft:enchantable");
                             for (let i of lore.entries("enchants")) {
-                                if (comp.canAddEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(i[0]) })) {
-                                    comp.addEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(i[0]) });
+                                if (comp.canAddEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(minecraft(i[0])) })) {
+                                    comp.addEnchantment({ "level": parseInt(i[1]), "type": EnchantmentTypes.get(minecraft(i[0])) });
                                 }
                             }
                         }
@@ -47,7 +48,7 @@ export default class PomEnChantSystem extends GameController {
                 if (item) {
                     if (item.typeId === "wb:book_cache") {
                         PomEnChantSystem.blockTranslateData.set(new Vector3(block).toString(), item);
-                        this.setTimeout(() => {
+                        this.runTimeout(() => {
                             block.transTo("wb:block_translate_book");
                             bag.clearItem(bag.getSelectedSlot(), 1);
                         }, 0);
@@ -61,7 +62,7 @@ export default class PomEnChantSystem extends GameController {
                 const item = e.itemStack;
                 const saveItem = PomEnChantSystem.blockTranslateData.get(new Vector3(block).toString());
                 if (!saveItem) {
-                    this.setTimeout(() => {
+                    this.runTimeout(() => {
                         block.transTo("wb:block_translate");
                     }, 0);
                     return;
@@ -69,7 +70,7 @@ export default class PomEnChantSystem extends GameController {
                 if (saveItem) {
                     if (item && item.amount === 1) {
                         PomEnChantSystem.blockTranslateData.delete(new Vector3(block).toString());
-                        this.setTimeout(() => {
+                        this.runTimeout(() => {
                             let exHandItem = item;
                             let exSaveItem = saveItem;
                             let d = exSaveItem.getComponentById("minecraft:durability").damage;
@@ -131,10 +132,10 @@ export default class PomEnChantSystem extends GameController {
                 ];
                 if (item) {
                     if ((_a = this.client.talentSystem.itemOnHandComp) === null || _a === void 0 ? void 0 : _a.getComponent("equipment_type")) {
-                        this.client.sayTo("§b物品过于贵重");
+                        this.client.sayTo(this.lang.itemIsTooValuable);
                     }
                     else {
-                        this.setTimeout(() => {
+                        this.runTimeout(() => {
                             var _a, _b;
                             let m = new Map();
                             for (let i = (_a = (item.amount)) !== null && _a !== void 0 ? _a : 0; i > 0; i--) {
@@ -151,7 +152,7 @@ export default class PomEnChantSystem extends GameController {
                     }
                 }
                 else {
-                    this.client.sayTo("§b回收废物过大，处理失败");
+                    this.client.sayTo(this.lang.itemIsTooBig);
                 }
                 e.cancel = true;
             }

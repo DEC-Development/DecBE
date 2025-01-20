@@ -1,3 +1,4 @@
+import { ignorn } from '../ExErrorQueue.js';
 import { ContainerSlot, EquipmentSlot } from "@minecraft/server";
 export default class ExEntityBag {
     constructor(entity) {
@@ -7,10 +8,10 @@ export default class ExEntityBag {
     }
     getItem(arg) {
         if (typeof (arg) === "number") {
-            return this.bagComponent.container.getItem(arg);
+            return ignorn(() => this.bagComponent.container.getItem(arg));
         }
         if (arg in EquipmentSlot) {
-            return this.getEquipment(arg);
+            return ignorn(() => this.getEquipment(arg));
         }
         let search = this.searchItem(arg);
         if (!search) {

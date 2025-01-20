@@ -110,8 +110,8 @@
         "burst_interval": 1,
         "charge_charged_trigger": 0.0,
         "charge_shoot_trigger": 4.0,
-        "attack_interval_min": 2.0,
-        "attack_interval_max": 3.0,
+        "attack_interval_min": 1.0,
+        "attack_interval_max": 2.0,
         "attack_radius": 64.0
       },
         "minecraft:movement": {
@@ -181,7 +181,7 @@
 
     "events": {
       "minecraft:disappear": {
-        "run_command": {
+        "queue_command": {
           "command": [
             "particle dec:summon_staff_spawn_disappear ~~~",
             "event entity @s minecraft:despawn"

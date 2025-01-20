@@ -87,7 +87,7 @@ export default class PomDesertRuinBasicRule extends GameControllerRuinRule {
         super(game);
         this.tmpA = new Vector3();
         const addHealthListener = (damage) => {
-            this.client.magicSystem.additionHealth -= damage / 2;
+            this.client.magicSystem.additionHealth -= damage[0] / 2;
             if (this.client.magicSystem.additionHealth <= 0) {
                 game.exPlayer.removeHealth(game, 999);
             }

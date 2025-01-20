@@ -1,5 +1,8 @@
 import ExSystem from "../utils/ExSystem.js";
 export default class ExTaskRunner {
+    constructor(context) {
+        this.context = context;
+    }
     step() {
         this.tasks.next();
     }
@@ -11,7 +14,7 @@ export default class ExTaskRunner {
         const pro = new Promise((rs, rj) => {
             resolve = rs;
         });
-        this.tick = ExSystem.tickTask(() => {
+        this.tick = ExSystem.tickTask(this.context, () => {
             for (let i = 0; i < steps; i++)
                 this.step();
             if (this.isOver()) {

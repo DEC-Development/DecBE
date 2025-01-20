@@ -86,7 +86,7 @@ export default class DecBossBarrier {
                 if (!this.area.contains(e.entity.location)) {
                     if (this.players.get(e.entity)) {
                         // notUtillTask(this.server,() => ExPlayer.getInstance(e).getHealth()>0,()=>{
-                        this.server.setTimeout(() => {
+                        this.server.runTimeout(() => {
                             if (this.dim.dimension !== e.dimension) {
                                 e.addEffect(MinecraftEffectTypes.Resistance, 14 * 20, 10, false);
                                 e.addEffect(MinecraftEffectTypes.Weakness, 14 * 20, 10, false);
@@ -121,14 +121,14 @@ export default class DecBossBarrier {
             this.boss.exEntity.setPosition(this.area.center());
         }
         if (this.fog)
-            this.dim.command.run(`fog @a[x=${this.center.x},y=${this.center.y},z=${this.center.z},r=128] push ${this.fog} "ruin_fog"`);
+            this.dim.command.runAsync(`fog @a[x=${this.center.x},y=${this.center.y},z=${this.center.z},r=128] push ${this.fog} "ruin_fog"`);
     }
     stop() {
         this.clearFog();
         this.dispose();
     }
     clearFog() {
-        this.dim.command.run(`fog @a[x=${this.center.x},y=${this.center.y},z=${this.center.z},r=128] remove "ruin_fog"`);
+        this.dim.command.runAsync(`fog @a[x=${this.center.x},y=${this.center.y},z=${this.center.z},r=128] remove "ruin_fog"`);
     }
     changeFog(name) {
         this.fogListener.upDate(name);

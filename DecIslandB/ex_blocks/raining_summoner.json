@@ -1,0 +1,59 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dec:raining_summoner",
+            "menu_category": {
+                "group": "itemGroup.name.outside",
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:light_dampening": 15,
+            "minecraft:light_emission": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 10
+            },
+            "minecraft:map_color": "#ECECEC",
+            "minecraft:loot": "loot_tables/blocks/raining_summoner.json",
+            "minecraft:on_interact": {
+                "event": "activate",
+                "condition": "query.get_equipped_item_name('main_hand') == 'pulse_stone'"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "stone"
+                ]
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "north": "sides",
+                "south": "sides",
+                "east": "sides",
+                "west": "sides",
+                "sides": {
+                    "texture": "raining_summoner"
+                },
+                "up": {
+                    "texture": "weather_console_up"
+                },
+                "down": {
+                    "texture": "weather_console_down"
+                }
+            }
+        },
+        "events": {
+            "activate": {
+                "run_command": {
+                    "command": [
+                        "weather rain"
+                    ]
+                },
+                "decrement_stack": {}
+            }
+        }
+    }
+}

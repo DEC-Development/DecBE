@@ -53,7 +53,7 @@ export default class ExDimension {
     }
     digBlock(vec) {
         try {
-            this.command.run(`setBlock ${vec.x} ${vec.y} ${vec.z} air [] destroy`);
+            this.command.runAsync(`setBlock ${vec.x} ${vec.y} ${vec.z} air [] destroy`);
             return true;
         }
         catch (e) {
@@ -81,6 +81,9 @@ export default class ExDimension {
     }
     runCommandAsync(str) {
         return this._dimension.runCommandAsync(str);
+    }
+    runCommand(str) {
+        return this._dimension.runCommand(str);
     }
     static getInstance(source) {
         let dimension = source;

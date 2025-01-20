@@ -9,13 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent, Dimension } from "@minecraft/server";
+import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent, Dimension, EntityLoadAfterEvent } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
 import initConsole from "../utils/Console.js";
 import ExServerEvents from "./events/ExServerEvents.js";
 import UUID from "../utils/UUID.js";
 import ExErrorQueue from './ExErrorQueue.js';
-import ExTickQueue from "./ExTickQueue.js";
 import ExCommand from './env/ExCommand.js';
 import ExClientEvents from "./events/ExClientEvents.js";
 import ExEntityEvents from "./entity/ExEntityEvents.js";
@@ -26,8 +25,11 @@ import ExMusic from "./env/ExMusic.js";
 import { ExEventNames } from "./events/events.js";
 import ExSystem from "../utils/ExSystem.js";
 import Vector3 from "../utils/math/Vector3.js";
-export default class ExGameServer {
+import ExEntityPool from "./entity/ExEntityPool.js";
+import ExContext from "./ExGameObject.js";
+export default class ExGameServer extends ExContext {
     constructor(config) {
+        super(config.gameContext);
         this.entityControllers = new Map();
         this.playerIsInSet = new Set();
         this.clients = new Map();
@@ -46,7 +48,6 @@ export default class ExGameServer {
             }
             ExGameConfig.console = initConsole(ExGameConfig);
             ExErrorQueue.init();
-            ExTickQueue.init(this);
             ExCommand.init(this);
             ExClientEvents.init(this);
             ExEntityEvents.init(this);
@@ -79,10 +80,7 @@ export default class ExGameServer {
     getDynamicPropertyManager() {
         return world;
     }
-    _onEntitySpawn(e) {
-        this.onEntitySpawn(e);
-    }
-    onEntitySpawn(e) {
+    _onEntityLoad(e) {
         if (!e.entity.isValid())
             return;
         let id;
@@ -94,11 +92,28 @@ export default class ExGameServer {
         }
         const entityConstructor = this.entityControllers.get(e.entity.typeId);
         if (entityConstructor) {
-            new (entityConstructor)(e.entity, this);
+            if (!ExEntityPool.pool.has(e.entity)) {
+                ExEntityPool.pool.set(e.entity, new (entityConstructor)(e.entity, this, false));
+            }
+        }
+    }
+    _onEntitySpawn(e) {
+        if (!e.entity.isValid())
+            return;
+        let id;
+        try {
+            id = e.entity.typeId;
+        }
+        catch (e) {
+            return;
+        }
+        const entityConstructor = this.entityControllers.get(e.entity.typeId);
+        if (entityConstructor) {
+            ExEntityPool.pool.set(e.entity, new (entityConstructor)(e.entity, this, true));
         }
     }
     createEntityController(e, ec) {
-        return new ec(e, this);
+        return new ec(e, this, false);
     }
     getDimension(dimensionId) {
         return ExGameServer.dimensionMap.get(dimensionId);
@@ -185,32 +200,21 @@ export default class ExGameServer {
     newClient(id, player) {
         return new ExGameClient(this, id, player);
     }
-    setTimeout(fun, timeout) {
-        let time = 0;
-        let method = (e) => {
-            time += e.deltaTime * 1000;
-            if (time > timeout) {
-                this.getEvents().exEvents.tick.unsubscribe(method);
-                fun();
-            }
-        };
-        this.getEvents().exEvents.tick.subscribe(method);
-    }
 }
 ExGameServer.dimensionMap = new Map();
 ExGameServer.musicMap = new Map();
+__decorate([
+    registerEvent(ExEventNames.afterEntityLoad),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [EntityLoadAfterEvent]),
+    __metadata("design:returntype", void 0)
+], ExGameServer.prototype, "_onEntityLoad", null);
 __decorate([
     registerEvent(ExEventNames.afterEntitySpawn),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [EntitySpawnAfterEvent]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "_onEntitySpawn", null);
-__decorate([
-    registerEvent(ExEventNames.afterEntityLoad),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EntitySpawnAfterEvent]),
-    __metadata("design:returntype", void 0)
-], ExGameServer.prototype, "onEntitySpawn", null);
 __decorate([
     registerEvent(ExEventNames.afterPlayerJoin),
     __metadata("design:type", Function),

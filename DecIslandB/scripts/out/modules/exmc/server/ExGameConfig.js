@@ -19,5 +19,8 @@ export default class ExGameConfig {
             }
         });
     }
+    static runCommand(str) {
+        return world.getDimension(MinecraftDimensionTypes.overworld).runCommand(str);
+    }
 }
 //# sourceMappingURL=ExGameConfig.js.map

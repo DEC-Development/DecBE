@@ -47,7 +47,7 @@ export default class MenuUIAlert {
     }
     upDatePage() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._client.setTimeout(tofunc(() => __awaiter(this, void 0, void 0, function* () {
+            this._client.runTimeout(tofunc(() => __awaiter(this, void 0, void 0, function* () {
                 var _a, _b;
                 let page = this._uiJson[this.choose[0]].page;
                 if (typeof (page) === "function") {

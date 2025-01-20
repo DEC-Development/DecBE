@@ -34,7 +34,12 @@ export default class Random {
             return o[Random.choice(arr)];
         }
     }
+    randDouble(min, max) {
+        return min + this.nextDouble() * (max - min);
+    }
 }
+Random.random = new Random();
 Random.MAX_VALUE = ~(1 << 31);
 Random.MIN_VALUE = (1 << 31);
+export const random = new Random();
 //# sourceMappingURL=Random.js.map

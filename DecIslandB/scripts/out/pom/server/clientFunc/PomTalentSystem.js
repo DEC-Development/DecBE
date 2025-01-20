@@ -16,12 +16,16 @@ import PomOccupationSkillTrack from '../entities/PomOccupationSkillTrack.js';
 import damageShow from "../helper/damageShow.js";
 import GameController from "./GameController.js";
 import { MinecraftItemTypes } from '../../../modules/vanilla-data/lib/index.js';
+import Random from '../../../modules/exmc/utils/Random.js';
+import { MinecraftBlockTypes } from '../../../modules/vanilla-data/lib/index.js';
+import ExEntityQuery from '../../../modules/exmc/server/env/ExEntityQuery.js';
+import { canSweep } from '../items/isEquipment.js';
 export default class PomTalentSystem extends GameController {
     constructor() {
         super(...arguments);
         this.strikeSkill = true;
         this.talentRes = new Map();
-        this.skillLoop = ExSystem.tickTask(() => {
+        this.skillLoop = ExSystem.tickTask(this, () => {
             var _a;
             if (this.data.talent.occupation.id === Occupation.ASSASSIN.id)
                 this.strikeSkill = true;
@@ -78,9 +82,27 @@ export default class PomTalentSystem extends GameController {
             this.updatePlayerAttribute();
         }, "");
         this.skill_stateNum = [];
+        this.attackCooldown = 0;
+        this.maxAttackCooldown = 0;
+        this.attackCooldownLooper = ExSystem.tickTask(this, () => {
+            const maxFrame = 30;
+            if (this.attackCooldown < -10) {
+                this.attackCooldownLooper.stop();
+                this.player.setProperty("wb:attack_cooldown", -1);
+            }
+            else {
+                this.attackCooldown--;
+                this.player.setProperty("wb:attack_cooldown", Math.floor(maxFrame * (1 - Math.max(0.001, this.attackCooldown / this.maxAttackCooldown))));
+            }
+        }).delay(1);
         this.debugger = false;
         this.hasBeenDamaged = new MonitorManager();
         this.hasCauseDamage = new MonitorManager();
+    }
+    setCooldown(cooldown) {
+        this.attackCooldown = cooldown;
+        this.maxAttackCooldown = cooldown;
+        this.attackCooldownLooper.start();
     }
     chooseArmor(a) {
     }
@@ -154,6 +176,14 @@ export default class PomTalentSystem extends GameController {
         this.movementChanger.force();
     }
     onJoin() {
+        let ignornAttackSend = false;
+        ExGame.scriptEventReceive.addMonitor(e => {
+            if (e.sourceEntity == this.player && e.id == "wb:attack_send" && this.attackCooldown > 0 && !ignornAttackSend) {
+                this.setCooldown(this.maxAttackCooldown);
+            }
+            if (ignornAttackSend)
+                ignornAttackSend = false;
+        });
         this.getEvents().exEvents.onLongTick.subscribe(e => {
             if (e.currentTick % 20 === 0) {
                 const bag = this.exPlayer.getBag();
@@ -166,21 +196,22 @@ export default class PomTalentSystem extends GameController {
         });
         //玩家攻击生物增伤
         this.getEvents().exEvents.afterPlayerHitEntity.subscribe((e) => {
-            var _a, _b, _c, _d, _e, _f;
-            if (e.damage > 10000000)
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+            if (e.damage > 10000000 && e.hurtEntity.isValid())
                 return;
             let item = this.exPlayer.getBag().itemOnMainHand;
             let damageFac = 0;
             let extraDamage = 0;
             let target = ExEntity.getInstance(e.hurtEntity);
+            let targetHealth = target.health;
             let dis = target.position.distance(this.exPlayer.position);
             let CLOAD_PIERCING = (_a = this.talentRes.get(Talent.CLOAD_PIERCING)) !== null && _a !== void 0 ? _a : 0;
             damageFac += MathUtil.clamp(dis, 28, 64) / 64 * CLOAD_PIERCING / 100;
-            if (this.data.talent.occupation.id === Occupation.WARLOCK.id && ((_b = this.itemOnHandComp) === null || _b === void 0 ? void 0 : _b.getComponentWithGroup("equipment_type").data) === "magic_weapon" && e.damageSource.cause !== EntityDamageCause.magic) {
+            if (this.data.talent.occupation.id === Occupation.WARLOCK.id && ((_b = this.itemOnHandComp) === null || _b === void 0 ? void 0 : _b.getComponentWithGroup("equipment_type").tagName) === "magic_weapon" && e.damageSource.cause !== EntityDamageCause.magic) {
                 let scores = this.exPlayer.getScoresManager();
                 let extraFl = scores.getScore("wbfl") - 100;
                 if (extraFl > 0) {
-                    ExGame.runTimeout(() => {
+                    this.runTimeoutByTick(() => {
                         e.hurtEntity.applyDamage(extraFl / 100 * e.damage, {
                             "cause": EntityDamageCause.magic,
                             "damagingEntity": this.player
@@ -204,29 +235,81 @@ export default class PomTalentSystem extends GameController {
                 this.strikeSkill = false;
                 damageFac += SUDDEN_STRIKE / 100;
             }
+            let skipPar = false;
+            if (this.attackCooldown <= 0) {
+                damageFac += 0.1;
+                if ((canSweep((_g = item === null || item === void 0 ? void 0 : item.typeId) !== null && _g !== void 0 ? _g : "") ||
+                    ((_h = this.itemOnHandComp) === null || _h === void 0 ? void 0 : _h.getComponentWithGroup("equipment_type").match("melee_weapon", "sword")) ||
+                    ((_j = this.itemOnHandComp) === null || _j === void 0 ? void 0 : _j.getComponentWithGroup("equipment_type").match("melee_weapon", "dagger")) ||
+                    ((_k = this.itemOnHandComp) === null || _k === void 0 ? void 0 : _k.getComponentWithGroup("equipment_type").match("melee_weapon", "katana")))
+                    && ((_l = this.getExDimension().getBlock(this.exPlayer.position.sub(0, 0.4, 0))) === null || _l === void 0 ? void 0 : _l.typeId) === MinecraftBlockTypes.Air) {
+                    skipPar = true;
+                    damageFac += 0.1;
+                }
+                else {
+                    this.getDimension().spawnParticle("wb:attack_heavy", e.hurtEntity.location);
+                }
+            }
+            else {
+                damageFac -= 0.4;
+            }
             damageFac += (this.client.getDifficulty().damageAddFactor - 1);
             extraDamage += this.attack_addition;
             let damage = e.damage * damageFac + extraDamage;
             if (this.globalSettings.damageShow) {
                 damageShow(this.getExDimension(), e.damage + damage, target.entity.location);
             }
-            this.hasCauseDamage.trigger(e.damage + damage, e.hurtEntity);
+            this.hasCauseDamage.trigger([e.damage + damage, e.hurtEntity]);
             usetarget = e.hurtEntity;
-            let g = target.health;
-            if (damage >= g && g > 0) {
+            if (damage >= targetHealth && targetHealth > 0) {
                 target.entity.applyDamage(99999999, {
                     "cause": EntityDamageCause.entityAttack,
                     "damagingEntity": this.player
                 });
             }
+            if (damage >= targetHealth && (canSweep((_m = item === null || item === void 0 ? void 0 : item.typeId) !== null && _m !== void 0 ? _m : "") ||
+                ((_o = this.itemOnHandComp) === null || _o === void 0 ? void 0 : _o.getComponentWithGroup("equipment_type").match("melee_weapon", "sword")) ||
+                ((_p = this.itemOnHandComp) === null || _p === void 0 ? void 0 : _p.getComponentWithGroup("equipment_type").match("melee_weapon", "dagger")) ||
+                ((_q = this.itemOnHandComp) === null || _q === void 0 ? void 0 : _q.getComponentWithGroup("equipment_type").match("melee_weapon", "katana")))) {
+                skipPar = false;
+                if (this.attackCooldown <= 0) {
+                    this.getDimension().spawnParticle("dec:the_blade_particle", target.position.sub(0, 0.8, 0));
+                    new ExEntityQuery(this.getDimension())
+                        .at(this.exPlayer.position)
+                        .querySector(5, 2, this.exPlayer.viewDirection, 45, 0, {
+                        excludeTypes: ["minecraft:item"]
+                    })
+                        .except(this.player)
+                        .except(target.entity)
+                        .forEach(en => {
+                        en.applyDamage(e.damage, {
+                            "cause": EntityDamageCause.entityAttack,
+                            "damagingEntity": this.player
+                        });
+                    });
+                    this.player.playSound("attack.sword.sweep", {
+                        "pitch": Random.random.randDouble(0.8, 1.2),
+                        "volume": 0.55
+                    });
+                }
+            }
+            if (skipPar) {
+                this.player.playSound("attack.sword.heavy_hit", {
+                    "pitch": Random.random.randDouble(0.8, 1.2),
+                    "volume": 0.55
+                });
+                this.getDimension().spawnParticle("dec:iron_sickle_particle", e.hurtEntity.location);
+            }
             target.removeHealth(this, damage);
+            ignornAttackSend = true;
+            this.setCooldown(10);
         });
         let lastResist = 0;
         //玩家减伤
         this.afterHurtListener = this.getEvents().exEvents.afterPlayerHurt.subscribe((e) => {
             var _a, _b;
             if (this.client.magicSystem.isDied) {
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     this.client.magicSystem.isDied = false;
                 }, 2500);
                 return;
@@ -258,7 +341,7 @@ export default class PomTalentSystem extends GameController {
                 willdamage *= (1 - this.client.getDifficulty().physicalDefenseAddFactor);
                 willdamage -= this.armor_protection[6];
             }
-            let add = Math.min(damage - willdamage, damage - 1);
+            let add = Math.min(damage - willdamage, damage - 0.2);
             let anotherAdd = 0;
             if (PomTalentSystem.physicalDamageType.has(e.damageSource.cause)) {
                 let remain = this.client.magicSystem.tryReduceDamageAbsorbed(damage - add);
@@ -269,18 +352,27 @@ export default class PomTalentSystem extends GameController {
                 anotherAdd += (damage - add) - (remain);
             }
             add += anotherAdd;
+            if (!this.client.magicSystem.healthHeavyHitShower.isStarted() && damage - add > this.client.magicSystem.gameMaxHealth / 2) {
+                this.client.magicSystem.healthHeavyHit = this.calculateHealth;
+                this.client.magicSystem.healthHeavyHitShower.startOnce();
+                this.exPlayer.cameraShake(0.1, 0.2, "rotational");
+                this.player.playSound("hurted.heavily.boom", {
+                    "volume": 0.8,
+                    "pitch": Random.random.randDouble(0.8, 1.2)
+                });
+            }
             this.calculateHealth = this.calculateHealth - damage + add;
             if (this.calculateHealth <= 0) {
                 const clnE = Object.assign({}, e.damageSource);
-                ExGame.run(() => {
+                this.run(() => {
                     var _a, _b;
                     try {
                         let bag = this.exPlayer.getBag();
                         const armor_pitch = [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet];
                         const item_main = bag.itemOnMainHand;
                         const item_off = bag.itemOnOffHand;
-                        if ((item_main === null || item_main === void 0 ? void 0 : item_main.typeId) == MinecraftItemTypes.TotemOfUndying || (item_off === null || item_off === void 0 ? void 0 : item_off.typeId) == MinecraftItemTypes.TotemOfUndying) {
-                            this.setTimeout(() => {
+                        if (((item_main === null || item_main === void 0 ? void 0 : item_main.typeId) == MinecraftItemTypes.TotemOfUndying || (item_off === null || item_off === void 0 ? void 0 : item_off.typeId) == MinecraftItemTypes.TotemOfUndying)) {
+                            this.runTimeout(() => {
                                 [bag.equipmentOnHead, bag.equipmentOnChest, bag.equipmentOnLegs, bag.equipmentOnFeet] = armor_pitch;
                             }, 100);
                         }
@@ -305,12 +397,16 @@ export default class PomTalentSystem extends GameController {
                         });
                     }
                     this.client.magicSystem.isDied = true;
+                    this.data.pointRecord.deathPoint.push([this.getDimension().id, this.exPlayer.position.round()]);
+                    if (this.data.pointRecord.deathPoint.length > 5) {
+                        this.data.pointRecord.deathPoint.shift();
+                    }
                 });
                 return;
             }
             this.client.magicSystem.addGameHealth += add;
             // this.exPlayer.addHealth(this, add);
-            this.hasBeenDamaged.trigger(e.damage - add, e.damageSource.damagingEntity);
+            this.hasBeenDamaged.trigger([e.damage - add, e.damageSource.damagingEntity]);
         });
         let lastListener = (d) => { };
         this.getEvents().exEvents.afterItemOnHandChange.subscribe((e) => {
@@ -325,33 +421,29 @@ export default class PomTalentSystem extends GameController {
                     comp.setGroup(comp.dataGroupJudge(this.client));
                     let base = [];
                     if (comp.hasComponent("actual_level"))
-                        base.push(`§r§e基础属性` + "  §r§6LV." + comp.getComponentWithGroup("actual_level"));
+                        base.push(`§r§e` + this.lang.armorProperty + "  §r§6LV." + comp.getComponentWithGroup("actual_level"));
                     if (comp.hasComponent("armor_protection"))
-                        base.push("§r§7•护甲值§6+" + comp.getComponentWithGroup("armor_protection") + "§r§7 | 护甲韧性§6+" + comp.getComponentWithGroup("armor_resilience"));
+                        base.push("§r§7•" + this.lang.armorProtection + "§6+" + comp.getComponentWithGroup("armor_protection") + "§r§7 | " + this.lang.armorResilience + "§6+" + comp.getComponentWithGroup("armor_resilience"));
                     if (comp.hasComponent("armor_type")) {
-                        //let typeMsg = comp.getComponentWithGroup("armor_type");
-                        //lore.setValueUseDefault("盔甲类型", typeMsg.tagName + ": " + typeMsg.data);
-                        // if (comp.hasComponent("armor_physical_protection")) base.push("§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 受到的物理伤害§6-" + comp.getComponentWithGroup("armor_physical_reduction") ?? 0);
-                        // if (comp.hasComponent("armor_magic_protection")) base.push("§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 受到的魔法伤害§6-" + comp.getComponentWithGroup("armor_magic_reduction") ?? 0);
                         if (comp.hasComponent("armor_physical_protection"))
-                            base.push("§r§7•物理抗性§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | 物理防御§6+" + comp.getComponentWithGroup("armor_physical_reduction"));
+                            base.push("§r§7•" + this.lang.physicalProtection + "§6+" + comp.getComponentWithGroup("armor_physical_protection") + "％§r§7 | " + this.lang.physicalReduction + "§6+" + comp.getComponentWithGroup("armor_physical_reduction"));
                         if (comp.hasComponent("armor_magic_protection"))
-                            base.push("§r§7•魔法抗性§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | 魔法防御§6+" + comp.getComponentWithGroup("armor_magic_reduction"));
+                            base.push("§r§7•" + this.lang.magicalProtection + "§6+" + comp.getComponentWithGroup("armor_magic_protection") + "％§r§7 | " + this.lang.magicalReduction + "§6+" + comp.getComponentWithGroup("armor_magic_reduction"));
                     }
                     let smove = (_a = comp.getComponentWithGroup("sneak_movement_addition")) !== null && _a !== void 0 ? _a : 0;
                     if (comp.hasComponent("movement_addition")) {
-                        base.push("§r§7•移动速度§6+" + comp.getComponentWithGroup("movement_addition"));
+                        base.push("§r§7•" + this.lang.movement + "§6+" + comp.getComponentWithGroup("movement_addition"));
                         if (comp.hasComponent("sneak_movement_addition"))
-                            base[base.length - 1] += ("§r§7 | 潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
+                            base[base.length - 1] += ("§r§7 | " + this.lang.sneakingMovement + (smove < 0 ? "§c" + smove : "§6+" + smove));
                     }
                     else if (comp.hasComponent("sneak_movement_addition"))
-                        base.push("§r§7•潜行移速" + (smove < 0 ? "§c" + smove : "§6+" + smove));
+                        base.push("§r§7•" + this.lang.sneakingMovement + (smove < 0 ? "§c" + smove : "§6+" + smove));
                     if (comp.hasComponent("attack_addition")) {
-                        base.push("§r§7•攻击伤害§6+" + comp.getComponentWithGroup("attack_addition"));
+                        base.push("§r§7•" + this.lang.attackDamage + "§6+" + comp.getComponentWithGroup("attack_addition"));
                     }
                     if (comp.hasComponent("equipment_type")) {
                         if (e.afterItem.typeId.startsWith("dec:")) {
-                            base.push("§r§7•在主手时: +20％§7攻击伤害");
+                            base.push("§r§7•" + this.lang.onTheMainHand + ": +20％§7" + this.lang.attackDamage);
                         }
                         // let typeMsg = comp.getComponentWithGroup("equipment_type");
                         // lore.setValueUseDefault("武器类型", typeMsg.tagName + ": " + typeMsg.data);
@@ -369,12 +461,12 @@ export default class PomTalentSystem extends GameController {
                         let damage = 0;
                         this.hasCauseDamage.removeMonitor(lastListener);
                         lastListener = (d) => {
-                            damage += d;
-                            maxSingleDamage = Math.ceil(Math.max(d, maxSingleDamage));
+                            damage += d[0];
+                            maxSingleDamage = Math.ceil(Math.max(d[0], maxSingleDamage));
                         };
                         this.hasCauseDamage.addMonitor(lastListener);
                         (_d = this.equiTotalTask) === null || _d === void 0 ? void 0 : _d.stop();
-                        (this.equiTotalTask = ExSystem.tickTask(() => {
+                        (this.equiTotalTask = ExSystem.tickTask(this, () => {
                             var _a, _b, _c, _d;
                             let shouldUpstate = false;
                             maxSecondaryDamage = Math.ceil(Math.max(maxSecondaryDamage, damage / 5));
@@ -437,7 +529,7 @@ export default class PomTalentSystem extends GameController {
                     }
                     this.skill_stateNum[0] += 1;
                 }
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     this.exPlayer.selectedSlotIndex = e.beforeSlot;
                 }, (0));
             }
@@ -451,14 +543,14 @@ export default class PomTalentSystem extends GameController {
             if (data.message.startsWith(">/_debugger")) {
                 if (!this.debugger) {
                     this.debugger = true;
-                    ExGame.run(() => {
+                    this.run(() => {
                         let resetTime = 5;
                         this.client.magicSystem.registActionbarPass("debugger");
-                        this.hasBeenDamaged.addMonitor(e => {
+                        this.hasBeenDamaged.addMonitor(([e, _]) => {
                             testBeDamaged += e;
                             resetTime = 5;
                         });
-                        this.hasCauseDamage.addMonitor(e => {
+                        this.hasCauseDamage.addMonitor(([e, _]) => {
                             testCauseDamage += e;
                             resetTime = 5;
                         });
@@ -492,6 +584,7 @@ export default class PomTalentSystem extends GameController {
                     testBeDamaged = 0;
                     testCauseDamage = 0;
                     testRoundDamage = 0;
+                    56;
                     delay = 0;
                 }
             }
@@ -509,7 +602,7 @@ export default class PomTalentSystem extends GameController {
         })(this);
         //职业重选
         if (TalentData.hasOccupation(this.data.talent) && !this.player.hasTag("_talentUpdate")) {
-            this.sayTo("§b[注意]本次更新后需重新选职业和加点");
+            this.sayTo(this.lang.updaterechooseNotice);
             this.data.talent.occupation = Occupation.EMPTY;
             this.data.talent.talents = [];
             this.data.talent.pointUsed = 0;

@@ -15,6 +15,7 @@ export default class ExEntityEvents {
         this.eventHandlers.init(s);
     }
     constructor(ctrl) {
+        this.monitorMapBackup = {};
         this.exEvents = {
             [ExEventNames.beforeItemUse]: new Listener(this, ExEventNames.beforeItemUse),
             [ExEventNames.afterItemUse]: new Listener(this, ExEventNames.afterItemUse),
@@ -26,9 +27,14 @@ export default class ExEntityEvents {
             [ExOtherEventNames.beforeTick]: new Listener(this, ExOtherEventNames.beforeTick),
             [ExEventNames.afterPlayerBreakBlock]: new Listener(this, ExEventNames.afterPlayerBreakBlock),
             [ExEventNames.afterEntityDie]: new Listener(this, ExEventNames.afterEntityDie),
-            [ExEventNames.afterEntityRemove]: new Listener(this, ExEventNames.afterEntityRemove)
+            [ExEventNames.afterEntityRemove]: new Listener(this, ExEventNames.afterEntityRemove),
+            [ExEventNames.beforeEntityRemove]: new Listener(this, ExEventNames.beforeEntityRemove),
+            [ExEventNames.afterEntityLoad]: new Listener(this, ExEventNames.afterEntityLoad)
         };
         this._ctrl = ctrl;
+        this.exEvents[ExOtherEventNames.tick] = ctrl.tickMonitor;
+        this.exEvents[ExOtherEventNames.onLongTick] = ctrl.longTickMonitor;
+        this.exEvents[ExOtherEventNames.beforeTick] = ctrl.beforeTickMonitor;
     }
     register(name, fun) {
         let func = fun;
@@ -41,6 +47,27 @@ export default class ExEntityEvents {
         if (name in this.exEvents) {
             return this.exEvents[name].unsubscribe(fun);
         }
+    }
+    stopContext() {
+        if (ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.onLongTick].has(this._ctrl.entity)) {
+            this.monitorMapBackup[ExOtherEventNames.onLongTick] =
+                ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.onLongTick].get(this._ctrl.entity);
+            ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.onLongTick].delete(this._ctrl.entity);
+        }
+        if (ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.tick].has(this._ctrl.entity)) {
+            this.monitorMapBackup[ExOtherEventNames.tick] =
+                ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.tick].get(this._ctrl.entity);
+            ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.tick].delete(this._ctrl.entity);
+        }
+    }
+    startContext() {
+        if (ExOtherEventNames.tick in this.monitorMapBackup) {
+            ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.tick].set(this._ctrl.entity, this.monitorMapBackup[ExOtherEventNames.tick]);
+        }
+        if (ExOtherEventNames.onLongTick in this.monitorMapBackup) {
+            ExEntityEvents.eventHandlers.monitorMap[ExOtherEventNames.onLongTick].set(this._ctrl.entity, this.monitorMapBackup[ExOtherEventNames.onLongTick]);
+        }
+        this.monitorMapBackup = {};
     }
 }
 ExEntityEvents.eventHandlers = new EventHandle();
@@ -58,10 +85,10 @@ ExEntityEvents.exEventSetting = {
         }
     },
     [ExOtherEventNames.tick]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
+        pattern: (registerName, k) => { }
     },
     [ExOtherEventNames.beforeTick]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEventCanErr
+        pattern: (registerName, k) => { }
     },
     [ExEventNames.afterEntityHitBlock]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
@@ -84,7 +111,7 @@ ExEntityEvents.exEventSetting = {
         name: ExEventNames.afterEntityHurt
     },
     [ExOtherEventNames.onLongTick]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
+        pattern: (registerName, k) => { }
     },
     [ExEventNames.afterPlayerBreakBlock]: {
         pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
@@ -93,10 +120,33 @@ ExEntityEvents.exEventSetting = {
         }
     },
     [ExEventNames.afterEntityDie]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
+        pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "deadEntity"
+        }
     },
     [ExEventNames.afterEntityRemove]: {
-        pattern: ExEntityEvents.eventHandlers.registerToServerByServerEvent
+        pattern: (registerName, k) => {
+            ExEntityEvents.eventHandlers.server.getEvents().register(registerName, (e) => {
+                for (let [key, value] of ExEntityEvents.eventHandlers.monitorMap[k]) {
+                    if (key.id === e.removedEntityId) {
+                        value.trigger(e);
+                    }
+                }
+            });
+        }
+    },
+    [ExEventNames.beforeEntityRemove]: {
+        pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "removedEntity"
+        }
+    },
+    [ExEventNames.afterEntityLoad]: {
+        pattern: ExEntityEvents.eventHandlers.registerToServerByEntity,
+        filter: {
+            "name": "entity"
+        }
     }
 };
 ExEntityEvents.onHandItemMap = new Map();

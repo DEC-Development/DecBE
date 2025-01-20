@@ -1,6 +1,8 @@
 import ExGameConfig from "../../../modules/exmc/server/ExGameConfig.js";
-export default class GameController {
+import ExContext from "../../../modules/exmc/server/ExGameObject.js";
+export default class GameController extends ExContext {
     constructor(client) {
+        super(client);
         this._client = client;
     }
     get exPlayer() {
@@ -27,11 +29,8 @@ export default class GameController {
     runCommandAsync(str) {
         return ExGameConfig.runCommandAsync(str);
     }
-    setTimeout(fun, timeout) {
-        this._client.setTimeout(fun, timeout);
-    }
-    stop(timeout) {
-        return this._client.stop(timeout);
+    runCommand(str) {
+        return ExGameConfig.runCommand(str);
     }
     getDimension(type = undefined) {
         return this._client.getDimension(type);
@@ -49,6 +48,9 @@ export default class GameController {
         this._client.sayTo(str, p);
     }
     getLang() {
+        return this._client.getLang();
+    }
+    get lang() {
         return this._client.getLang();
     }
 }

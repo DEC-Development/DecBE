@@ -1,9 +1,9 @@
 export default class BidirectionalMap extends Map {
     has(key) {
-        return this.has(key);
+        return super.has(key);
     }
     get(key) {
-        return this.get(key);
+        return super.get(key);
     }
     set(key, value) {
         super.set(key, value);
@@ -11,7 +11,14 @@ export default class BidirectionalMap extends Map {
         return this;
     }
     delete(key) {
-        return super.delete(key) && super.delete(this.get(key));
+        if (!this.has(key))
+            return false;
+        const value = this.get(key);
+        if (value === undefined)
+            return false;
+        super.delete(key);
+        super.delete(value);
+        return true;
     }
 }
 //# sourceMappingURL=BidirectionalMap.js.map

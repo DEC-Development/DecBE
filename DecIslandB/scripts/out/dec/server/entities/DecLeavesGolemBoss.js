@@ -1,7 +1,7 @@
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecLeavesGolemBoss extends DecCommonBossLastStage {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.wooden_heart");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
@@ -10,8 +10,8 @@ export class DecLeavesGolemBoss extends DecCommonBossLastStage {
         this.music.stop();
         super.onDestroy();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 //# sourceMappingURL=DecLeavesGolemBoss.js.map

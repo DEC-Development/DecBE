@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.50",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dec:rosemary",
+            "menu_category": {
+                "group": "itemGroup.name.flower",
+                "is_hidden_in_commands": false,
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "item.dec:rosemary.name"
+            },
+            "minecraft:icon": {
+                "texture": "rosemary"
+            },
+            "minecraft:block_placer": {
+                "block": "dec:rosemary_crop"
+            }
+        }
+    }
+}

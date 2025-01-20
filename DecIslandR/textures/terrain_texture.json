@@ -1283,6 +1283,11 @@
       "textures": [
         "textures/blocks/yellow_butterfly_flower_crop"
       ]
+    },
+    "flesh_block": {
+      "textures": [
+        "textures/blocks/flesh_block"
+      ]
     }
   }
 }

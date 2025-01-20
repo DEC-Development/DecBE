@@ -10,12 +10,12 @@ export function falseIfError(func) {
         return false;
     }
 }
-export function undefIfError(func) {
-    try {
-        return func();
+export function minecraft(str) {
+    if (str.startsWith("minecraft:")) {
+        return str;
     }
-    catch (err) {
-        return undefined;
+    else {
+        return "minecraft:" + str;
     }
 }
 //# sourceMappingURL=tool.js.map

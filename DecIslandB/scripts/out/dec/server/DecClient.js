@@ -35,7 +35,7 @@ export default class DecClient extends ExGameClient {
     }
     onJoin() {
         super.onJoin();
-        this.exPlayer.command.run('fog @s remove \"night_event\"');
+        this.exPlayer.command.runAsync('fog @s remove \"night_event\"');
         this.getEvents().exEvents.onLongTick.subscribe((e) => {
             if (e.currentTick % 40 === 0) {
                 this.totemEffect('dec:gingerbread_totem', ['function item/gingerbread_totem']);
@@ -105,17 +105,17 @@ export default class DecClient extends ExGameClient {
             if (this.exPlayer.health <= 0) {
                 if (this.bossBarrier)
                     this.bossBarrier.notifyDeathAdd();
-                this.exPlayer.command.run('function die/normal');
+                this.exPlayer.command.runAsync('function die/normal');
                 world.setDynamicProperty('AlreadyDie', true);
                 this.exPlayer.entity.setDynamicProperty('AlreadyDie', true);
                 if (this.globalscores.getNumber('DieMode') === 1) {
                     //死亡模式
-                    this.exPlayer.command.run('function die/die_mode');
+                    this.exPlayer.command.runAsync('function die/die_mode');
                 }
                 else {
                     //非死亡模式
                     if (MathUtil.randomInteger(1, 3) == 1) {
-                        this.exPlayer.command.run('function die/ghost');
+                        this.exPlayer.command.runAsync('function die/ghost');
                     }
                 }
             }
@@ -195,9 +195,9 @@ export default class DecClient extends ExGameClient {
                             }
                             catch (e) { }
                         }
-                        this.exPlayer.addEffect(MinecraftEffectTypes.FireResistance, 5 * 20, 0);
                         this.exPlayer.addEffect(MinecraftEffectTypes.Absorption, 1 * 20, 0);
-                        this.exPlayer.command.run("function EPIC/armor/sunlight");
+                        this.exPlayer.addEffect(MinecraftEffectTypes.FireResistance, 5 * 20, 0);
+                        this.exPlayer.command.runAsync("function EPIC/armor/sunlight");
                         this.exPlayer.removeTag("skill_user");
                         break;
                 }
@@ -210,16 +210,16 @@ export default class DecClient extends ExGameClient {
                 const tmpV = new Vector3();
                 switch (this.useArmor) {
                     case ArmorPlayerPom.bloodsucking:
-                        this.exPlayer.command.run("function armor/bloodsucking");
+                        this.exPlayer.command.runAsync("function armor/bloodsucking");
                         break;
                     case ArmorPlayerPom.senior_bloodsucking:
-                        this.exPlayer.command.run("function armor/bloodsucking2");
+                        this.exPlayer.command.runAsync("function armor/bloodsucking2");
                         break;
                     case ArmorPlayerPom.senior_seal:
-                        this.exPlayer.command.run("function armor/seal2");
+                        this.exPlayer.command.runAsync("function armor/seal2");
                         break;
                     case ArmorPlayerPom.seal:
-                        this.exPlayer.command.run("function armor/seal");
+                        this.exPlayer.command.runAsync("function armor/seal");
                         break;
                     case ArmorPlayerPom.senior_water:
                         for (let e of this.getExDimension().getEntities({
@@ -237,7 +237,7 @@ export default class DecClient extends ExGameClient {
                             }
                             catch (e) { }
                         }
-                        this.exPlayer.command.run("function armor/water2");
+                        this.exPlayer.command.runAsync("function armor/water2");
                         break;
                     case ArmorPlayerPom.water:
                         for (let e of this.getExDimension().getEntities({
@@ -255,29 +255,29 @@ export default class DecClient extends ExGameClient {
                             }
                             catch (e) { }
                         }
-                        this.exPlayer.command.run("function armor/water");
+                        this.exPlayer.command.runAsync("function armor/water");
                         break;
                     case ArmorPlayerPom.senior_equipment:
-                        this.exPlayer.command.run("function armor/equipment2");
+                        this.exPlayer.command.runAsync("function armor/equipment2");
                         break;
                     case ArmorPlayerPom.equipment:
-                        this.exPlayer.command.run("function armor/equipment");
+                        this.exPlayer.command.runAsync("function armor/equipment");
                         break;
                     case ArmorPlayerPom.senior_forget:
-                        this.exPlayer.command.run("function armor/forget2");
+                        this.exPlayer.command.runAsync("function armor/forget2");
                         break;
                     case ArmorPlayerPom.forget:
-                        this.exPlayer.command.run("function armor/forget");
+                        this.exPlayer.command.runAsync("function armor/forget");
                         break;
                     case ArmorPlayerPom.senior_ink:
                         this.exPlayer.addHealth(this, e.damage);
                         // this.exPlayer.health += e.damage;
-                        this.exPlayer.command.run("function armor/ink2");
+                        this.exPlayer.command.runAsync("function armor/ink2");
                         break;
                     case ArmorPlayerPom.ink:
                         // this.exPlayer.health += e.damage;
                         this.exPlayer.addHealth(this, e.damage);
-                        this.exPlayer.command.run("function armor/ink");
+                        this.exPlayer.command.runAsync("function armor/ink");
                         break;
                 }
             }
@@ -352,14 +352,14 @@ export default class DecClient extends ExGameClient {
                 p.removeTag("dOverworld");
                 p.removeTag("dTheEnd");
                 if (e.currentTick % 80 === 0)
-                    ep.command.run("fog @s remove \"night_event\"");
+                    ep.command.runAsync("fog @s remove \"night_event\"");
             }
             else if (p.dimension.id === MinecraftDimensionTypes.theEnd) {
                 p.addTag("dTheEnd");
                 p.removeTag("dNether");
                 p.removeTag("dOverworld");
                 if (e.currentTick % 80 === 0)
-                    ep.command.run("fog @s remove \"night_event\"");
+                    ep.command.runAsync("fog @s remove \"night_event\"");
             }
             if (e.currentTick % 20 === 0) {
                 //深渊之翼
@@ -370,10 +370,10 @@ export default class DecClient extends ExGameClient {
                 //紫水晶套装效果
                 if (this.useArmor === ArmorPlayerDec.amethyst) {
                     if (DecGlobal.isDec()) {
-                        let mg = scores.getScore("wbfl");
+                        let mg = scores.getScore("magicpoint");
                         if (11 <= mg && mg <= 29) {
                             this.getExDimension().spawnParticle("dec:amethyst_armor_magic_increase_particle", p.location);
-                            scores.addScore("wbfl", 1);
+                            scores.addScore("magicpoint", 1);
                         }
                     }
                     else {
@@ -405,10 +405,10 @@ export default class DecClient extends ExGameClient {
                 //木叶套装效果
                 if (this.useArmor === ArmorPlayerDec.wood) {
                     if (DecGlobal.isDec()) {
-                        let mg = scores.getScore("wbfl");
+                        let mg = scores.getScore("magicpoint");
                         if (mg <= 15) {
                             this.getExDimension().spawnParticle("dec:wood_armor_magic_increase_particle", p.location);
-                            scores.addScore("wbfl", 5);
+                            scores.addScore("magicpoint", 5);
                         }
                     }
                     else {
@@ -421,7 +421,7 @@ export default class DecClient extends ExGameClient {
                 }
             }
             if (scores.getScore('i_heavy') > 0) { //防末影珍珠的放function/global里的
-                this.exPlayer.command.run('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
+                this.exPlayer.command.runAsync('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
             }
             //Dec的魔法系统
             if (DecGlobal.isDec()) {
@@ -483,7 +483,7 @@ export default class DecClient extends ExGameClient {
             //魔法卷轴
             if (e.itemStack.typeId == "dec:magic_scroll_blue") {
                 const i = e.itemStack;
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     if (DecGlobal.isDec())
                         taskUi(this, i);
                     else
@@ -496,19 +496,19 @@ export default class DecClient extends ExGameClient {
                 let cur_hunter_z = this.globalscores.getNumber('hunter_z');
                 if (this.globalscores.getNumber('hunter_x') == undefined || this.globalscores.getNumber('hunter_z') == undefined || this.globalscores.getNumber('hunter_x') == 0 || this.globalscores.getNumber('hunter_z') == 0) {
                     hunter_reset();
-                    this.exPlayer.command.run(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
+                    this.exPlayer.command.runAsync(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
                         'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }']);
                 }
                 else if (cur_hunter_x - 3 <= e.source.location.x && cur_hunter_x + 3 >= e.source.location.x && cur_hunter_z - 3 <= e.source.location.z && cur_hunter_z + 3 >= e.source.location.z) {
                     hunter_reset();
-                    this.exPlayer.command.run(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }',
+                    this.exPlayer.command.runAsync(['tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_success.name" } ] }',
                         'tellraw @a { "rawtext" : [ { "translate" : "text.dec:hunter_book_new.name" } ] }',
                         'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }',
                         'xp ' + (5000 + Math.random() * 4000) + ' @s',
                         'loot give @s loot "items/hunter_book"']);
                 }
                 else {
-                    this.exPlayer.command.run(['tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }',
+                    this.exPlayer.command.runAsync(['tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_not_complete.name" } ] }',
                         'tellraw @s { "rawtext" : [ { "translate" : "text.dec:hunter_book_coordinate_1.name" },{ "score":{ "name": "hunter_x","objective": "global" } },{ "translate" : "text.dec:hunter_book_coordinate_2.name" },{ "score":{ "name": "hunter_z","objective": "global" } } ] }']);
                 }
             }
@@ -538,7 +538,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:fake_fireball', shoot_opt);
                     ex_e.shootProj('dec:fake_fireball', shoot_opt);
                     ex_e.shootProj('dec:fake_fireball', shoot_opt);
-                    p.command.run('function item/bomber');
+                    p.command.runAsync('function item/bomber');
                     //e.source.playSound('random.explode')
                     //e.source.playAnimation('animation.humanoid.shoot')
                     //e.source.spawnParticle('flintlock_smoke_particle',lo)
@@ -727,6 +727,7 @@ export default class DecClient extends ExGameClient {
     }
     onLoad() {
         super.onLoad();
+        this.exPlayer.addTag("load_ok");
         if (this.globalscores.getNumber('FirstEnter') === 0) {
             this.exPlayer.addTag('owner');
             this.globalscores.setNumber('FirstEnter', 1);

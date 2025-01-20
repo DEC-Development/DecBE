@@ -1,13 +1,13 @@
 import ExSystem from "./ExSystem.js";
 export default class ExTimeLine {
-    constructor(tasks) {
+    constructor(context, tasks) {
         this.arr = [];
         this.tickMap = new Map();
         for (let k in tasks) {
             this.arr.push([parseFloat(k), tasks[k]]);
         }
         this.arr.sort((a, b) => a[0] - b[0]);
-        this.timer = ExSystem.tickTask(() => {
+        this.timer = ExSystem.tickTask(context, () => {
             if (this.arr.length === 0) {
                 this.stop();
                 return;

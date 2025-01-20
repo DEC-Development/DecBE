@@ -49,10 +49,10 @@ export default class IStructureSettle {
             "blockId": (_a = this.blockloads.get(blockName)) !== null && _a !== void 0 ? _a : 0
         });
     }
-    run(dim, pos) {
+    run(context, dim, pos) {
         return __awaiter(this, void 0, void 0, function* () {
             const s = new Vector3(), e = new Vector3();
-            let runner = new ExTaskRunner();
+            let runner = new ExTaskRunner(context);
             const t = this;
             const tmpV = new Vector3();
             const tmpP = new Vector3();

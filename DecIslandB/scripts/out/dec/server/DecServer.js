@@ -23,6 +23,8 @@ import ExGame from '../../modules/exmc/server/ExGame.js';
 import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import { DecLeavesGolemBoss } from './entities/DecLeavesGolemBoss.js';
 import { DecEscapeSoulBoss3, DecEscapeSoulBoss4, DecEscapeSoulBoss5 } from './entities/DecEscapeSoulBoss.js';
+import DecBossController from './entities/DecBossController.js';
+import DecBossBarrier from './entities/DecBossBarrier.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -66,7 +68,7 @@ export default class DecServer extends ExGameServer {
                 this.globalscores.setNumber("NightRandom", 0);
                 this.globalscores.setNumber("IsDay", 1);
                 this.globalscores.setNumber("IsNight", 0);
-                this.getExDimension(MinecraftDimensionTypes.overworld).command.run([
+                this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync([
                     "fog @a remove \"night_event\""
                 ]);
             }
@@ -133,12 +135,12 @@ export default class DecServer extends ExGameServer {
                 let errMsg = "";
                 switch (cmds[0]) {
                     case "help": {
-                        sender.command.run("function help");
+                        sender.command.runAsync("function help");
                         break;
                     }
                     case "creators": {
                         if (DecGlobal.isDec()) {
-                            sender.command.run("function test/creator_list");
+                            sender.command.runAsync("function test/creator_list");
                         }
                         break;
                     }
@@ -159,17 +161,17 @@ export default class DecServer extends ExGameServer {
                             if (cmds[1] === "display") {
                                 if (e.sender.isOp()) {
                                     if (cmds[2] === "true") {
-                                        cmdRunner.command.run("function magic/display_on");
+                                        cmdRunner.command.runAsync("function magic/display_on");
                                     }
                                     else if (cmds[2] === "false") {
-                                        cmdRunner.command.run("function magic/display_off");
+                                        cmdRunner.command.runAsync("function magic/display_off");
                                     }
                                     else {
                                         errMsg = "Invalid command " + cmds[2];
                                     }
                                 }
                                 else {
-                                    sender.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:command_fail.name\" } ] }");
+                                    sender.command.runAsync("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:command_fail.name\" } ] }");
                                 }
                             }
                             else {
@@ -184,7 +186,7 @@ export default class DecServer extends ExGameServer {
                         let start = new Vector3(Math.floor(parseFloat(cmds[1])), Math.floor(parseFloat(cmds[2])), Math.floor(parseFloat(cmds[3])));
                         let end = new Vector3(Math.floor(parseFloat(cmds[4])), Math.floor(parseFloat(cmds[5])), Math.floor(parseFloat(cmds[6]))).add(1);
                         let data = [];
-                        let task = new ExTaskRunner();
+                        let task = new ExTaskRunner(this);
                         const mthis = this;
                         task.setTasks((function* () {
                             var _a;
@@ -208,7 +210,7 @@ export default class DecServer extends ExGameServer {
                         for (let comp of this.compress) {
                             task.push(() => {
                                 data.load(JSON.parse(GZIPUtil.unzipString(comp)));
-                                data.run(this.getExDimension(MinecraftDimensionTypes.overworld), start)
+                                data.run(this, this.getExDimension(MinecraftDimensionTypes.overworld), start)
                                     .then(() => {
                                     var _a;
                                     (_a = task.shift()) === null || _a === void 0 ? void 0 : _a();
@@ -236,7 +238,7 @@ export default class DecServer extends ExGameServer {
                     }
                 }
                 if (errMsg.length !== 0) {
-                    sender.command.run(`tellraw @s { "rawtext" : [ { "text" : "Command Error: ${errMsg}" } ] }`);
+                    sender.command.runAsync(`tellraw @s { "rawtext" : [ { "text" : "Command Error: ${errMsg}" } ] }`);
                 }
                 e.cancel = true;
             }
@@ -293,14 +295,14 @@ export default class DecServer extends ExGameServer {
             //防破坏方块 i_inviolable计分板控制
             if (entity.getScoresManager().getScore(this.i_inviolable) > 1) {
                 let ep = ExPlayer.getInstance(e.player);
-                ExGame.run(() => {
-                    ep.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
-                    ep.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
-                    ep.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
+                this.run(() => {
+                    // ep.addEffect(MinecraftEffectTypes.Blindness, 200, 0, true);
+                    // ep.addEffect(MinecraftEffectTypes.Darkness, 400, 0, true);
+                    // ep.addEffect(MinecraftEffectTypes.Wither, 100, 0, true);
                     ep.addEffect(MinecraftEffectTypes.MiningFatigue, 600, 2, true);
-                    ep.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
-                    ep.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
-                    entity.command.run("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
+                    // ep.addEffect(MinecraftEffectTypes.Hunger, 600, 1, true);
+                    // ep.addEffect(MinecraftEffectTypes.Nausea, 200, 0, true);
+                    // entity.command.runAsync("tellraw @s { \"rawtext\" : [ { \"translate\" : \"text.dec:i_inviolable.name\" } ] }");
                 });
                 e.cancel = true;
             }
@@ -308,11 +310,13 @@ export default class DecServer extends ExGameServer {
         });
         this.getEvents().events.beforeExplosion.subscribe(e => {
             if (e.source) {
+                //防爆 i_inviolable计分板控制 和 boss领地默认保护
                 const entity = ExEntity.getInstance(e.source);
                 //防爆 i_inviolable计分板控制
-                if (entity.getScoresManager().getScore(this.i_damp) > 0) {
+                if (entity.getScoresManager().getScore(this.i_damp) > 0 || DecBossBarrier.find(e.source.location)) {
                     const s = e.source.location;
-                    ExGame.run(() => entity.exDimension.spawnParticle("dec:damp_explosion_particle", s));
+                    const dim = entity.dimension;
+                    this.run(() => dim.spawnParticle("dec:damp_explosion_particle", s));
                     ;
                     e.cancel = true;
                 }
@@ -444,7 +448,7 @@ export default class DecServer extends ExGameServer {
         });
         this.getEvents().exEvents.tick.subscribe(e => {
             //诅咒时间减少
-            this.getExDimension(MinecraftDimensionTypes.overworld).command.run([
+            this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync([
                 "scoreboard players remove @e[scores={i_inviolable=1..}] i_inviolable 1",
                 "scoreboard players remove @e[scores={i_damp=1..}] i_damp 1",
                 "scoreboard players remove @e[scores={i_soft=1..}] i_soft 1",
@@ -490,7 +494,7 @@ export default class DecServer extends ExGameServer {
             }
             let night_event = this.globalscores.getNumber("NightRandom");
             const nightEvent = (fog, eventEntity, maxSpawn) => {
-                this.getExDimension(MinecraftDimensionTypes.overworld).command.run(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
+                this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
                 let i = 0;
                 for (let p of this.getExDimension(MinecraftDimensionTypes.overworld).getPlayers()) {
                     if (i >= maxSpawn)
@@ -541,7 +545,10 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:king_of_pillager", DecCommonBossLastStage);
         this.addEntityController("dec:abyssal_controller", DecCommonBossLastStage);
         this.addEntityController("dec:predators", DecCommonBossLastStage);
+        this.addEntityController("dec:enchant_illager", DecBossController);
+        this.addEntityController("dec:enchant_illager_1", DecBossController);
         this.addEntityController("dec:enchant_illager_2", DecCommonBossLastStage);
+        this.addEntityController("dec:escaped_soul", DecBossController);
         this.addEntityController("dec:escaped_soul_1", DecEscapeSoulBoss3);
         this.addEntityController("dec:escaped_soul_2", DecEscapeSoulBoss4);
         this.addEntityController("dec:escaped_soul_entity", DecEscapeSoulBoss5);
@@ -583,7 +590,7 @@ export default class DecServer extends ExGameServer {
             });
             states_string = states_string.slice(0, states_string.length - 1);
             states_string += ']';
-            this.getExDimension(block.dimension).command.run('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
+            this.getExDimension(block.dimension).command.runAsync('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
         };
         const trellis_cover_wither_spread = (block) => {
             if (block.typeId == 'dec:trellis_cover' && block.permutation.getAllStates()['dec:crop_type'] != 'empty') {
@@ -591,7 +598,7 @@ export default class DecServer extends ExGameServer {
             }
         };
         ExGame.scriptEventReceive.addMonitor(e => {
-            var _a;
+            var _a, _b, _c, _d, _e;
             if (e.id == 'dec:trellis') {
                 //种植架
                 const block = e.sourceBlock;
@@ -624,6 +631,39 @@ export default class DecServer extends ExGameServer {
                     trellis_cover_wither_spread(block_xn);
                     trellis_cover_wither_spread(block_zp);
                     trellis_cover_wither_spread(block_zn);
+                }
+            }
+            else if (e.id == 'dec:flesh_block') {
+                if (e.message == 'spread') {
+                    let loc = (_a = e.sourceBlock) === null || _a === void 0 ? void 0 : _a.location;
+                    let dim = (_b = e.sourceBlock) === null || _b === void 0 ? void 0 : _b.dimension;
+                    let blocks = [
+                        dim.getBlock(loc.add(1, 0, 0)),
+                        dim.getBlock(loc.add(-1, 0, 0)),
+                        dim.getBlock(loc.add(0, 1, 0)),
+                        dim.getBlock(loc.add(0, -1, 0)),
+                        dim.getBlock(loc.add(0, 0, 1)),
+                        dim.getBlock(loc.add(0, 0, -1))
+                    ];
+                    let age_ori = (_c = e.sourceBlock) === null || _c === void 0 ? void 0 : _c.permutation.getState('dec:age');
+                    if (age_ori == 15) {
+                        //这里写死亡
+                        (_d = e.sourceBlock) === null || _d === void 0 ? void 0 : _d.setType('minecraft:air'); //后面改成死亡的方块
+                    }
+                    let can_grow_on = [
+                        'minecraft:air',
+                        'minecraft:water',
+                        'minecraft:flowing_water',
+                        'minecraft:grass',
+                        'minecraft:tall_grass'
+                    ];
+                    blocks = blocks.filter(block => (block === null || block === void 0 ? void 0 : block.typeId) !== undefined && can_grow_on.indexOf(block === null || block === void 0 ? void 0 : block.typeId) !== -1);
+                    if (blocks.length > 0) {
+                        let b = blocks[Math.floor(Math.random() * length)];
+                        // 以后这可以写长其他东西
+                        b.setType('dec:flesh_block');
+                        state_set_keep(b, { 'dec:age': age_ori + 1 });
+                    }
                 }
             }
             else if (e.id == 'dec:sprint') {
@@ -660,7 +700,7 @@ export default class DecServer extends ExGameServer {
                     damagingEntity: e.sourceEntity
                 };
                 let i = 0;
-                (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.addTag(para_arr[4].toString());
+                (_e = e.sourceEntity) === null || _e === void 0 ? void 0 : _e.addTag(para_arr[4].toString());
                 while (i < Number(para_arr[2])) {
                     system.runTimeout(() => {
                         let loc = script_event_location(e)[1];

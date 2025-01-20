@@ -1,25 +1,25 @@
 import { MinecraftItemTypes } from "../../../../modules/vanilla-data/lib/index.js";
 export default function taskDaily_b(client, lang) {
     return {
-        "name": "每日任务-稀有级",
+        "name": lang.menuUIMsgBailan303,
         "tasks": [
             {
-                "name": "粮食提交 I",
+                "name": lang.menuUIMsgBailan304,
                 "conditions": [
                     {
-                        "name": "小麦",
+                        "name": lang.menuUIMsgBailan305,
                         "typeId": MinecraftItemTypes.Wheat,
                         "count": 16,
                         "type": "item"
                     },
                     {
-                        "name": "南瓜",
+                        "name": lang.menuUIMsgBailan306,
                         "typeId": MinecraftItemTypes.Pumpkin,
                         "count": 16,
                         "type": "item"
                     },
                     {
-                        "name": "西瓜片",
+                        "name": lang.menuUIMsgBailan307,
                         "typeId": MinecraftItemTypes.MelonSlice,
                         "count": 16,
                         "type": "item"
@@ -27,30 +27,30 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 800,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "粮食提交 II",
+                "name": lang.menuUIMsgBailan308,
                 "conditions": [
                     {
-                        "name": "马铃薯",
+                        "name": lang.menuUIMsgBailan309,
                         "typeId": MinecraftItemTypes.Potato,
                         "count": 32,
                         "type": "item"
                     },
                     {
-                        "name": "胡萝卜",
+                        "name": lang.menuUIMsgBailan310,
                         "typeId": MinecraftItemTypes.Carrot,
                         "count": 32,
                         "type": "item"
                     },
                     {
-                        "name": "西瓜",
+                        "name": lang.menuUIMsgBailan311,
                         "typeId": MinecraftItemTypes.MelonBlock,
                         "count": 1,
                         "type": "item"
@@ -58,36 +58,36 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "盛宴",
+                "name": lang.menuUIMsgBailan312,
                 "conditions": [
                     {
-                        "name": "熟鸡肉",
+                        "name": lang.menuUIMsgBailan313,
                         "typeId": MinecraftItemTypes.CookedChicken,
                         "count": 16,
                         "type": "item"
                     },
                     {
-                        "name": "熟羊肉",
+                        "name": lang.menuUIMsgBailan314,
                         "typeId": MinecraftItemTypes.CookedMutton,
                         "count": 24,
                         "type": "item"
                     },
                     {
-                        "name": "生牛肉",
+                        "name": lang.menuUIMsgBailan315,
                         "typeId": MinecraftItemTypes.Beef,
                         "count": 16,
                         "type": "item"
                     },
                     {
-                        "name": "熟兔肉",
+                        "name": lang.menuUIMsgBailan316,
                         "typeId": MinecraftItemTypes.CookedRabbit,
                         "count": 3,
                         "type": "item"
@@ -95,30 +95,30 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "清缴怪物",
+                "name": lang.menuUIMsgBailan317,
                 "conditions": [
                     {
-                        "name": "僵尸战士",
+                        "name": lang.menuUIMsgBailan318,
                         "typeId": "dec:zombie_warrior",
                         "count": 8,
                         "type": "kill"
                     },
                     {
-                        "name": "地狱苦力怕",
+                        "name": lang.menuUIMsgBailan319,
                         "typeId": "dec:nether_creeper",
                         "count": 4,
                         "type": "kill"
                     },
                     {
-                        "name": "末影女巫",
+                        "name": lang.menuUIMsgBailan320,
                         "typeId": "dec:ender_witch",
                         "count": 1,
                         "type": "kill"
@@ -126,30 +126,30 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1200,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "狩猎愉快!",
+                "name": lang.menuUIMsgBailan321,
                 "conditions": [
                     {
-                        "name": "猪",
+                        "name": lang.menuUIMsgBailan322,
                         "typeId": "minecraft:pig",
                         "count": 24,
                         "type": "kill"
                     },
                     {
-                        "name": "牛",
+                        "name": lang.menuUIMsgBailan323,
                         "typeId": "minecraft:cow",
                         "count": 16,
                         "type": "kill"
                     },
                     {
-                        "name": "羊",
+                        "name": lang.menuUIMsgBailan324,
                         "typeId": "minecraft:sheep",
                         "count": 16,
                         "type": "kill"
@@ -157,18 +157,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "砍树!",
+                "name": lang.menuUIMsgBailan325,
                 "conditions": [
                     {
-                        "name": "木头",
+                        "name": lang.menuUIMsgBailan326,
                         "typeId": "log",
                         "count": 84,
                         "type": "break"
@@ -176,18 +176,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 800,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "成为矿工",
+                "name": lang.menuUIMsgBailan327,
                 "conditions": [
                     {
-                        "name": "石头",
+                        "name": lang.menuUIMsgBailan328,
                         "typeId": MinecraftItemTypes.Stone,
                         "count": 128,
                         "type": "break"
@@ -195,18 +195,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "毒马铃薯",
+                "name": lang.menuUIMsgBailan329,
                 "conditions": [
                     {
-                        "name": "毒马铃薯",
+                        "name": lang.menuUIMsgBailan330,
                         "typeId": MinecraftItemTypes.PoisonousPotato,
                         "count": 12,
                         "type": "item"
@@ -214,24 +214,24 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "改善伙食",
+                "name": lang.menuUIMsgBailan331,
                 "conditions": [
                     {
-                        "name": "兔肉煲",
+                        "name": lang.menuUIMsgBailan332,
                         "typeId": MinecraftItemTypes.RabbitStew,
                         "count": 12,
                         "type": "item"
                     },
                     {
-                        "name": "蘑菇煲",
+                        "name": lang.menuUIMsgBailan333,
                         "typeId": MinecraftItemTypes.MushroomStew,
                         "count": 12,
                         "type": "item"
@@ -239,18 +239,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1200,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "僵尸大脑",
+                "name": lang.menuUIMsgBailan334,
                 "conditions": [
                     {
-                        "name": "僵尸大脑",
+                        "name": lang.menuUIMsgBailan335,
                         "typeId": "dec:zombie_brain",
                         "count": 48,
                         "type": "item"
@@ -258,18 +258,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "附魔匠",
+                "name": lang.menuUIMsgBailan336,
                 "conditions": [
                     {
-                        "name": "转移附魔书",
+                        "name": lang.menuUIMsgBailan337,
                         "typeId": "wb:book_cache",
                         "count": 3,
                         "type": "item"
@@ -277,18 +277,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 800,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "灵魂猎手",
+                "name": lang.menuUIMsgBailan338,
                 "conditions": [
                     {
-                        "name": "灵魂",
+                        "name": lang.menuUIMsgBailan339,
                         "typeId": "dec:soul",
                         "count": 16,
                         "type": "item"
@@ -296,18 +296,18 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 1000,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]
             },
             {
-                "name": "海洋美食",
+                "name": lang.menuUIMsgBailan340,
                 "conditions": [
                     {
-                        "name": "海胆",
+                        "name": lang.menuUIMsgBailan341,
                         "typeId": "dec:sea_urchin",
                         "count": 12,
                         "type": "item"
@@ -315,9 +315,9 @@ export default function taskDaily_b(client, lang) {
                 ],
                 "rewards": [
                     {
-                        "name": "模组经验",
+                        "name": lang.modExperience,
                         "count": 900,
-                        "unit": "点",
+                        "unit": lang.points,
                         "type": "integral"
                     }
                 ]

@@ -158,7 +158,7 @@
         }
       },
       "minecraft:entity_spawned": {
-        "run_command": {
+        "queue_command": {
           "command": [
             "summon dec:entity_soul ~~~ 0 0 minecraft:summon_by_boss"
           ],
@@ -181,7 +181,7 @@
             "minecraft:can_be_attacked"
           ]
         },
-        "run_command": {
+        "queue_command": {
           "command": [
             "scoreboard players random @s random 1 8",
             "execute if entity @s[scores={random=1}] run tp ~24~3~",
@@ -207,7 +207,7 @@
             "minecraft:cannot_be_attacked"
           ]
         },
-        "run_command": {
+        "queue_command": {
           "command": [
             "summon dec:entity_soul ~~~ 0 0 minecraft:summon_by_boss",
             "execute if entity @s[scores={random=1}] run tp ~-24~-3~",
@@ -241,7 +241,7 @@
             "minecraft:wait_next"
           ]
         },
-        "run_command": {
+        "queue_command": {
           "command": [
             "execute if entity @s[scores={random=1}] run tp ~-24~-3~",
             "execute if entity @s[scores={random=2}] run tp ~24~-3~",

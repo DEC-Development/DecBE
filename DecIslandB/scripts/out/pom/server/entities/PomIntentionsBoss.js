@@ -12,17 +12,18 @@ import { registerEvent } from '../../../modules/exmc/server/events/eventDecorato
 import ExErrorQueue from '../../../modules/exmc/server/ExErrorQueue.js';
 import VarOnChangeListener from '../../../modules/exmc/utils/VarOnChangeListener.js';
 export class PomIntentionsBoss1 extends PomBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     initBossEntity() {
         super.initBossEntity();
-        if (this.isFisrtCall)
+        if (this.isFisrtCall) {
             this.server.say({ rawtext: [{ translate: "text.wb:summon_intentions.name" }] });
+        }
         this.barrier.changeFog("wb:ruin_mind_1_boss");
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         super.onKilled(e);
@@ -49,15 +50,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PomIntentionsBoss1.prototype, "onLongTick", null);
 export class PomIntentionsBoss2 extends PomBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     initBossEntity() {
         super.initBossEntity();
         this.barrier.changeFog("wb:ruin_mind_2_boss");
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         super.onKilled(e);
@@ -88,8 +89,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PomIntentionsBoss2.prototype, "onLongTick", null);
 export class PomIntentionsBoss3 extends PomBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     initBossEntity() {
         super.initBossEntity();
@@ -108,7 +109,7 @@ export class PomIntentionsBoss3 extends PomBossController {
         this.changeFog = new VarOnChangeListener((n) => {
             if (n === "wb:ruin_mind_5_boss") {
                 this.barrier.changeFog("wb:ruin_mind_4_boss");
-                this.setTimeout(() => {
+                this.runTimeout(() => {
                     this.barrier.changeFog("wb:ruin_mind_5_boss");
                 }, 5000);
             }
@@ -133,8 +134,8 @@ export class PomIntentionsBoss3 extends PomBossController {
             ExErrorQueue.throwError(e);
         }
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         //设置奖励

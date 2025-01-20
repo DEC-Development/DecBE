@@ -4,6 +4,9 @@ export class ItemTagComponentGroup {
         this.tagName = tagName;
         this.data = data;
     }
+    match(tagName, data) {
+        return tagName === this.tagName && data === this.data;
+    }
 }
 const itemTagComponentType = {
     use_data_group: [new ItemTagComponentGroup("", [])],
@@ -45,7 +48,7 @@ export default class ItemTagComponent {
                         let use = itemTagComponentType[msg[1]][0];
                         if (use instanceof ItemTagComponentGroup) {
                             this.components.set(msg[1], msg[2].split("::").map(e => e.includes("_:") ? new ItemTagComponentGroup(e.substring(0, e.indexOf("_:")), e.substring(e.indexOf("_:") + 2, e.indexOf(":_")))
-                                : new ItemTagComponentGroup("", e)));
+                                : new ItemTagComponentGroup(e, "")));
                         }
                         else if (typeof use === "string") {
                             this.components.set(msg[1], msg[2].split("::"));

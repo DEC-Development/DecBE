@@ -1,7 +1,7 @@
 import PomBossController from './PomBossController.js';
 export default class PomHeadlessGuardBoss extends PomBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     initBossEntity() {
         super.initBossEntity();
@@ -12,8 +12,8 @@ export default class PomHeadlessGuardBoss extends PomBossController {
             this.music.loop();
         }
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         //设置奖励

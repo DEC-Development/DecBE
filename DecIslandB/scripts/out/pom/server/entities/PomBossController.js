@@ -3,27 +3,9 @@ import ExEntityController from '../../../modules/exmc/server/entity/ExEntityCont
 import PomBossBarrier from './barrier/PomBossBarrier.js';
 import { ExBlockArea } from '../../../modules/exmc/server/block/ExBlockArea.js';
 export default class PomBossController extends ExEntityController {
-    constructor(e, server) {
-        super(e, server);
+    constructor() {
+        super(...arguments);
         this.isFisrtCall = false;
-        this.startPos = this.exEntity.position;
-        let barrier = PomBossBarrier.find(this.startPos);
-        if (!barrier) {
-            this.isFisrtCall = true;
-            barrier = new PomBossBarrier(server, this.exEntity.exDimension, new ExBlockArea(this.startPos.cpy().sub(32, 32, 32), this.startPos.cpy().add(32, 32, 32), true), this);
-        }
-        else {
-            barrier.setBoss(this);
-        }
-        this.barrier = barrier;
-        if (barrier.players.size === 0) {
-            this.despawn();
-            this.stopBarrier();
-            this.destroyBossEntity();
-        }
-        else {
-            this.initBossEntity();
-        }
     }
     despawn() {
         this.entity.remove();
@@ -51,8 +33,26 @@ export default class PomBossController extends ExEntityController {
         }
         super.onKilled(e);
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
+        this.startPos = this.exEntity.position;
+        let barrier = PomBossBarrier.find(this.startPos);
+        this.isFisrtCall = spawn;
+        if (!barrier) {
+            barrier = new PomBossBarrier(this.server, this.exEntity.exDimension, new ExBlockArea(this.startPos.cpy().sub(32, 32, 32), this.startPos.cpy().add(32, 32, 32), true), this);
+        }
+        else {
+            barrier.setBoss(this);
+        }
+        this.barrier = barrier;
+        if (barrier.players.size === 0) {
+            this.despawn();
+            this.stopBarrier();
+            this.destroyBossEntity();
+        }
+        else {
+            this.initBossEntity();
+        }
     }
     stopBarrier() {
         this.barrier.stop();

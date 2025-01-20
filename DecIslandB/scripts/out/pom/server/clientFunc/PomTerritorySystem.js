@@ -4,22 +4,23 @@ import VarOnChangeListener from "../../../modules/exmc/utils/VarOnChangeListener
 import { MinecraftDimensionTypes } from "../../../modules/vanilla-data/lib/index.js";
 import BlockPartitioning from "../map/BlockPartitioning.js";
 import GameController from "./GameController.js";
+import format from "../../../modules/exmc/utils/format.js";
 export default class PomTerritorySystem extends GameController {
     constructor() {
         super(...arguments);
         this.inTerritotyLevel = -1; //-1/0/1/2;
         this.territoryTip = new VarOnChangeListener((b, a) => {
             if (b === "") {
-                this.sayTo("§b你离开了 " + a.split("|")[0] + " §b的领地");
+                this.sayTo(format(this.lang.youLeaveSbTerritory, a.split("|")[0]));
             }
             else {
-                this.sayTo("§b你进入了 " + b.split("|")[0] + " §b的" + (parseInt(b.split("|")[1]) === 1 ? "§a" : "§c") + "领地");
+                this.sayTo(format(this.lang.youEnterSbTerritory, b.split("|")[0], (parseInt(b.split("|")[1]) === 1 ? "§a" : "§c")));
             }
         }, "");
     }
     onJoin() {
         this.territoryData = new BlockPartitioning(this.globalData.territoryData);
-        this.looper = ExSystem.tickTask(() => {
+        this.looper = ExSystem.tickTask(this, () => {
             this.getLocationLevel();
             this.data.territory.data.forEach(e => e.coolingTime = Math.max(0, e.coolingTime - 4));
         }).delay(4 * 20);

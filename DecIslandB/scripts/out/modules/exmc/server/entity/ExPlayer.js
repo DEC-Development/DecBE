@@ -95,5 +95,11 @@ export default class ExPlayer extends ExEntity {
     getScoresManager() {
         return this.scoresManager;
     }
+    cameraShake(inf, time, mode) {
+        this.command.run(`camerashake add @s ${inf} ${time} ${mode}`);
+    }
+    stopCameraShake() {
+        this.command.run(`camerashake stop`);
+    }
 }
 //# sourceMappingURL=ExPlayer.js.map

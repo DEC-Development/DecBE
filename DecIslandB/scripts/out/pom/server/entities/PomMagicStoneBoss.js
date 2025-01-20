@@ -1,15 +1,16 @@
 import PomBossController from './PomBossController.js';
 export default class PomMagicStoneBoss extends PomBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     initBossEntity() {
         super.initBossEntity();
-        if (this.isFisrtCall)
+        if (this.isFisrtCall) {
             this.server.say({ rawtext: [{ translate: "text.wb:summon_magic_stoneman.name" }] });
+        }
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         //清理周围

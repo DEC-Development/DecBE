@@ -1,13 +1,13 @@
 import DecBossController from "./DecBossController.js";
 export class DecCommonBossLastStage extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
     }
     onDestroy() {
         super.onDestroy();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onKilled(e) {
         this.onWin();

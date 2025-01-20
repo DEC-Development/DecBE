@@ -113,9 +113,6 @@
     "resistance_potion": {
       "textures": "textures/items/resistance_potion"
     },
-    "ender_mind": {
-      "textures": "textures/items/ender_mind"
-    },
     "star_debris": {
       "textures": "textures/items/star_debris"
     },
@@ -685,36 +682,6 @@
     },
     "magic_chest_debris": {
       "textures": "textures/items/magic_chest_debris"
-    },
-    "super_armor_core0": {
-      "textures": "textures/items/super_armor_core0"
-    },
-    "super_armor_core1": {
-      "textures": "textures/items/super_armor_core1"
-    },
-    "super_armor_core2": {
-      "textures": "textures/items/super_armor_core2"
-    },
-    "super_armor_core3": {
-      "textures": "textures/items/super_armor_core3"
-    },
-    "super_armor_core4": {
-      "textures": "textures/items/super_armor_core4"
-    },
-    "super_armor_core5": {
-      "textures": "textures/items/super_armor_core5"
-    },
-    "super_armor_core6": {
-      "textures": "textures/items/super_armor_core6"
-    },
-    "super_armor_core7": {
-      "textures": "textures/items/super_armor_core7"
-    },
-    "super_armor_core8": {
-      "textures": "textures/items/super_armor_core8"
-    },
-    "energy_gem": {
-      "textures": "textures/items/energy_gem"
     },
     "dragon_fireball_by_player": {
       "textures": "textures/items/dragon_fireball_by_player"

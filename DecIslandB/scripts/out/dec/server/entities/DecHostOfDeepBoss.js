@@ -2,14 +2,14 @@ import { EntityDamageCause } from "@minecraft/server";
 import DecBossController from "./DecBossController.js";
 import { DecCommonBossLastStage } from "./DecCommonBossLastStage.js";
 export class DecHostOfDeepBoss1 extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.from_the_burning_deep");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
         this.music.loop();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onFail() {
         this.music.stop();
@@ -23,13 +23,13 @@ export class DecHostOfDeepBoss1 extends DecBossController {
     }
 }
 export class DecHostOfDeepBoss2 extends DecBossController {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.from_the_burning_deep");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
     onFail() {
         this.music.stop();
@@ -43,8 +43,8 @@ export class DecHostOfDeepBoss2 extends DecBossController {
     }
 }
 export class DecHostOfDeepBoss3 extends DecCommonBossLastStage {
-    constructor(e, server) {
-        super(e, server);
+    constructor(e, server, spawn) {
+        super(e, server, spawn);
         this.music = server.getMusic("music.wb.from_the_burning_deep");
         this.music.trackPlayers(Array.from(this.barrier.getPlayers()));
     }
@@ -52,8 +52,8 @@ export class DecHostOfDeepBoss3 extends DecCommonBossLastStage {
         this.music.stop();
         super.onDestroy();
     }
-    onSpawn() {
-        super.onSpawn();
+    onAppear(spawn) {
+        super.onAppear(spawn);
     }
 }
 //# sourceMappingURL=DecHostOfDeepBoss.js.map
