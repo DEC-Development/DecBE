@@ -1,4 +1,13 @@
-import { MinecraftDimensionTypes, world, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId } from '@minecraft/server';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { MinecraftDimensionTypes, world, Block, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
@@ -19,7 +28,7 @@ import ExTaskRunner from '../../modules/exmc/server/ExTaskRunner.js';
 import DecNukeController from './entities/DecNukeController.js';
 import GlobalScoreBoardCache from '../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js';
 import MathUtil from '../../modules/exmc/utils/math/MathUtil.js';
-import ExGame from '../../modules/exmc/server/ExGame.js';
+import ExGame, { receiveMessage } from '../../modules/exmc/server/ExGame.js';
 import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import { DecLeavesGolemBoss } from './entities/DecLeavesGolemBoss.js';
 import { DecEscapeSoulBoss3, DecEscapeSoulBoss4, DecEscapeSoulBoss5 } from './entities/DecEscapeSoulBoss.js';
@@ -32,6 +41,26 @@ export default class DecServer extends ExGameServer {
         this.globalscores = new GlobalScoreBoardCache(new Objective("global"), false);
         //test
         this.compress = [""];
+        this.state_set_keep = (block, stateMatchMap) => {
+            let states = block.permutation.getAllStates();
+            for (let k in stateMatchMap) {
+                states[k] = stateMatchMap[k];
+            }
+            let states_string = '[';
+            Object.keys(states).forEach(k => {
+                let new_st = '"' + k + '"=';
+                if (typeof (states[k]) == 'boolean' || typeof (states[k]) == 'number') {
+                    new_st += (states[k]) + ',';
+                }
+                else if (typeof (states[k]) == 'string') {
+                    new_st += '"' + (states[k]) + '",';
+                }
+                states_string += new_st;
+            });
+            states_string = states_string.slice(0, states_string.length - 1);
+            states_string += ']';
+            this.getExDimension(block.dimension).command.runAsync('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
+        };
         this.i_inviolable = new Objective("i_inviolable").create("i_inviolable");
         this.i_damp = new Objective("i_damp").create("i_damp");
         this.i_soft = new Objective("i_soft").create("i_soft");
@@ -272,7 +301,7 @@ export default class DecServer extends ExGameServer {
             if (block_before_id == 'dec:trellis') {
                 const bottom_block = block.dimension.getBlock(new Vector3(block.location.x, block.location.y - 1, block.location.z));
                 if (bottom_block.typeId == 'dec:trellis') {
-                    state_set_keep(bottom_block, { 'dec:is_top': true });
+                    this.state_set_keep(bottom_block, { 'dec:is_top': true });
                 }
             }
             else if (block_before_id in multiple_blocks) {
@@ -435,15 +464,27 @@ export default class DecServer extends ExGameServer {
             const block = e.block;
             //种植架
             if (e.block.typeId == 'dec:trellis') {
-                state_set_keep(block, { 'dec:is_top': true });
+                this.state_set_keep(block, { 'dec:is_top': true });
                 const bottom_block = block.dimension.getBlock(new Vector3(block.location.x, block.location.y - 1, block.location.z));
                 if (bottom_block.typeId == 'minecraft:farmland') {
-                    state_set_keep(block, { 'dec:is_bottom': true });
+                    this.state_set_keep(block, { 'dec:is_bottom': true });
                 }
                 else if (bottom_block.typeId == 'dec:trellis') {
-                    state_set_keep(block, { 'dec:is_bottom': false });
-                    state_set_keep(bottom_block, { 'dec:is_top': false });
+                    this.state_set_keep(block, { 'dec:is_bottom': false });
+                    this.state_set_keep(bottom_block, { 'dec:is_top': false });
                 }
+            }
+        });
+        this.getEvents().events.afterProjectileHitEntity.subscribe(e => {
+            var _a;
+            if ((_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit')) {
+                e.projectile.remove();
+            }
+        });
+        this.getEvents().events.afterProjectileHitBlock.subscribe(e => {
+            var _a, _b;
+            if (((_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit')) || ((_b = e.projectile.getComponent('type_family')) === null || _b === void 0 ? void 0 : _b.hasTypeFamily('remove_on_hit_ground'))) {
+                e.projectile.remove();
             }
         });
         this.getEvents().exEvents.tick.subscribe(e => {
@@ -453,6 +494,8 @@ export default class DecServer extends ExGameServer {
                 "scoreboard players remove @e[scores={i_damp=1..}] i_damp 1",
                 "scoreboard players remove @e[scores={i_soft=1..}] i_soft 1",
                 "scoreboard players remove @e[scores={i_heavy=1..}] i_heavy 1",
+                //由于隔壁太耗时间，所以迁移过来了
+                "execute as @e[scores={i_heavy=1..}] at @s run tag @e[r=10,type=ender_pearl] add no_ender_pearl",
                 "scoreboard players remove @e[scores={harmless=1..}] harmless 1"
             ]);
         });
@@ -572,33 +615,13 @@ export default class DecServer extends ExGameServer {
                 arr.push(block);
             }
         };
-        const state_set_keep = (block, stateMatchMap) => {
-            let states = block.permutation.getAllStates();
-            for (let k in stateMatchMap) {
-                states[k] = stateMatchMap[k];
-            }
-            let states_string = '[';
-            Object.keys(states).forEach(k => {
-                let new_st = '"' + k + '"=';
-                if (typeof (states[k]) == 'boolean' || typeof (states[k]) == 'number') {
-                    new_st += (states[k]) + ',';
-                }
-                else if (typeof (states[k]) == 'string') {
-                    new_st += '"' + (states[k]) + '",';
-                }
-                states_string += new_st;
-            });
-            states_string = states_string.slice(0, states_string.length - 1);
-            states_string += ']';
-            this.getExDimension(block.dimension).command.runAsync('setblock ' + (block.location.x) + ' ' + (block.location.y) + ' ' + (block.location.z) + ' ' + block.typeId + ' ' + states_string);
-        };
         const trellis_cover_wither_spread = (block) => {
             if (block.typeId == 'dec:trellis_cover' && block.permutation.getAllStates()['dec:crop_type'] != 'empty') {
-                state_set_keep(block, { 'dec:may_wither': true });
+                this.state_set_keep(block, { 'dec:may_wither': true });
             }
         };
         ExGame.scriptEventReceive.addMonitor(e => {
-            var _a, _b, _c, _d, _e;
+            var _a;
             if (e.id == 'dec:trellis') {
                 //种植架
                 const block = e.sourceBlock;
@@ -611,7 +634,7 @@ export default class DecServer extends ExGameServer {
                 if ((block_above === null || block_above === void 0 ? void 0 : block_above.typeId) == 'dec:trellis' && e.message == 'wither') {
                     let block_above_n = block_above;
                     while (block_above_n.typeId == 'dec:trellis') {
-                        state_set_keep(block_above_n, { 'dec:may_wither': true });
+                        this.state_set_keep(block_above_n, { 'dec:may_wither': true });
                         block_above_n = block.dimension.getBlock(tmpV.set(block_above_n.location.x, block_above_n.location.y + 1, block_above_n.location.z));
                     }
                 }
@@ -623,7 +646,7 @@ export default class DecServer extends ExGameServer {
                     block_around_judge(may_grow_block, block_zn, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
                     block_around_judge(may_grow_block, block_above, 'dec:trellis', { 'dec:crop_type': 'empty' });
                     if (may_grow_block.length > 0) {
-                        state_set_keep(may_grow_block[MathUtil.randomInteger(0, may_grow_block.length - 1)], { 'dec:may_wither': false, 'dec:growth_stage': 0, 'dec:crop_type': block.permutation.getState('dec:crop_type') });
+                        this.state_set_keep(may_grow_block[MathUtil.randomInteger(0, may_grow_block.length - 1)], { 'dec:may_wither': false, 'dec:growth_stage': 0, 'dec:crop_type': block.permutation.getState('dec:crop_type') });
                     }
                 }
                 if (e.message == 'wither_spread') {
@@ -631,39 +654,6 @@ export default class DecServer extends ExGameServer {
                     trellis_cover_wither_spread(block_xn);
                     trellis_cover_wither_spread(block_zp);
                     trellis_cover_wither_spread(block_zn);
-                }
-            }
-            else if (e.id == 'dec:flesh_block') {
-                if (e.message == 'spread') {
-                    let loc = (_a = e.sourceBlock) === null || _a === void 0 ? void 0 : _a.location;
-                    let dim = (_b = e.sourceBlock) === null || _b === void 0 ? void 0 : _b.dimension;
-                    let blocks = [
-                        dim.getBlock(loc.add(1, 0, 0)),
-                        dim.getBlock(loc.add(-1, 0, 0)),
-                        dim.getBlock(loc.add(0, 1, 0)),
-                        dim.getBlock(loc.add(0, -1, 0)),
-                        dim.getBlock(loc.add(0, 0, 1)),
-                        dim.getBlock(loc.add(0, 0, -1))
-                    ];
-                    let age_ori = (_c = e.sourceBlock) === null || _c === void 0 ? void 0 : _c.permutation.getState('dec:age');
-                    if (age_ori == 15) {
-                        //这里写死亡
-                        (_d = e.sourceBlock) === null || _d === void 0 ? void 0 : _d.setType('minecraft:air'); //后面改成死亡的方块
-                    }
-                    let can_grow_on = [
-                        'minecraft:air',
-                        'minecraft:water',
-                        'minecraft:flowing_water',
-                        'minecraft:grass',
-                        'minecraft:tall_grass'
-                    ];
-                    blocks = blocks.filter(block => (block === null || block === void 0 ? void 0 : block.typeId) !== undefined && can_grow_on.indexOf(block === null || block === void 0 ? void 0 : block.typeId) !== -1);
-                    if (blocks.length > 0) {
-                        let b = blocks[Math.floor(Math.random() * length)];
-                        // 以后这可以写长其他东西
-                        b.setType('dec:flesh_block');
-                        state_set_keep(b, { 'dec:age': age_ori + 1 });
-                    }
                 }
             }
             else if (e.id == 'dec:sprint') {
@@ -700,7 +690,7 @@ export default class DecServer extends ExGameServer {
                     damagingEntity: e.sourceEntity
                 };
                 let i = 0;
-                (_e = e.sourceEntity) === null || _e === void 0 ? void 0 : _e.addTag(para_arr[4].toString());
+                (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.addTag(para_arr[4].toString());
                 while (i < Number(para_arr[2])) {
                     system.runTimeout(() => {
                         let loc = script_event_location(e)[1];
@@ -752,8 +742,45 @@ export default class DecServer extends ExGameServer {
             return arr;
         };
     }
+    fleshBlockSpread(block) {
+        const dim = block.dimension;
+        const loc = new Vector3(block.location);
+        let blocks = [
+            dim.getBlock(loc.cpy().add(1, 0, 0)),
+            dim.getBlock(loc.cpy().add(-1, 0, 0)),
+            dim.getBlock(loc.cpy().add(0, 1, 0)),
+            dim.getBlock(loc.cpy().add(0, -1, 0)),
+            dim.getBlock(loc.cpy().add(0, 0, 1)),
+            dim.getBlock(loc.cpy().add(0, 0, -1))
+        ];
+        let age_ori = block.permutation.getState('dec:age');
+        if (age_ori == 15) {
+            //这里写死亡
+            block.setType('minecraft:air'); //后面改成死亡的方块
+        }
+        let can_grow_on = [
+            'minecraft:air',
+            'minecraft:water',
+            'minecraft:flowing_water',
+            'minecraft:grass',
+            'minecraft:tall_grass'
+        ];
+        blocks = blocks.filter(b => { var _a; return can_grow_on.includes((_a = b === null || b === void 0 ? void 0 : b.typeId) !== null && _a !== void 0 ? _a : ''); });
+        if (blocks) {
+            let b = blocks[Math.floor(Math.random() * blocks.length)];
+            // 以后这可以写长其他东西
+            b.setType('dec:flesh_block');
+            this.state_set_keep(b, { 'dec:age': age_ori + 1 });
+        }
+    }
     newClient(id, player) {
         return new DecClient(this, id, player);
     }
 }
+__decorate([
+    receiveMessage('dec:flesh_block_spread'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Block]),
+    __metadata("design:returntype", void 0)
+], DecServer.prototype, "fleshBlockSpread", null);
 //# sourceMappingURL=DecServer.js.map

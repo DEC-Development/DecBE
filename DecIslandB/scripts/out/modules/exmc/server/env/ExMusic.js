@@ -14,10 +14,10 @@ export default class ExMusic {
             this.isInDelayStop = false;
         }
         else {
-            console.warn(`play ${this.soundId}`);
+            console.info(`play ${this.soundId}`);
             if (this.players) {
                 for (let p of this.players) {
-                    console.warn(`play ${this.soundId} for ${p.name}`);
+                    console.info(`play ${this.soundId} for ${p.name}`);
                     p.playMusic(this.soundId, {
                         "fade": 2,
                         "loop": true,
@@ -28,7 +28,7 @@ export default class ExMusic {
         }
     }
     stop() {
-        console.warn(`stop ${this.soundId}`);
+        console.info(`stop ${this.soundId}`);
         if (!this.players)
             return;
         for (let p of this.players) {
@@ -48,7 +48,7 @@ export default class ExMusic {
         }, time);
     }
     play(dim, vec) {
-        console.warn(`play ${this.soundId} at ${vec.x} ${vec.y} ${vec.z}`);
+        console.info(`play ${this.soundId} at ${vec.x} ${vec.y} ${vec.z}`);
         if (!this.players) {
             this.players = [];
             for (let p of dim.getPlayers({

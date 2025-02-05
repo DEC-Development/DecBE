@@ -1,5 +1,4 @@
 import { MolangVariableMap, BlockTypes } from '@minecraft/server';
-import ExGameConfig from './ExGameConfig.js';
 import ExCommand from './env/ExCommand.js';
 import { ignorn } from './ExErrorQueue.js';
 export default class ExDimension {
@@ -21,6 +20,9 @@ export default class ExDimension {
     constructor(dimension) {
         this.command = new ExCommand(this);
         this._dimension = dimension;
+    }
+    chunkIsLoaded(vec) {
+        return this.spawnParticle("minecraft:conduit_particle", vec);
     }
     getPlayers(entityQueryOptions) {
         return this._dimension.getPlayers(entityQueryOptions);
@@ -65,7 +67,7 @@ export default class ExDimension {
             return this._dimension.spawnItem(item, v);
         }
         catch (error) {
-            ExGameConfig.console.warn(error);
+            console.warn(error);
             return undefined;
         }
         ;
@@ -75,7 +77,7 @@ export default class ExDimension {
             return this._dimension.spawnEntity(id, v, options);
         }
         catch (error) {
-            ExGameConfig.console.warn(error);
+            console.warn(error);
             return undefined;
         }
     }

@@ -49,11 +49,11 @@
         "offset": [
           0,
           0,
-          1
+          0
         ],
         "semirandomdiffdamage": true,
         "uncertaintyBase": 70.0,
-        "uncertaintyMultiplier": 1,
+        "uncertaintyMultiplier": 0,
         "reflectOnHurt": true,
         "shoot_target": false
       },

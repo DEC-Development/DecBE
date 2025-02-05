@@ -27,7 +27,7 @@
             },
             "minecraft:cooldown": {
                 "category": "missile",
-                "duration": 0.7
+                "duration": 1.2
             },
             "minecraft:tags": {
                 "tags": [

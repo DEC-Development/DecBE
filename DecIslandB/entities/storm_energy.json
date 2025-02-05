@@ -17,8 +17,7 @@
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 0.08,
         "gravity": 0.01,
@@ -40,8 +39,7 @@
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 0.1,
         "gravity": 0.01,
@@ -63,8 +61,7 @@
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 0.2,
         "gravity": 0.01,
@@ -86,8 +83,7 @@
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 0.3,
         "gravity": 0.01,
@@ -109,8 +105,7 @@
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 0.4,
         "gravity": 0.01,

@@ -39,20 +39,24 @@
         "num_particles": 6,
         "on_entity_hit": true,
         "on_other_hit": true
-      },
-      "remove_on_hit": { }
+      }
     },
     "hit_sound": "bullet.hit",
     "power": 0.3,
     "gravity": 0.00,
-    "inertia": 1.2,
+    "inertia": 1.3,
     "liquid_inertia": 0.7,
     "anchor": 1,
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
-    "uncertaintyBase": 6.0,
-    "uncertaintyMultiplier": 6,
+    "uncertaintyBase": 2.0,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true
+   },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit_ground"
+     ]
    },
    "minecraft:pushable": {
     "is_pushable": false,

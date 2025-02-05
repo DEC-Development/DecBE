@@ -9,9 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, PlayerLeaveAfterEvent, system, EntitySpawnAfterEvent, Dimension, EntityLoadAfterEvent } from "@minecraft/server";
+import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, system, EntitySpawnAfterEvent, Dimension, EntityLoadAfterEvent, PlayerLeaveBeforeEvent } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
-import initConsole from "../utils/Console.js";
 import ExServerEvents from "./events/ExServerEvents.js";
 import UUID from "../utils/UUID.js";
 import ExErrorQueue from './ExErrorQueue.js';
@@ -46,7 +45,6 @@ export default class ExGameServer extends ExContext {
                     e.cancel = true;
                 });
             }
-            ExGameConfig.console = initConsole(ExGameConfig);
             ExErrorQueue.init();
             ExCommand.init(this);
             ExClientEvents.init(this);
@@ -186,16 +184,19 @@ export default class ExGameServer extends ExContext {
     //     }
     // }
     onClientLeave(event) {
-        this.playerIsInSet.delete(event.playerName);
-        console.warn("Player " + event.playerName + " leave");
-        let client = this.findClientByName(event.playerName);
+        const playerName = event.player.name;
+        if (!this.playerIsInSet.has(playerName))
+            return;
+        this.playerIsInSet.delete(playerName);
+        console.info("Player " + playerName + " leave");
+        let client = this.findClientByName(playerName);
         if (client === undefined) {
-            ExGameConfig.console.error(event.playerName + " client is not exists");
+            console.warn(playerName + " client is not exists");
             return;
         }
         client.onLeave();
         this.clients.delete(client.clientId);
-        this.clients_nameMap.delete(event.playerName);
+        this.clients_nameMap.delete(playerName);
     }
     newClient(id, player) {
         return new ExGameClient(this, id, player);
@@ -222,9 +223,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onClientJoin", null);
 __decorate([
-    registerEvent(ExEventNames.afterPlayerLeave),
+    registerEvent(ExEventNames.beforePlayerLeave),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [PlayerLeaveAfterEvent]),
+    __metadata("design:paramtypes", [PlayerLeaveBeforeEvent]),
     __metadata("design:returntype", void 0)
 ], ExGameServer.prototype, "onClientLeave", null);
 //# sourceMappingURL=ExGameServer.js.map

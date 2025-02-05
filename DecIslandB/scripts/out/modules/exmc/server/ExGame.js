@@ -1,6 +1,7 @@
 var _a;
 import { Player, system, world } from "@minecraft/server";
 import "../../reflect-metadata/Reflect.js";
+import '../utils/Console.js';
 import ExSystem from "../utils/ExSystem.js";
 import MonitorManager from "../utils/MonitorManager.js";
 import ExErrorQueue from "./ExErrorQueue.js";
@@ -86,6 +87,18 @@ export default class ExGame {
                 let data = Reflect.getMetadata("exportName", finder, k);
                 if (data === exportName) {
                     Reflect.get(finder, k).apply(finder, args);
+                }
+            }
+        });
+    }
+    static postMessageToServer(exportName, args) {
+        ExGame._run(() => {
+            for (let [k, v] of this.serverMap.entries()) {
+                for (let k of ExSystem.keys(v)) {
+                    let data = Reflect.getMetadata("exportName", v, k);
+                    if (data === exportName) {
+                        Reflect.get(v, k).apply(v, args);
+                    }
                 }
             }
         });
@@ -181,7 +194,7 @@ export function receiveMessage(exportName) {
 export const gameContext = new (class extends ExContext {
     constructor() {
         super(...arguments);
-        this.interrupt = true;
+        this.interrupt = false;
         this.parent = undefined;
         this.tickMonitor = ExGame.tickMonitor;
         this.beforeTickMonitor = ExGame.beforeTickMonitor;

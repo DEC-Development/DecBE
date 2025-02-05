@@ -53,6 +53,10 @@ export default class EventHandle {
             p.pattern(registerName, k);
         }
     }
+    getLength(entity, name) {
+        var _a, _b;
+        return (_b = (_a = this.monitorMap[name].get(entity)) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
+    }
     subscribe(entity, name, callback) {
         var _a;
         let e = this.monitorMap[name];

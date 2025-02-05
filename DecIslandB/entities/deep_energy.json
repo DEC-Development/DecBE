@@ -37,8 +37,7 @@
             "duration": 2,
             "affect_owner": false,
             "reapplication_delay": 10
-          },
-          "remove_on_hit": { }
+          }
         },
         "power": 1.9,
         "gravity": 0.00,
@@ -52,6 +51,11 @@
       }
     },
 	  "minecraft:physics": {
+    },
+    "minecraft:type_family": {
+      "family": [
+        "remove_on_hit"
+      ]
     },
     "minecraft:pushable": {
       "is_pushable": true,

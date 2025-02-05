@@ -12,9 +12,7 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "lurk_grass",
-                    "render_method": "alpha_test",
-                    "face_dimming": false,
-                    "ambient_occlusion": false
+                    "render_method": "alpha_test"
                 }
             },
             "minecraft:geometry": "geometry.crop.sparse.on_dirt",

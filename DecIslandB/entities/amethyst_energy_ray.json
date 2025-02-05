@@ -26,20 +26,24 @@
         "knockback": false,
         "catchFire": false,
         "semirandomdiffdamage": false
-      },
-      "remove_on_hit": { }
+      }
     },
     "hit_sound": "bullet.hit",
-    "power": 0.95,
+    "power": 1.4,
     "gravity": 0.00,
     "inertia": 1,
     "liquid_inertia": 1,
     "anchor": 1,
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
-    "uncertaintyBase": 5.0,
-    "uncertaintyMultiplier": 5,
+    "uncertaintyBase": 1.6,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true
+   },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit_ground"
+     ]
    },
    "minecraft:physics": {
    }

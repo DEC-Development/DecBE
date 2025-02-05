@@ -41,7 +41,7 @@
           }
         },
         "hit_sound": "bullet.hit",
-        "power": 1.2,
+        "power": 1.6,
         "gravity": 0.03,
         "inertia": 1.01,
         "liquid_inertia": 1.0,
@@ -49,11 +49,11 @@
         "offset": [
           0,
           0,
-          1
+          0
         ],
         "semirandomdiffdamage": true,
-        "uncertaintyBase": 6.0,
-        "uncertaintyMultiplier": 6,
+        "uncertaintyBase": 2.0,
+        "uncertaintyMultiplier": 0,
         "reflectOnHurt": true,
         "shoot_target": false
       },

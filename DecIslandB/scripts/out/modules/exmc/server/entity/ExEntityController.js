@@ -8,10 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import ExEntity from "./ExEntity.js";
-import { EntityHurtAfterEvent } from '@minecraft/server';
+import { EntityDieAfterEvent } from '@minecraft/server';
 import ExEntityEvents from "./ExEntityEvents.js";
 import { eventDecoratorFactory, registerEvent } from "../events/eventDecoratorFactory.js";
-import { ExEventNames, ExOtherEventNames } from "../events/events.js";
+import { ExEventNames } from "../events/events.js";
 import ExEntityPool from "./ExEntityPool.js";
 import ExContext from "../ExGameObject.js";
 /**
@@ -20,6 +20,9 @@ import ExContext from "../ExGameObject.js";
  * @implements {SetTimeOutSupport}
  */
 export default class ExEntityController extends ExContext {
+    getTypeId() {
+        return this._typeId;
+    }
     getId() {
         return this._id;
     }
@@ -41,15 +44,15 @@ export default class ExEntityController extends ExContext {
     constructor(e, server, spawn) {
         super(server);
         this._isDestroyed = false;
-        this._isKilled = false;
+        this.isKilled = false;
         this._entity = e;
         this.server = server;
         this._events = new ExEntityEvents(this);
         this._id = e.id;
+        this._typeId = e.typeId;
         this._init(server);
-        this.onAppear(spawn);
-        this.onMemoryLoad();
         eventDecoratorFactory(this.getEvents(), this);
+        this.onAppear(spawn);
     }
     _init(server) {
         this.exEntity = ExEntity.getInstance(this.entity);
@@ -59,14 +62,22 @@ export default class ExEntityController extends ExContext {
     }
     onMemoryRemove() {
         if (this.isLoaded) {
+            console.info(this._entity.typeId);
             this.stopContext();
             this.getEvents().stopContext();
+        }
+        else {
+            return;
         }
     }
     onMemoryLoad() {
         if (!this.isLoaded) {
+            console.info(this._entity.typeId);
             this.startContext();
             this.getEvents().startContext();
+        }
+        else {
+            return;
         }
     }
     onAppear(spawn) {
@@ -74,6 +85,7 @@ export default class ExEntityController extends ExContext {
     destroyTrigger() {
         if (!this._isDestroyed) {
             this._isDestroyed = true;
+            this.entity.remove();
             this.onDestroy();
         }
     }
@@ -82,15 +94,21 @@ export default class ExEntityController extends ExContext {
     }
     dispose() {
         super.dispose();
-        console.warn("dispose " + this._entity.typeId);
+        console.info(this._entity.typeId);
         this.getEvents().cancelAll();
         if (this.isLoaded)
             this.onMemoryRemove();
         ExEntityPool.pool.delete(this.entity);
     }
     onKilled(e) {
-        this._isKilled = true;
-        console.warn("onKilled " + this._entity.typeId);
+        if (this.isKilled)
+            return;
+        this.isKilled = true;
+        console.info(this._entity.typeId);
+        if (!this._isDestroyed) {
+            this._isDestroyed = true;
+            this.onDestroy();
+        }
     }
 }
 __decorate([
@@ -108,13 +126,7 @@ __decorate([
 __decorate([
     registerEvent(ExEventNames.afterEntityDie),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ExEntityController.prototype, "destroyTrigger", null);
-__decorate([
-    registerEvent(ExOtherEventNames.afterOnHurt, (ctrl, e) => ctrl.exEntity.health <= 0 && !ctrl._isKilled),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EntityHurtAfterEvent]),
+    __metadata("design:paramtypes", [EntityDieAfterEvent]),
     __metadata("design:returntype", void 0)
 ], ExEntityController.prototype, "onKilled", null);
 //# sourceMappingURL=ExEntityController.js.map

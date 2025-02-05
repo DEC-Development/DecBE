@@ -26,8 +26,7 @@
         "knockback": false,
         "catchFire": false,
         "semirandomdiffdamage": false
-      },
-      "remove_on_hit": { }
+      }
     },
     "power": 0.2,
     "gravity": 0.00,
@@ -37,8 +36,13 @@
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
     "uncertaintyBase": 0.1,
-    "uncertaintyMultiplier": 0.1,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true
+   },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit"
+     ]
    },
    "minecraft:pushable": {
     "is_pushable": false,

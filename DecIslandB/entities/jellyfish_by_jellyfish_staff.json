@@ -22,22 +22,21 @@
    "minecraft:projectile": {
     "onHit": {
       "impact_damage": {
-        "damage": 9,
+        "damage": 12,
         "knockback": true,
         "catchFire": false,
         "semirandomdiffdamage": false
-      },
-      "remove_on_hit": { }
+      }
     },
     "power": 0.6,
     "gravity": 0.00,
     "inertia": 1,
-    "liquid_inertia": 1,
+    "liquid_inertia": 1.1,
     "anchor": 1,
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
-    "uncertaintyBase": 30.0,
-    "uncertaintyMultiplier": 6,
+    "uncertaintyBase": 20.0,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true
    },
    "minecraft:pushable": {

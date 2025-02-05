@@ -38,6 +38,11 @@
     "uncertaintyBase": 6.0,
     "reflectOnHurt": true
    },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit_ground"
+     ]
+   },
    "minecraft:physics": {
    }
   }

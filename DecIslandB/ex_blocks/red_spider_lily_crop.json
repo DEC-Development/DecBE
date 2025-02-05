@@ -8,9 +8,7 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "red_spider_lily_crop",
-                    "render_method": "alpha_test",
-                    "face_dimming": false,
-                    "ambient_occlusion": false
+                    "render_method": "alpha_test"
                 }
             },
             "minecraft:geometry": "geometry.crop.sparse.on_dirt",
@@ -28,8 +26,8 @@
                 ]
             },
             "minecraft:destructible_by_mining": {
-                        "seconds_to_destroy":  0.001
-                    },
+                "seconds_to_destroy": 0.001
+            },
             "minecraft:map_color": "#EB4460",
             "minecraft:light_emission": 7,
             "minecraft:light_dampening": 0.0,

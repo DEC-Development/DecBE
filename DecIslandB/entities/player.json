@@ -8,6 +8,40 @@
 			"is_experimental": false
 		},
 		"component_groups": {
+			"minecraft:team_red_no_friendly_fire": {
+				"minecraft:damage_sensor": {
+					"triggers": [
+						{
+							"on_damage": {
+								"filters": {
+									"test": "has_tag",
+									"subject": "other",
+									"operator": "==",
+									"value": "team_red"
+								}
+							},
+							"deals_damage": false
+						}
+					]
+				}
+			},
+			"minecraft:team_blue_no_friendly_fire": {
+				"minecraft:damage_sensor": {
+					"triggers": [
+						{
+							"on_damage": {
+								"filters": {
+									"test": "has_tag",
+									"subject": "other",
+									"operator": "==",
+									"value": "team_blue"
+								}
+							},
+							"deals_damage": false
+						}
+					]
+				}
+			},
 			"minecraft:hpl1": {
 				"minecraft:health": {
 					"max": 10
@@ -1254,6 +1288,33 @@
 			]
 		},
 		"events": {
+			"minecraft:become_no_team_friendly_fire": {
+				"remove": {
+					"component_groups": [
+						"minecraft:team_red_no_friendly_fire",
+						"minecraft:team_blue_no_friendly_fire"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"say no"
+					]
+				}
+			},
+			"minecraft:become_team_red_no_friendly_fire": {
+				"add": {
+					"component_groups": [
+						"minecraft:team_red_no_friendly_fire"
+					]
+				}
+			},
+			"minecraft:become_team_blue_no_friendly_fire": {
+				"add": {
+					"component_groups": [
+						"minecraft:team_blue_no_friendly_fire"
+					]
+				}
+			},
 			"minecraft:become_hpl1": {
 				"remove": {
 					"component_groups": [

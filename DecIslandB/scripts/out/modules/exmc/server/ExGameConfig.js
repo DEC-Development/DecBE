@@ -15,7 +15,7 @@ export default class ExGameConfig {
                 return world.getDimension(MinecraftDimensionTypes.overworld).runCommandAsync(str);
             }
             catch (e) {
-                console.warn("Console error:", e);
+                console.error("Console error:", e);
             }
         });
     }

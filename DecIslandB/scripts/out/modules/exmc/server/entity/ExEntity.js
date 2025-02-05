@@ -203,7 +203,7 @@ export default class ExEntity {
         (_a = this.getComponent("minecraft:movement")) === null || _a === void 0 ? void 0 : _a.setCurrentValue(num);
     }
     shootProj(id, option, shoot_dir, loc) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         if (shoot_dir === void 0) { shoot_dir = this.viewDirection; }
         if (loc === void 0) { loc = new Vector3(this._entity.getHeadLocation())
             .add(this.viewDirection.scl((_a = option.spawnDistance) !== null && _a !== void 0 ? _a : 1.5)); }
@@ -251,11 +251,12 @@ export default class ExEntity {
         proj_comp.lightningStrikeOnHit = (_m = option.lightningStrikeOnHit) !== null && _m !== void 0 ? _m : proj_comp.lightningStrikeOnHit;
         proj_comp.liquidInertia = (_o = option.liquidInertia) !== null && _o !== void 0 ? _o : proj_comp.liquidInertia;
         proj_comp.onFireTime = (_p = option.onFireTime) !== null && _p !== void 0 ? _p : proj_comp.onFireTime;
-        proj_comp.owner = (_q = option.owner) !== null && _q !== void 0 ? _q : this._entity;
-        proj_comp.shouldBounceOnHit = (_r = option.shouldBounceOnHit) !== null && _r !== void 0 ? _r : proj_comp.shouldBounceOnHit;
-        proj_comp.stopOnHit = (_s = option.stopOnHit) !== null && _s !== void 0 ? _s : proj_comp.stopOnHit;
+        proj_comp.owner = owner;
+        proj_comp.shouldBounceOnHit = (_q = option.shouldBounceOnHit) !== null && _q !== void 0 ? _q : proj_comp.shouldBounceOnHit;
+        proj_comp.stopOnHit = (_r = option.stopOnHit) !== null && _r !== void 0 ? _r : proj_comp.stopOnHit;
         let v = new Vector3(view);
         if (option.delay) {
+            console.warn('after2:' + proj_comp.owner.nameTag);
             proj_comp.shoot(view.normalize().scl(0.05), shootOpt);
             ExGame._runTimeout(() => {
                 if (falseIfError(() => proj.isValid()))

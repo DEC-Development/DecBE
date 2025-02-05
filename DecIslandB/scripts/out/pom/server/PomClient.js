@@ -57,7 +57,6 @@ export default class PomClient extends ExGameClient {
         this.cache = new ExPropCache(this.getDynamicPropertyManager());
         this.looper = ExSystem.tickTask(this, () => {
             this.cache.save();
-            // console.warn("save cache" + Date.now());
         });
         this.looper.delay(10 * 20);
         this.looper.start();
@@ -205,6 +204,7 @@ export default class PomClient extends ExGameClient {
     }
     onLeave() {
         var _a;
+        this.cache.save();
         this.gameControllers.forEach(controller => controller.onLeave());
         this.looper.stop();
         (_a = this.licenseLooper) === null || _a === void 0 ? void 0 : _a.stop();

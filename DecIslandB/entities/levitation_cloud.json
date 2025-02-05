@@ -34,8 +34,7 @@
         "durationnormal": 100,
         "durationhard": 100,
         "amplifier": 1
-      },
-      "remove_on_hit": { }
+      }
     },
     "hit_sound": "bullet.hit",
     "power": 0.75,
@@ -49,6 +48,11 @@
     "reflect_on_hurt": true
    },
    "minecraft:physics": {
+   },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit"
+     ]
    },
    "minecraft:pushable": {
     "is_pushable": true,

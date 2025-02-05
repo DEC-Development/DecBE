@@ -50,7 +50,7 @@
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
     "uncertaintyBase": 8.0,
-    "uncertaintyMultiplier": 6,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true,
     "shoot_target": false
    },

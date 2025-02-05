@@ -46,6 +46,9 @@ export default class PomMagicSystem extends GameController {
             wbwqlq: 0,
             wbkjlqcg: 0
         };
+        this.posOrRotChangeListener = new VarOnChangeListener((old, now) => {
+            this.lastShowActionbar = '';
+        }, '');
         this.dataCacheRefreshDelay = 0;
         this.lastHealth = 0;
         this.actionbarShow = ExSystem.tickTask(this, () => {
@@ -151,10 +154,15 @@ export default class PomMagicSystem extends GameController {
                 arr2.push("");
             }
             arr2 = arr2.concat(Array.from(this._mapShow.values()).map(e => e.join('\n§r')));
-            this.exPlayer.titleActionBar(arr1.join("\n") + "定位".repeat(6) + arr2.join("\n§r"));
+            let show = arr1.join("\n") + "定位".repeat(6) + arr2.join("\n§r");
+            this.posOrRotChangeListener.upDate(this.exPlayer.position.toString() + this.exPlayer.viewDirection.toString());
+            if (this.lastShowActionbar != show)
+                this.exPlayer.titleActionBar(show);
+            this.lastShowActionbar = show;
         }).delay(8);
         this.damageAbsorbed = 0;
         this.magicReduce = 0;
+        this.lastShowActionbar = "";
         this.hurtState = false;
         this.hurtMaxNum = 0;
     }

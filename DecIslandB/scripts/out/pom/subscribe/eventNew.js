@@ -22,8 +22,22 @@ const tickingCompName = "ticking";
 const randomTickingCompName = "random_ticking";
 const onPlayerPlacingCompName = "on_player_placing";
 const onPlayerDestroyedCompName = "on_player_destroyed";
+const tmpV = new Vector3();
 function molangCalculate(molang, option) {
     molang = (molang + "").replace(/q\./g, "query.");
+    const sapi = {
+        get position() {
+            var _a, _b, _c;
+            return new Vector3((_c = (_b = (_a = option.triggerEntity) === null || _a === void 0 ? void 0 : _a.location) !== null && _b !== void 0 ? _b : option.triggerBlock) !== null && _c !== void 0 ? _c : new Vector3());
+        },
+        get dimension() {
+            var _a, _b, _c;
+            return (_b = (_a = option.triggerEntity) === null || _a === void 0 ? void 0 : _a.dimension) !== null && _b !== void 0 ? _b : (_c = option.triggerBlock) === null || _c === void 0 ? void 0 : _c.dimension;
+        },
+        get block() {
+            return option.triggerBlock;
+        }
+    };
     const query = {
         "block_state": (name) => {
             var _a;
@@ -49,6 +63,17 @@ function molangCalculate(molang, option) {
             if (!option.triggerEntity)
                 return "";
             return ExEntity.getInstance(option.triggerEntity).getScoresManager().getScore(name);
+        },
+        "position": (index) => {
+            if (option.triggerBlock) {
+                return tmpV.set(option.triggerBlock).toArray()[index];
+            }
+            else if (option.triggerEntity) {
+                return tmpV.set(option.triggerEntity.location).toArray()[index];
+            }
+            else {
+                return 0;
+            }
         },
         get time_of_day() {
             return world.getTimeOfDay() / 24000;
@@ -85,7 +110,7 @@ function molangCalculate(molang, option) {
         }
     };
     let res = eval("(" + molang + ")");
-    // console.warn(molang + " -> "+  res);
+    //console.warn(molang + " -> "+  res);
     return res;
 }
 function findTriggerComp(option) {
@@ -210,6 +235,13 @@ function handleEventUser(eventUser, option) {
                     bag.clearItem(item.typeId, 1);
                 }
             }
+        }
+        if (eventUser.post_message) {
+            const post = ExSystem.deepClone(eventUser.post_message);
+            for (let [i, e] of post.message.entries()) {
+                post.message[i] = typeof e === "string" ? molangCalculate(e, option) : e;
+            }
+            ExGame.postMessageToServer(post.sign, post.message);
         }
     }
     else if (option.triggerItem && option.triggerEntity) {
@@ -437,7 +469,7 @@ export default (context) => {
                 tryUse();
                 useMap.set(player, ExSystem.tickTask(context, () => {
                     tryUse();
-                }).delay(1).start());
+                }).delay(5).start());
             }
         }
     });

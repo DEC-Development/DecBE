@@ -34,7 +34,10 @@ export default class ExServerTickDelayTask {
                 return;
             this.looper();
         };
-        this.id = this.context.runIntervalByTick(() => { var _a; return (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this); }, this.time);
+        this.id = this.context.runIntervalByTick(() => {
+            var _a;
+            (_a = this === null || this === void 0 ? void 0 : this.func) === null || _a === void 0 ? void 0 : _a.call(this);
+        }, this.time);
         return this;
     }
     stop() {

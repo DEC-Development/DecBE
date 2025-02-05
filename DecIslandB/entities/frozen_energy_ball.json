@@ -33,8 +33,7 @@
         "num_particles": 6,
         "on_entity_hit": true,
         "on_other_hit": true
-      },
-      "remove_on_hit": { }
+      }
     },
     "hit_sound": "bullet.hit",
     "power": 0.8,
@@ -45,8 +44,13 @@
     "offset": [ 0, 0, 0 ],
     "semirandomdiffdamage": true,
     "uncertaintyBase": 6.0,
-    "uncertaintyMultiplier": 6,
+    "uncertaintyMultiplier": 0,
     "reflectOnHurt": true
+   },
+   "minecraft:type_family": {
+     "family": [
+       "remove_on_hit"
+     ]
    },
    "minecraft:pushable": {
     "is_pushable": false,

@@ -8,20 +8,26 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "lurk_mushroom_lit",
-                    "render_method": "alpha_test",
-                    "face_dimming": false,
-                    "ambient_occlusion": false
+                    "render_method": "alpha_test"
                 }
             },
             "minecraft:geometry": "geometry.crop.sparse.on_dirt",
             "minecraft:collision_box": false,
             "minecraft:selection_box": {
-                "origin": [-5,0,-5],
-                "size": [10,9,10]
+                "origin": [
+                    -5,
+                    0,
+                    -5
+                ],
+                "size": [
+                    10,
+                    9,
+                    10
+                ]
             },
             "minecraft:destructible_by_mining": {
-                        "seconds_to_destroy":  0.001
-                    },
+                "seconds_to_destroy": 0.001
+            },
             "minecraft:light_emission": 6,
             "minecraft:map_color": "#00847D",
             "minecraft:light_dampening": 0.0,
@@ -52,11 +58,11 @@
             }
         },
         "events": {
-			"turn_off": {
-				"set_block": {
-					"block_type": "dec:lurk_mushroom"
-				}
-			}
-		}
+            "turn_off": {
+                "set_block": {
+                    "block_type": "dec:lurk_mushroom"
+                }
+            }
+        }
     }
 }

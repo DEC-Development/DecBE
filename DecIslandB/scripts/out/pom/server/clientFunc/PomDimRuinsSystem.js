@@ -498,7 +498,7 @@ export default class PomDimRuinsSystem extends GameController {
                                     Y: "wb:portal_guardboss",
                                     A: MinecraftBlockTypes.Air,
                                     S: MinecraftBlockTypes.SandstoneSlab,
-                                    C: MinecraftBlockTypes.Air
+                                    C: MinecraftBlockTypes.SandstoneWall
                                 })
                                     .putStructure(m);
                                 const parLoc = new Vector3(e.block).add(0.5, 0.5, 0.5);

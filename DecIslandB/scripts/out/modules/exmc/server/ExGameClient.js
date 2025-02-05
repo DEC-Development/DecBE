@@ -17,6 +17,7 @@ import ExActionAlert from "./ui/ExActionAlert.js";
 import "../../reflect-metadata/Reflect.js";
 import { eventDecoratorFactory } from "./events/eventDecoratorFactory.js";
 import notUtillTask from "../utils/notUtillTask.js";
+import '../utils/Console.js';
 import { MinecraftDimensionTypes } from "../../vanilla-data/lib/index.js";
 import ExContext from "./ExGameObject.js";
 export default class ExGameClient extends ExContext {
@@ -41,7 +42,7 @@ export default class ExGameClient extends ExContext {
         this.debuggerChatTest = (e) => {
             this.run(() => {
                 if (e.message.startsWith("*/"))
-                    ExGameConfig.console.info(eval(e.message.substring(2, e.message.length)));
+                    console.info(eval(e.message.substring(2, e.message.length)));
             });
         };
         this.isLoaded = false;

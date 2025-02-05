@@ -98,24 +98,9 @@
         },
         "components": {
             "minecraft:material_instances": {
-                "north": "front",
-                "south": "back",
-                "east": "sides",
-                "west": "sides",
-                "sides": {
-                    "texture": "golden_bookshelf_frame_side"
-                },
-                "front": {
-                    "texture": "golden_bookshelf_frame_front"
-                },
-                "up": {
-                    "texture": "golden_bookshelf_up_down"
-                },
-                "back": {
-                    "texture": "golden_bookshelf_back"
-                },
-                "down": {
-                    "texture": "golden_bookshelf_up_down"
+                "*": {
+                    "texture": "golden_bookshelf_frame",
+                    "render_method": "alpha_test"
                 }
             },
             "minecraft:on_player_placing": {

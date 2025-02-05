@@ -320,46 +320,48 @@ export default class DecClient extends ExGameClient {
             const p = this.player;
             const ep = this.exPlayer;
             const scores = this.exPlayer.getScoresManager();
-            //生存，冒险玩家添加gaming标签
-            const gamemode = ep.gamemode;
-            if ((gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
-                if (!p.hasTag('gaming')) {
-                    p.addTag('gaming');
+            if (e.currentTick % 20 === 0) {
+                //生存，冒险玩家添加gaming标签
+                const gamemode = ep.gamemode;
+                if ((gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
+                    if (!p.hasTag('gaming')) {
+                        p.addTag('gaming');
+                    }
                 }
-            }
-            else {
-                if (p.hasTag('gaming')) {
-                    p.removeTag('gaming');
+                else {
+                    if (p.hasTag('gaming')) {
+                        p.removeTag('gaming');
+                    }
+                    p.setDynamicProperty('GmCheat', true);
+                    world.setDynamicProperty('GmCheat', true);
                 }
-                p.setDynamicProperty('GmCheat', true);
-                world.setDynamicProperty('GmCheat', true);
-            }
-            //潜行获得tag is_sneaking
-            if (p.isSneaking) {
-                p.addTag("is_sneaking");
-            }
-            else {
-                p.removeTag("is_sneaking");
-            }
-            //根据维度添加tag
-            if (p.dimension.id === MinecraftDimensionTypes.overworld) {
-                p.addTag("dOverworld");
-                p.removeTag("dNether");
-                p.removeTag("dTheEnd");
-            }
-            else if (p.dimension.id === MinecraftDimensionTypes.nether) {
-                p.addTag("dNether");
-                p.removeTag("dOverworld");
-                p.removeTag("dTheEnd");
-                if (e.currentTick % 80 === 0)
-                    ep.command.runAsync("fog @s remove \"night_event\"");
-            }
-            else if (p.dimension.id === MinecraftDimensionTypes.theEnd) {
-                p.addTag("dTheEnd");
-                p.removeTag("dNether");
-                p.removeTag("dOverworld");
-                if (e.currentTick % 80 === 0)
-                    ep.command.runAsync("fog @s remove \"night_event\"");
+                //潜行获得tag is_sneaking
+                if (p.isSneaking) {
+                    p.addTag("is_sneaking");
+                }
+                else {
+                    p.removeTag("is_sneaking");
+                }
+                //根据维度添加tag
+                if (p.dimension.id === MinecraftDimensionTypes.overworld) {
+                    p.addTag("dOverworld");
+                    p.removeTag("dNether");
+                    p.removeTag("dTheEnd");
+                }
+                else if (p.dimension.id === MinecraftDimensionTypes.nether) {
+                    p.addTag("dNether");
+                    p.removeTag("dOverworld");
+                    p.removeTag("dTheEnd");
+                    if (e.currentTick % 80 === 0)
+                        ep.command.runAsync("fog @s remove \"night_event\"");
+                }
+                else if (p.dimension.id === MinecraftDimensionTypes.theEnd) {
+                    p.addTag("dTheEnd");
+                    p.removeTag("dNether");
+                    p.removeTag("dOverworld");
+                    if (e.currentTick % 80 === 0)
+                        ep.command.runAsync("fog @s remove \"night_event\"");
+                }
             }
             if (e.currentTick % 20 === 0) {
                 //深渊之翼
@@ -420,9 +422,10 @@ export default class DecClient extends ExGameClient {
                     }
                 }
             }
-            if (scores.getScore('i_heavy') > 0) { //防末影珍珠的放function/global里的
-                this.exPlayer.command.runAsync('tag @e[r=10,type=ender_pearl] add no_ender_pearl');
-            }
+            //迁移到server了
+            // if (scores.getScore('i_heavy') > 0) {//防末影珍珠的放function/global里的
+            //     this.exPlayer.command.runAsync('')
+            // }
             //Dec的魔法系统
             if (DecGlobal.isDec()) {
                 let maxmagic = scores.getScore('maxmagic');
