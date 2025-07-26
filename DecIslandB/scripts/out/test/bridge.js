@@ -343,8 +343,8 @@ function testBridge() {
             });
         }
         ;
-        call(functionName, parameters, timeout = 20 * 10) {
-            return __awaiter(this, void 0, void 0, function* () {
+        call(functionName_1, parameters_1) {
+            return __awaiter(this, arguments, void 0, function* (functionName, parameters, timeout = 20 * 10) {
                 const data = yield this.protocolInterceptors.onCalling((_functionName, _parameters, _timeout) => {
                     let res = this.post(_functionName, SIGN.FunctionCallSign, _parameters, _timeout);
                     return res;
@@ -353,8 +353,8 @@ function testBridge() {
             });
         }
         ;
-        post(functionName, typePost, parameters, timeout = 20 * 10) {
-            return __awaiter(this, void 0, void 0, function* () {
+        post(functionName_1, typePost_1, parameters_1) {
+            return __awaiter(this, arguments, void 0, function* (functionName, typePost, parameters, timeout = 20 * 10) {
                 const callId = '-' + randomFloor(1000, 9999);
                 if (!(typePost.equals(SIGN.FunctionCallSign)))
                     parameters = [typePost];
@@ -371,8 +371,8 @@ function testBridge() {
             });
         }
         ;
-        callObject(objectAddress, functionName, parameters, timeout = 20 * 10) {
-            return __awaiter(this, void 0, void 0, function* () {
+        callObject(objectAddress_1, functionName_1, parameters_1) {
+            return __awaiter(this, arguments, void 0, function* (objectAddress, functionName, parameters, timeout = 20 * 10) {
                 const data = this.call(objectAddress + "." + functionName, parameters !== null && parameters !== void 0 ? parameters : [], timeout);
                 return data;
             });

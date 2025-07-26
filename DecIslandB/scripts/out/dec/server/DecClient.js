@@ -1,4 +1,4 @@
-import { EntityDamageCause, GameMode, MinecraftDimensionTypes, world } from '@minecraft/server';
+import { EntityDamageCause, GameMode, world } from '@minecraft/server';
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
 import MathUtil from "../../modules/exmc/utils/math/MathUtil.js";
@@ -10,7 +10,7 @@ import PomServer from "../../pom/server/PomServer.js";
 import GlobalScoreBoardCache from "../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js";
 import { Objective } from "../../modules/exmc/server/entity/ExScoresManager.js";
 import Random from "../../modules/exmc/utils/Random.js";
-import { MinecraftEffectTypes } from "../../modules/vanilla-data/lib/index.js";
+import { MinecraftDimensionTypes, MinecraftEffectTypes } from "../../modules/vanilla-data/lib/index.js";
 import ExEntity from '../../modules/exmc/server/entity/ExEntity.js';
 export default class DecClient extends ExGameClient {
     constructor(server, id, player) {
@@ -29,7 +29,7 @@ export default class DecClient extends ExGameClient {
         const item_off = this.exPlayer.getBag().itemOnOffHand;
         if ((item_main === null || item_main === void 0 ? void 0 : item_main.typeId) == equipmentTest || (item_off === null || item_off === void 0 ? void 0 : item_off.typeId) == equipmentTest) {
             for (let c of commands) {
-                this.player.runCommandAsync(c);
+                this.player.runCommand(c);
             }
         }
     }
@@ -93,9 +93,10 @@ export default class DecClient extends ExGameClient {
                 //这里写有饰品时触发的东西
             }
         });
-        this.getEvents().exEvents.beforeItemUseOn.subscribe(e => {
-            const id = e.itemStack.typeId;
-            if (id.startsWith("dec") && id.includes("summoner") && id !== "dec:summoner" && this.exPlayer.gamemode !== GameMode.creative) {
+        this.getEvents().exEvents.beforePlayerInteractWithBlock.subscribe(e => {
+            var _a, _b;
+            const id = (_b = (_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) !== null && _b !== void 0 ? _b : "";
+            if (id.startsWith("dec") && id.includes("summoner") && id !== "dec:summoner" && this.exPlayer.gamemode !== GameMode.Creative) {
                 e.cancel = true;
             }
         });
@@ -191,7 +192,7 @@ export default class DecClient extends ExGameClient {
                                 });
                                 e.setOnFire(5, false);
                                 let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                                e.applyKnockback(direction.x, direction.z, 1.2, 0.6);
+                                e.applyKnockback({ x: direction.x, z: direction.z }, 1.2);
                             }
                             catch (e) { }
                         }
@@ -204,7 +205,7 @@ export default class DecClient extends ExGameClient {
             }
             //WB
             if (ra <= 50 && ((_a = ExEntity.getInstance(e.hurtEntity).getBag().equipmentOnHead) === null || _a === void 0 ? void 0 : _a.typeId) === 'dec:glass_tank') {
-                e.hurtEntity.runCommandAsync('playsound random.glass @a ~~1~');
+                e.hurtEntity.runCommand('playsound random.glass @a ~~1~');
             }
             if (!DecGlobal.isDec() && !this.player.hasTag("wbkjlq")) {
                 const tmpV = new Vector3();
@@ -233,7 +234,7 @@ export default class DecClient extends ExGameClient {
                                     "damagingEntity": this.player
                                 });
                                 let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                                e.applyKnockback(direction.x, direction.z, 4, 1);
+                                e.applyKnockback({ x: direction.x, z: direction.z }, 4);
                             }
                             catch (e) { }
                         }
@@ -251,7 +252,7 @@ export default class DecClient extends ExGameClient {
                                     "damagingEntity": this.player
                                 });
                                 let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                                e.applyKnockback(direction.x, direction.z, 3, 0.5);
+                                e.applyKnockback({ x: direction.x, z: direction.z }, 3);
                             }
                             catch (e) { }
                         }
@@ -323,7 +324,7 @@ export default class DecClient extends ExGameClient {
             if (e.currentTick % 20 === 0) {
                 //生存，冒险玩家添加gaming标签
                 const gamemode = ep.gamemode;
-                if ((gamemode == GameMode.adventure || gamemode == GameMode.survival)) {
+                if ((gamemode == GameMode.Adventure || gamemode == GameMode.Survival)) {
                     if (!p.hasTag('gaming')) {
                         p.addTag('gaming');
                     }
@@ -343,19 +344,19 @@ export default class DecClient extends ExGameClient {
                     p.removeTag("is_sneaking");
                 }
                 //根据维度添加tag
-                if (p.dimension.id === MinecraftDimensionTypes.overworld) {
+                if (p.dimension.id === MinecraftDimensionTypes.Overworld) {
                     p.addTag("dOverworld");
                     p.removeTag("dNether");
                     p.removeTag("dTheEnd");
                 }
-                else if (p.dimension.id === MinecraftDimensionTypes.nether) {
+                else if (p.dimension.id === MinecraftDimensionTypes.Nether) {
                     p.addTag("dNether");
                     p.removeTag("dOverworld");
                     p.removeTag("dTheEnd");
                     if (e.currentTick % 80 === 0)
                         ep.command.runAsync("fog @s remove \"night_event\"");
                 }
-                else if (p.dimension.id === MinecraftDimensionTypes.theEnd) {
+                else if (p.dimension.id === MinecraftDimensionTypes.TheEnd) {
                     p.addTag("dTheEnd");
                     p.removeTag("dNether");
                     p.removeTag("dOverworld");
@@ -578,7 +579,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_1);
                     ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_2);
                     ex_e.shootProj('dec:bullet_by_everlasting_winter_flintlock', shoot_opt_2);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:flintlock_pro' && hasBullet('dec:flintlock_bullet')) {
@@ -593,7 +594,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_1);
                     ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_2);
                     ex_e.shootProj('dec:bullet_by_flintlock_pro', shoot_opt_2);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -608,7 +609,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_1);
                     ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_2);
                     ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt_2);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:ghost_flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -617,7 +618,7 @@ export default class DecClient extends ExGameClient {
                         uncertainty: 0
                     };
                     ex_e.shootProj('dec:bullet_by_ghost_flintlock', shoot_opt);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:lava_flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -629,7 +630,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
                     ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
                     ex_e.shootProj('dec:bullet_by_lava_flintlock', shoot_opt);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:short_flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -639,7 +640,7 @@ export default class DecClient extends ExGameClient {
                     };
                     ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt);
                     ex_e.shootProj('dec:bullet_by_flintlock', shoot_opt);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:star_flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -652,7 +653,7 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
                     ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
                     ex_e.shootProj('dec:bullet_by_star_flintlock', shoot_opt);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 else if (item_name == 'dec:storm_flintlock' && hasBullet('dec:flintlock_bullet')) {
@@ -667,14 +668,14 @@ export default class DecClient extends ExGameClient {
                     ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_1);
                     ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_2);
                     ex_e.shootProj('dec:bullet_by_storm_flintlock', shoot_opt_2);
-                    e.source.runCommandAsync('function item/general_flintlock');
+                    e.source.runCommand('function item/general_flintlock');
                     suc = true;
                 }
                 if (suc) {
                     let new_item = e.itemStack;
                     let dur = new_item.getComponent('minecraft:durability');
                     (_c = e.itemStack.getComponent('minecraft:cooldown')) === null || _c === void 0 ? void 0 : _c.startCooldown(e.source);
-                    if (p.gamemode != GameMode.creative) {
+                    if (p.gamemode != GameMode.Creative) {
                         if (dur.damage + 1 < dur.maxDurability) {
                             dur.damage += 1;
                             p.getBag().setItem(e.source.selectedSlotIndex, new_item);

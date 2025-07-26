@@ -4,7 +4,7 @@ import ExGame from '../ExGame.js';
 import { ExOtherEventNames } from './events.js';
 import MonitorManager from '../../utils/MonitorManager.js';
 //顶层事件分发
-export default class ExServerEvents {
+class ExServerEvents {
     _subscribe(name, callback) {
         let e = ExServerEvents.monitorMap.get(name);
         if (e === undefined) {
@@ -151,4 +151,5 @@ export default class ExServerEvents {
 ExServerEvents.monitorMap = new Map();
 ExServerEvents.init = false;
 ExServerEvents.interceptor = new Map();
+export default ExServerEvents;
 //# sourceMappingURL=ExServerEvents.js.map

@@ -1,6 +1,7 @@
-import { world, MinecraftDimensionTypes } from '@minecraft/server';
+import { world } from '@minecraft/server';
 import TimeLoopTask from '../../utils/TimeLoopTask.js';
 import { to } from '../ExErrorQueue.js';
+import { MinecraftDimensionTypes } from '../../../vanilla-data/lib/index.js';
 export default class ExSound {
     constructor(manager, id, time) {
         this.isInDelayStop = false;
@@ -25,7 +26,7 @@ export default class ExSound {
     stop() {
         var _a;
         (_a = this.looper) === null || _a === void 0 ? void 0 : _a.stop();
-        world.getDimension(MinecraftDimensionTypes.overworld).runCommandAsync("stopsound @a " + this.soundId);
+        world.getDimension(MinecraftDimensionTypes.Overworld).runCommandAsync("stopsound @a " + this.soundId);
     }
     delayStop(time) {
         this.isInDelayStop = true;

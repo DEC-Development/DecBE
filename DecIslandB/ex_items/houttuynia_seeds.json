@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:houttuynia_seeds",
             "menu_category": {
-                "group": "itemGroup.name.seed",
+                "group": "minecraft:itemGroup.name.seed",
                 "is_hidden_in_commands": false,
                 "category": "nature"
             }

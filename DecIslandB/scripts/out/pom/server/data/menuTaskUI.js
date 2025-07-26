@@ -5,6 +5,7 @@ import taskDaily_x from "./tasks/daily_x.js";
 import { PomTasks, taskTranToNum } from "../../../dec/server/data/Task.js";
 import getCharByNum, { PROGRESS_CHAR } from "./getCharByNum.js";
 import taskProgress from "./tasks/taskProgress.js";
+import plotLine from "./plotLine.js";
 export default function menuTaskUI(ctrl) {
     const lang = ctrl.getLang();
     let bagItems = ctrl.exPlayer.getBag().countAllItems();
@@ -264,6 +265,37 @@ export default function menuTaskUI(ctrl) {
                     }
                     arr[i] = {
                         "text": (completed ? "§a" : (isOk ? "§e" : "§c")) + task.name + ": " + (completed ? lang.menuUIMsgBailan234 : Math.round(prog * 100) + "％"),
+                        "page": page
+                    };
+                }
+                return arr;
+            }
+        },
+        "story": {
+            "text": "story",
+            "default": "0",
+            "img": "textures/items/unknow_book.png",
+            "page": (client, ui) => {
+                let arr = {};
+                for (let i = 0; i < 3; i++) {
+                    let page = [
+                        {
+                            "type": "text_title",
+                            "msg": "Part " + "I".repeat(i + 1)
+                        },
+                        {
+                            "type": "padding"
+                        }
+                    ];
+                    for (let j = 0; j < plotLine[i].length; j++) {
+                        if (client.data.plotLine.part[i].includes(j))
+                            page.push({
+                                "type": "text",
+                                "msg": plotLine[i][j]
+                            });
+                    }
+                    arr[i + ""] = {
+                        "text": "Part " + "I".repeat(i + 1),
                         "page": page
                     };
                 }

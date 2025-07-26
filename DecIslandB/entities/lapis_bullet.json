@@ -8,8 +8,7 @@
       "is_summonable": true,
       "is_experimental": false
     },
-    "component_groups": {
-    },
+    "component_groups": {},
     "components": {
       "minecraft:type_family": {
         "family": [

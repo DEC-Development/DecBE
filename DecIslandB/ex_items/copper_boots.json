@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:copper_boots",
             "menu_category": {
-                "group": "itemGroup.name.boots",
+                "group": "minecraft:itemGroup.name.boots",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -27,7 +27,7 @@
                     },
                     {
                         "items": [
-                            "minecraft:copper_nugget"
+                            "dec:copper_nugget"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.03"
                     }

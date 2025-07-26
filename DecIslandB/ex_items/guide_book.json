@@ -1,12 +1,12 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:guide_book",
             "menu_category": {
-                "group": "itemGroup.name.enchantedBook",
+                "group": "dec:itemGroup.name.other_books",
                 "is_hidden_in_commands": false,
-                "category": "items"
+                "category": "equipment"
             }
         },
         "components": {
@@ -16,7 +16,7 @@
             "minecraft:icon": {
                 "texture": "guide_book"
             },
-            "minecraft:use_animation": "bow",
+
             "minecraft:hand_equipped": true,
             "minecraft:max_stack_size": 64,
             "minecraft:foil": true,

@@ -1,6 +1,6 @@
 import EventHandle from "../events/EventHandle.js";
 import { ExEventNames, ExOtherEventNames } from "../events/events.js";
-export default class ExEntityEvents {
+class ExEntityEvents {
     _subscribe(arg0, callback) {
         ExEntityEvents.eventHandlers.subscribe(this._ctrl.entity, arg0, callback);
     }
@@ -151,6 +151,7 @@ ExEntityEvents.exEventSetting = {
 };
 ExEntityEvents.onHandItemMap = new Map();
 ExEntityEvents.onceItemUseOnMap = new Map();
+export default ExEntityEvents;
 class Listener {
     constructor(e, name) {
         this.subscribe = (callback) => {

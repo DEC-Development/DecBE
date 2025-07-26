@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import ExGameClient from "./ExGameClient.js";
 import ExDimension from "./ExDimension.js";
-import { world, MinecraftDimensionTypes, PlayerJoinAfterEvent, system, EntitySpawnAfterEvent, Dimension, EntityLoadAfterEvent, PlayerLeaveBeforeEvent } from "@minecraft/server";
+import { world, PlayerJoinAfterEvent, system, EntitySpawnAfterEvent, Dimension, EntityLoadAfterEvent, PlayerLeaveBeforeEvent } from "@minecraft/server";
 import ExGameConfig from "./ExGameConfig.js";
 import ExServerEvents from "./events/ExServerEvents.js";
 import UUID from "../utils/UUID.js";
@@ -26,7 +26,8 @@ import ExSystem from "../utils/ExSystem.js";
 import Vector3 from "../utils/math/Vector3.js";
 import ExEntityPool from "./entity/ExEntityPool.js";
 import ExContext from "./ExGameObject.js";
-export default class ExGameServer extends ExContext {
+import { MinecraftDimensionTypes } from "../../vanilla-data/lib/index.js";
+class ExGameServer extends ExContext {
     constructor(config) {
         super(config.gameContext);
         this.entityControllers = new Map();
@@ -37,9 +38,9 @@ export default class ExGameServer extends ExContext {
         if (!ExGameServer.isInitialized) {
             ExGameServer.isInitialized = true;
             ExGameConfig.config = config;
-            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.nether, world.getDimension(MinecraftDimensionTypes.nether));
-            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.overworld, world.getDimension(MinecraftDimensionTypes.overworld));
-            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.theEnd, world.getDimension(MinecraftDimensionTypes.theEnd));
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.Nether, world.getDimension(MinecraftDimensionTypes.Nether));
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.Overworld, world.getDimension(MinecraftDimensionTypes.Overworld));
+            ExGameServer.dimensionMap.set(MinecraftDimensionTypes.TheEnd, world.getDimension(MinecraftDimensionTypes.TheEnd));
             if (!config.watchDog) {
                 system.beforeEvents.watchdogTerminate.subscribe((e) => {
                     e.cancel = true;
@@ -79,7 +80,7 @@ export default class ExGameServer extends ExContext {
         return world;
     }
     _onEntityLoad(e) {
-        if (!e.entity.isValid())
+        if (!e.entity.isValid)
             return;
         let id;
         try {
@@ -96,7 +97,7 @@ export default class ExGameServer extends ExContext {
         }
     }
     _onEntitySpawn(e) {
-        if (!e.entity.isValid())
+        if (!e.entity.isValid)
             return;
         let id;
         try {
@@ -204,6 +205,7 @@ export default class ExGameServer extends ExContext {
 }
 ExGameServer.dimensionMap = new Map();
 ExGameServer.musicMap = new Map();
+export default ExGameServer;
 __decorate([
     registerEvent(ExEventNames.afterEntityLoad),
     __metadata("design:type", Function),

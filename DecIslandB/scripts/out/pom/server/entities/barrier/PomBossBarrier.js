@@ -3,7 +3,7 @@ import { GameMode } from '@minecraft/server';
 import { ignorn } from "../../../../modules/exmc/server/ExErrorQueue.js";
 import VarOnChangeListener from '../../../../modules/exmc/utils/VarOnChangeListener.js';
 import { MinecraftEffectTypes } from "../../../../modules/vanilla-data/lib/index.js";
-export default class PomBossBarrier {
+class PomBossBarrier {
     particle(arg0) {
         this.dim.spawnParticle(arg0, this.center);
     }
@@ -71,7 +71,7 @@ export default class PomBossBarrier {
     }
     *getPlayers() {
         for (let e of this.players) {
-            if (e[0].isValid())
+            if (e[0].isValid)
                 yield e[0];
         }
     }
@@ -90,7 +90,7 @@ export default class PomBossBarrier {
             if (!e.entity.location)
                 continue;
             if (this.players.has(e.entity)) {
-                if (!ignorn(() => e.entity.isValid()))
+                if (!ignorn(() => e.entity.isValid))
                     continue;
                 if (!this.area.contains(e.entity.location)) {
                     if (this.players.get(e.entity)) {
@@ -119,7 +119,7 @@ export default class PomBossBarrier {
                     if (!e.entity.getDynamicProperty('InBoundary')) {
                         e.entity.setDynamicProperty('InBoundary', this.id);
                         e.getScoresManager().setScore("pre_gamemode", e.gameModeCode);
-                        e.gamemode = GameMode.spectator;
+                        e.gamemode = GameMode.Spectator;
                     }
                 }
                 else {
@@ -130,7 +130,7 @@ export default class PomBossBarrier {
                 }
             }
         }
-        if (ignorn(() => this.boss.entity.isValid()) && !this.area.contains(this.boss.entity.location)) {
+        if (ignorn(() => this.boss.entity.isValid) && !this.area.contains(this.boss.entity.location)) {
             this.boss.exEntity.setPosition(this.area.center());
         }
         if (this.players.size === 0) {
@@ -151,4 +151,5 @@ export default class PomBossBarrier {
     }
 }
 PomBossBarrier.map = new Map();
+export default PomBossBarrier;
 //# sourceMappingURL=PomBossBarrier.js.map

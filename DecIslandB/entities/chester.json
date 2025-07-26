@@ -7,7 +7,6 @@
       "is_summonable": true,
       "is_experimental": false
     },
-
     "component_groups": {
       "minecraft:wild": {
         "minecraft:tameable": {
@@ -20,15 +19,13 @@
         }
       },
       "minecraft:tame": {
-        "minecraft:sittable": {
-        },
+        "minecraft:sittable": {},
         "minecraft:inventory": {
           "container_type": "minecart_chest",
           "inventory_size": 27,
           "can_be_siphoned_from": true
         },
-        "minecraft:is_tamed": {
-        },
+        "minecraft:is_tamed": {},
         "minecraft:health": {
           "value": 20,
           "max": 20
@@ -41,13 +38,12 @@
         }
       }
     },
-
-
     "components": {
-      "minecraft:nameable": {
-      },
+      "minecraft:nameable": {},
       "minecraft:type_family": {
-        "family": [ "chester" ]
+        "family": [
+          "chester"
+        ]
       },
       "minecraft:breathable": {
         "total_supply": 15,
@@ -64,7 +60,12 @@
       "minecraft:hurt_on_condition": {
         "damage_conditions": [
           {
-            "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
             "cause": "lava",
             "damage_per_tick": 4
           }
@@ -77,12 +78,9 @@
         "can_path_over_water": true,
         "avoid_damage_blocks": true
       },
-      "minecraft:movement.basic": {
-      },
-      "minecraft:jump.static": {
-      },
-      "minecraft:can_climb": {
-      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:can_climb": {},
       "minecraft:attack": {
         "damage": 3
       },
@@ -118,15 +116,12 @@
       "minecraft:behavior.stay_while_sitting": {
         "priority": 3
       },
-      "minecraft:physics": {
-      },
+      "minecraft:physics": {},
       "minecraft:pushable": {
         "is_pushable": true,
         "is_pushable_by_piston": true
       }
     },
-
-
     "events": {
       "minecraft:entity_spawned": {
         "add": {

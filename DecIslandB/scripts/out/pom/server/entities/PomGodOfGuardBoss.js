@@ -1417,7 +1417,7 @@ export class PomGodOfGuardShadow extends ExEntityController {
         let damage = e.damage;
         if (e.damageSource.cause === EntityDamageCause.projectile)
             damage *= 0.2;
-        if (e.damageSource.cause !== EntityDamageCause.selfDestruct && e.damageSource.cause !== EntityDamageCause.suicide)
+        if (e.damageSource.cause !== EntityDamageCause.selfDestruct)
             this.bossOri.entity.applyDamage(damage, {
                 "cause": EntityDamageCause.charging,
                 "damagingEntity": e.damageSource.damagingEntity
@@ -2483,7 +2483,7 @@ export class PomGodOfGuardBossPassive {
                     let loc = new Vector3(p.location);
                     let under = ignorn(() => ctrl.entity.dimension.getBlock(loc.sub(0, 1, 0)));
                     let getter = this.playerSkipperData.get(p);
-                    if (p.getGameMode() === GameMode.creative)
+                    if (p.getGameMode() === GameMode.Creative)
                         continue;
                     getter[1] -= getter[0].shift();
                     getter[0].push(((under === null || under === void 0 ? void 0 : under.typeId) === "minecraft:air" ? 1 : 0) +
@@ -2664,7 +2664,10 @@ export class PomGodOfGuardShootCenters {
                         "cause": d[1],
                         "damagingEntity": from
                     });
-                    p.applyKnockback(0, 0, 0.5, 0.2);
+                    p.applyKnockback({
+                        "x": 0,
+                        "z": 0,
+                    }, 0.5);
                 }
             }
         }

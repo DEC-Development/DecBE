@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.60",
     "minecraft:block": {
         "description": {
             "identifier": "dec:red_spider_lily_crop"
@@ -41,7 +41,7 @@
                         "block_filter": [
                             "netherrack",
                             "crimson_nylium",
-                            "ash"
+                            "dec:ash"
                         ]
                     }
                 ]

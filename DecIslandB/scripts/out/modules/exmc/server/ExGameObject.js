@@ -115,7 +115,7 @@ export default class ExGameObject extends ExContext {
     }
     startContext() {
         this.interrupt = false;
-        this._waitCode.forEach(([p, res]) => __awaiter(this, void 0, void 0, function* () {
+        this._waitCode.forEach((_a) => __awaiter(this, [_a], void 0, function* ([p, res]) {
             p(res);
         }));
         this._waitCode = [];

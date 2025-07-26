@@ -1,7 +1,7 @@
 import Matrix3 from "../utils/math/Matrix3.js";
 import Paint, { Style } from "./Paint.js";
 import PixelFilter from "./PixelFilter.js";
-export default class Canvas {
+class Canvas {
     getMatrix() {
         return this.mat;
     }
@@ -207,4 +207,5 @@ Canvas._grayscale = `�
 Canvas._saturation2 = ``;
 Canvas._grayscale2 = ``;
 Canvas._canvasStart = "";
+export default Canvas;
 //# sourceMappingURL=Canvas.js.map

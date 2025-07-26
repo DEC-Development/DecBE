@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:cloud_flower",
             "menu_category": {
-                "group": "itemGroup.name.flower",
+                "group": "minecraft:itemGroup.name.flower",
                 "is_hidden_in_commands": false,
                 "category": "nature"
             }

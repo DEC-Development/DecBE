@@ -10,8 +10,8 @@
     },
     "components": {
       "minecraft:collision_box": {
-        "width": 0.31,
-        "height": 0.31
+        "width": 0.8,
+        "height": 0.8
       },
       "minecraft:explode": {
         "fuseLength": 3,
@@ -21,6 +21,11 @@
       },
       "minecraft:projectile": {
         "onHit": {
+          "definition_event": {
+            "event_trigger": {
+              "event": "hit"
+            }
+          },
           "impact_damage": {
             "damage": 5,
             "knockback": true,
@@ -44,7 +49,6 @@
         "uncertaintyMultiplier": 0,
         "reflectOnHurt": true
       },
-      
       "minecraft:type_family": {
         "family": [
           "remove_on_hit"
@@ -53,6 +57,15 @@
       "minecraft:pushable": {
         "is_pushable": false,
         "is_pushable_by_piston": true
+      }
+    },
+    "events": {
+      "hit": {
+        "queue_command": {
+          "command": [
+            "particle dec:energy_ball_hit_particle ~~~"
+          ]
+        }
       }
     }
   }

@@ -95,6 +95,13 @@ export default class PomClient extends ExGameClient {
                 }
             };
         }
+        if (!this.data.plotLine) {
+            this.data.plotLine = {
+                part: [
+                    [], [], []
+                ]
+            };
+        }
         if (!this.data.socialList) {
             this.data.socialList = {
                 refuseList: [],
@@ -247,6 +254,9 @@ export default class PomClient extends ExGameClient {
     jetPackSkill() {
         this.itemUseFunc.jetPackSkill();
     }
+    unknownBook() {
+        this.itemUseFunc.unknownBook();
+    }
 }
 __decorate([
     receiveMessage("taskUi"),
@@ -272,4 +282,10 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PomClient.prototype, "jetPackSkill", null);
+__decorate([
+    receiveMessage("item:unknow_book"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PomClient.prototype, "unknownBook", null);
 //# sourceMappingURL=PomClient.js.map

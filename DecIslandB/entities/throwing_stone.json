@@ -21,7 +21,7 @@
           }
         },
         "hit_sound": "dig.stone",
-				"hit_ground_sound": "dig.stone",
+        "hit_ground_sound": "dig.stone",
         "power": 1.5,
         "gravity": 0.035,
         "angleoffset": 0.0

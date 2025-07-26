@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:storm_staff",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "dec:itemGroup.name.staffs",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -16,7 +16,7 @@
             "minecraft:icon": {
                 "texture": "storm_staff"
             },
-            "minecraft:use_animation": "bow",
+
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -69,7 +69,8 @@
                                 "run_command": {
                                     "command": [
                                         "playsound conduit.activate @a ~~~",
-                                        "scoreboard players remove @s magicpoint 9"
+                                        "scoreboard players remove @s magicpoint 9",
+                                        "playanimation @s animation.humanoid.staff_use"
                                     ],
                                     "target": "holder"
                                 }

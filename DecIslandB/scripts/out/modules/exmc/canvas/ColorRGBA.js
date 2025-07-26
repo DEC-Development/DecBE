@@ -1,5 +1,5 @@
 import ColorHSV from "./ColorHSV.js";
-export default class ColorRGBA {
+class ColorRGBA {
     constructor(r, g, b, a) {
         if (typeof r === "string") {
             if (r.startsWith("#"))
@@ -222,4 +222,5 @@ ColorRGBA.WHITE = new ColorRGBA('#FFFFFF');
 ColorRGBA.WHITESMOKE = new ColorRGBA('#F5F5F5');
 ColorRGBA.YELLOW = new ColorRGBA('#FFFF00');
 ColorRGBA.YELLOWGREEN = new ColorRGBA('#9ACD32');
+export default ColorRGBA;
 //# sourceMappingURL=ColorRGBA.js.map

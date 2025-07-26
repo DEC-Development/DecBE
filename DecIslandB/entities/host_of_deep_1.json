@@ -462,7 +462,7 @@
           ]
         }
       },
-      "minecraft:next":{
+      "minecraft:next": {
         "add": {
           "component_groups": [
             "minecraft:next"

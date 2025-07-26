@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:black_courtesy",
             "menu_category": {
-                "group": "itemGroup.name.helmet",
+                "group": "dec:itemGroup.name.clothes_helmets",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }

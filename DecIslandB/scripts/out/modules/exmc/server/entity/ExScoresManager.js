@@ -129,7 +129,7 @@ export class Objective {
     }
     isValid() {
         var _a, _b;
-        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.isValid()) !== null && _b !== void 0 ? _b : false;
+        return (_b = (_a = this.scoreboardObjective) === null || _a === void 0 ? void 0 : _a.isValid) !== null && _b !== void 0 ? _b : false;
     }
     removeParticipant(participant) {
         var _a, _b;

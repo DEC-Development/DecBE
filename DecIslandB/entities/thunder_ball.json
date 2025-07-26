@@ -15,8 +15,8 @@
     },
     "components": {
       "minecraft:collision_box": {
-        "width": 0.3,
-        "height": 0.3
+        "width": 0.9,
+        "height": 0.9
       },
       "minecraft:explode": {
         "fuseLength": 3,

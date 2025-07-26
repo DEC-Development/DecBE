@@ -37,7 +37,7 @@ export default class PomBossController extends ExEntityController {
         console.info("onWin");
     }
     onKilled(e) {
-        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
+        if (e.damageSource.cause === EntityDamageCause.selfDestruct) {
             this.stopBattle();
         }
         super.onKilled(e);
@@ -87,7 +87,7 @@ export default class PomBossController extends ExEntityController {
         (_a = this.autoJudgeTimer) === null || _a === void 0 ? void 0 : _a.stop();
         this.autoJudgeTimer = ExSystem.tickTask(this.server, () => {
             var _a, _b;
-            if (this.isKilled) {
+            if (this.isKilled || this.isDestroyed) {
                 (_a = this.autoJudgeTimer) === null || _a === void 0 ? void 0 : _a.stop();
                 return;
             }

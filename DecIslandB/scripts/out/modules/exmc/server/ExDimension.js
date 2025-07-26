@@ -1,7 +1,16 @@
-import { MolangVariableMap, BlockTypes } from '@minecraft/server';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { Dimension, MolangVariableMap, BlockTypes, system } from '@minecraft/server';
 import ExCommand from './env/ExCommand.js';
 import { ignorn } from './ExErrorQueue.js';
-export default class ExDimension {
+class ExDimension {
     spawnParticle(p, v, varMap = new MolangVariableMap()) {
         try {
             (this._dimension.spawnParticle(p, v, varMap));
@@ -82,7 +91,9 @@ export default class ExDimension {
         }
     }
     runCommandAsync(str) {
-        return this._dimension.runCommandAsync(str);
+        return __awaiter(this, void 0, void 0, function* () {
+            return this._dimension.runCommand(str);
+        });
     }
     runCommand(str) {
         return this._dimension.runCommand(str);
@@ -96,4 +107,23 @@ export default class ExDimension {
     }
 }
 ExDimension.propertyNameCache = "exCache";
+export default ExDimension;
+const oldMethod = Dimension.prototype.spawnEntity;
+Dimension.prototype.spawnEntity = function (p, v, options) {
+    let entity = oldMethod.call(this, p, v, options);
+    return entity;
+};
+Dimension.prototype.runCommandAsync = function (str) {
+    return new Promise((resolve, reject) => {
+        system.run(() => {
+            try {
+                let res = this.runCommand(str);
+                resolve(res);
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    });
+};
 //# sourceMappingURL=ExDimension.js.map

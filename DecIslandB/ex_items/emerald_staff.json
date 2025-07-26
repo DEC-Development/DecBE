@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:emerald_staff",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "dec:itemGroup.name.staffs",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -13,7 +13,7 @@
             "minecraft:icon": {
                 "texture": "emerald_staff"
             },
-            "minecraft:use_animation": "bow",
+
             "minecraft:display_name": {
                 "value": "item.dec:emerald_staff.name"
             },
@@ -74,7 +74,7 @@
                             {
                                 "run_command": {
                                     "command": [
-                                        "playsound item.book.put @a ~~~",
+                                        "playsound break.amethyst_block @a ~~~",
                                         "scoreboard players remove @s magicpoint 8",
                                         "playanimation @s animation.humanoid.staff_use"
                                     ],

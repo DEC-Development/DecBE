@@ -1,14 +1,14 @@
 var _a;
 import Vector3 from "../../../../modules/exmc/utils/math/Vector3.js";
 import { ExBlockArea } from '../../../../modules/exmc/server/block/ExBlockArea.js';
-export default class RuinsLoaction {
+class RuinsLoaction {
     static isInProtectArea(v) {
-        return RuinsLoaction.DESERT_RUIN_PROTECT_AREA.contains(v)
-            || RuinsLoaction.GUARD_RUIN_PROTECT_AREA.contains(v)
-            || RuinsLoaction.STONE_RUIN_PROTECT_AREA.contains(v)
-            || RuinsLoaction.CAVE_RUIN_PROTECT_AREA.contains(v)
-            || RuinsLoaction.ANCIENT_RUIN_PROTECT_AREA.contains(v)
-            || RuinsLoaction.MIND_RUIN_PROTECT_AREA.contains(v);
+        return _a.DESERT_RUIN_PROTECT_AREA.contains(v)
+            || _a.GUARD_RUIN_PROTECT_AREA.contains(v)
+            || _a.STONE_RUIN_PROTECT_AREA.contains(v)
+            || _a.CAVE_RUIN_PROTECT_AREA.contains(v)
+            || _a.ANCIENT_RUIN_PROTECT_AREA.contains(v)
+            || _a.MIND_RUIN_PROTECT_AREA.contains(v);
     }
 }
 _a = RuinsLoaction;
@@ -54,4 +54,5 @@ RuinsLoaction.GUARD_RUIN_LOCATION_END = _a.GUARD_RUIN_LOCATION_START.cpy().add(_
 RuinsLoaction.GUARD_RUIN_LOCATION_CENTER = _a.GUARD_RUIN_LOCATION_START.cpy().add(_a.GUARD_RUIN_LOCATION_SIZE.x / 2, 0, _a.GUARD_RUIN_LOCATION_SIZE.z / 2);
 RuinsLoaction.GUARD_RUIN_AREA = new ExBlockArea(_a.GUARD_RUIN_LOCATION_START, _a.GUARD_RUIN_LOCATION_SIZE);
 RuinsLoaction.GUARD_RUIN_PROTECT_AREA = new ExBlockArea(_a.GUARD_RUIN_LOCATION_START.cpy().sub(_a.GUARD_RUIN_LOCATION_SIZE), _a.GUARD_RUIN_LOCATION_END.cpy().add(_a.GUARD_RUIN_LOCATION_SIZE), true);
+export default RuinsLoaction;
 //# sourceMappingURL=RuinsLoaction.js.map

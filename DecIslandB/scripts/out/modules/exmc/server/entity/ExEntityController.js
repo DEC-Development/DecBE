@@ -43,7 +43,7 @@ export default class ExEntityController extends ExContext {
     }
     constructor(e, server, spawn) {
         super(server);
-        this._isDestroyed = false;
+        this.isDestroyed = false;
         this.isKilled = false;
         this._entity = e;
         this.server = server;
@@ -83,8 +83,8 @@ export default class ExEntityController extends ExContext {
     onAppear(spawn) {
     }
     destroyTrigger() {
-        if (!this._isDestroyed) {
-            this._isDestroyed = true;
+        if (!this.isDestroyed) {
+            this.isDestroyed = true;
             this.entity.remove();
             this.onDestroy();
         }
@@ -94,6 +94,7 @@ export default class ExEntityController extends ExContext {
     }
     dispose() {
         super.dispose();
+        this.isDestroyed = true;
         console.info(this._entity.typeId);
         this.getEvents().cancelAll();
         if (this.isLoaded)
@@ -105,8 +106,8 @@ export default class ExEntityController extends ExContext {
             return;
         this.isKilled = true;
         console.info(this._entity.typeId);
-        if (!this._isDestroyed) {
-            this._isDestroyed = true;
+        if (!this.isDestroyed) {
+            this.isDestroyed = true;
             this.onDestroy();
         }
     }

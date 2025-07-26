@@ -35,7 +35,7 @@
       "minecraft:projectile": {
         "onHit": {
           "impact_damage": {
-            "damage": 14,
+            "damage": 10,
             "knockback": false,
             "catchFire": true,
             "destroy_on_hit": false
@@ -69,7 +69,7 @@
       },
       "minecraft:type_family": {
         "family": [
-          "remove_on_hit_ground"
+          "remove_on_hit"
         ]
       },
       "minecraft:pushable": {

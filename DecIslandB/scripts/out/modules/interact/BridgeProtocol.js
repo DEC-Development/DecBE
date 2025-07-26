@@ -516,8 +516,8 @@ export class BridgeProtocol {
      *
      * @returns 返回一个Promise，解析为函数调用的结果，类型为TransmissionDataType
      */
-    call(functionName, parameters, timeout = 20 * 10, source) {
-        return __awaiter(this, void 0, void 0, function* () {
+    call(functionName_1, parameters_1) {
+        return __awaiter(this, arguments, void 0, function* (functionName, parameters, timeout = 20 * 10, source) {
             /**
              * 通过协议拦截器处理函数调用，以便在调用前后添加额外的处理逻辑
              */
@@ -551,8 +551,8 @@ export class BridgeProtocol {
      *
      * 此函数用于向游戏服务器发送脚本事件，并等待相应的响应它主要用于跨系统的数据交互和功能调用
      */
-    post(functionName, typePost, parameters, timeout = 20 * 10, source) {
-        return __awaiter(this, void 0, void 0, function* () {
+    post(functionName_1, typePost_1, parameters_1) {
+        return __awaiter(this, arguments, void 0, function* (functionName, typePost, parameters, timeout = 20 * 10, source) {
             // 生成一个唯一的调用ID，用于标识和匹配事件响应
             const callId = '-' + randomFloor(1000, 9999);
             // 根据签名类型决定参数的处理方式如果类型不是函数调用签名，则将签名作为第一个参数
@@ -592,8 +592,8 @@ export class BridgeProtocol {
      *
      * @returns 返回一个Promise，解析为方法调用的结果
      */
-    callObject(targetId, objectAddress, functionName, parameters, timeout = 20 * 10, source) {
-        return __awaiter(this, void 0, void 0, function* () {
+    callObject(targetId_1, objectAddress_1, functionName_1, parameters_1) {
+        return __awaiter(this, arguments, void 0, function* (targetId, objectAddress, functionName, parameters, timeout = 20 * 10, source) {
             // 组合对象地址和函数名，构造完整的调用路径
             // 调用方法，并传递参数和超时设置，以及可能的调用源
             const data = this.call(targetId + "." + objectAddress + "." + functionName, parameters !== null && parameters !== void 0 ? parameters : [], timeout, source);

@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:angel_purification",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "dec:itemGroup.name.spears",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -41,13 +41,7 @@
                 "repair_items": [
                     {
                         "items": [
-                            "minecraft:red_flower"
-                        ],
-                        "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.1"
-                    },
-                    {
-                        "items": [
-                            "minecraft:yellow_flower"
+                            "dec:dandelion"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.1"
                     },

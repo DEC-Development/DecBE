@@ -1,5 +1,5 @@
 import PomBossController from './PomBossController.js';
-export default class PomHeadlessGuardBoss extends PomBossController {
+class PomHeadlessGuardBoss extends PomBossController {
     constructor(e, server, spawn) {
         super(e, server, spawn);
     }
@@ -28,4 +28,5 @@ export default class PomHeadlessGuardBoss extends PomBossController {
     }
 }
 PomHeadlessGuardBoss.typeId = "wb:headless_guard";
+export default PomHeadlessGuardBoss;
 //# sourceMappingURL=PomHeadlessGuardBoss.js.map

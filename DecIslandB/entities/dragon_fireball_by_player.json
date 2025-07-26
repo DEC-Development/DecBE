@@ -19,7 +19,7 @@
         "power": 0,
         "causesFire": false,
         "destroy_affected_by_griefing": false
-        },
+      },
       "minecraft:projectile": {
         "on_hit": {
           "spawn_aoe_cloud": {
@@ -28,7 +28,11 @@
             "potion": 23,
             "particle": "dragonbreath",
             "duration": 10,
-            "color": [ 220, 0, 239 ],
+            "color": [
+              220,
+              0,
+              239
+            ],
             "affect_owner": false,
             "reapplication_delay": 20
           }
@@ -37,23 +41,26 @@
         "gravity": 0.00,
         "inertia": 1,
         "anchor": 2,
-        "offset": [ 0, 0, 0 ],
+        "offset": [
+          0,
+          0,
+          0
+        ],
         "semi_random_diff_damage": true,
         "uncertainty_base": 10.0,
         "reflect_on_hurt": true,
         "hit_sound": "explode"
+      },
+      "minecraft:type_family": {
+        "family": [
+          "remove_on_hit"
+        ]
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
       }
-    },
-    "minecraft:type_family": {
-      "family": [
-        "remove_on_hit"
-      ]
-    },
-	  "minecraft:physics": {
-    },
-    "minecraft:pushable": {
-      "is_pushable": true,
-      "is_pushable_by_piston": true
     }
   }
 }

@@ -2,7 +2,7 @@ import Vector3 from "../../../utils/math/Vector3.js";
 import ExDimension from "../../ExDimension.js";
 import { ExBlockArea } from "../ExBlockArea.js";
 import { MinecraftBlockTypes } from "../../../../vanilla-data/lib/index.js";
-export default class ExBlockStructureNormal {
+class ExBlockStructureNormal {
     constructor() {
         this.direction = ExBlockStructureNormal.DIRECTION_AROUND | ExBlockStructureNormal.DIRECTION_LAY;
         this.canPut = false;
@@ -291,4 +291,5 @@ ExBlockStructureNormal.DIRECTION_AROUND = ExBlockStructureNormal.DIRECTION_WEST 
 ExBlockStructureNormal.DIRECTION_AROUND_MIRROR = ExBlockStructureNormal.DIRECTION_EAST | ExBlockStructureNormal.DIRECTION_NORTH;
 ExBlockStructureNormal.DIRECTION_LAY = ExBlockStructureNormal.DIRECTION_UP | ExBlockStructureNormal.DIRECTION_BUTTOM;
 ExBlockStructureNormal.DIRECTION_LAY_MIRROR = ExBlockStructureNormal.DIRECTION_UP;
+export default ExBlockStructureNormal;
 //# sourceMappingURL=ExBlockStructureNormal.js.map

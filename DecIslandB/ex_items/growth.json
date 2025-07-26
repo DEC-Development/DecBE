@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:growth",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "minecraft:itemGroup.name.sword",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -41,13 +41,7 @@
                 "repair_items": [
                     {
                         "items": [
-                            "minecraft:red_flower"
-                        ],
-                        "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.1"
-                    },
-                    {
-                        "items": [
-                            "minecraft:yellow_flower"
+                            "dec:dandelion"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.1"
                     },
@@ -105,8 +99,9 @@
                             {
                                 "run_command": {
                                     "command": [
-                                        "playsound item.book.put @a ~~~",
-                                        "scoreboard players remove @s magicpoint 4"
+                                        "playsound break.amethyst_block @a ~~~",
+                                        "scoreboard players remove @s magicpoint 4",
+                                        "playanimation @s animation.humanoid.staff_use"
                                     ],
                                     "target": "holder"
                                 }
@@ -135,7 +130,7 @@
                             {
                                 "run_command": {
                                     "command": [
-                                        "playsound item.book.put @a ~~~",
+                                        "playsound break.amethyst_block @a ~~~",
                                         "scoreboard players remove @s magicpoint 5"
                                     ],
                                     "target": "holder"

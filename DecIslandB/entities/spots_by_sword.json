@@ -69,7 +69,7 @@
       },
       "minecraft:type_family": {
         "family": [
-          "remove_on_hit_ground"
+          "remove_on_hit"
         ]
       },
       "minecraft:pushable": {

@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.60",
     "minecraft:block": {
         "description": {
             "identifier": "dec:golden_bookshelf",
@@ -12,7 +12,7 @@
                 ]
             },
             "menu_category": {
-                "group": "itemGroup.name.outside",
+                "group": "minecraft:itemGroup.name.outside",
                 "category": "items"
             }
         },
@@ -98,9 +98,24 @@
         },
         "components": {
             "minecraft:material_instances": {
-                "*": {
-                    "texture": "golden_bookshelf",
-                    "render_method": "alpha_test"
+                "north": "front",
+                "south": "back",
+                "east": "sides",
+                "west": "sides",
+                "sides": {
+                    "texture": "golden_bookshelf_side"
+                },
+                "front": {
+                    "texture": "golden_bookshelf_front"
+                },
+                "back": {
+                    "texture": "golden_bookshelf_back"
+                },
+                "up": {
+                    "texture": "golden_bookshelf_up_down"
+                },
+                "down": {
+                    "texture": "golden_bookshelf_up_down"
                 }
             },
             "minecraft:on_player_placing": {

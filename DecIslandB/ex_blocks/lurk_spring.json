@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.60",
     "minecraft:block": {
         "description": {
             "identifier": "dec:lurk_spring",
             "menu_category": {
-                "group": "itemGroup.name.sapling",
+                "group": "minecraft:itemGroup.name.sapling",
                 "category": "nature"
             }
         },

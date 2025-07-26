@@ -1,11 +1,11 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.60",
     "minecraft:block": {
         "description": {
             "identifier": "dec:smooth_amethyst_block",
             "menu_category": {
-                "group": "itemGroup.name.outside",
-                "category": "construction"
+                "group": "minecraft:itemGroup.name.stone",
+                "category": "nature"
             }
         },
         "components": {

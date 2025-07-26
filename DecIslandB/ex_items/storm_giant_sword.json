@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:storm_giant_sword",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "minecraft:itemGroup.name.sword",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -16,7 +16,7 @@
             "minecraft:icon": {
                 "texture": "storm_giant_sword"
             },
-            "minecraft:use_animation": "bow",
+
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "attack",
@@ -97,7 +97,7 @@
                             {
                                 "run_command": {
                                     "command": [
-                                        "playsound item.book.put @a ~~~",
+                                        "playsound break.amethyst_block @a ~~~",
                                         "scoreboard players remove @s magicpoint 3",
                                         "playanimation @s animation.humanoid.staff_use"
                                     ],

@@ -1,1 +1,1 @@
-{"version":3,"file":"ExEntityPool.js","sourceRoot":"","sources":["../../../../../ExcellentMInecraftscripts/src/modules/exmc/server/entity/ExEntityPool.ts"],"names":[],"mappings":"AAGA,MAAM,CAAC,OAAO,OAAO,YAAY;;AACf,iBAAI,GAAwC,IAAI,OAAO,EAAE,CAAC"}
+{"version":3,"file":"ExEntityPool.js","sourceRoot":"","sources":["../../../../../ExcellentMInecraftscripts/src/modules/exmc/server/entity/ExEntityPool.ts"],"names":[],"mappings":"AAGA,MAAqB,YAAY;;AACf,iBAAI,GAAwC,IAAI,OAAO,EAAE,CAAC;eADvD,YAAY"}

@@ -1,6 +1,6 @@
 import ExErrorQueue from "../server/ExErrorQueue.js";
 import BidirectionalMap from "./BidirectionalMap.js";
-export default class MonitorManager {
+class MonitorManager {
     constructor() {
         this.idMap = new BidirectionalMap();
         this.mixer = [];
@@ -64,4 +64,5 @@ export default class MonitorManager {
     }
 }
 MonitorManager.id = 0;
+export default MonitorManager;
 //# sourceMappingURL=MonitorManager.js.map

@@ -5,9 +5,9 @@
         "builder": "node ./build/build.js"
     },
     "dependencies": {
-        "@minecraft/server": "1.17.0-beta.1.21.50-preview.28",
-        "@minecraft/server-ui": "1.4.0-beta.1.21.30-preview.24",
-        "@minecraft/vanilla-data": "1.21.40-preview.23",
+        "@minecraft/server": "2.1.0-beta.1.21.90-preview.28",
+        "@minecraft/server-ui": "2.1.0-beta.1.21.90-preview.28",
+        "@minecraft/vanilla-data": "1.21.93",
         "chokidar": "^3.6.0"
     },
     "devDependencies": {
@@ -15,7 +15,7 @@
         "@types/node": "^22.4.1",
         "copy-paste": "^1.5.3",
         "object-sizeof": "^2.6.1",
-        "typescript": "^4.9.5"
+        "typescript": "5.9.0-dev.20250220"
     },
     "name": "wp",
     "version": "1.0.0",

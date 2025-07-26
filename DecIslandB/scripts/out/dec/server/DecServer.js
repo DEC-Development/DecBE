@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { MinecraftDimensionTypes, world, Block, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId } from '@minecraft/server';
+import { world, Block, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId, CommandPermissionLevel } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
@@ -29,11 +29,12 @@ import DecNukeController from './entities/DecNukeController.js';
 import GlobalScoreBoardCache from '../../modules/exmc/server/storage/cache/GlobalScoreBoardCache.js';
 import MathUtil from '../../modules/exmc/utils/math/MathUtil.js';
 import ExGame, { receiveMessage } from '../../modules/exmc/server/ExGame.js';
-import { MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
+import { MinecraftDimensionTypes, MinecraftEffectTypes } from '../../modules/vanilla-data/lib/index.js';
 import { DecLeavesGolemBoss } from './entities/DecLeavesGolemBoss.js';
 import { DecEscapeSoulBoss3, DecEscapeSoulBoss4, DecEscapeSoulBoss5 } from './entities/DecEscapeSoulBoss.js';
 import DecBossController from './entities/DecBossController.js';
 import DecBossBarrier from './entities/DecBossBarrier.js';
+import { ignorn } from '../../modules/exmc/server/ExErrorQueue.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -97,7 +98,7 @@ export default class DecServer extends ExGameServer {
                 this.globalscores.setNumber("NightRandom", 0);
                 this.globalscores.setNumber("IsDay", 1);
                 this.globalscores.setNumber("IsNight", 0);
-                this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync([
+                this.getExDimension(MinecraftDimensionTypes.Overworld).command.runAsync([
                     "fog @a remove \"night_event\""
                 ]);
             }
@@ -138,7 +139,7 @@ export default class DecServer extends ExGameServer {
             else {
                 if (world.getDynamicProperty('DieMode')) {
                     p.sendMessage({ "rawtext": [{ "translate": "text.dec:diemode_test_open.name" }] });
-                    p.runCommandAsync('tellraw @s ');
+                    p.runCommand('tellraw @s ');
                 }
                 else {
                     if (world.getDynamicProperty('AlreadyDie')) {
@@ -157,7 +158,7 @@ export default class DecServer extends ExGameServer {
         };
         this.getEvents().events.beforeChatSend.subscribe(e => {
             var _a;
-            let cmdRunner = this.getExDimension(MinecraftDimensionTypes.overworld);
+            let cmdRunner = this.getExDimension(MinecraftDimensionTypes.Overworld);
             let sender = ExPlayer.getInstance(e.sender);
             if (e.message.startsWith(">/")) {
                 let cmds = commandAnalysis(e.message.substring(2));
@@ -188,7 +189,7 @@ export default class DecServer extends ExGameServer {
                     case "magic": {
                         if (DecGlobal.isDec()) {
                             if (cmds[1] === "display") {
-                                if (e.sender.isOp()) {
+                                if (e.sender.commandPermissionLevel >= CommandPermissionLevel.Admin) {
                                     if (cmds[2] === "true") {
                                         cmdRunner.command.runAsync("function magic/display_on");
                                     }
@@ -219,7 +220,7 @@ export default class DecServer extends ExGameServer {
                         const mthis = this;
                         task.setTasks((function* () {
                             var _a;
-                            for (let i of new IStructureDriver().save(mthis.getExDimension(MinecraftDimensionTypes.overworld), start, end)) {
+                            for (let i of new IStructureDriver().save(mthis.getExDimension(MinecraftDimensionTypes.Overworld), start, end)) {
                                 let res = i.toData();
                                 i.dispose();
                                 let com = (_a = GZIPUtil.zipString(JSON.stringify(res))) !== null && _a !== void 0 ? _a : "";
@@ -239,7 +240,7 @@ export default class DecServer extends ExGameServer {
                         for (let comp of this.compress) {
                             task.push(() => {
                                 data.load(JSON.parse(GZIPUtil.unzipString(comp)));
-                                data.run(this, this.getExDimension(MinecraftDimensionTypes.overworld), start)
+                                data.run(this, this.getExDimension(MinecraftDimensionTypes.Overworld), start)
                                     .then(() => {
                                     var _a;
                                     (_a = task.shift()) === null || _a === void 0 ? void 0 : _a();
@@ -363,30 +364,31 @@ export default class DecServer extends ExGameServer {
             'minecraft:light_gray_shulker_box', 'minecraft:lime_shulker_box', 'minecraft:magenta_shulker_box', 'minecraft:orange_shulker_box', 'minecraft:pink_shulker_box',
             'minecraft:purple_shulker_box', 'minecraft:red_shulker_box', 'minecraft:undyed_shulker_box', 'minecraft:white_shulker_box', 'minecraft:yellow_shulker_box',
             'minecraft:ender_chest', 'minecraft:trapped_chest'].concat(Array.from(block_exceptx.values())));
-        this.getEvents().events.beforeItemUseOn.subscribe(e => {
-            const entity = ExEntity.getInstance(e.source);
+        this.getEvents().events.beforePlayerInteractWithBlock.subscribe(e => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+            const entity = ExEntity.getInstance(e.player);
             //防放方块
             if (entity.getScoresManager().getScore(this.i_soft) > 0) {
-                if (e.source.isSneaking) {
+                if (e.player.isSneaking) {
                     e.cancel = true;
                 }
                 else {
-                    if ((block_except.has(e.block.typeId) || item_except.has(e.itemStack.typeId)) == false) {
+                    if ((block_except.has(e.block.typeId) || item_except.has((_b = (_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) !== null && _b !== void 0 ? _b : "")) == false) {
                         e.cancel = true;
                     }
                 }
             }
             else if (entity.getScoresManager().getScore(this.i_softx) > 0) {
-                if (e.source.isSneaking) {
+                if (e.player.isSneaking) {
                     e.cancel = true;
                 }
                 else {
-                    if ((block_exceptx.has(e.block.typeId) || item_except.has(e.itemStack.typeId)) == false) {
+                    if ((block_exceptx.has(e.block.typeId) || item_except.has((_d = (_c = e.itemStack) === null || _c === void 0 ? void 0 : _c.typeId) !== null && _d !== void 0 ? _d : "")) == false) {
                         e.cancel = true;
                     }
                 }
             }
-            else if (e.itemStack.typeId in multiple_blocks_items && place_block_wait_tick <= 0) {
+            else if (((_f = (_e = e.itemStack) === null || _e === void 0 ? void 0 : _e.typeId) !== null && _f !== void 0 ? _f : "") in multiple_blocks_items && place_block_wait_tick <= 0) {
                 let b = e.block;
                 place_block_wait_tick = 2;
                 //e.source.playAnimation('')
@@ -407,7 +409,7 @@ export default class DecServer extends ExGameServer {
                     b = e.block.dimension.getBlock(new Vector3(b.location.x, b.location.y + 1, b.location.z));
                 }
                 if (e.blockFace != Direction.Down) {
-                    let repeat_times = multiple_blocks[multiple_blocks_items[e.itemStack.typeId]]['height'] + 1;
+                    let repeat_times = multiple_blocks[multiple_blocks_items[(_h = (_g = e.itemStack) === null || _g === void 0 ? void 0 : _g.typeId) !== null && _h !== void 0 ? _h : ""]]['height'] + 1;
                     let repeat_times_jud = repeat_times;
                     let place_admit = true;
                     let test_block = b;
@@ -426,20 +428,20 @@ export default class DecServer extends ExGameServer {
                     if (place_admit) {
                         while (repeat_times > 0) {
                             let states_str = '';
-                            if (multiple_blocks[multiple_blocks_items[e.itemStack.typeId]]['facing']) {
-                                states_str = ' ["dec:location"=' + String(loc) + ',"dec:facing"="' + get_direction_str(e.source) + '"]';
+                            if ((_l = multiple_blocks[multiple_blocks_items[(_k = (_j = e.itemStack) === null || _j === void 0 ? void 0 : _j.typeId) !== null && _k !== void 0 ? _k : ""]]) === null || _l === void 0 ? void 0 : _l['facing']) {
+                                states_str = ' ["dec:location"=' + String(loc) + ',"dec:facing"="' + get_direction_str(e.player) + '"]';
                             }
                             else {
                                 states_str = ' ["dec:location"=' + String(loc) + ']';
                             }
-                            test_block.dimension.runCommandAsync('setblock ' + String(test_block.location.x) + ' ' + String(test_block.location.y) + ' ' + String(test_block.location.z) + ' ' + multiple_blocks_items[e.itemStack.typeId] + states_str);
+                            test_block.dimension.runCommandAsync('setblock ' + String(test_block.location.x) + ' ' + String(test_block.location.y) + ' ' + String(test_block.location.z) + ' ' + multiple_blocks_items[(_o = (_m = e.itemStack) === null || _m === void 0 ? void 0 : _m.typeId) !== null && _o !== void 0 ? _o : ""] + states_str);
                             test_block = test_block.dimension.getBlock(new Vector3(test_block.location.x, test_block.location.y + 1, test_block.location.z));
                             loc += 1;
                             repeat_times -= 1;
                         }
-                        let p = ExPlayer.getInstance(e.source);
-                        if (p.gamemode == GameMode.survival || p.gamemode == GameMode.adventure) {
-                            p.getBag().clearItem(e.itemStack.typeId, 1);
+                        let p = ExPlayer.getInstance(e.player);
+                        if (p.gamemode == GameMode.Survival || p.gamemode == GameMode.Adventure) {
+                            p.getBag().clearItem((_q = (_p = e.itemStack) === null || _p === void 0 ? void 0 : _p.typeId) !== null && _q !== void 0 ? _q : "", 1);
                         }
                     }
                 }
@@ -476,20 +478,18 @@ export default class DecServer extends ExGameServer {
             }
         });
         this.getEvents().events.afterProjectileHitEntity.subscribe(e => {
-            var _a;
-            if ((_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit')) {
+            if (e.projectile.isValid && ignorn(() => { var _a; return (_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit'); })) {
                 e.projectile.remove();
             }
         });
         this.getEvents().events.afterProjectileHitBlock.subscribe(e => {
-            var _a, _b;
-            if (((_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit')) || ((_b = e.projectile.getComponent('type_family')) === null || _b === void 0 ? void 0 : _b.hasTypeFamily('remove_on_hit_ground'))) {
+            if (e.projectile.isValid && ignorn(() => { var _a, _b; return ((_a = e.projectile.getComponent('type_family')) === null || _a === void 0 ? void 0 : _a.hasTypeFamily('remove_on_hit')) || ((_b = e.projectile.getComponent('type_family')) === null || _b === void 0 ? void 0 : _b.hasTypeFamily('remove_on_hit_ground')); })) {
                 e.projectile.remove();
             }
         });
         this.getEvents().exEvents.tick.subscribe(e => {
             //诅咒时间减少
-            this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync([
+            this.getExDimension(MinecraftDimensionTypes.Overworld).command.runAsync([
                 "scoreboard players remove @e[scores={i_inviolable=1..}] i_inviolable 1",
                 "scoreboard players remove @e[scores={i_damp=1..}] i_damp 1",
                 "scoreboard players remove @e[scores={i_soft=1..}] i_soft 1",
@@ -507,11 +507,11 @@ export default class DecServer extends ExGameServer {
                 world.getDimension('overworld').runCommandAsync('difficulty hard');
                 world.getAllPlayers().forEach(p => {
                     if (p.getDynamicProperty('AlreadyDie')) {
-                        p.setGameMode(GameMode.spectator);
+                        p.setGameMode(GameMode.Spectator);
                         ExPlayer.getInstance(p).titleActionBar('{ "rawtext" : [ { "translate" : "text.dec:diemode_spectator.name" } ] }');
                     }
                     else if (p.getDynamicProperty('GmCheat')) {
-                        p.setGameMode(GameMode.spectator);
+                        p.setGameMode(GameMode.Spectator);
                         ExPlayer.getInstance(p).titleActionBar('{ "rawtext" : [ { "translate" : "text.dec:diemode_spectator_gmcheat.name" } ] }');
                     }
                 });
@@ -537,12 +537,12 @@ export default class DecServer extends ExGameServer {
             }
             let night_event = this.globalscores.getNumber("NightRandom");
             const nightEvent = (fog, eventEntity, maxSpawn) => {
-                this.getExDimension(MinecraftDimensionTypes.overworld).command.runAsync(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
+                this.getExDimension(MinecraftDimensionTypes.Overworld).command.runAsync(['fog @a[tag=dOverworld] push ' + fog + ' "night_event"']);
                 let i = 0;
-                for (let p of this.getExDimension(MinecraftDimensionTypes.overworld).getPlayers()) {
+                for (let p of this.getExDimension(MinecraftDimensionTypes.Overworld).getPlayers()) {
                     if (i >= maxSpawn)
                         break;
-                    this.getExDimension(MinecraftDimensionTypes.overworld).spawnEntity(eventEntity, p.location);
+                    this.getExDimension(MinecraftDimensionTypes.Overworld).spawnEntity(eventEntity, p.location);
                     i += 1;
                 }
             };
@@ -603,68 +603,19 @@ export default class DecServer extends ExGameServer {
         this.addEntityController("dec:everlasting_winter_ghast_1", DecEverlastingWinterGhastBoss2);
         this.addEntityController("dec:nuke", DecNukeController);
         //植物
-        const block_around_judge = (arr, block, targetId, stateMatchMap) => {
-            if (block.typeId == targetId) {
-                if (stateMatchMap) {
-                    let states = block.permutation.getAllStates();
-                    for (let k in stateMatchMap) {
-                        if (states[k] !== stateMatchMap[k])
-                            return;
-                    }
-                }
-                arr.push(block);
-            }
-        };
-        const trellis_cover_wither_spread = (block) => {
-            if (block.typeId == 'dec:trellis_cover' && block.permutation.getAllStates()['dec:crop_type'] != 'empty') {
-                this.state_set_keep(block, { 'dec:may_wither': true });
-            }
-        };
         ExGame.scriptEventReceive.addMonitor(e => {
             var _a;
             if (e.id == 'dec:trellis') {
-                //种植架
-                const block = e.sourceBlock;
-                const tmpV = new Vector3();
-                const block_above = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y + 1, block.location.z));
-                const block_xp = block.dimension.getBlock(tmpV.set(block.location.x + 1, block.location.y, block.location.z));
-                const block_xn = block.dimension.getBlock(tmpV.set(block.location.x - 1, block.location.y, block.location.z));
-                const block_zp = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z + 1));
-                const block_zn = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z - 1));
-                if ((block_above === null || block_above === void 0 ? void 0 : block_above.typeId) == 'dec:trellis' && e.message == 'wither') {
-                    let block_above_n = block_above;
-                    while (block_above_n.typeId == 'dec:trellis') {
-                        this.state_set_keep(block_above_n, { 'dec:may_wither': true });
-                        block_above_n = block.dimension.getBlock(tmpV.set(block_above_n.location.x, block_above_n.location.y + 1, block_above_n.location.z));
-                    }
-                }
-                if (e.message == 'grow_spread') {
-                    let may_grow_block = [];
-                    block_around_judge(may_grow_block, block_xp, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
-                    block_around_judge(may_grow_block, block_xn, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
-                    block_around_judge(may_grow_block, block_zp, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
-                    block_around_judge(may_grow_block, block_zn, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
-                    block_around_judge(may_grow_block, block_above, 'dec:trellis', { 'dec:crop_type': 'empty' });
-                    if (may_grow_block.length > 0) {
-                        this.state_set_keep(may_grow_block[MathUtil.randomInteger(0, may_grow_block.length - 1)], { 'dec:may_wither': false, 'dec:growth_stage': 0, 'dec:crop_type': block.permutation.getState('dec:crop_type') });
-                    }
-                }
-                if (e.message == 'wither_spread') {
-                    trellis_cover_wither_spread(block_xp);
-                    trellis_cover_wither_spread(block_xn);
-                    trellis_cover_wither_spread(block_zp);
-                    trellis_cover_wither_spread(block_zn);
-                }
             }
             else if (e.id == 'dec:sprint') {
                 let power = Number(e.message);
                 let p = e.sourceEntity;
                 let r = p.getViewDirection();
-                if (power < 0) {
-                    p.applyKnockback(r.x, r.z, power, 0);
+                if (power > 0) {
+                    p.applyKnockback({ x: r.x * power, z: r.z * power }, 0);
                 }
                 else {
-                    p.applyKnockback(-r.x, -r.z, -power, 0);
+                    p.applyKnockback({ x: -r.x * power, z: -r.z * power }, 0);
                 }
             }
             else if (e.id == 'dec:sustain_particle') {
@@ -742,6 +693,57 @@ export default class DecServer extends ExGameServer {
             return arr;
         };
     }
+    trellis(eblock, emessage) {
+        const trellis_cover_wither_spread = (block) => {
+            if (block.typeId == 'dec:trellis_cover' && block.permutation.getAllStates()['dec:crop_type'] != 'empty') {
+                this.state_set_keep(block, { 'dec:may_wither': true });
+            }
+        };
+        const block_around_judge = (arr, block, targetId, stateMatchMap) => {
+            if (block.typeId == targetId) {
+                if (stateMatchMap) {
+                    let states = block.permutation.getAllStates();
+                    for (let k in stateMatchMap) {
+                        if (states[k] !== stateMatchMap[k])
+                            return;
+                    }
+                }
+                arr.push(block);
+            }
+        };
+        //种植架
+        const block = eblock;
+        const tmpV = new Vector3();
+        const block_above = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y + 1, block.location.z));
+        const block_xp = block.dimension.getBlock(tmpV.set(block.location.x + 1, block.location.y, block.location.z));
+        const block_xn = block.dimension.getBlock(tmpV.set(block.location.x - 1, block.location.y, block.location.z));
+        const block_zp = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z + 1));
+        const block_zn = block.dimension.getBlock(tmpV.set(block.location.x, block.location.y, block.location.z - 1));
+        if ((block_above === null || block_above === void 0 ? void 0 : block_above.typeId) == 'dec:trellis' && emessage == 'wither') {
+            let block_above_n = block_above;
+            while (block_above_n.typeId == 'dec:trellis') {
+                this.state_set_keep(block_above_n, { 'dec:may_wither': true });
+                block_above_n = block.dimension.getBlock(tmpV.set(block_above_n.location.x, block_above_n.location.y + 1, block_above_n.location.z));
+            }
+        }
+        if (emessage == 'grow_spread') {
+            let may_grow_block = [];
+            block_around_judge(may_grow_block, block_xp, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
+            block_around_judge(may_grow_block, block_xn, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
+            block_around_judge(may_grow_block, block_zp, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
+            block_around_judge(may_grow_block, block_zn, 'dec:trellis_cover', { 'dec:crop_type': 'empty' });
+            block_around_judge(may_grow_block, block_above, 'dec:trellis', { 'dec:crop_type': 'empty' });
+            if (may_grow_block.length > 0) {
+                this.state_set_keep(may_grow_block[MathUtil.randomInteger(0, may_grow_block.length - 1)], { 'dec:may_wither': false, 'dec:growth_stage': 0, 'dec:crop_type': block.permutation.getState('dec:crop_type') });
+            }
+        }
+        if (emessage == 'wither_spread') {
+            trellis_cover_wither_spread(block_xp);
+            trellis_cover_wither_spread(block_xn);
+            trellis_cover_wither_spread(block_zp);
+            trellis_cover_wither_spread(block_zn);
+        }
+    }
     fleshBlockSpread(block) {
         const dim = block.dimension;
         const loc = new Vector3(block.location);
@@ -777,6 +779,12 @@ export default class DecServer extends ExGameServer {
         return new DecClient(this, id, player);
     }
 }
+__decorate([
+    receiveMessage('dec:trellis'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Block, String]),
+    __metadata("design:returntype", void 0)
+], DecServer.prototype, "trellis", null);
 __decorate([
     receiveMessage('dec:flesh_block_spread'),
     __metadata("design:type", Function),

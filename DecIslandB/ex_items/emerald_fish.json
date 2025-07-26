@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:emerald_fish",
             "menu_category": {
-                "group": "itemGroup.name.rawFood",
+                "group": "minecraft:itemGroup.name.rawFood",
                 "is_hidden_in_commands": false,
                 "category": "nature"
             }
@@ -22,7 +22,8 @@
                 "saturation_modifier": 0.6
             },
             "minecraft:use_modifiers": {
-                "use_duration": 4
+                "use_duration": 4,
+                "movement_modifier": 0.4
             }
         }
     }

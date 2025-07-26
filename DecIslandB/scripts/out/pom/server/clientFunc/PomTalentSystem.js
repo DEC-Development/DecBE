@@ -21,7 +21,7 @@ import { MinecraftBlockTypes } from '../../../modules/vanilla-data/lib/index.js'
 import ExEntityQuery from '../../../modules/exmc/server/env/ExEntityQuery.js';
 import { canSweep } from '../items/isEquipment.js';
 import { ignorn } from '../../../modules/exmc/server/ExErrorQueue.js';
-export default class PomTalentSystem extends GameController {
+class PomTalentSystem extends GameController {
     constructor() {
         super(...arguments);
         this.strikeSkill = true;
@@ -198,7 +198,7 @@ export default class PomTalentSystem extends GameController {
         //玩家攻击生物增伤
         this.getEvents().exEvents.afterPlayerHitEntity.subscribe((e) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-            if (e.damage > 10000000 || !(ignorn(() => e.hurtEntity.isValid())))
+            if (e.damage > 10000000 || !(ignorn(() => e.hurtEntity.isValid)))
                 return;
             let item = this.exPlayer.getBag().itemOnMainHand;
             let damageFac = 0;
@@ -383,7 +383,7 @@ export default class PomTalentSystem extends GameController {
                         if (clnE.damagingEntity) {
                             this.player.applyDamage(99999999, {
                                 "damagingEntity": clnE.damagingEntity,
-                                "damagingProjectile": ((_a = clnE.damagingProjectile) === null || _a === void 0 ? void 0 : _a.isValid()) ?
+                                "damagingProjectile": ((_a = clnE.damagingProjectile) === null || _a === void 0 ? void 0 : _a.isValid) ?
                                     clnE.damagingProjectile : (clnE.damagingEntity)
                             });
                         }
@@ -393,7 +393,7 @@ export default class PomTalentSystem extends GameController {
                     }
                     else {
                         this.player.applyDamage(99999999, {
-                            "damagingEntity": ((_b = clnE.damagingEntity) === null || _b === void 0 ? void 0 : _b.isValid()) ? clnE.damagingEntity : undefined,
+                            "damagingEntity": ((_b = clnE.damagingEntity) === null || _b === void 0 ? void 0 : _b.isValid) ? clnE.damagingEntity : undefined,
                             "cause": clnE.cause
                         });
                     }
@@ -505,7 +505,7 @@ export default class PomTalentSystem extends GameController {
         this.skill_stateNum = [0, 0];
         let usetarget;
         const trackingArrow = (e) => {
-            if (usetarget === null || usetarget === void 0 ? void 0 : usetarget.isValid()) {
+            if (usetarget === null || usetarget === void 0 ? void 0 : usetarget.isValid) {
                 this.client.getServer().createEntityController(e.projectile, PomOccupationSkillTrack).setTarget(usetarget);
                 this.skill_stateNum[0] -= 1;
                 if (this.skill_stateNum[0] > 0) {
@@ -515,7 +515,7 @@ export default class PomTalentSystem extends GameController {
             }
         };
         const targetParticle = (e) => {
-            if (usetarget === null || usetarget === void 0 ? void 0 : usetarget.isValid()) {
+            if (usetarget === null || usetarget === void 0 ? void 0 : usetarget.isValid) {
                 ExDimension.getInstance(usetarget.dimension).spawnParticle("wb:skill_tracking_arrow_par", usetarget.location);
             }
         };
@@ -649,4 +649,5 @@ PomTalentSystem.physicalDamageType = new Set([
     EntityDamageCause.stalagmite,
     EntityDamageCause.suffocation
 ]);
+export default PomTalentSystem;
 //# sourceMappingURL=PomTalentSystem.js.map

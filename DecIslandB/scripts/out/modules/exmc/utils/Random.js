@@ -1,4 +1,4 @@
-export default class Random {
+class Random {
     constructor(seed) {
         this.seed = (seed || Date.now()) % 999999999;
     }
@@ -41,5 +41,6 @@ export default class Random {
 Random.random = new Random();
 Random.MAX_VALUE = ~(1 << 31);
 Random.MIN_VALUE = (1 << 31);
+export default Random;
 export const random = new Random();
 //# sourceMappingURL=Random.js.map

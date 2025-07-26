@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:amethyst_pickaxe",
             "menu_category": {
-                "group": "itemGroup.name.pickaxe",
+                "group": "minecraft:itemGroup.name.pickaxe",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }

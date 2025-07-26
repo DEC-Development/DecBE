@@ -10,7 +10,7 @@ export class DecEscapeSoulBoss3 extends DecBossController {
     }
     onKilled(e) {
         super.onKilled(e);
-        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
+        if (e.damageSource.cause === EntityDamageCause.selfDestruct) {
             this.music.stop();
         }
     }
@@ -31,7 +31,7 @@ export class DecEscapeSoulBoss4 extends DecBossController {
     }
     onKilled(e) {
         super.onKilled(e);
-        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
+        if (e.damageSource.cause === EntityDamageCause.selfDestruct) {
             this.music.stop();
         }
     }

@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:wooden_dagger",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "dec:itemGroup.name.daggers",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -37,7 +37,7 @@
                         "speed": 15
                     },
                     {
-                        "block": "dec:christmas_gift",
+                        "block": "dec:christmas_gift_block",
                         "speed": 15
                     }
                 ],

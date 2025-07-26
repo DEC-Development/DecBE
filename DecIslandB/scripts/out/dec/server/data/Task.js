@@ -290,7 +290,7 @@ export let DecTasks = [
     new DecTask("057", 482, [
         "execute if entity @s[hasitem={item=dec:shell,quantity=3..}] run tag @s add task_complete",
         "execute if entity @s[tag=task_complete] run clear @s dec:shell 0 3"
-    ]),
+    ]), //Below is new
     new DecTask("058", 754, [
         "execute if entity @s[hasitem={item=dec:melon_piece,quantity=78..}] run tag @s add task_complete",
         "execute if entity @s[tag=task_complete] run clear @s dec:melon_piece 0 78"

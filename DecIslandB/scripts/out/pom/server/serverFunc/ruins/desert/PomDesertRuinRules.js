@@ -203,7 +203,10 @@ export default class PomDesertRuinRules {
                     const value = getEnumFlag(desertCommand.EFFECT, cmdArr[i]) || getEnumFlag(desertCommand.VALUE, cmdArr[i]);
                     const num = (cmdArr[i].startsWith("VALUE_")) ? parseInt(cmdArr[i].split("_")[1]) : 0;
                     const r = yield new ModalFormData().title("其他选项")
-                        .slider("延迟(s)", 0, 15, 0.5, 0)
+                        .slider("延迟(s)", 0, 15, {
+                        "valueStep": 0.5,
+                        "defaultValue": 0
+                    })
                         .show(this.game.player);
                     if (r.canceled || r.formValues === undefined)
                         break outerLoop;

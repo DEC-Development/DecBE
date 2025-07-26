@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:hanyi_pants",
             "menu_category": {
-                "group": "itemGroup.name.leggings",
+                "group": "dec:itemGroup.name.clothes_leggings",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }

@@ -1,7 +1,7 @@
 import ExServerTickDelayTask from '../server/ExServerTickDelayTask.js';
 import ExTimeLine from './ExTimeLine.js';
 import Random from './Random.js';
-export default class ExSystem {
+class ExSystem {
     static getId(x) {
         if (this.idMap.has(x)) {
             return this.idMap.get(x);
@@ -73,4 +73,5 @@ export default class ExSystem {
 }
 ExSystem.idMap = new WeakMap();
 ExSystem.chineseCharMatcher = /([\u4E00-\u9FA5])+/;
+export default ExSystem;
 //# sourceMappingURL=ExSystem.js.map

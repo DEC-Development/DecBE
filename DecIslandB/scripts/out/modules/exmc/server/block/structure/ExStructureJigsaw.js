@@ -4,7 +4,7 @@ import ExStructure from './ExStructure.js';
 /**
  * 表示一个Jigsaw结构，用于管理多个结构块的拼接。
  */
-export default class ExStructureJigsaw {
+class ExStructureJigsaw {
     /**
      * 构造一个新的ExStructureJigsaw实例。
      * @param gridSize 网格的大小。
@@ -224,6 +224,7 @@ export default class ExStructureJigsaw {
  * 表示继续结构的常量。
  */
 ExStructureJigsaw.ContinueStructure = 1;
+export default ExStructureJigsaw;
 /**
  * 表示导出的结构数据。
  */

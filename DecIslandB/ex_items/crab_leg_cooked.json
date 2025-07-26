@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:crab_leg_cooked",
             "menu_category": {
-                "group": "itemGroup.name.cookedFood",
+                "group": "minecraft:itemGroup.name.cookedFood",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -22,7 +22,8 @@
                 "saturation_modifier": 0.5
             },
             "minecraft:use_modifiers": {
-                "use_duration": 1.6
+                "use_duration": 1.6,
+                "movement_modifier": 0.4
             }
         }
     }

@@ -59,7 +59,6 @@
         "reflectOnHurt": false,
         "shoot_target": false
       },
-      
       "minecraft:type_family": {
         "family": [
           "remove_on_hit"

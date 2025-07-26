@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.60",
     "minecraft:block": {
         "description": {
             "identifier": "dec:lace_block_light_red",
@@ -11,7 +11,7 @@
                 ]
             },
             "menu_category": {
-                "group": "itemGroup.name.outside",
+                "group": "minecraft:itemGroup.name.outside",
                 "category": "items"
             }
         },
@@ -101,7 +101,7 @@
                 "burn_odds": 5
             },
             "minecraft:unit_cube": {},
-            "minecraft:loot": "loot_tables/blocks/8F5758.json",
+            "minecraft:loot": "loot_tables/blocks/lace_block_light_red.json",
             "minecraft:tags": {
                 "tags": [
                     "wool"

@@ -2,7 +2,7 @@ import { EntityDamageCause } from '@minecraft/server';
 import PomBossController from './PomBossController.js';
 import VarOnChangeListener from '../../../modules/exmc/utils/VarOnChangeListener.js';
 import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
-export default class PomAncientStoneBoss extends PomBossController {
+class PomAncientStoneBoss extends PomBossController {
     constructor(e, server, spawn) {
         super(e, server, spawn);
         this.viewTime = 0;
@@ -65,7 +65,7 @@ export default class PomAncientStoneBoss extends PomBossController {
             this.exEntity.command.runAsync(`camera @a[r=128] clear`);
             this.music.stop();
         }
-        if (e.damageSource.cause === EntityDamageCause.suicide || e.damageSource.cause === EntityDamageCause.selfDestruct) {
+        if (e.damageSource.cause === EntityDamageCause.selfDestruct) {
             this.music.stop();
         }
         super.onKilled(e);
@@ -78,4 +78,5 @@ export default class PomAncientStoneBoss extends PomBossController {
     }
 }
 PomAncientStoneBoss.typeId = "wb:ancient_stone";
+export default PomAncientStoneBoss;
 //# sourceMappingURL=PomAncientStoneBoss.js.map

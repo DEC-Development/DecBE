@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:uniform_clothes",
             "menu_category": {
-                "group": "itemGroup.name.chestplate",
+                "group": "dec:itemGroup.name.clothes_chestplates",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }

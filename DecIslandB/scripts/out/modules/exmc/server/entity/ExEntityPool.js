@@ -1,4 +1,5 @@
-export default class ExEntityPool {
+class ExEntityPool {
 }
 ExEntityPool.pool = new WeakMap();
+export default ExEntityPool;
 //# sourceMappingURL=ExEntityPool.js.map

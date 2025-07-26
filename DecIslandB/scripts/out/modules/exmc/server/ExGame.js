@@ -1,12 +1,22 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var _a;
-import { Player, system, world } from "@minecraft/server";
+import { GameRules, Player, system, world } from "@minecraft/server";
 import "../../reflect-metadata/Reflect.js";
 import '../utils/Console.js';
 import ExSystem from "../utils/ExSystem.js";
 import MonitorManager from "../utils/MonitorManager.js";
 import ExErrorQueue from "./ExErrorQueue.js";
 import ExContext from '../interface/ExContext.js';
-export default class ExGame {
+import lateinit from '../utils/lateinit.js';
+class ExGame {
     static _clearRun(runId) {
         if (this.idToTrigger.has(runId)) {
             let time = this.idToTrigger.get(runId);
@@ -67,8 +77,7 @@ export default class ExGame {
         system.runJob(r());
     }
     static createServer(serverCons, config) {
-        let server = new serverCons(config);
-        this.serverMap.set(serverCons, server);
+        this.preparedServer.push([serverCons, config]);
     }
     static register(arg0, event, config) {
         event(config.gameContext);
@@ -76,7 +85,7 @@ export default class ExGame {
     static postMessageBetweenServer() {
     }
     static postMessageBetweenClient(client, s, exportName, args) {
-        ExGame._run(() => {
+        _a._run(() => {
             let server = this.serverMap.get(s);
             if (!server)
                 return;
@@ -92,7 +101,7 @@ export default class ExGame {
         });
     }
     static postMessageToServer(exportName, args) {
-        ExGame._run(() => {
+        _a._run(() => {
             for (let [k, v] of this.serverMap.entries()) {
                 for (let k of ExSystem.keys(v)) {
                     let data = Reflect.getMetadata("exportName", v, k);
@@ -146,7 +155,6 @@ ExGame.tickDelayMax = 2300000000;
         func();
     }, 1);
 })();
-ExGame.gamerules = world.gameRules;
 ExGame.beforeTickMonitor = new MonitorManager();
 ExGame.tickMonitor = new MonitorManager();
 ExGame.longTickMonitor = new MonitorManager();
@@ -164,7 +172,7 @@ ExGame.scriptEventReceive = new MonitorManager();
         _a.beforeTickMonitor.trigger(event);
         _a.tickMonitor.trigger(event);
     };
-    ExGame._runInterval(fun, 1);
+    _a._runInterval(fun, 1);
 })();
 (() => {
     let tickNum = 0, tickTime = 0;
@@ -178,14 +186,28 @@ ExGame.scriptEventReceive = new MonitorManager();
         tickNum = (tickNum + 1) % 72000;
         _a.longTickMonitor.trigger(event);
     };
-    ExGame._runInterval(fun, 5);
+    _a._runInterval(fun, 5);
 })();
 (() => {
     system.afterEvents.scriptEventReceive.subscribe(e => {
-        ExGame.scriptEventReceive.trigger(e);
+        _a.scriptEventReceive.trigger(e);
     });
 })();
 ExGame.serverMap = new Map;
+ExGame.preparedServer = [];
+(() => {
+    world.afterEvents.worldLoad.subscribe(() => {
+        for (let [serverCons, config] of _a.preparedServer) {
+            let server = new serverCons(config);
+            _a.serverMap.set(serverCons, server);
+        }
+    });
+})();
+export default ExGame;
+__decorate([
+    lateinit(() => world.gameRules),
+    __metadata("design:type", GameRules)
+], ExGame, "gamerules", void 0);
 export function receiveMessage(exportName) {
     return function (target, propertyName, descriptor) {
         Reflect.defineMetadata("exportName", exportName, target, propertyName);

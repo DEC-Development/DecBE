@@ -3,7 +3,7 @@ import UUID from "../../../modules/exmc/utils/UUID.js";
 import VarOnChangeListener from "../../../modules/exmc/utils/VarOnChangeListener.js";
 import { MinecraftEffectTypes } from "../../../modules/vanilla-data/lib/index.js";
 import { GameMode } from "@minecraft/server";
-export default class DecBossBarrier {
+class DecBossBarrier {
     particle(arg0) {
         this.dim.spawnParticle(arg0, this.center);
     }
@@ -70,7 +70,7 @@ export default class DecBossBarrier {
     }
     *getPlayers() {
         for (let e of this.players) {
-            if (e[0].isValid())
+            if (e[0].isValid)
                 yield e[0];
         }
     }
@@ -106,7 +106,7 @@ export default class DecBossBarrier {
                     if (!e.entity.getDynamicProperty('InBoundary')) {
                         e.entity.setDynamicProperty('InBoundary', this.id);
                         e.getScoresManager().setScore("pre_gamemode", e.gameModeCode);
-                        e.gamemode = GameMode.spectator;
+                        e.gamemode = GameMode.Spectator;
                     }
                 }
                 else {
@@ -135,4 +135,5 @@ export default class DecBossBarrier {
     }
 }
 DecBossBarrier.map = new Map();
+export default DecBossBarrier;
 //# sourceMappingURL=DecBossBarrier.js.map

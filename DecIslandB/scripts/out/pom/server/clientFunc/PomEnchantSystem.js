@@ -9,7 +9,7 @@ import { MinecraftItemTypes } from "../../../modules/vanilla-data/lib/index.js";
 import MathUtil from "../../../modules/exmc/utils/math/MathUtil.js";
 import Random from "../../../modules/exmc/utils/Random.js";
 import { minecraft } from "../../../modules/exmc/utils/tool.js";
-export default class PomEnChantSystem extends GameController {
+class PomEnChantSystem extends GameController {
     onJoin() {
         this.getEvents().exEvents.afterItemOnHandChange.subscribe((e) => {
             const bag = this.exPlayer.getBag();
@@ -164,4 +164,5 @@ export default class PomEnChantSystem extends GameController {
     }
 }
 PomEnChantSystem.blockTranslateData = new Map();
+export default PomEnChantSystem;
 //# sourceMappingURL=PomEnchantSystem.js.map

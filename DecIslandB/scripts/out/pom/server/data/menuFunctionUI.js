@@ -286,7 +286,6 @@ export default function menuFunctionUI(lang) {
                             `   ${lang.menuUIMsgBailan97}: ${scores.getScore("wbwqlq")}`,
                             `   ${lang.menuUIMsgBailan98}: ${scores.getScore("wbkjlqcg")}`,
                             `   ${lang.menuUIMsgBailan99}: ${source.hasTag("wbmsyh") ? lang.yes : lang.no}`,
-                            `   ${lang.menuUIMsgBailan100}: ${source.hasTag("wbdjeff") ? lang.yes : lang.no}`,
                             `   ${lang.gameDifficulty}: ${client.getDifficulty().name}`
                         ];
                         let arr = MenuUIAlert.getLabelViews(msg);
@@ -497,6 +496,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                             }
                         ];
                         if (client.globalSettings.tpPointRecord && !client.ruinsSystem.isInRuinJudge && client.territorySystem.inTerritotyLevel !== 0) {
+                            client.data.pointRecord.point.sort((a, b) => (a[1] || "").localeCompare(b[1] || ""));
                             for (let j = 0; j < client.data.pointRecord.point.length; j++) {
                                 const i = client.data.pointRecord.point[j];
                                 const v = new Vector3(i[2]);
@@ -523,7 +523,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                             return false;
                                         },
                                         (client, ui) => {
-                                            new ModalFormData().textField(lang.menuUIMsgBailan39, (i[0] + v.toString()))
+                                            new ModalFormData().textField(lang.menuUIMsgBailan39, (i[0] + v.toString()), { "defaultValue": i[1] })
                                                 .show(client.player)
                                                 .then(e => {
                                                 var _a;
@@ -537,7 +537,7 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                         },
                                         (client, ui) => {
                                             new ExMessageAlert().title(lang.ensure)
-                                                .body(`${lang.whetherToDeletePoint} ${client.data.pointRecord.point[j].map(e => e.toString()).join(" / ")}`)
+                                                .body(`${lang.whetherToDeletePoint} ${client.data.pointRecord.point[j].map(e => typeof e === "object" ? new Vector3(e).toString() : e).join(" / ")}`)
                                                 .button1(lang.yes, () => {
                                                 client.data.pointRecord.point.splice(j, 1);
                                             })
@@ -555,12 +555,13 @@ ${getCharByNum(client.data.gameExperience / (client.magicSystem.getGradeNeedExpe
                                 "type": "button",
                                 "function": (client, ui) => {
                                     var _a;
-                                    if (((_a = client.data.pointRecord.point.length) !== null && _a !== void 0 ? _a : 0) <= 10) {
+                                    let nowNum = Math.max(2, Math.floor(client.data.gameGrade * client.globalSettings.tpPointRecordMaxNum / 100));
+                                    if (((_a = client.data.pointRecord.point.length) !== null && _a !== void 0 ? _a : 0) < nowNum) {
                                         client.data.pointRecord.point.push([client.exPlayer.dimension.id, "", client.exPlayer.position.floor()]);
                                         return true;
                                     }
                                     else {
-                                        client.sayTo(lang.menuUIMsgBailan106);
+                                        client.sayTo(format(lang.menuUIMsgBailan106, nowNum));
                                         return false;
                                     }
                                 }
@@ -744,7 +745,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                             return;
                                         }
                                         client.sayTo(lang.menuUIMsgBailan127);
-                                        const p1 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforeItemUseOn, (e) => e.itemStack.typeId === MinecraftItemTypes.Stick)).block);
+                                        const p1 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
                                         const actions = client.magicSystem.registActionbarPass("facingBlockGetter");
                                         actions.push("", "");
                                         const sizeJedge = (width) => {
@@ -763,7 +764,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                         if (client.getDefaultSpawnLocation())
                                             client.getEvents().exEvents.onLongTick.subscribe(facingBlockGetter);
                                         client.sayTo(format(lang.choosePoint2, `${minSize.toString()}-${maxSize.toString()}`));
-                                        const p2 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforeItemUseOn, (e) => e.itemStack.typeId === MinecraftItemTypes.Stick)).block);
+                                        const p2 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
                                         //二次判断防止转空子
                                         if (client.getDimension().id !== MinecraftDimensionTypes.Overworld) {
                                             client.sayTo(lang.menuUIMsgBailan132);
@@ -823,14 +824,6 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                         {
                             "type": "button",
                             "msg": lang.menuUIMsgBailan142,
-                            "function": (client, ui) => {
-                                client.taskUI();
-                                return false;
-                            }
-                        },
-                        {
-                            "type": "button",
-                            "msg": lang.menuUIMsgBailan143,
                             "function": (client, ui) => {
                                 client.taskUI();
                                 return false;
@@ -1154,7 +1147,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                             "function": (client, ui) => {
                                 new ModalFormData()
                                     .title("Choose a language")
-                                    .dropdown("Language List", ["English", "简体中文"], 0)
+                                    .dropdown("Language List", ["English", "简体中文"], { "defaultValueIndex": 0 })
                                     .show(client.player).then((e) => {
                                     if (!e.canceled) {
                                         client.data.lang = (e.formValues && e.formValues[0] == 0) ? "en" : "zh";
@@ -1172,13 +1165,31 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                             "function": (client, ui) => {
                                 new ModalFormData()
                                     .title(lang.menuUIMsgBailan157)
-                                    .dropdown(lang.menuUIMsgBailan158, [lang.menuUIMsgBailan159, lang.menuUIMsgBailan160, lang.menuUIMsgBailan161], client.data.uiCustomSetting.topLeftMessageBarStyle)
-                                    .slider(lang.menuUIMsgBailan162, 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer1)
-                                    .slider(lang.menuUIMsgBailan163, 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer2)
-                                    .slider(lang.menuUIMsgBailan164, 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer3)
-                                    .slider(lang.menuUIMsgBailan165, 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer4)
-                                    .slider(lang.menuUIMsgBailan166, 0, 100, 1, client.data.uiCustomSetting.topLeftMessageBarLayer5)
-                                    .slider(lang.menuUIMsgBailan167, 0, 100, 1, client.data.uiCustomSetting.accuracyCustom)
+                                    .dropdown(lang.menuUIMsgBailan158, [lang.menuUIMsgBailan159, lang.menuUIMsgBailan160, lang.menuUIMsgBailan161], { "defaultValueIndex": client.data.uiCustomSetting.topLeftMessageBarStyle })
+                                    .slider(lang.menuUIMsgBailan162, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.topLeftMessageBarLayer1,
+                                    "valueStep": 1
+                                })
+                                    .slider(lang.menuUIMsgBailan163, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.topLeftMessageBarLayer2,
+                                    "valueStep": 1
+                                })
+                                    .slider(lang.menuUIMsgBailan164, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.topLeftMessageBarLayer3,
+                                    "valueStep": 1
+                                })
+                                    .slider(lang.menuUIMsgBailan165, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.topLeftMessageBarLayer4,
+                                    "valueStep": 1
+                                })
+                                    .slider(lang.menuUIMsgBailan166, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.topLeftMessageBarLayer5,
+                                    "valueStep": 1
+                                })
+                                    .slider(lang.menuUIMsgBailan167, 0, 100, {
+                                    "defaultValue": client.data.uiCustomSetting.accuracyCustom,
+                                    "valueStep": 1
+                                })
                                     .show(client.player).then((e) => {
                                     if (!e.canceled && e.formValues) {
                                         client.data.uiCustomSetting.topLeftMessageBarStyle = e.formValues[0];
@@ -1321,7 +1332,9 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                             map.get("3").name,
                                             map.get("4").name,
                                             map.get("5").name
-                                        ], 2)
+                                        ], {
+                                            "defaultValueIndex": 2
+                                        })
                                             .show(client.player).then((e) => {
                                             var _a;
                                             if (!e.canceled) {
@@ -1377,7 +1390,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                             .dropdown(lang.menuUIMsgBailan181, [
                                             lang.menuUIMsgBailan182,
                                             lang.menuUIMsgBailan183
-                                        ], 1)
+                                        ], { "defaultValueIndex": 0 })
                                             .textField(lang.menuUIMsgBailan184, lang.menuUIMsgBailan185)
                                             .show(client.player).then((e) => {
                                             if (!e.canceled && e.formValues) {
@@ -1416,13 +1429,26 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                     "msg": lang.menuUIMsgBailan85,
                                     "function": (client, ui) => {
                                         new ModalFormData()
-                                            .toggle(lang.menuUIMsgBailan80, client.globalSettings.entityCleaner)
-                                            .slider(lang.menuUIMsgBailan91, 40, 1000, 20, client.globalSettings.entityCleanerLeastNum)
-                                            .slider(lang.menuUIMsgBailan92, 2, 10, 1, client.globalSettings.entityCleanerStrength)
-                                            .slider(lang.menuUIMsgBailan93, 1, 60, 1, client.globalSettings.entityCleanerDelay)
-                                            .toggle(lang.menuUIMsgBailan187, client.globalSettings.entityShowMsg)
-                                            .textField(lang.menuUIMsgBailan188, `{"xxx":1}`, JSON.stringify(client.getGlobalData().entityCleanerSetting.acceptListByTypeId))
-                                            .textField(lang.menuUIMsgBailan189, `{"134":1}`, JSON.stringify(client.getGlobalData().entityCleanerSetting.acceptListById))
+                                            .toggle(lang.menuUIMsgBailan80, {
+                                            "defaultValue": client.globalSettings.entityCleaner
+                                        })
+                                            .slider(lang.menuUIMsgBailan91, 40, 1000, {
+                                            "defaultValue": client.globalSettings.entityCleanerLeastNum,
+                                            "valueStep": 1
+                                        })
+                                            .slider(lang.menuUIMsgBailan92, 2, 10, {
+                                            "defaultValue": client.globalSettings.entityCleanerStrength,
+                                            "valueStep": 1
+                                        })
+                                            .slider(lang.menuUIMsgBailan93, 1, 60, {
+                                            "defaultValue": client.globalSettings.entityCleanerDelay,
+                                            "valueStep": 1
+                                        })
+                                            .toggle(lang.menuUIMsgBailan187, {
+                                            "defaultValue": client.globalSettings.entityShowMsg
+                                        })
+                                            .textField(lang.menuUIMsgBailan188, `{"xxx":1}`, { "defaultValue": JSON.stringify(client.getGlobalData().entityCleanerSetting.acceptListByTypeId) })
+                                            .textField(lang.menuUIMsgBailan189, `{"134":1}`, { "defaultValue": JSON.stringify(client.getGlobalData().entityCleanerSetting.acceptListById) })
                                             .show(client.player).then((e) => {
                                             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
                                             if (e.canceled || !e.formValues)
@@ -1461,7 +1487,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                     "function": (client, ui) => {
                                         to((() => __awaiter(this, void 0, void 0, function* () {
                                             client.sayTo(lang.menuUIMsgBailan194);
-                                            const e = (yield eventGetter(client.getEvents().exEvents.afterPlayerHitEntity, (e) => { var _a; return e.hurtEntity.isValid() && ((_a = client.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; }));
+                                            const e = (yield eventGetter(client.getEvents().exEvents.afterPlayerHitEntity, (e) => { var _a; return e.hurtEntity.isValid && ((_a = client.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; }));
                                             ExEntity.getInstance(e.hurtEntity).addHealth(client, e.damage);
                                             client.getGlobalData().entityCleanerSetting.acceptListById[e.hurtEntity.id] = 1;
                                             client.sayTo(lang.menuUIMsgBailan195 + e.hurtEntity.id);
@@ -1475,7 +1501,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                     "function": (client, ui) => {
                                         to((() => __awaiter(this, void 0, void 0, function* () {
                                             client.sayTo(lang.menuUIMsgBailan197);
-                                            const e = (yield eventGetter(client.getEvents().exEvents.afterPlayerHitEntity, (e) => { var _a; return e.hurtEntity.isValid() && ((_a = client.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; }));
+                                            const e = (yield eventGetter(client.getEvents().exEvents.afterPlayerHitEntity, (e) => { var _a; return e.hurtEntity.isValid && ((_a = client.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; }));
                                             ExEntity.getInstance(e.hurtEntity).addHealth(client, e.damage);
                                             client.getGlobalData().entityCleanerSetting.acceptListByTypeId[e.hurtEntity.typeId] = 1;
                                             client.sayTo(lang.menuUIMsgBailan198 + e.hurtEntity.typeId);
@@ -1490,8 +1516,8 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                         let map = pomDifficultyMap;
                                         new ModalFormData()
                                             .title(lang.menuUIMsgBailan200)
-                                            .slider(lang.menuUIMsgBailan201, 4, 20, 1, 4)
-                                            .slider(lang.menuUIMsgBailan202, 1, 5, 1, 2)
+                                            .slider(lang.menuUIMsgBailan201, 4, 20, { "defaultValue": 1, "valueStep": 4 })
+                                            .slider(lang.menuUIMsgBailan202, 1, 5, { "defaultValue": 1, "valueStep": 2 })
                                             .show(client.player).then((e) => {
                                             var _a;
                                             if (!e.canceled) {
@@ -1516,14 +1542,42 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                         let map = pomDifficultyMap;
                                         new ModalFormData()
                                             .title(lang.menuUIMsgBailan204)
-                                            .slider(lang.menuUIMsgBailan205, 0, 99, 1, client.data.gameGrade)
-                                            .slider(lang.menuUIMsgBailan206, 0, 990000, 10000, client.data.gameExperience)
+                                            .slider(lang.menuUIMsgBailan205, 0, 99, {
+                                            "defaultValue": client.data.gameGrade,
+                                            "valueStep": 1,
+                                        })
+                                            .slider(lang.menuUIMsgBailan206, 0, 990000, {
+                                            "defaultValue": client.data.gameExperience,
+                                            "valueStep": 1000,
+                                        })
                                             .show(client.player).then((e) => {
                                             var _a, _b, _c, _d;
                                             if (!e.canceled && e.formValues) {
                                                 client.data.gameGrade = Number((_b = (_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : 0);
                                                 client.data.gameExperience = Number((_d = (_c = e.formValues) === null || _c === void 0 ? void 0 : _c[1]) !== null && _d !== void 0 ? _d : 0);
                                                 client.magicSystem.upDateGrade();
+                                            }
+                                        })
+                                            .catch((e) => {
+                                            ExErrorQueue.throwError(e);
+                                        });
+                                        return false;
+                                    }
+                                },
+                                {
+                                    "type": "button",
+                                    "msg": lang.setMaxTpPoint,
+                                    "function": (client, ui) => {
+                                        new ModalFormData()
+                                            .title(lang.setMaxTpPoint)
+                                            .slider(lang.setMaxTpPoint, 1, 60, {
+                                            "valueStep": 1,
+                                            "defaultValue": client.globalSettings.tpPointRecordMaxNum
+                                        })
+                                            .show(client.player).then((e) => {
+                                            var _a, _b;
+                                            if (!e.canceled && e.formValues) {
+                                                client.globalSettings.tpPointRecordMaxNum = Number((_b = (_a = e.formValues) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : 0);
                                             }
                                         })
                                             .catch((e) => {
@@ -1569,7 +1623,10 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                         client.runTimeout(() => {
                                             new ModalFormData()
                                                 .title(lang.menuUIMsgBailan209)
-                                                .slider(lang.menuUIMsgBailan210, 0, 99, 1, client.getClient(i[0]).data.gameGrade)
+                                                .slider(lang.menuUIMsgBailan210, 0, 99, {
+                                                "valueStep": 1,
+                                                "defaultValue": client.getClient(i[0]).data.gameGrade
+                                            })
                                                 .show(client.player).then((e) => {
                                                 var _a, _b;
                                                 if (e.canceled)

@@ -1,5 +1,5 @@
 import ExNullEntity from '../../entity/ExNullEntity.js';
-export default class GlobalScoreBoardCache {
+class GlobalScoreBoardCache {
     constructor(objective, useCache = true) {
         this.useCache = useCache;
         this.entity = new ExNullEntity("");
@@ -58,4 +58,5 @@ export default class GlobalScoreBoardCache {
     }
 }
 GlobalScoreBoardCache.varMap = new Map();
+export default GlobalScoreBoardCache;
 //# sourceMappingURL=GlobalScoreBoardCache.js.map

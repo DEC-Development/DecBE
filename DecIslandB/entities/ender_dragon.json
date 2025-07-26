@@ -7,7 +7,6 @@
       "is_summonable": true,
       "is_experimental": false
     },
-
     "component_groups": {
       "dragon_sitting": {
         "minecraft:behavior.dragonlanding": {
@@ -44,10 +43,15 @@
         }
       }
     },
-
     "components": {
       "minecraft:type_family": {
-        "family": [ "ender_dragon", "dragon", "mob", "boss", "ender" ]
+        "family": [
+          "ender_dragon",
+          "dragon",
+          "mob",
+          "boss",
+          "ender"
+        ]
       },
       "minecraft:health": {
         "value": 300,
@@ -95,18 +99,15 @@
         "event": "minecraft:start_death",
         "target": "self"
       },
-      "minecraft:persistent": {
-      },
+      "minecraft:persistent": {},
       "minecraft:physics": {
         "has_gravity": false,
         "has_collision": false
       }
     },
-
     "events": {
       "minecraft:entity_spawned": {
-        "remove": {
-        },
+        "remove": {},
         "add": {
           "component_groups": [
             "dragon_flying"

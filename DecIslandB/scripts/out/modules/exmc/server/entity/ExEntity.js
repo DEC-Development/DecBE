@@ -1,4 +1,4 @@
-import { EntityDamageCause, Player } from '@minecraft/server';
+import { EntityDamageCause, Player, system } from '@minecraft/server';
 import ExScoresManager from './ExScoresManager.js';
 import Vector3 from '../../utils/math/Vector3.js';
 import ExEntityBag from './ExEntityBag.js';
@@ -8,7 +8,7 @@ import Matrix4 from '../../utils/math/Matrix4.js';
 import ExEntityQuery from '../env/ExEntityQuery.js';
 import ExGame from '../ExGame.js';
 import { falseIfError } from '../../utils/tool.js';
-export default class ExEntity {
+class ExEntity {
     damage(d, source) {
         this.entity.applyDamage(d, source);
     }
@@ -28,7 +28,7 @@ export default class ExEntity {
             this._damage = damage;
             timeout.runTimeout(() => {
                 var _a;
-                if (!this.entity.isValid())
+                if (!this.entity.isValid)
                     return;
                 let health = this.getComponent("minecraft:health");
                 if (health.currentValue > 0)
@@ -102,7 +102,17 @@ export default class ExEntity {
         return str;
     }
     runCommandAsync(str) {
-        return this._entity.runCommandAsync(str);
+        return new Promise((resolve, reject) => {
+            system.run(() => {
+                try {
+                    let res = this._entity.runCommand(str);
+                    resolve(res);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            });
+        });
     }
     runCommand(str) {
         return this._entity.runCommand(str);
@@ -259,7 +269,7 @@ export default class ExEntity {
             console.warn('after2:' + proj_comp.owner.nameTag);
             proj_comp.shoot(view.normalize().scl(0.05), shootOpt);
             ExGame._runTimeout(() => {
-                if (falseIfError(() => proj.isValid()))
+                if (falseIfError(() => proj.isValid))
                     proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
             }, option.delay * 20);
         }
@@ -293,4 +303,5 @@ export default class ExEntity {
     }
 }
 ExEntity.propertyNameCache = "exCache";
+export default ExEntity;
 //# sourceMappingURL=ExEntity.js.map

@@ -2,7 +2,7 @@ import Matrix4 from './Matrix4.js';
 /**
  * Represents a three-dimensional vector.
  */
-export default class Vector3 {
+class Vector3 {
     constructor(a, b, c) {
         if (typeof a === "number" && typeof b === "number" && typeof c === "number") {
             this.x = a;
@@ -351,4 +351,5 @@ Vector3.up = new Vector3(0, 1, 0);
  * The zero vector, with all components set to 0.
  */
 Vector3.zero = new Vector3(0, 0, 0);
+export default Vector3;
 //# sourceMappingURL=Vector3.js.map

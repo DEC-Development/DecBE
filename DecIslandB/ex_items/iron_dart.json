@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:iron_dart",
             "menu_category": {
-                "group": "itemGroup.name.sword",
+                "group": "dec:itemGroup.name.darts",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -16,7 +16,7 @@
             "minecraft:icon": {
                 "texture": "iron_dart"
             },
-            "minecraft:use_animation": "crossbow",
+
             "minecraft:cooldown": {
                 "category": "dart",
                 "duration": 0.5

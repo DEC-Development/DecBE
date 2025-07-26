@@ -1,5 +1,5 @@
 import PomBossController from './PomBossController.js';
-export default class PomMagicStoneBoss extends PomBossController {
+class PomMagicStoneBoss extends PomBossController {
     constructor(e, server, spawn) {
         super(e, server, spawn);
     }
@@ -28,4 +28,5 @@ export default class PomMagicStoneBoss extends PomBossController {
     }
 }
 PomMagicStoneBoss.typeId = "wb:magic_stoneman";
+export default PomMagicStoneBoss;
 //# sourceMappingURL=PomMagicStoneBoss.js.map

@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:turtle_chestplate",
             "menu_category": {
-                "group": "itemGroup.name.chestplate",
+                "group": "minecraft:itemGroup.name.chestplate",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -32,7 +32,7 @@
                 "repair_items": [
                     {
                         "items": [
-                            "minecraft:scute"
+                            "minecraft:turtle_scute"
                         ],
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.3"
                     }

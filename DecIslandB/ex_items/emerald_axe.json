@@ -1,10 +1,10 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:emerald_axe",
             "menu_category": {
-                "group": "itemGroup.name.axe",
+                "group": "minecraft:itemGroup.name.axe",
                 "is_hidden_in_commands": false,
                 "category": "equipment"
             }
@@ -63,7 +63,7 @@
                         "speed": 7
                     },
                     {
-                        "block": "minecraft:bamboo_sign",
+                        "block": "minecraft:bamboo_standing_sign",
                         "speed": 7
                     },
                     {
@@ -79,7 +79,7 @@
                         "speed": 7
                     },
                     {
-                        "block": "minecraft:cherry_sign",
+                        "block": "minecraft:cherry_standing_sign",
                         "speed": 7
                     },
                     {

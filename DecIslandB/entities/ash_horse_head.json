@@ -182,7 +182,7 @@
     "events": {
       "minecraft:next": {
         "queue_command": {
-          "command": [//这里也记得改
+          "command": [ //这里也记得改
             "summon dec:ash_monster ~~~",
             "summon dec:ash_monster ~~~"
           ],
@@ -196,8 +196,7 @@
           ]
         }
       },
-      "minecraft:entity_spawned": {
-      }
+      "minecraft:entity_spawned": {}
     }
   }
 }

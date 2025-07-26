@@ -7,12 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { world, MinecraftDimensionTypes } from '@minecraft/server';
+import { world } from '@minecraft/server';
+import { MinecraftDimensionTypes } from '../../vanilla-data/lib/index.js';
 export default class ExGameConfig {
     static runCommandAsync(str) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return world.getDimension(MinecraftDimensionTypes.overworld).runCommandAsync(str);
+                return world.getDimension(MinecraftDimensionTypes.Overworld).runCommandAsync(str);
             }
             catch (e) {
                 console.error("Console error:", e);
@@ -20,7 +21,7 @@ export default class ExGameConfig {
         });
     }
     static runCommand(str) {
-        return world.getDimension(MinecraftDimensionTypes.overworld).runCommand(str);
+        return world.getDimension(MinecraftDimensionTypes.Overworld).runCommand(str);
     }
 }
 //# sourceMappingURL=ExGameConfig.js.map

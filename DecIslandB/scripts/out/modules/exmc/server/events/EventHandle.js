@@ -22,7 +22,7 @@ export default class EventHandle {
         this.registerToServerByServerEvent = (registerName, k) => {
             this.server.getEvents().register(registerName, (e) => {
                 for (let [key, value] of this.monitorMap[k]) {
-                    if (falseIfError(() => key.isValid())) {
+                    if (falseIfError(() => key.isValid)) {
                         value.trigger(e);
                     }
                 }

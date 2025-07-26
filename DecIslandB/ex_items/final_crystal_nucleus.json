@@ -1,12 +1,12 @@
 {
-    "format_version": "1.20.50",
+    "format_version": "1.21.94",
     "minecraft:item": {
         "description": {
             "identifier": "dec:final_crystal_nucleus",
             "menu_category": {
-                "group": "itemGroup.name.decorations",
+                "group": "dec:itemGroup.name.crystal_nucleus",
                 "is_hidden_in_commands": false,
-                "category": "items"
+                "category": "equipment"
             }
         },
         "components": {
@@ -16,7 +16,7 @@
             "minecraft:icon": {
                 "texture": "final_crystal_nucleus"
             },
-            "minecraft:use_animation": "bow",
+
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:foil": true,
@@ -28,7 +28,7 @@
             },
             "minecraft:cooldown": {
                 "category": "final_crystal_nucleus",
-                "duration": 0.02
+                "duration": 0.05
             },
             "minecraft:durability": {
                 "max_durability": 2340
@@ -60,11 +60,11 @@
             "use": {
                 "sequence": [
                     {
-                        "condition": "query.scoreboard('magicpoint') <= 68",
+                        "condition": "query.scoreboard('magicpoint') <= 69",
                         "run_command": {
                             "command": [
                                 "particle dec:white_star_particle ~~1~",
-                                "scoreboard players add @s magicpoint 2"
+                                "scoreboard players add @s magicpoint 1"
                             ]
                         }
                     },

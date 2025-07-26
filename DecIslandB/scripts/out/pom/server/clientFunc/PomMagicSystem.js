@@ -6,7 +6,7 @@ import GameController from "./GameController.js";
 import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
 import { zeroIfNaN } from '../../../modules/exmc/utils/tool.js';
 import { idItemMap } from '../../common/idMap.js';
-export default class PomMagicSystem extends GameController {
+class PomMagicSystem extends GameController {
     constructor() {
         super(...arguments);
         this.additionHealthShow = false;
@@ -400,4 +400,5 @@ PomMagicSystem.armorCoolingChar = "";
 PomMagicSystem.wbflChar = "";
 PomMagicSystem.AdditionHPChar = "";
 PomMagicSystem.numberFont = "";
+export default PomMagicSystem;
 //# sourceMappingURL=PomMagicSystem.js.map

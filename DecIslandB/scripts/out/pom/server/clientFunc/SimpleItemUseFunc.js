@@ -1,4 +1,4 @@
-import { EntityDamageCause, ItemStack, ItemTypes, MinecraftDimensionTypes, BiomeTypes, MolangVariableMap } from '@minecraft/server';
+import { EntityDamageCause, ItemStack, ItemTypes, MolangVariableMap, BiomeTypes } from '@minecraft/server';
 import { ModalFormData } from "@minecraft/server-ui";
 import Vector3 from '../../../modules/exmc/utils/math/Vector3.js';
 import ExDimension from '../../../modules/exmc/server/ExDimension.js';
@@ -7,13 +7,15 @@ import menuFunctionUI from "../data/menuFunctionUI.js";
 import MenuUIAlert from "../ui/MenuUIAlert.js";
 import GameController from "./GameController.js";
 import RuinsLoaction from '../serverFunc/ruins/RuinsLoaction.js';
-import { MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
+import { MinecraftDimensionTypes, MinecraftEffectTypes } from '../../../modules/vanilla-data/lib/index.js';
 import { MinecraftBiomeTypes } from '../../../modules/vanilla-data/lib/index.js';
 import ExEntity from '../../../modules/exmc/server/entity/ExEntity.js';
 import ExSystem from '../../../modules/exmc/utils/ExSystem.js';
 import { falseIfError } from '../../../modules/exmc/utils/tool.js';
 import ExEntityQuery from '../../../modules/exmc/server/env/ExEntityQuery.js';
 import MathUtil from '../../../modules/exmc/utils/math/MathUtil.js';
+import plotLine from '../data/plotLine.js';
+import Random from '../../../modules/exmc/utils/Random.js';
 export default class SimpleItemUseFunc extends GameController {
     constructor() {
         super(...arguments);
@@ -27,7 +29,7 @@ export default class SimpleItemUseFunc extends GameController {
         this.getEvents().exEvents.afterPlayerBreakBlock.subscribe(e => {
             var _a;
             const itemId = (_a = this.exPlayer.getBag().itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId;
-            if ((e.dimension === this.getDimension(MinecraftDimensionTypes.theEnd) && RuinsLoaction.isInProtectArea(e.block)) || this.exPlayer.getScoresManager().getScore("i_inviolable") > 1)
+            if ((e.dimension === this.getDimension(MinecraftDimensionTypes.TheEnd) && RuinsLoaction.isInProtectArea(e.block)) || this.exPlayer.getScoresManager().getScore("i_inviolable") > 1)
                 return;
             if (!this.globalSettings.chainMining)
                 return;
@@ -53,10 +55,10 @@ export default class SimpleItemUseFunc extends GameController {
                 }
             }
         });
-        this.getEvents().exEvents.beforeItemUseOn.subscribe(e => {
-            var _a, _b;
-            if (e.itemStack.typeId === "wb:technology_world_explorer") {
-                this.sayTo((_b = (_a = e.block) === null || _a === void 0 ? void 0 : _a.typeId) !== null && _b !== void 0 ? _b : "");
+        this.getEvents().exEvents.beforePlayerInteractWithBlock.subscribe(e => {
+            var _a, _b, _c;
+            if (((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "wb:technology_world_explorer") {
+                this.sayTo((_c = (_b = e.block) === null || _b === void 0 ? void 0 : _b.typeId) !== null && _c !== void 0 ? _c : "");
             }
         });
         this.getEvents().exEvents.beforeItemUse.subscribe((e) => {
@@ -67,7 +69,7 @@ export default class SimpleItemUseFunc extends GameController {
                     this.runTimeout(() => {
                         new ModalFormData()
                             .title("Choose a language")
-                            .dropdown("Language List", ["English", "简体中文"], 0)
+                            .dropdown("Language List", ["English", "简体中文"], { "defaultValueIndex": 0 })
                             .show(this.player).then((e) => {
                             if (!e.canceled) {
                                 this.data.lang = (e.formValues && e.formValues[0] == 0) ? "en" : "zh";
@@ -113,7 +115,7 @@ export default class SimpleItemUseFunc extends GameController {
                             }));
                             const dic = new Vector3(pos).sub(pPos).normalize().scl(1 / 10);
                             this.worldExploreTimer = ExSystem.tickTask(this, () => {
-                                if (falseIfError(() => ball.entity.isValid())) {
+                                if (falseIfError(() => ball.entity.isValid)) {
                                     pPos.add(dic);
                                     ball.setPosition(pPos.cpy().add(0, 1.5, 0));
                                     if (pPos.distance(pos) < 2048) {
@@ -134,7 +136,9 @@ export default class SimpleItemUseFunc extends GameController {
                     else {
                         new ModalFormData()
                             .title(this.lang.chooseBossToFindBiomes)
-                            .dropdown(this.lang.chooseBoss, boss.map(e => e[0]), 0)
+                            .dropdown(this.lang.chooseBoss, boss.map(e => e[0]), {
+                            "defaultValueIndex": 0
+                        })
                             .show(this.player).then((e) => {
                             var _a, _b, _c;
                             if (!e.canceled && e.formValues) {
@@ -157,7 +161,7 @@ export default class SimpleItemUseFunc extends GameController {
                     this.inkSwordsSkill = true;
                     this.inkSwordsSkillTask.startOnce();
                     let dic = this.player.getViewDirection();
-                    this.player.applyKnockback(dic.x, dic.z, 7, 0);
+                    this.player.applyKnockback({ x: dic.x, z: dic.z }, 7);
                     let move = this.player.getComponent("minecraft:movement");
                     move === null || move === void 0 ? void 0 : move.setCurrentValue(MathUtil.clamp(move.currentValue - 0.1, 0.1, 0.7));
                     this.player.addEffect(MinecraftEffectTypes.Resistance, 10, {
@@ -232,7 +236,7 @@ export default class SimpleItemUseFunc extends GameController {
                                 "damagingEntity": this.player
                             });
                             let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                            e.applyKnockback(direction.x, direction.z, 1.2, 0.5);
+                            e.applyKnockback({ x: direction.x, z: direction.z }, 1.2);
                             if (use_time > 2) {
                                 e.addEffect(MinecraftEffectTypes.Slowness, 3 * 20, {
                                     "amplifier": 255,
@@ -324,7 +328,7 @@ export default class SimpleItemUseFunc extends GameController {
                                     "damagingEntity": this.player
                                 });
                                 let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                                e.applyKnockback(direction.x, direction.z, 1.5, 0.7);
+                                e.applyKnockback({ x: direction.x, z: direction.z }, 1.5);
                             }
                             catch (e) { }
                         }
@@ -392,6 +396,28 @@ export default class SimpleItemUseFunc extends GameController {
         this.exPlayer.addEffect(MinecraftEffectTypes.Levitation, 2, 100, false);
         this.exPlayer.addEffect(MinecraftEffectTypes.SlowFalling, 10, 3, false);
         this.exPlayer.dimension.spawnEntity("wb:ball_jet_pack", this.exPlayer.position.sub(this.exPlayer.viewDirection.scl(2)));
+    }
+    unknownBook() {
+        let remainArr = [];
+        // 遍历所有剧情部分
+        for (let i = 0; i < plotLine.length; i++) {
+            // 遍历每个部分的所有剧情段落
+            for (let j = 0; j < plotLine[i].length; j++) {
+                // 如果这段剧情还没被选择过，加入到remainArr
+                if (!this.data.plotLine.part[i].includes(j)) {
+                    remainArr.push([i, j]);
+                }
+            }
+        }
+        // 如果没有剩余的剧情，直接返回
+        if (remainArr.length === 0)
+            return;
+        // 随机选择一个剩余的剧情
+        let choice = Random.choice(remainArr);
+        let [a, b] = choice;
+        // 展示剧情并记录
+        this.sayTo(plotLine[a][b]);
+        this.data.plotLine.part[a].push(b);
     }
 }
 //# sourceMappingURL=SimpleItemUseFunc.js.map

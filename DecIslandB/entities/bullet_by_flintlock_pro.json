@@ -16,8 +16,7 @@
         "spawn": "animation.playsound_random_explode"
       }
     },
-    "component_groups": {
-    },
+    "component_groups": {},
     "components": {
       "minecraft:collision_box": {
         "width": 0.2,
@@ -57,7 +56,6 @@
         "is_pushable_by_piston": true
       }
     },
-    "events": {
-    }
+    "events": {}
   }
 }

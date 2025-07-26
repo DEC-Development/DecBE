@@ -26,18 +26,20 @@
           }
         },
         "power": 1.5,
-        "offset": [ 0, 0, 0 ],
+        "offset": [
+          0,
+          0,
+          0
+        ],
         "gravity": 0.03,
         "angleoffset": 0.0
       },
-      
       "minecraft:type_family": {
         "family": [
           "remove_on_hit"
         ]
       },
-	    "minecraft:physics": {
-      }
+      "minecraft:physics": {}
     }
   }
 }

@@ -1,4 +1,4 @@
-import { world, Player, ItemStack } from '@minecraft/server';
+import { world, Player, ItemStack, GameMode, system } from '@minecraft/server';
 import { fileProvider } from '../../filepack/index.js';
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 import Vector3 from '../../modules/exmc/utils/math/Vector3.js';
@@ -8,6 +8,7 @@ import ExGame from '../../modules/exmc/server/ExGame.js';
 import ExSystem from '../../modules/exmc/utils/ExSystem.js';
 import { Objective } from '../../modules/exmc/server/entity/ExScoresManager.js';
 import PomServer from '../server/PomServer.js';
+import DecGlobal from '../../dec/server/DecGlobal.js';
 const ex = (name) => "ex:" + name;
 const minecraft = (name) => "minecraft:" + name;
 const fnamespace = (name) => name.split(":").slice(1).join(":");
@@ -36,6 +37,15 @@ function molangCalculate(molang, option) {
         },
         get block() {
             return option.triggerBlock;
+        },
+        get isDec() {
+            return DecGlobal.isDec();
+        },
+        get triggerEntity() {
+            return option.triggerEntity;
+        },
+        get player() {
+            return option.triggerEntity;
         }
     };
     const query = {
@@ -229,7 +239,15 @@ function handleEventUser(eventUser, option) {
             if (item) {
                 let damageComp = item.getComponent("durability");
                 if (damageComp) {
-                    damageComp.damage += 1;
+                    let damage = damageComp.damage;
+                    damage += 1;
+                    if (damage >= damageComp.maxDurability) {
+                        bag.clearItem(item.typeId, 1);
+                    }
+                    else {
+                        damageComp.damage = damage;
+                        bag.itemOnMainHand = item;
+                    }
                 }
                 else {
                     bag.clearItem(item.typeId, 1);
@@ -241,7 +259,8 @@ function handleEventUser(eventUser, option) {
             for (let [i, e] of post.message.entries()) {
                 post.message[i] = typeof e === "string" ? molangCalculate(e, option) : e;
             }
-            ExGame.postMessageToServer(post.sign, post.message);
+            if (post.sign)
+                ExGame.postMessageToServer(post.sign, post.message);
         }
     }
     else if (option.triggerItem && option.triggerEntity) {
@@ -269,19 +288,31 @@ function handleEventUser(eventUser, option) {
             option.triggerEntity.dimension.playSound(eventUser.play_sound.sound, pos);
         }
         if (eventUser.shoot) {
-            let proj = (_c = (_b = (_a = idEntityMap.get(eventUser.shoot.projectile)) === null || _a === void 0 ? void 0 : _a["minecraft:entity"]) === null || _b === void 0 ? void 0 : _b["components"]) === null || _c === void 0 ? void 0 : _c['minecraft:projectile'];
+            const shootConfig = eventUser.shoot;
+            let proj = (_c = (_b = (_a = idEntityMap.get(shootConfig.projectile)) === null || _a === void 0 ? void 0 : _a["minecraft:entity"]) === null || _b === void 0 ? void 0 : _b["components"]) === null || _c === void 0 ? void 0 : _c['minecraft:projectile'];
             let power = proj === null || proj === void 0 ? void 0 : proj['power'];
             let uncertaintyBase = proj === null || proj === void 0 ? void 0 : proj['uncertaintyBase'];
-            ExEntity.getInstance(option.triggerEntity).shootProj(eventUser.shoot.projectile, {
-                "speed": ((_d = eventUser.shoot.launch_power) !== null && _d !== void 0 ? _d : 1) *
-                    (power !== null && power !== void 0 ? power : 1),
-                "uncertainty": uncertaintyBase !== null && uncertaintyBase !== void 0 ? uncertaintyBase : 0
-            });
+            system.runTimeout(() => {
+                var _a;
+                ExEntity.getInstance(option.triggerEntity).shootProj(shootConfig.projectile, {
+                    "speed": ((_a = shootConfig.launch_power) !== null && _a !== void 0 ? _a : 1) * (power !== null && power !== void 0 ? power : 1),
+                    "uncertainty": uncertaintyBase !== null && uncertaintyBase !== void 0 ? uncertaintyBase : 0
+                });
+            }, (_d = shootConfig.delay_ticks) !== null && _d !== void 0 ? _d : 0);
         }
         if (eventUser.damage) {
             let damageComp = option.triggerItem.getComponent("durability");
-            if (damageComp) {
-                damageComp.damage += eventUser.damage.amount;
+            if (damageComp && !(option.triggerEntity instanceof Player && option.triggerEntity.getGameMode() == GameMode.Creative)) {
+                let bag = ExEntity.getInstance(option.triggerEntity).getBag();
+                let damage = damageComp.damage;
+                damage += eventUser.damage.amount;
+                if (damage >= damageComp.maxDurability) {
+                    bag.clearItem(option.triggerItem.typeId, 1);
+                }
+                else {
+                    damageComp.damage = damage;
+                    bag.itemOnMainHand = option.triggerItem;
+                }
             }
         }
         if (eventUser.add_mob_effect) {
@@ -345,7 +376,7 @@ export default (context) => {
             console.warn(fpath);
         }
     }
-    world.beforeEvents.worldInitialize.subscribe(initEvent => {
+    system.beforeEvents.startup.subscribe(initEvent => {
         initEvent.blockComponentRegistry.registerCustomComponent(ex(onStepOnCompName), {
             onStepOn: e => {
                 if (e.entity) {
@@ -386,7 +417,7 @@ export default (context) => {
             }
         });
         initEvent.blockComponentRegistry.registerCustomComponent(ex(onPlayerDestroyedCompName), {
-            onPlayerDestroy: e => {
+            onPlayerBreak: e => {
                 if (e) {
                     let option = { triggerBlock: e.block, triggerEntity: e.player, triggerType: onPlayerDestroyedCompName };
                     const triggerComp = findTriggerComp(option);
@@ -518,7 +549,9 @@ export default (context) => {
             let option = { triggerItem: e.itemStackBeforeBreak, triggerEntity: e.player, triggerType: diggerCompName };
             const triggerComp = findTriggerComp(option);
             if (triggerComp) {
-                emitEvent(triggerComp.on_dig.event, option);
+                if (triggerComp.on_dig) {
+                    emitEvent(triggerComp.on_dig.event, option);
+                }
             }
         }
     });
@@ -530,10 +563,12 @@ export default (context) => {
             let option = { triggerItem: e.itemStack, triggerEntity: e.source, triggerType: foodCompName };
             const triggerComp = findTriggerComp(option);
             if (triggerComp) {
-                emitEvent(triggerComp.on_consume.event, option);
+                if (triggerComp.on_consume) {
+                    emitEvent(triggerComp.on_consume.event, option);
+                }
             }
             if (triggerComp === null || triggerComp === void 0 ? void 0 : triggerComp.using_converts_to) {
-                ExPlayer.getInstance(e.source).getBag().itemOnMainHand = new ItemStack(triggerComp.using_converts_to);
+                ExPlayer.getInstance(e.source).getBag().addItem(new ItemStack(triggerComp.using_converts_to));
             }
         }
     });

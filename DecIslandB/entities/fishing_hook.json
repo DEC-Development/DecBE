@@ -7,7 +7,6 @@
       "is_summonable": false,
       "is_experimental": false
     },
-    
     "component_groups": {
       "loot_jungle": {
         "minecraft:loot": {
@@ -35,66 +34,85 @@
         }
       }
     },
-
-      "components": {
-        "minecraft:collision_box": {
-          "width": 0.15,
-          "height": 0.15
-        },
-        "minecraft:projectile": {
-          "on_hit": { "stick_in_ground": {} }
-        },
-        "minecraft:loot": {
-          "table": "loot_tables/gameplay/fishing.json"
-        },
-        "minecraft:physics": {
-        },
-        "minecraft:pushable": {
-          "is_pushable": false,
-          "is_pushable_by_piston": true
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.15,
+        "height": 0.15
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "stick_in_ground": {}
         }
       },
-
-      "events": {
-        "minecraft:entity_spawned": {
-          "sequence": [
-            {
-              "filters": {
-                "test": "is_biome",
-                "value": "jungle"
-              },
-              "add": { "component_groups": [ "loot_jungle" ] }
+      "minecraft:loot": {
+        "table": "loot_tables/gameplay/fishing.json"
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "is_biome",
+              "value": "jungle"
             },
-            {
-              "filters": {
-                "test": "is_biome",
-                "value": "desert"
-              },
-              "add": { "component_groups": [ "loot_desert" ] }
-            },
-            {
-              "filters": {
-                "test": "is_biome",
-                "value": "the_end"
-              },
-              "add": { "component_groups": [ "loot_end" ] }
-            },
-            {
-              "filters": {
-                "test": "is_biome",
-                "value": "ocean"
-              },
-              "add": { "component_groups": [ "loot_ocean" ] }
-            },
-            {
-              "filters": {
-                "test": "is_biome",
-                "value": "ice"
-              },
-              "add": { "component_groups": [ "loot_ice" ] }
+            "add": {
+              "component_groups": [
+                "loot_jungle"
+              ]
             }
-          ]
-        }
+          },
+          {
+            "filters": {
+              "test": "is_biome",
+              "value": "desert"
+            },
+            "add": {
+              "component_groups": [
+                "loot_desert"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "is_biome",
+              "value": "the_end"
+            },
+            "add": {
+              "component_groups": [
+                "loot_end"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "is_biome",
+              "value": "ocean"
+            },
+            "add": {
+              "component_groups": [
+                "loot_ocean"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "is_biome",
+              "value": "ice"
+            },
+            "add": {
+              "component_groups": [
+                "loot_ice"
+              ]
+            }
+          }
+        ]
       }
     }
   }
+}

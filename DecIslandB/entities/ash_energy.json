@@ -21,6 +21,11 @@
       },
       "minecraft:projectile": {
         "on_hit": {
+          "definition_event": {
+            "event_trigger": {
+              "event": "hit"
+            }
+          },
           "impact_damage": {
             "damage": [
               5,
@@ -67,6 +72,15 @@
       "minecraft:pushable": {
         "is_pushable": false,
         "is_pushable_by_piston": true
+      }
+    },
+    "events": {
+      "hit": {
+        "queue_command": {
+          "command": [
+            "particle dec:ash_energy_hit_particle ~~~"
+          ]
+        }
       }
     }
   }
