@@ -9,19 +9,19 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/grave_2_1",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/grave_2_2",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ]
     }

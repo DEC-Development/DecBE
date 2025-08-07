@@ -9,19 +9,19 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "haunted_house/haunted_house_1",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "haunted_house/haunted_house_2",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ]
     }

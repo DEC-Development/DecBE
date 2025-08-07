@@ -9,10 +9,10 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/everlasting_winter_tower",
-                    "processors": "dec:ice_brick_block_processor"
+                    "processors": "dec:ice_brick_block_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ]
     }

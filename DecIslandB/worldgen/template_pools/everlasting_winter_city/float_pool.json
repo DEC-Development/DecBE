@@ -9,91 +9,91 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/empty",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 40,
-                "projection": "rigid"
+                "weight": 40
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/ice_crystal_1",
-                    "processors": "dec:ice_processor"
+                    "processors": "dec:ice_processor",
+                    "projection": "rigid"
                 },
-                "weight": 10,
-                "projection": "rigid"
+                "weight": 10
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/ice_crystal_2",
-                    "processors": "dec:ice_processor"
+                    "processors": "dec:ice_processor",
+                    "projection": "rigid"
                 },
-                "weight": 10,
-                "projection": "rigid"
+                "weight": 10
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/ice_crystal_3",
-                    "processors": "dec:ice_processor"
+                    "processors": "dec:ice_processor",
+                    "projection": "rigid"
                 },
-                "weight": 10,
-                "projection": "rigid"
+                "weight": 10
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/snow_torch",
-                    "processors": "dec:ice_processor"
+                    "processors": "dec:ice_processor",
+                    "projection": "rigid"
                 },
-                "weight": 5,
-                "projection": "rigid"
+                "weight": 5
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/snow_beacon",
-                    "processors": "dec:ice_processor"
+                    "processors": "dec:ice_processor",
+                    "projection": "rigid"
                 },
-                "weight": 2,
-                "projection": "rigid"
+                "weight": 2
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/tower_1",
-                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                    "processors": "dec:ice_and_brick_and_shelf_processor",
+                    "projection": "rigid"
                 },
-                "weight": 4,
-                "projection": "rigid"
+                "weight": 4
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/tower_2",
-                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                    "processors": "dec:ice_and_brick_and_shelf_processor",
+                    "projection": "rigid"
                 },
-                "weight": 4,
-                "projection": "rigid"
+                "weight": 4
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/tower_3",
-                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                    "processors": "dec:ice_and_brick_and_shelf_processor",
+                    "projection": "rigid"
                 },
-                "weight": 4,
-                "projection": "rigid"
+                "weight": 4
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "everlasting_winter_city/tower_4",
-                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                    "processors": "dec:ice_and_brick_and_shelf_processor",
+                    "projection": "rigid"
                 },
-                "weight": 2,
-                "projection": "rigid"
+                "weight": 2
             }
         ]
     }

@@ -85,6 +85,7 @@ class PomTalentSystem extends GameController {
         this.skill_stateNum = [];
         this.attackCooldown = 0;
         this.maxAttackCooldown = 0;
+        this.itemMaxAttackCooldown = 0;
         this.attackCooldownLooper = ExSystem.tickTask(this, () => {
             const maxFrame = 30;
             if (this.attackCooldown < -10) {
@@ -96,6 +97,7 @@ class PomTalentSystem extends GameController {
                 this.player.setProperty("wb:attack_cooldown", Math.floor(maxFrame * (1 - Math.max(0.001, this.attackCooldown / this.maxAttackCooldown))));
             }
         }).delay(1);
+        this.cooldownMap = new Map();
         this.debugger = false;
         this.hasBeenDamaged = new MonitorManager();
         this.hasCauseDamage = new MonitorManager();
@@ -104,6 +106,9 @@ class PomTalentSystem extends GameController {
         this.attackCooldown = cooldown;
         this.maxAttackCooldown = cooldown;
         this.attackCooldownLooper.start();
+    }
+    bindingItemCooldown(id, maxCooldown) {
+        this.cooldownMap.set(id, maxCooldown);
     }
     chooseArmor(a) {
     }
@@ -303,7 +308,7 @@ class PomTalentSystem extends GameController {
             }
             target.removeHealth(this, damage);
             ignornAttackSend = true;
-            this.setCooldown(10);
+            this.setCooldown(this.itemMaxAttackCooldown);
         });
         let lastResist = 0;
         //玩家减伤
@@ -535,6 +540,16 @@ class PomTalentSystem extends GameController {
                 }, (0));
             }
         });
+        //binging cooldown
+        this.itemMaxAttackCooldown = 10;
+        this.getEvents().exEvents.afterItemOnHandChange.subscribe((e) => {
+            if (e.afterItem && this.cooldownMap.has(e.afterItem.typeId)) {
+                this.itemMaxAttackCooldown = this.cooldownMap.get(e.afterItem.typeId);
+            }
+            else {
+                this.itemMaxAttackCooldown = 10;
+            }
+        });
         //debugger
         let testCauseDamage = 0;
         let testRoundDamage = 0;
@@ -591,6 +606,9 @@ class PomTalentSystem extends GameController {
             }
         });
     }
+    setItemMaxCooldown(cooldown) {
+        this.itemMaxAttackCooldown = cooldown;
+    }
     onLoad() {
         (function (c) {
             let a, b, d, e, f, g, h, i, j;
@@ -626,7 +644,7 @@ PomTalentSystem.magicDamageType = new Set([
     EntityDamageCause.drowning,
     EntityDamageCause.temperature,
     EntityDamageCause.thorns,
-    EntityDamageCause.wither
+    EntityDamageCause.wither,
 ]);
 PomTalentSystem.physicalDamageType = new Set([
     EntityDamageCause.none,
@@ -647,7 +665,14 @@ PomTalentSystem.physicalDamageType = new Set([
     EntityDamageCause.piston,
     EntityDamageCause.stalactite,
     EntityDamageCause.stalagmite,
-    EntityDamageCause.suffocation
+    EntityDamageCause.suffocation,
+    EntityDamageCause.soulCampfire,
+    EntityDamageCause.campfire,
+    EntityDamageCause.ramAttack
+]);
+PomTalentSystem.OtherDamageType = new Set([
+    EntityDamageCause.void, //湮灭伤害(虚空)
+    EntityDamageCause.sonicBoom //回声伤害(循声守卫音波)
 ]);
 export default PomTalentSystem;
 //# sourceMappingURL=PomTalentSystem.js.map

@@ -47,7 +47,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "dec:copper_nugget",
+                    "name": "minecraft:copper_nugget",
                     "weight": 4,
                     "functions": [
                         {

@@ -5,19 +5,19 @@
       "entries": [
         {
           "type": "item",
-          "name": "dec:copper_helmet"
+          "name": "minecraft:copper_helmet"
         },
         {
           "type": "item",
-          "name": "dec:copper_chestplate"
+          "name": "minecraft:copper_chestplate"
         },
         {
           "type": "item",
-          "name": "dec:copper_leggings"
+          "name": "minecraft:copper_leggings"
         },
         {
           "type": "item",
-          "name": "dec:copper_boots"
+          "name": "minecraft:copper_boots"
         }
       ]
     }

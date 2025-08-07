@@ -9,46 +9,46 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/road_1",
-                    "processors": "dec:cemetery_road_processor"
+                    "processors": "dec:cemetery_road_processor",
+                    "projection": "terrain_matching"
                 },
-                "weight": 2,
-                "projection": "terrain_matching"
+                "weight": 2
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/road_2",
-                    "processors": "dec:cemetery_road_processor"
+                    "processors": "dec:cemetery_road_processor",
+                    "projection": "terrain_matching"
                 },
-                "weight": 2,
-                "projection": "terrain_matching"
+                "weight": 2
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/road_3",
-                    "processors": "dec:cemetery_road_processor"
+                    "processors": "dec:cemetery_road_processor",
+                    "projection": "terrain_matching"
                 },
-                "weight": 3,
-                "projection": "terrain_matching"
+                "weight": 3
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/road_4",
-                    "processors": "dec:cemetery_road_processor"
+                    "processors": "dec:cemetery_road_processor",
+                    "projection": "terrain_matching"
                 },
-                "weight": 2,
-                "projection": "terrain_matching"
+                "weight": 2
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/road_cross_1",
-                    "processors": "dec:cemetery_road_processor"
+                    "processors": "dec:cemetery_road_processor",
+                    "projection": "terrain_matching"
                 },
-                "weight": 1,
-                "projection": "terrain_matching"
+                "weight": 1
             }
         ]
     }

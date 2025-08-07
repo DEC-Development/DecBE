@@ -22,7 +22,15 @@ export default class SimpleItemUseFunc extends GameController {
         this.inkSwordsSkill = false;
         this.inkSwordsSkillTask = ExSystem.tickTask(this, () => {
             this.inkSwordsSkill = false;
+            //主目标倍率
         }).delay(2 * 20);
+    }
+    getItem() {
+        return this.exPlayer.getBag().itemOnMainHand;
+    }
+    isHoldingItem(id) {
+        const item = this.getItem();
+        return (item === null || item === void 0 ? void 0 : item.typeId) === id;
     }
     onJoin() {
         //连锁挖矿
@@ -55,7 +63,7 @@ export default class SimpleItemUseFunc extends GameController {
                 }
             }
         });
-        this.getEvents().exEvents.beforePlayerInteractWithBlock.subscribe(e => {
+        this.getEvents().exEvents.beforeOncePlayerInteractWithBlock.subscribe(e => {
             var _a, _b, _c;
             if (((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === "wb:technology_world_explorer") {
                 this.sayTo((_c = (_b = e.block) === null || _b === void 0 ? void 0 : _b.typeId) !== null && _c !== void 0 ? _c : "");
@@ -291,52 +299,50 @@ export default class SimpleItemUseFunc extends GameController {
             }
         });
         this.getEvents().exEvents.beforeItemUse.subscribe(e => {
-            var _a;
-            const item = e.itemStack;
-            const wbfl = this.exPlayer.getScoresManager().getScore("wbfl");
-            if (item.typeId === "epic:echoing_scream_saber" && wbfl >= 25) {
-                const cd = this.player.getItemCooldown(e.itemStack.getComponent('minecraft:cooldown').cooldownCategory);
-                if (cd == 0) {
-                    //尖啸回响
-                    const tmpV = new Vector3();
-                    const sharpness = ((_a = item === null || item === void 0 ? void 0 : item.getComponentById("minecraft:enchantable").getEnchantment("sharpness")) === null || _a === void 0 ? void 0 : _a.level) || 0;
-                    //const strength = (this.exPlayer.entity.getEffect("strength")?.amplifier || -1) + 1;
-                    //const weakness = (this.exPlayer.entity.getEffect("weakness")?.amplifier || -1) + 1;
-                    const base_atk = 7 + sharpness * 1.25;
-                    //let eff_atk = base_atk*(1.25^strength)/(1.25^weakness)
-                    let dam = 2.4 * Math.round(base_atk) + 15;
-                    this.runTimeout(() => {
-                        this.exPlayer.addTag("skill_user");
-                        this.exPlayer.command.runAsync("/function EPIC/weapon/echoing_scream_saber");
-                    }, 0);
-                    this.runTimeout(() => {
-                        for (let e of this.getExDimension().getEntities({
-                            "maxDistance": 5,
-                            "excludeTags": ["skill_user", "wbmsyh"],
-                            "excludeFamilies": [],
-                            "excludeTypes": ["item"],
-                            "location": this.player.location
-                        })) {
-                            try {
-                                let i = Number(e.getDynamicProperty('echo_record')) || 0;
-                                if (i <= 4) {
-                                    e.setDynamicProperty('echo_record', (i = i + 1));
-                                }
-                                // e.runCommand("/say " + i)
-                                e.applyDamage(dam, {
-                                    "cause": EntityDamageCause.magic,
-                                    "damagingEntity": this.player
-                                });
-                                let direction = tmpV.set(e.location).sub(this.player.location).normalize();
-                                e.applyKnockback({ x: direction.x, z: direction.z }, 1.5);
-                            }
-                            catch (e) { }
-                        }
-                        this.exPlayer.removeTag("skill_user");
-                        this.exPlayer.getScoresManager().removeScore("wbfl", 25);
-                    }, 150);
-                }
-            }
+            /* const item = e.itemStack;
+               const wbfl = this.exPlayer.getScoresManager().getScore("wbfl");
+               if (item.typeId === "epic:echoing_scream_saber" && wbfl >= 25) {
+                   const cd = this.player.getItemCooldown(e.itemStack.getComponent('minecraft:cooldown')!.cooldownCategory);
+                   if (cd == 0) {
+                       //尖啸回响
+                       const tmpV = new Vector3();
+                       const sharpness = item?.getComponentById("minecraft:enchantable")!.getEnchantment("sharpness")?.level || 0;
+                       //const strength = (this.exPlayer.entity.getEffect("strength")?.amplifier || -1) + 1;
+                       //const weakness = (this.exPlayer.entity.getEffect("weakness")?.amplifier || -1) + 1;
+                       const base_atk = 7 + sharpness * 1.25;
+                       //let eff_atk = base_atk*(1.25^strength)/(1.25^weakness)
+                       let dam = 2.4 * Math.round(base_atk) + 15
+                       this.runTimeout(() => {
+                           this.exPlayer.addTag("skill_user");
+                           this.exPlayer.command.runAsync("/function EPIC/weapon/echoing_scream_saber");
+                       }, 0);
+                       this.runTimeout(() => {
+                           for (let e of this.getExDimension().getEntities({
+                               "maxDistance": 5,
+                               "excludeTags": ["skill_user", "wbmsyh"],
+                               "excludeFamilies": [],
+                               "excludeTypes": ["item"],
+                               "location": this.player.location
+                           })) {
+                               try {
+                                   let i = Number(e.getDynamicProperty('echo_record')) || 0;
+                                   if (i <= 4) {
+                                       e.setDynamicProperty('echo_record', (i = i + 1));
+                                   }
+                                   // e.runCommand("/say " + i)
+                                   e.applyDamage(dam, {
+                                       "cause": EntityDamageCause.magic,
+                                       "damagingEntity": this.player
+                                   });
+                                   let direction = tmpV.set(e.location).sub(this.player.location).normalize();
+                                   e.applyKnockback({x:direction.x, z:direction.z}, 1.5);
+                               } catch (e) { }
+                           }
+                           this.exPlayer.removeTag("skill_user");
+                           this.exPlayer.getScoresManager().removeScore("wbfl", 25);
+                       }, 150);
+                   }
+               } */
         });
     }
     chainDigging(v, idType, times, posData) {

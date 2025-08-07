@@ -193,6 +193,13 @@
                      "name": "dec:itemGroup.name.magic_gems"
                   },
                   "items": []
+               },
+               {
+                  "group_identifier": {
+                     "icon": "dec:everlasting_winter_heart",
+                     "name": "dec:itemGroup.name.night_event_items"
+                  },
+                  "items": []
                }
             ]
          },

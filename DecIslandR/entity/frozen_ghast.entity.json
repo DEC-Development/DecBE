@@ -12,7 +12,7 @@
         "default": "geometry.ghast"
       },
       "scripts": {
-        "scale": "0.5"
+        "scale": "0.1"
       },
       "spawn_egg": {
         "base_color": "#D3FCFF",

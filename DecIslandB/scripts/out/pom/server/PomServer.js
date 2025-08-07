@@ -43,6 +43,7 @@ import ExPropCache from '../../modules/exmc/server/storage/cache/ExPropCache.js'
 import BlockPartitioning from './map/BlockPartitioning.js';
 import { PomGodOfGuardBoss0, PomGodOfGuardBoss1, PomGodOfGuardBoss2, PomGodOfGuardBoss3 } from './entities/PomGodOfGuardBoss.js';
 import PomGuardBossRuin from './serverFunc/ruins/guard/PomGuardBossRuin.js';
+import EpicPetController from './entities/EpicPetController.js';
 // import * as b from "brain.js";
 export default class PomServer extends ExGameServer {
     sayTo(str) {
@@ -142,6 +143,7 @@ export default class PomServer extends ExGameServer {
         this.addEntityController(PomGodOfGuardBoss1.typeId, PomGodOfGuardBoss1);
         this.addEntityController(PomGodOfGuardBoss2.typeId, PomGodOfGuardBoss2);
         this.addEntityController(PomGodOfGuardBoss3.typeId, PomGodOfGuardBoss3);
+        this.addEntityController(EpicPetController.typeId, EpicPetController);
     }
     initRuinsRules() {
         //遗迹掉落物清理

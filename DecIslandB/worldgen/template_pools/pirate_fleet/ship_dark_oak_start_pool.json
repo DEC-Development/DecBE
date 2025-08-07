@@ -9,10 +9,10 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "pirate_fleet_dark_oak/ship_dark_oak_1",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ]
     }

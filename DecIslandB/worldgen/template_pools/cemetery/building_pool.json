@@ -9,55 +9,55 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_1",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_2",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_3",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_4",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_5",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/cemetery_6",
-                    "processors": "dec:stone_bricks_processor"
+                    "processors": "dec:stone_bricks_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ],
         "fallback": "dec:cemetery/street_lamp_pool"

@@ -12,7 +12,7 @@
         "default": "geometry.ghast"
       },
       "scripts": {
-        "scale": "1.25"
+        "scale": "0.25"
       },
       "animations": {
         "move": "animation.ghast.move",

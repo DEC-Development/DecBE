@@ -40,6 +40,7 @@ import { ArmorData } from "../../dec/server/items/ArmorData.js";
 import { pomDifficultyMap } from "./data/GameDifficulty.js";
 import TalentData from "./cache/TalentData.js";
 import PomTerritorySystem from "./clientFunc/PomTerritorySystem.js";
+import EpicItemUse from "./clientFunc/EpicItem.js";
 export default class PomClient extends ExGameClient {
     // net;
     constructor(server, id, player) {
@@ -49,6 +50,7 @@ export default class PomClient extends ExGameClient {
         this.talentSystem = new PomTalentSystem(this);
         this.magicSystem = new PomMagicSystem(this);
         this.itemUseFunc = new SimpleItemUseFunc(this);
+        this.epic = new EpicItemUse(this);
         this.ruinsSystem = new PomDimRuinsSystem(this);
         this.taskSystem = new PomTaskSystem(this);
         this.interactSystem = new PomInteractSystem(this);
@@ -69,6 +71,7 @@ export default class PomClient extends ExGameClient {
         this.addCtrller(this.magicSystem);
         this.addCtrller(this.talentSystem);
         this.addCtrller(this.itemUseFunc);
+        this.addCtrller(this.epic);
         this.addCtrller(this.ruinsSystem);
         this.addCtrller(this.taskSystem);
         this.addCtrller(this.interactSystem);
@@ -257,6 +260,9 @@ export default class PomClient extends ExGameClient {
     unknownBook() {
         this.itemUseFunc.unknownBook();
     }
+    setItemMaxCooldown(cooldown) {
+        this.talentSystem.setItemMaxCooldown(cooldown);
+    }
 }
 __decorate([
     receiveMessage("taskUi"),
@@ -288,4 +294,10 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PomClient.prototype, "unknownBook", null);
+__decorate([
+    receiveMessage("setItemMaxCooldown"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], PomClient.prototype, "setItemMaxCooldown", null);
 //# sourceMappingURL=PomClient.js.map

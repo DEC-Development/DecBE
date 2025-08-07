@@ -9,10 +9,10 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "tower_of_watcher",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ]
     }

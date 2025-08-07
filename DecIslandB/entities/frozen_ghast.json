@@ -203,28 +203,19 @@
             "randomize": [
               {
                 "weight": 1,
-                "sequence": [
-                  {
-                    "randomize": [
-                      {
-                        "weight": 1,
-                        "add": {
-                          "component_groups": [
-                            "minecraft:repeat"
-                          ]
-                        }
-                      },
-                      {
-                        "weight": 1,
-                        "add": {
-                          "component_groups": [
-                            "minecraft:single"
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "add": {
+                  "component_groups": [
+                    "minecraft:repeat"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "minecraft:single"
+                  ]
+                }
               }
             ]
           },

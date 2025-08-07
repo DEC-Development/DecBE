@@ -9,55 +9,55 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_1",
-                    "processors": "dec:blackstone_processor"
+                    "processors": "dec:blackstone_processor",
+                    "projection": "rigid"
                 },
-                "weight": 4,
-                "projection": "rigid"
+                "weight": 4
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_2",
-                    "processors": "dec:blackstone_processor"
+                    "processors": "dec:blackstone_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_3",
-                    "processors": "dec:blackstone_processor"
+                    "processors": "dec:blackstone_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_4",
-                    "processors": "dec:blackstone_processor"
+                    "processors": "dec:blackstone_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_blocked_1",
-                    "processors": "dec:soul_room_way_blocked_processor"
+                    "processors": "dec:soul_room_way_blocked_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "soul_room/way_blocked_2",
-                    "processors": "dec:soul_room_way_blocked_processor"
+                    "processors": "dec:soul_room_way_blocked_processor",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             }
         ],
         "fallback": "dec:soul_room/cap_pool"

@@ -84,22 +84,22 @@
         },
         {
           "type": "item",
-          "name": "dec:copper_helmet",
+          "name": "minecraft:copper_helmet",
           "weight": 1
         },
         {
           "type": "item",
-          "name": "dec:copper_chestplate",
+          "name": "minecraft:copper_chestplate",
           "weight": 1
         },
         {
           "type": "item",
-          "name": "dec:copper_leggings",
+          "name": "minecraft:copper_leggings",
           "weight": 1
         },
         {
           "type": "item",
-          "name": "dec:copper_boots",
+          "name": "minecraft:copper_boots",
           "weight": 1
         },
         {

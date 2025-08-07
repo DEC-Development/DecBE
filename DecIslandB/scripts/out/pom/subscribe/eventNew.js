@@ -189,7 +189,7 @@ function emitEvent(eventName, option) {
     return undefined;
 }
 function handleEventUser(eventUser, option) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g;
     if (option.triggerBlock) {
         if (eventUser.condition) {
             if (!molangCalculate(eventUser.condition, option)) {
@@ -246,7 +246,9 @@ function handleEventUser(eventUser, option) {
                     }
                     else {
                         damageComp.damage = damage;
-                        bag.itemOnMainHand = item;
+                        if (((_a = bag.itemOnMainHand) === null || _a === void 0 ? void 0 : _a.typeId) === item.typeId) {
+                            bag.itemOnMainHand = item;
+                        }
                     }
                 }
                 else {
@@ -289,7 +291,7 @@ function handleEventUser(eventUser, option) {
         }
         if (eventUser.shoot) {
             const shootConfig = eventUser.shoot;
-            let proj = (_c = (_b = (_a = idEntityMap.get(shootConfig.projectile)) === null || _a === void 0 ? void 0 : _a["minecraft:entity"]) === null || _b === void 0 ? void 0 : _b["components"]) === null || _c === void 0 ? void 0 : _c['minecraft:projectile'];
+            let proj = (_d = (_c = (_b = idEntityMap.get(shootConfig.projectile)) === null || _b === void 0 ? void 0 : _b["minecraft:entity"]) === null || _c === void 0 ? void 0 : _c["components"]) === null || _d === void 0 ? void 0 : _d['minecraft:projectile'];
             let power = proj === null || proj === void 0 ? void 0 : proj['power'];
             let uncertaintyBase = proj === null || proj === void 0 ? void 0 : proj['uncertaintyBase'];
             system.runTimeout(() => {
@@ -298,7 +300,7 @@ function handleEventUser(eventUser, option) {
                     "speed": ((_a = shootConfig.launch_power) !== null && _a !== void 0 ? _a : 1) * (power !== null && power !== void 0 ? power : 1),
                     "uncertainty": uncertaintyBase !== null && uncertaintyBase !== void 0 ? uncertaintyBase : 0
                 });
-            }, (_d = shootConfig.delay_ticks) !== null && _d !== void 0 ? _d : 0);
+            }, (_e = shootConfig.delay_ticks) !== null && _e !== void 0 ? _e : 0);
         }
         if (eventUser.damage) {
             let damageComp = option.triggerItem.getComponent("durability");
@@ -311,7 +313,9 @@ function handleEventUser(eventUser, option) {
                 }
                 else {
                     damageComp.damage = damage;
-                    bag.itemOnMainHand = option.triggerItem;
+                    if (((_f = bag.itemOnMainHand) === null || _f === void 0 ? void 0 : _f.typeId) === option.triggerItem.typeId) {
+                        bag.itemOnMainHand = option.triggerItem;
+                    }
                 }
             }
         }
@@ -328,7 +332,7 @@ function handleEventUser(eventUser, option) {
             }
         }
         if (eventUser.script && option.triggerEntity instanceof Player) {
-            ExGame.postMessageBetweenClient(option.triggerEntity, PomServer, eventUser.script.output, (_e = eventUser.script.args) !== null && _e !== void 0 ? _e : []);
+            ExGame.postMessageBetweenClient(option.triggerEntity, PomServer, eventUser.script.output, (_g = eventUser.script.args) !== null && _g !== void 0 ? _g : []);
         }
     }
     if (eventUser.sequence) {
@@ -562,10 +566,8 @@ export default (context) => {
             lastSelectItemSlot.set(e.source, [e.source.selectedSlotIndex, e.itemStack.typeId]);
             let option = { triggerItem: e.itemStack, triggerEntity: e.source, triggerType: foodCompName };
             const triggerComp = findTriggerComp(option);
-            if (triggerComp) {
-                if (triggerComp.on_consume) {
-                    emitEvent(triggerComp.on_consume.event, option);
-                }
+            if (triggerComp && triggerComp.on_consume) {
+                emitEvent(triggerComp.on_consume.event, option);
             }
             if (triggerComp === null || triggerComp === void 0 ? void 0 : triggerComp.using_converts_to) {
                 ExPlayer.getInstance(e.source).getBag().addItem(new ItemStack(triggerComp.using_converts_to));

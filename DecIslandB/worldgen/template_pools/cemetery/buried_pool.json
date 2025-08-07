@@ -9,37 +9,37 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/buried_1",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/buried_2",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/buried_3",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 2,
-                "projection": "rigid"
+                "weight": 2
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "cemetery/buried_empty",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 15,
-                "projection": "rigid"
+                "weight": 15
             }
         ]
     }

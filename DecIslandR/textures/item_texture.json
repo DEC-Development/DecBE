@@ -272,9 +272,6 @@
     "ender_breath": {
       "textures": "textures/items/ender_breath"
     },
-    "copper_nugget": {
-      "textures": "textures/items/copper_nugget"
-    },
     "copper_sword": {
       "textures": "textures/items/copper_sword"
     },
@@ -1033,18 +1030,6 @@
     },
     "energy_totem": {
       "textures": "textures/items/energy_totem"
-    },
-    "copper_helmet": {
-      "textures": "textures/items/copper_helmet"
-    },
-    "copper_chestplate": {
-      "textures": "textures/items/copper_chestplate"
-    },
-    "copper_leggings": {
-      "textures": "textures/items/copper_leggings"
-    },
-    "copper_boots": {
-      "textures": "textures/items/copper_boots"
     },
     "emerald_helmet": {
       "textures": "textures/items/emerald_helmet"

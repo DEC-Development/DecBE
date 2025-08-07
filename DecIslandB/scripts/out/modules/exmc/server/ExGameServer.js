@@ -51,14 +51,31 @@ class ExGameServer extends ExContext {
             ExClientEvents.init(this);
             ExEntityEvents.init(this);
         }
-        for (const p of world.getAllPlayers()) {
-            if (!this.playerIsInSet.has(p.name)) {
-                this.onClientJoin({
-                    "playerId": p.id,
-                    "playerName": p.name
+        this.run(() => {
+            for (const p of world.getAllPlayers()) {
+                if (!this.playerIsInSet.has(p.name)) {
+                    this.onClientJoin({
+                        "playerId": p.id,
+                        "playerName": p.name
+                    });
+                }
+            }
+            for (const e of this.getDimension(MinecraftDimensionTypes.Overworld).getEntities()) {
+                this._onEntityLoad({
+                    entity: e
                 });
             }
-        }
+            for (const e of this.getDimension(MinecraftDimensionTypes.Nether).getEntities()) {
+                this._onEntityLoad({
+                    entity: e
+                });
+            }
+            for (const e of this.getDimension(MinecraftDimensionTypes.TheEnd).getEntities()) {
+                this._onEntityLoad({
+                    entity: e
+                });
+            }
+        });
         // for (const c of this.getClients()) {
         //     if (!c.isLoaded) {
         //         c.onLoad();

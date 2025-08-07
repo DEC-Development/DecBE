@@ -8,7 +8,13 @@ import Matrix4 from '../../utils/math/Matrix4.js';
 import ExEntityQuery from '../env/ExEntityQuery.js';
 import ExGame from '../ExGame.js';
 import { falseIfError } from '../../utils/tool.js';
+import { StatusManager } from '../../../../pom/server/clientFunc/StatusManager.js';
+import { PoisonStatus } from '../../../../pom/server/clientFunc/EpicStatus';
 class ExEntity {
+    applyStatus(id, dur) {
+        const newStatus = new PoisonStatus(dur);
+        this.statusManager.addStatus(newStatus);
+    }
     damage(d, source) {
         this.entity.applyDamage(d, source);
     }
@@ -62,6 +68,7 @@ class ExEntity {
         return new Vector3(this._entity.getHeadLocation());
     }
     constructor(entity) {
+        this.statusManager = new StatusManager(this);
         this.command = new ExCommand(this);
         this._entity = entity;
         if (ExEntity.propertyNameCache in entity) {

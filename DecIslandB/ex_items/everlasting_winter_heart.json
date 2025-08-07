@@ -4,9 +4,9 @@
         "description": {
             "identifier": "dec:everlasting_winter_heart",
             "menu_category": {
-                "group": "minecraft:itemGroup.name.decorations",
+                "group": "dec:itemGroup.name.night_event_items",
                 "is_hidden_in_commands": false,
-                "category": "items"
+                "category": "equipment"
             }
         },
         "components": {

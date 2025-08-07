@@ -745,7 +745,7 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                             return;
                                         }
                                         client.sayTo(lang.menuUIMsgBailan127);
-                                        const p1 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
+                                        const p1 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforeOncePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
                                         const actions = client.magicSystem.registActionbarPass("facingBlockGetter");
                                         actions.push("", "");
                                         const sizeJedge = (width) => {
@@ -759,12 +759,13 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                                             const area = new ExBlockArea(p1, vec, true);
                                             const width = area.getWidth();
                                             actions[0] = lang.menuUIMsgBailan128 + vec.toString();
-                                            actions[1] = lang.menuUIMsgBailan129 + (sizeJedge(width) ? lang.menuUIMsgBailan130 : lang.menuUIMsgBailan131) + width.toString();
+                                            actions[1] = lang.menuUIMsgBailan129 + (sizeJedge(width) ? lang.menuUIMsgBailan130 : lang.menuUIMsgBailan131) + width.toString() +
+                                                ` (有效范围: ${minSize.toString()}-${maxSize.toString()})`;
                                         };
                                         if (client.getDefaultSpawnLocation())
                                             client.getEvents().exEvents.onLongTick.subscribe(facingBlockGetter);
                                         client.sayTo(format(lang.choosePoint2, `${minSize.toString()}-${maxSize.toString()}`));
-                                        const p2 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
+                                        const p2 = new Vector3((yield eventGetter(client.getEvents().exEvents.beforeOncePlayerInteractWithBlock, (e) => { var _a; return ((_a = e.itemStack) === null || _a === void 0 ? void 0 : _a.typeId) === MinecraftItemTypes.Stick; })).block);
                                         //二次判断防止转空子
                                         if (client.getDimension().id !== MinecraftDimensionTypes.Overworld) {
                                             client.sayTo(lang.menuUIMsgBailan132);
@@ -1767,6 +1768,32 @@ ${lang.size}: ${areaMsg === null || areaMsg === void 0 ? void 0 : areaMsg[0].get
                 }
             }
         }
+        // "TEST": {
+        //     "img": "textures/items/wet_paper",
+        //     "text": lang.menuUIMsgBailan1,
+        //     "default": "1",
+        //     "page": {
+        //         "1": {
+        //             "text": lang.menuUISubtitleGonggao,
+        //             "page": [
+        //                 {
+        //                     "type": "padding"
+        //                 },
+        //                 {
+        //                     "type": "text",
+        //                     "msg": lang.menuUIMsgGonggao1
+        //                 },
+        //                 {
+        //                     "type": "gif_test",
+        //                 },
+        //                 {
+        //                     "type": "testP",
+        //                     "msg": lang.menuUIMsgGonggao1
+        //                 }
+        //             ]
+        //         }
+        //     }
+        // }
     };
 }
 //# sourceMappingURL=menuFunctionUI.js.map

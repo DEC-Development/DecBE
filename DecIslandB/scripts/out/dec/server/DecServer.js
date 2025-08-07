@@ -771,6 +771,8 @@ export default class DecServer extends ExGameServer {
         if (blocks) {
             let b = blocks[Math.floor(Math.random() * blocks.length)];
             // 以后这可以写长其他东西
+            if (!b || b.typeId != 'minecraft:air')
+                return;
             b.setType('dec:flesh_block');
             this.state_set_keep(b, { 'dec:age': age_ori + 1 });
         }

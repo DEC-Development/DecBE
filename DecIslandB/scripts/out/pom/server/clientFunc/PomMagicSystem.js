@@ -18,12 +18,13 @@ class PomMagicSystem extends GameController {
         this.isProtected = false;
         this.gameMaxHealth = 30;
         this.scoresManager = this.exPlayer.getScoresManager();
+        this.wbflDefaultMax = 120;
+        this.wbflMax = this.wbflDefaultMax;
         this.wbflLooper = ExSystem.tickTask(this, () => {
+            this.scoresManager.setScore("wbflMax", this.wbflMax);
             if (this.scoresManager.getScore("wbfl") < this.wbflMax)
                 this.scoresManager.addScore("wbfl", 2);
         }).delay(5 * 20);
-        this.wbflDefaultMax = 120;
-        this.wbflMax = this.wbflDefaultMax;
         this.experienceAddLooper = ExSystem.tickTask(this, () => {
             this.data.gameExperience += 1;
         }).delay(12 * 20);

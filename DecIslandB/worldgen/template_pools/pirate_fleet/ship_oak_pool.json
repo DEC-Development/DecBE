@@ -9,28 +9,28 @@
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "pirate_fleet_oak/ship_oak_1",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "pirate_fleet_oak/ship_oak_2",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 1,
-                "projection": "rigid"
+                "weight": 1
             },
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
                     "location": "pirate_fleet_oak/empty_oak",
-                    "processors": "dec:empty"
+                    "processors": "dec:empty",
+                    "projection": "rigid"
                 },
-                "weight": 10,
-                "projection": "rigid"
+                "weight": 10
             }
         ]
     }
