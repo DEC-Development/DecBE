@@ -14,7 +14,9 @@
                 "value": "item.dec:ender_substance.name"
             },
             "minecraft:icon": {
-                "texture": "ender_substance"
+                "textures": {
+                    "default": "ender_substance"
+                }
             }
         }
     }

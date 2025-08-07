@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:muddy_altar_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "muddy_altar",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

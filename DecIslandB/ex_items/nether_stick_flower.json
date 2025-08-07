@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:nether_stick_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "nether_stick_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:nether_stick_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "nether_stick_flower"
+                }
             }
         }
     }

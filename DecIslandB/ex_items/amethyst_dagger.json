@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:amethyst_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "amethyst_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 78
@@ -101,6 +98,11 @@
                     "comp:movement_addition:0.013",
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "amethyst_dagger"
+                }
             }
         },
         "events": {

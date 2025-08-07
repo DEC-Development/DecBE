@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:lollipop.name"
             },
-            "minecraft:icon": {
-                "texture": "lollipop"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:weapon": {
                 "on_hurt_entity": {
@@ -58,6 +55,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lollipop"
+                }
             }
         },
         "events": {

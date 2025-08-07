@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:soul_fireball.name"
             },
-            "minecraft:icon": {
-                "texture": "soul_fireball"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 1.5
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "soul_fireball"
+                }
             }
         }
     }

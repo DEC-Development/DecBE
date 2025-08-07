@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:dandelion.name"
             },
-            "minecraft:icon": {
-                "texture": "dandelion"
-            },
             "minecraft:block_placer": {
                 "block": "dec:dandelion_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "dandelion"
+                }
             }
         }
     }

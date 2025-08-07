@@ -14,7 +14,9 @@
                 "value": "item.dec:ice_brick.name"
             },
             "minecraft:icon": {
-                "texture": "ice_brick"
+                "textures": {
+                    "default": "ice_brick"
+                }
             }
         }
     }

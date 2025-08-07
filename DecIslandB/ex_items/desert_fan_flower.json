@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:desert_fan_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "desert_fan_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:desert_fan_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "desert_fan_flower"
+                }
             }
         }
     }

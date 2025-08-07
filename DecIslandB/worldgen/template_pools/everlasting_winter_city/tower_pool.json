@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:everlasting_winter_city/tower_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/everlasting_winter_tower",
+                    "processors": "dec:ice_brick_block_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

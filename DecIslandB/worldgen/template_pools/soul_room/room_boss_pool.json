@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:soul_room/room_boss_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_boss",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:thyme.name"
             },
-            "minecraft:icon": {
-                "texture": "thyme"
-            },
             "minecraft:block_placer": {
                 "block": "dec:thyme_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "thyme"
+                }
             }
         }
     }

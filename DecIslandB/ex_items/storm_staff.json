@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:storm_staff.name"
             },
-            "minecraft:icon": {
-                "texture": "storm_staff"
-            },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -51,6 +47,11 @@
                 "tags": [
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "storm_staff"
+                }
             }
         },
         "events": {

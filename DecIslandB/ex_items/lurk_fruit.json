@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:lurk_fruit.name"
             },
-            "minecraft:icon": {
-                "texture": "lurk_fruit"
-            },
             "minecraft:block_placer": {
                 "block": "dec:lurk_fruit_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lurk_fruit"
+                }
             }
         }
     }

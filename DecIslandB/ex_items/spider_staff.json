@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:spider_staff.name"
             },
-            "minecraft:icon": {
-                "texture": "spider_staff"
-            },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -51,6 +47,11 @@
                 "tags": [
                     "comp:equipment_type:summon_weapon_:summon_weapon:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "spider_staff"
+                }
             }
         },
         "events": {

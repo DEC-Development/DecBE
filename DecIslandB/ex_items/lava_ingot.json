@@ -14,7 +14,9 @@
                 "value": "item.dec:lava_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "lava_ingot"
+                "textures": {
+                    "default": "lava_ingot"
+                }
             }
         }
     }

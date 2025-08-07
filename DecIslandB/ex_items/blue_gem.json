@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:blue_gem.name"
             },
-            "minecraft:icon": {
-                "texture": "blue_gem"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:stacked_by_data": false,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "use",
@@ -28,6 +25,11 @@
             "minecraft:cooldown": {
                 "category": "blue_gem",
                 "duration": 0.3
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "blue_gem"
+                }
             }
         },
         "events": {

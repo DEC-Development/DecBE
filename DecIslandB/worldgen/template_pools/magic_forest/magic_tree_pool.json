@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:magic_forest/magic_tree_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "magic_forest/magic_tree",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

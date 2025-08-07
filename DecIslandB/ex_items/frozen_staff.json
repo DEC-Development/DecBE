@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:frozen_staff.name"
             },
-            "minecraft:icon": {
-                "texture": "frozen_staff"
-            },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -56,6 +52,11 @@
                     "use_skill_count",
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "frozen_staff"
+                }
             }
         },
         "events": {

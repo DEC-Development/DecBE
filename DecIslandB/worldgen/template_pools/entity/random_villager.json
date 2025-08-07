@@ -1,0 +1,46 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:entity/random_villager"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "entity/villager",
+                    "processors": "dec:empty"
+                },
+                "weight": 3,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "entity/soldier",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "entity/archer",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "entity/doctor",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

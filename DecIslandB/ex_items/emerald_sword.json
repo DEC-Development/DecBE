@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:emerald_sword.name"
             },
-            "minecraft:icon": {
-                "texture": "emerald_sword"
-            },
             "minecraft:repairable": {
                 "repair_items": [
                     {
@@ -73,6 +70,11 @@
                     "comp:movement_addition:0.005",
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "emerald_sword"
+                }
             }
         },
         "events": {

@@ -14,7 +14,9 @@
                 "value": "item.dec:copper_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "copper_nugget"
+                "textures": {
+                    "default": "copper_nugget"
+                }
             }
         }
     }

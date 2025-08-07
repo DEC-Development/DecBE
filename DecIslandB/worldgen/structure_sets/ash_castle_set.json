@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:ash_castle_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 44212249,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:ash_castle",
+        "weight": 1
+      }
+    ]
+  }
+}

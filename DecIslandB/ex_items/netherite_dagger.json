@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:netherite_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "netherite_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 2321
@@ -24,7 +21,7 @@
                 "value": 15,
                 "slot": "sword"
             },
-            "minecraft:damage": 7.5,
+            "minecraft:damage": 7,
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [
@@ -83,6 +80,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "netherite_dagger"
+                }
             }
         },
         "events": {

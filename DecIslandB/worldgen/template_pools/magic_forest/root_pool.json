@@ -1,0 +1,37 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:magic_forest/root_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "magic_forest/root_1",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "terrain_matching"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "magic_forest/root_2",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "terrain_matching"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "magic_forest/root_3",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "terrain_matching"
+            }
+        ]
+    }
+}

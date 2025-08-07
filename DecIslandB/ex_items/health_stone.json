@@ -14,7 +14,9 @@
                 "value": "item.dec:health_stone.name"
             },
             "minecraft:icon": {
-                "texture": "health_stone"
+                "textures": {
+                    "default": "health_stone"
+                }
             }
         }
     }

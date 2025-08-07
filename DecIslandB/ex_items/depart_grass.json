@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:depart_grass.name"
             },
-            "minecraft:icon": {
-                "texture": "depart_grass"
-            },
             "minecraft:block_placer": {
                 "block": "dec:depart_grass_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "depart_grass"
+                }
             }
         }
     }

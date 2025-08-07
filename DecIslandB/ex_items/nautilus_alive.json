@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:nautilus_alive.name"
             },
-            "minecraft:icon": {
-                "texture": "nautilus_alive"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:stacked_by_data": true,
             "minecraft:food": {
@@ -26,6 +23,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "nautilus_alive"
+                }
             }
         }
     }

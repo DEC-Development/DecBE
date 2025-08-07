@@ -13,12 +13,14 @@
             "minecraft:display_name": {
                 "value": "item.dec:snow_lotus.name"
             },
-            "minecraft:icon": {
-                "texture": "snow_lotus"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:block_placer": {
                 "block": "dec:snow_lotus_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "snow_lotus"
+                }
             }
         }
     }

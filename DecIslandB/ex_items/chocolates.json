@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:chocolates.name"
             },
-            "minecraft:icon": {
-                "texture": "chocolates"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "using_converts_to": "minecraft:paper",
@@ -29,6 +26,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "chocolates"
+                }
             }
         },
         "events": {

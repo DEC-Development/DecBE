@@ -13,13 +13,15 @@
             "minecraft:display_name": {
                 "value": "item.dec:scarecrow.name"
             },
-            "minecraft:icon": {
-                "texture": "scarecrow"
-            },
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:entity_placer": {
                 "entity": "dec:scarecrow"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "scarecrow"
+                }
             }
         }
     }

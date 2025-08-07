@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:pulse_stone.name"
             },
+            "minecraft:stacked_by_data": false,
             "minecraft:icon": {
-                "texture": "pulse_stone"
-            },
-            "minecraft:stacked_by_data": false
+                "textures": {
+                    "default": "pulse_stone"
+                }
+            }
         }
     }
 }

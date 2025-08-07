@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:small_stone_block.name"
             },
-            "minecraft:icon": {
-                "texture": "small_stone_block"
-            },
             "minecraft:cooldown": {
                 "category": "missile",
-                "duration": 5
+                "duration": 4
             },
             "minecraft:throwable": {
                 "do_swing_animation": true
@@ -30,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "small_stone_block"
+                }
             }
         }
     }

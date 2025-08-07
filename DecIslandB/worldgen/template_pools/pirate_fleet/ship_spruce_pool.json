@@ -1,0 +1,46 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:pirate_fleet/ship_spruce_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "pirate_fleet_spruce/ship_spruce_1",
+                    "processors": "dec:empty"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "pirate_fleet_spruce/ship_spruce_2",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "pirate_fleet_spruce/ship_spruce_3",
+                    "processors": "dec:empty"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "pirate_fleet_spruce/empty_spruce",
+                    "processors": "dec:empty"
+                },
+                "weight": 15,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

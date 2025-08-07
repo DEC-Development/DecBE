@@ -14,7 +14,9 @@
                 "value": "item.dec:ghost_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "ghost_ingot"
+                "textures": {
+                    "default": "ghost_ingot"
+                }
             }
         }
     }

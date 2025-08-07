@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:diamond_dart.name"
             },
-            "minecraft:icon": {
-                "texture": "diamond_dart"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 0.5
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:dart:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "diamond_dart"
+                }
             }
         }
     }

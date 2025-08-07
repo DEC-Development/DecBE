@@ -10,13 +10,10 @@
             }
         },
         "components": {
-            "minecraft:use_animation": "eat",
-            "minecraft:icon": {
-                "texture": "a_bowl_of_rice"
-            },
             "minecraft:display_name": {
                 "value": "item.dec:a_bowl_of_rice.name"
             },
+            "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 10,
                 "saturation_modifier": 0.6,
@@ -25,6 +22,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 2,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "a_bowl_of_rice"
+                }
             }
         }
     }

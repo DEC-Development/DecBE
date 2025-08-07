@@ -14,7 +14,9 @@
                 "value": "item.dec:high_concentration_uranium.name"
             },
             "minecraft:icon": {
-                "texture": "high_concentration_uranium"
+                "textures": {
+                    "default": "high_concentration_uranium"
+                }
             }
         }
     }

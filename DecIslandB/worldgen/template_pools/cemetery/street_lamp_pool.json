@@ -1,0 +1,28 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:cemetery/street_lamp_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "cemetery/street_lamp_1",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "cemetery/street_lamp_2",
+                    "processors": "dec:empty"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

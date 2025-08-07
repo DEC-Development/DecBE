@@ -14,7 +14,9 @@
                 "value": "item.dec:sun_stone.name"
             },
             "minecraft:icon": {
-                "texture": "sun_stone"
+                "textures": {
+                    "default": "sun_stone"
+                }
             }
         }
     }

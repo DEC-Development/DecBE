@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:star_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "star_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:star_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "star_flower"
+                }
             }
         }
     }

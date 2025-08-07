@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:gold_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "gold_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:gold_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "gold_flower"
+                }
             }
         }
     }

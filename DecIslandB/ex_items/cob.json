@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:cob.name"
             },
-            "minecraft:icon": {
-                "texture": "cob"
-            },
             "minecraft:compostable": {
                 "composting_chance": 30
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "cob"
+                }
             }
         }
     }

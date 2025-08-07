@@ -13,10 +13,7 @@
             "minecraft:display_name": {
                 "value": "item.dec:shadow_crystal.name"
             },
-            "minecraft:icon": {
-                "texture": "shadow_crystal"
-            },
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:entity_placer": {
@@ -27,6 +24,11 @@
                 "dispense_on": [
                     "dec:purpur_summoner"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "shadow_crystal"
+                }
             }
         }
     }

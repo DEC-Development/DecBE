@@ -14,7 +14,9 @@
                 "value": "item.dec:wet_paper.name"
             },
             "minecraft:icon": {
-                "texture": "wet_paper"
+                "textures": {
+                    "default": "wet_paper"
+                }
             }
         }
     }

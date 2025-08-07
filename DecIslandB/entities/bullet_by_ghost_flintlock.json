@@ -41,7 +41,7 @@
             }
           },
           "impact_damage": {
-            "damage": 17,
+            "damage": 19,
             "knockback": true,
             "catchFire": false,
             "semirandomdiffdamage": false

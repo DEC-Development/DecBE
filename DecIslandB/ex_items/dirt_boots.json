@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:dirt_boots.name"
             },
-            "minecraft:icon": {
-                "texture": "dirt_boots"
-            },
             "minecraft:repairable": {
                 "repair_items": [
                     {
@@ -55,6 +52,11 @@
                     "comp:armor_protection:1",
                     "comp:armor_type:suit_:dirt:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "dirt_boots"
+                }
             }
         }
     }

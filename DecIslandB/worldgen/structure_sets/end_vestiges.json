@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:end_vestiges_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 1336022,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:end_vestiges",
+        "weight": 1
+      }
+    ]
+  }
+}

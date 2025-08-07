@@ -13,17 +13,22 @@
             "minecraft:display_name": {
                 "value": "item.dec:bracken.name"
             },
-            "minecraft:icon": {
-                "texture": "bracken"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 1,
                 "saturation_modifier": 0.5
             },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "bracken"
+                }
             }
         }
     }

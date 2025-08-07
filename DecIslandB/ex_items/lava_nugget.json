@@ -14,7 +14,9 @@
                 "value": "item.dec:lava_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "lava_nugget"
+                "textures": {
+                    "default": "lava_nugget"
+                }
             }
         }
     }

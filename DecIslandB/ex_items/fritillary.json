@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:fritillary.name"
             },
-            "minecraft:icon": {
-                "texture": "fritillary"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 3,
@@ -26,9 +23,17 @@
                     "target": "self"
                 }
             },
+            "minecraft:compostable": {
+                "composting_chance": 65
+            },
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "fritillary"
+                }
             }
         },
         "events": {

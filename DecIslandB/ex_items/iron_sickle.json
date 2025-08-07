@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:iron_sickle.name"
             },
-            "minecraft:icon": {
-                "texture": "iron_sickle"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "iron_sickle_attack",
@@ -47,7 +44,7 @@
                     }
                 ]
             },
-            "minecraft:damage": 6.5,
+            "minecraft:damage": 7,
             "minecraft:enchantable": {
                 "value": 15,
                 "slot": "axe"
@@ -73,6 +70,11 @@
                     "comp:movement_addition:-0.01",
                     "comp:equipment_type:melee_weapon_:sickle:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "iron_sickle"
+                }
             }
         },
         "events": {

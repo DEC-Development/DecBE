@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:candy_cane.name"
             },
-            "minecraft:icon": {
-                "texture": "candy_cane"
-            },
             "minecraft:repairable": {
                 "repair_items": [
                     {
@@ -66,6 +63,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "candy_cane"
+                }
             }
         },
         "events": {

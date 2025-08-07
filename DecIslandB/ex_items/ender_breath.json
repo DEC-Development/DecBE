@@ -14,7 +14,9 @@
                 "value": "item.dec:ender_breath.name"
             },
             "minecraft:icon": {
-                "texture": "ender_breath"
+                "textures": {
+                    "default": "ender_breath"
+                }
             }
         }
     }

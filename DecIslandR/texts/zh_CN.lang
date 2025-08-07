@@ -652,6 +652,11 @@ item.dec:zombie_summoner_mask.name=僵尸召唤师面具
 item.dec:zombie_villager_mask.name=僵尸村民面具
 item.dec:zombie_warrior_mask.name=僵尸战士面具
 item.dec:magic_mask_bag.name=魔法面具袋
+item.dec:echo_of_deep.name=深渊回影
+item.dec:firefly_bottle.name=萤火虫瓶
+item.dec:muddy_fish.name=泥鱼
+item.dec:pumpkin_candy.name=南瓜糖
+item.dec:muddy_ball.name=泥球
 
 tile.dec:ancient_ice.name=远古冰块
 tile.dec:lava_ore.name=岩浆矿石
@@ -1204,6 +1209,9 @@ entity.dec:ash_sword_phantom.name=灰烬剑影
 entity.dec:smoke_bomb.name=烟雾弹
 entity.dec:gas_bomb.name=毒气弹
 entity.dec:spots_overflow.name=溢出耀斑
+entity.dec:bullet_by_echo_of_deep.name=深渊弹
+entity.dec:firefly_bottle.name=萤火虫瓶
+entity.dec:muddy_ball.name=泥球
 
 entity.dec:supply_package.name=补给包
 

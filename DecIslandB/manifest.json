@@ -4,18 +4,18 @@
         "script_eval"
     ],
     "header": {
-        "name": "DecIsland[B]V1.9.7",
+        "name": "DecIsland[B]V1.9.8",
         "description": "/function test/creator_list",
         "uuid": "fb8e1981-c3e2-4f87-9c17-134f51c8f765",
         "min_engine_version": [
             1,
-            20,
-            41
+            21,
+            94
         ],
         "version": [
             1,
             9,
-            7
+            8
         ]
     },
     "modules": [
@@ -25,7 +25,7 @@
             "version": [
                 1,
                 9,
-                7
+                8
             ]
         },
         {
@@ -34,7 +34,7 @@
             "version": [
                 1,
                 9,
-                7
+                8
             ],
             "entry": "scripts/out/dec.js"
         }
@@ -45,7 +45,7 @@
             "version": [
                 1,
                 9,
-                7
+                8
             ]
         },
         {

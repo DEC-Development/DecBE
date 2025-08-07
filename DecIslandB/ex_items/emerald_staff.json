@@ -10,10 +10,6 @@
             }
         },
         "components": {
-            "minecraft:icon": {
-                "texture": "emerald_staff"
-            },
-
             "minecraft:display_name": {
                 "value": "item.dec:emerald_staff.name"
             },
@@ -57,6 +53,11 @@
                 "tags": [
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "emerald_staff"
+                }
             }
         },
         "events": {

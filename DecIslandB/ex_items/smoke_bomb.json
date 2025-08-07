@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:smoke_bomb.name"
             },
-            "minecraft:icon": {
-                "texture": "smoke_bomb"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 3
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_::thrown_weapon_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "smoke_bomb"
+                }
             }
         }
     }

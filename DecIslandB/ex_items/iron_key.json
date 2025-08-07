@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:iron_key.name"
             },
+            "minecraft:glint": false,
             "minecraft:icon": {
-                "texture": "iron_key"
-            },
-            "minecraft:foil": false
+                "textures": {
+                    "default": "iron_key"
+                }
+            }
         }
     }
 }

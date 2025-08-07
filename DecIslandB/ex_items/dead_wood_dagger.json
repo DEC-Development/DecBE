@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:dead_wood_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "dead_wood_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 281
@@ -24,7 +21,7 @@
                 "value": 4,
                 "slot": "sword"
             },
-            "minecraft:damage": 5.5,
+            "minecraft:damage": 6,
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [
@@ -76,6 +73,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "dead_wood_dagger"
+                }
             }
         },
         "events": {

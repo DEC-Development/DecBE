@@ -1,1 +1,0 @@
-structure load mystructure:tower_of_watcher ~-21 ~ ~-14

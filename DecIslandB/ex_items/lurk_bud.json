@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:lurk_bud.name"
             },
-            "minecraft:icon": {
-                "texture": "lurk_bud"
-            },
             "minecraft:block_placer": {
                 "block": "dec:lurk_bud_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lurk_bud"
+                }
             }
         }
     }

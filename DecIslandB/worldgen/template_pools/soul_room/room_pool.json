@@ -1,0 +1,227 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:soul_room/room_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_1",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_2",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_3",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_4",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_5",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_6",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_7",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_8",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_9",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_nor_10",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_har_1",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_har_2",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_har_3",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_small_1",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_small_2",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_small_3",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_small_4",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_small_5",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_stair_1",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_stair_2",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_stair_3",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_stair_4",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_stair_5",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/room_ladder_1",
+                    "processors": "dec:soul_room_way_blocked_processor"
+                },
+                "weight": 3,
+                "projection": "rigid"
+            }
+        ],
+        "fallback": "dec:soul_room/cap_pool"
+    }
+}

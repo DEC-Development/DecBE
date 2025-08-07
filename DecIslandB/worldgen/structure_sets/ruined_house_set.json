@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:ruined_house_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 86470321,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:ruined_house",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -10,16 +10,12 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 20
-            },
             "minecraft:display_name": {
                 "value": "item.dec:flare_magic_book.name"
             },
-            "minecraft:icon": {
-                "texture": "flare_magic_book"
+            "minecraft:fuel": {
+                "duration": 20
             },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": false,
@@ -51,6 +47,11 @@
                     "use_skill_count",
                     "comp:equipment_type:magic_weapon_:magic_book:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "flare_magic_book"
+                }
             }
         },
         "events": {

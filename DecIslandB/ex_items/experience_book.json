@@ -10,19 +10,15 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 20
-            },
             "minecraft:display_name": {
                 "value": "item.dec:experience_book.name"
             },
-            "minecraft:icon": {
-                "texture": "experience_book"
+            "minecraft:fuel": {
+                "duration": 20
             },
-
             "minecraft:hand_equipped": true,
             "minecraft:max_stack_size": 64,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "use",
@@ -32,6 +28,11 @@
             "minecraft:cooldown": {
                 "category": "experience_book",
                 "duration": 0.5
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "experience_book"
+                }
             }
         },
         "events": {

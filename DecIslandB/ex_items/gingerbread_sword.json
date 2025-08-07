@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:gingerbread_sword.name"
             },
-            "minecraft:icon": {
-                "texture": "gingerbread_sword"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:can_destroy_in_creative": false,
             "minecraft:weapon": {
@@ -66,6 +63,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "gingerbread_sword"
+                }
             }
         },
         "events": {

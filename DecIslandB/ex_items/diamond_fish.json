@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:diamond_fish.name"
             },
-            "minecraft:icon": {
-                "texture": "diamond_fish"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 8,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 8,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "diamond_fish"
+                }
             }
         }
     }

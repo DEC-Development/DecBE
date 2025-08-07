@@ -1,0 +1,130 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:processor_list": {
+        "description": {
+            "identifier": "dec:soul_room_way_blocked_processor"
+        },
+        "processors": [
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:blackstone",
+                            "probability": 0.1
+                        },
+                        "output_state": {
+                            "name": "minecraft:gilded_blackstone"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:soul_soil",
+                            "probability": 0.5
+                        },
+                        "output_state": {
+                            "name": "minecraft:blackstone"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:soul_soil",
+                            "probability": 0.1
+                        },
+                        "output_state": {
+                            "name": "minecraft:gilded_blackstone"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:soul_soil",
+                            "probability": 0.2
+                        },
+                        "output_state": {
+                            "name": "minecraft:soul_sand"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:soul_soil",
+                            "probability": 0.1
+                        },
+                        "output_state": {
+                            "name": "dec:soul_soil_diamond_ore"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:blackstone",
+                            "probability": 0.3
+                        },
+                        "output_state": {
+                            "name": "minecraft:polished_blackstone"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:blackstone",
+                            "probability": 0.2
+                        },
+                        "output_state": {
+                            "name": "minecraft:polished_blackstone_bricks"
+                        }
+                    }
+                ]
+            },
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "minecraft:blackstone",
+                            "probability": 0.1
+                        },
+                        "output_state": {
+                            "name": "minecraft:cracked_polished_blackstone_bricks"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

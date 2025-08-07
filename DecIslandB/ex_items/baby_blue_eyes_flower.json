@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:baby_blue_eyes_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "baby_blue_eyes_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:baby_blue_eyes_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "baby_blue_eyes_flower"
+                }
             }
         }
     }

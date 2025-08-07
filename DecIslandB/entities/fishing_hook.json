@@ -32,6 +32,11 @@
         "minecraft:loot": {
           "table": "loot_tables/gameplay/ice_fishing.json"
         }
+      },
+      "loot_mangrove_swamp": {
+        "minecraft:loot": {
+          "table": "loot_tables/gameplay/mangrove_swamp_fishing.json"
+        }
       }
     },
     "components": {
@@ -108,6 +113,17 @@
             "add": {
               "component_groups": [
                 "loot_ice"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "value": "mangrove_swamp"
+            },
+            "add": {
+              "component_groups": [
+                "loot_mangrove_swamp"
               ]
             }
           }

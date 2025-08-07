@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:bat_cave_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 95450282,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:bat_cave",
+        "weight": 1
+      }
+    ]
+  }
+}

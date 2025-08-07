@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:wooden_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "wooden_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 75
@@ -24,7 +21,7 @@
                 "value": 15,
                 "slot": "sword"
             },
-            "minecraft:damage": 3.5,
+            "minecraft:damage": 3,
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [
@@ -86,6 +83,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:melee_weapon"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wooden_dagger"
+                }
             }
         },
         "events": {

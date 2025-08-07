@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:wither_cone.name"
             },
-            "minecraft:icon": {
-                "texture": "wither_cone"
-            },
             "minecraft:block_placer": {
                 "block": "dec:wither_cone_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wither_cone"
+                }
             }
         }
     }

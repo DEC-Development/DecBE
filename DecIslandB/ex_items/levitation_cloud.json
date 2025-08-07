@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:levitation_cloud.name"
             },
-            "minecraft:icon": {
-                "texture": "levitation_cloud"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 2
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "levitation_cloud"
+                }
             }
         }
     }

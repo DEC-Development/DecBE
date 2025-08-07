@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:ender_fish.name"
             },
-            "minecraft:icon": {
-                "texture": "ender_fish"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:cooldown": {
                 "category": "ender_fish",
@@ -29,6 +26,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "ender_fish"
+                }
             }
         },
         "events": {

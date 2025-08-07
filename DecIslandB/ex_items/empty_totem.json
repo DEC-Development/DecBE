@@ -14,7 +14,9 @@
                 "value": "item.dec:empty_totem.name"
             },
             "minecraft:icon": {
-                "texture": "empty_totem"
+                "textures": {
+                    "default": "empty_totem"
+                }
             }
         }
     }

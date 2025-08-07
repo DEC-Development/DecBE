@@ -14,7 +14,9 @@
                 "value": "item.dec:glass_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "glass_ingot"
+                "textures": {
+                    "default": "glass_ingot"
+                }
             }
         }
     }

@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:bat_bait.name"
             },
+            "minecraft:glint": true,
+            "minecraft:stacked_by_data": false,
             "minecraft:icon": {
-                "texture": "bat_bait"
-            },
-            "minecraft:foil": true,
-            "minecraft:stacked_by_data": false
+                "textures": {
+                    "default": "bat_bait"
+                }
+            }
         }
     }
 }

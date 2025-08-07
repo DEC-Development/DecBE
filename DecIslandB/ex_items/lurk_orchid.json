@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:lurk_orchid.name"
             },
-            "minecraft:icon": {
-                "texture": "lurk_orchid"
-            },
             "minecraft:block_placer": {
                 "block": "dec:lurk_orchid_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lurk_orchid"
+                }
             }
         }
     }

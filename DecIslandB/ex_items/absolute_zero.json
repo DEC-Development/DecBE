@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:absolute_zero.name"
             },
-            "minecraft:icon": {
-                "texture": "absolute_zero"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "absolute_zero_attack",
@@ -89,6 +86,11 @@
                     "comp:movement_addition:0.03",
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "absolute_zero"
+                }
             }
         },
         "events": {

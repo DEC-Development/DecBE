@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:cooked_brain.name"
             },
-            "minecraft:icon": {
-                "texture": "cooked_brain"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 5,
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "cooked_brain"
+                }
             }
         },
         "events": {

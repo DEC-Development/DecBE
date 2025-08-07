@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:skeleton_fish.name"
             },
-            "minecraft:icon": {
-                "texture": "skeleton_fish"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 2,
@@ -26,6 +23,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "skeleton_fish"
+                }
             }
         }
     }

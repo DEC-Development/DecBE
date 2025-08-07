@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:ash_key.name"
             },
+            "minecraft:glint": false,
             "minecraft:icon": {
-                "texture": "ash_key"
-            },
-            "minecraft:foil": false
+                "textures": {
+                    "default": "ash_key"
+                }
+            }
         }
     }
 }

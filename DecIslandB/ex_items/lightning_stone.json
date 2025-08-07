@@ -14,7 +14,9 @@
                 "value": "item.dec:lightning_stone.name"
             },
             "minecraft:icon": {
-                "texture": "lightning_stone"
+                "textures": {
+                    "default": "lightning_stone"
+                }
             }
         }
     }

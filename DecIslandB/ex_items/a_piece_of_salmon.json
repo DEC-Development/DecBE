@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:a_piece_of_salmon.name"
             },
-            "minecraft:icon": {
-                "texture": "a_piece_of_salmon"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 1,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "a_piece_of_salmon"
+                }
             }
         }
     }

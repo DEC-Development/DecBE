@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:uranium_apple.name"
             },
-            "minecraft:icon": {
-                "texture": "uranium_apple"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:hand_equipped": false,
             "minecraft:stacked_by_data": true,
@@ -31,6 +28,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "uranium_apple"
+                }
             }
         },
         "events": {

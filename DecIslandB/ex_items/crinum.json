@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:crinum.name"
             },
-            "minecraft:icon": {
-                "texture": "crinum"
-            },
             "minecraft:block_placer": {
                 "block": "dec:crinum_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "crinum"
+                }
             }
         }
     }

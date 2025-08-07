@@ -1,0 +1,81 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:everlasting_winter_city"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "any_of": [
+          {
+            "all_of": [
+              {
+                "test": "has_biome_tag",
+                "operator": "==",
+                "value": "ocean"
+              },
+              {
+                "test": "has_biome_tag",
+                "operator": "==",
+                "value": "frozen"
+              }
+            ]
+          },
+          {
+            "all_of": [
+              {
+                "test": "has_biome_tag",
+                "operator": "!=",
+                "value": "ocean"
+              },
+              {
+                "test": "has_biome_tag",
+                "operator": "==",
+                "value": "cold"
+              }
+            ]
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "ice"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "frozen"
+      }
+    ],
+    "step": "surface_structures",
+    "start_pool": "dec:everlasting_winter_city/tower_pool",
+    "max_depth": 20,
+    "start_height": {
+      "type": "constant",
+      "value": {
+        "absolute": 2
+      }
+    },
+    "heightmap_projection": "world_surface",
+    "max_distance_from_center": 128,
+    "dimension_padding": {
+      "bottom": 0,
+      "top": 0
+    }
+  }
+}

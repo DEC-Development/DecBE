@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:bizarre_chilli.name"
             },
-            "minecraft:icon": {
-                "texture": "bizarre_chilli"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 2,
@@ -25,9 +22,17 @@
                     "target": "self"
                 }
             },
+            "minecraft:compostable": {
+                "composting_chance": 65
+            },
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "bizarre_chilli"
+                }
             }
         },
         "events": {

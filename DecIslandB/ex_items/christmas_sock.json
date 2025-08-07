@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:christmas_sock.name"
             },
-            "minecraft:icon": {
-                "texture": "christmas_sock"
-            },
             "minecraft:cooldown": {
                 "category": "christmas_sock",
                 "duration": 3
@@ -25,7 +22,12 @@
                     "event": "christmas_sock"
                 }
             },
-            "minecraft:stacked_by_data": true
+            "minecraft:stacked_by_data": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "christmas_sock"
+                }
+            }
         },
         "events": {
             "christmas_sock": {

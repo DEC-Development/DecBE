@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:moon_jellyfish.name"
             },
-            "minecraft:icon": {
-                "texture": "moon_jellyfish"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 2,
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "moon_jellyfish"
+                }
             }
         },
         "events": {

@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:blood_meat.name"
             },
-            "minecraft:icon": {
-                "texture": "blood_meat"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:max_stack_size": 64,
             "minecraft:on_use": {
@@ -27,6 +24,11 @@
             "minecraft:cooldown": {
                 "category": "night_event",
                 "duration": 10
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "blood_meat"
+                }
             }
         },
         "events": {

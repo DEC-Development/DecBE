@@ -10,19 +10,16 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 10
-            },
             "minecraft:display_name": {
                 "value": "item.dec:unknow_book.name"
             },
-            "minecraft:icon": {
-                "texture": "unknow_book"
+            "minecraft:fuel": {
+                "duration": 10
             },
             "minecraft:use_animation": "eat",
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "read",
@@ -32,6 +29,11 @@
             "minecraft:cooldown": {
                 "category": "unknow_book",
                 "duration": 1
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "unknow_book"
+                }
             }
         },
         "events": {

@@ -14,7 +14,9 @@
                 "value": "item.dec:frozen_power_debris.name"
             },
             "minecraft:icon": {
-                "texture": "frozen_power_debris"
+                "textures": {
+                    "default": "frozen_power_debris"
+                }
             }
         }
     }

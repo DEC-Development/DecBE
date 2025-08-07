@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:iron_apple.name"
             },
-            "minecraft:icon": {
-                "texture": "iron_apple"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 4,
@@ -29,6 +26,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "iron_apple"
+                }
             }
         },
         "events": {

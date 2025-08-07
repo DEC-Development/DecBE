@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:apple_pie.name"
             },
-            "minecraft:icon": {
-                "texture": "apple_pie"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 12,
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "apple_pie"
+                }
             }
         },
         "events": {

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:tower_of_watcher_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 10528532,
+      "separation": 120,
+      "spacing": 256,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:tower_of_watcher",
+        "weight": 1
+      }
+    ]
+  }
+}

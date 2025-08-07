@@ -14,7 +14,9 @@
                 "value": "item.dec:ghost_essence.name"
             },
             "minecraft:icon": {
-                "texture": "ghost_essence"
+                "textures": {
+                    "default": "ghost_essence"
+                }
             }
         }
     }

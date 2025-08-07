@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:ruined_muddy"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "mangrove_swamp"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "ocean"
+      }
+    ],
+    "step": "underground_structures",
+    "terrain_adaptation": "bury",
+    "start_pool": "dec:ruined_muddy_pool",
+    "max_depth": 10,
+    "start_height": {
+      "type": "uniform",
+      "min": {
+        "absolute": -50
+      },
+      "max": {
+        "absolute": -20
+      }
+    },
+    "heightmap_projection": "world_surface"
+  }
+}

@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:nature_essence.name"
             },
+            "minecraft:glint": true,
+            "minecraft:stacked_by_data": false,
             "minecraft:icon": {
-                "texture": "nature_essence"
-            },
-            "minecraft:foil": true,
-            "minecraft:stacked_by_data": false
+                "textures": {
+                    "default": "nature_essence"
+                }
+            }
         }
     }
 }

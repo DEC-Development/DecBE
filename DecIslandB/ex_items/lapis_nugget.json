@@ -14,7 +14,9 @@
                 "value": "item.dec:lapis_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "lapis_nugget"
+                "textures": {
+                    "default": "lapis_nugget"
+                }
             }
         }
     }

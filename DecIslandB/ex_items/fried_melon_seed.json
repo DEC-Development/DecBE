@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:fried_melon_seed.name"
             },
-            "minecraft:icon": {
-                "texture": "fried_melon_seed"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 1,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "fried_melon_seed"
+                }
             }
         }
     }

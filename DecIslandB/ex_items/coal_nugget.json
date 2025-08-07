@@ -10,14 +10,16 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 10
-            },
             "minecraft:display_name": {
                 "value": "item.dec:coal_nugget.name"
             },
+            "minecraft:fuel": {
+                "duration": 10
+            },
             "minecraft:icon": {
-                "texture": "coal_nugget"
+                "textures": {
+                    "default": "coal_nugget"
+                }
             }
         }
     }

@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:diamond_apple_enchanted.name"
             },
-            "minecraft:icon": {
-                "texture": "diamond_apple"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:hover_text_color": "light_purple",
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:hand_equipped": false,
             "minecraft:stacked_by_data": true,
             "minecraft:food": {
@@ -33,6 +30,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "diamond_apple"
+                }
             }
         },
         "events": {

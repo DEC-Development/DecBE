@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:stream_dart.name"
             },
-            "minecraft:icon": {
-                "texture": "stream_dart"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 1.1
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:dart:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "stream_dart"
+                }
             }
         }
     }

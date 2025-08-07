@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:butter_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "butter_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:butter_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "butter_flower"
+                }
             }
         }
     }

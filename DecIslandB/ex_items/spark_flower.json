@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:spark_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "spark_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:spark_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "spark_flower"
+                }
             }
         }
     }

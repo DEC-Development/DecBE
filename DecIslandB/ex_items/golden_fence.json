@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:golden_fence.name"
             },
+            "minecraft:use_animation": "eat",
             "minecraft:icon": {
-                "texture": "golden_fence"
-            },
-            "minecraft:use_animation": "eat"
+                "textures": {
+                    "default": "golden_fence"
+                }
+            }
         }
     }
 }

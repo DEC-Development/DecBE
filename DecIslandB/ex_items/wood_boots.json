@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:wood_boots.name"
             },
-            "minecraft:icon": {
-                "texture": "wood_boots"
-            },
             "minecraft:fuel": {
                 "duration": 10
             },
@@ -63,6 +60,11 @@
                     "comp:armor_magic_protection:2",
                     "comp:armor_type:suit_:wood:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wood_boots"
+                }
             }
         }
     }

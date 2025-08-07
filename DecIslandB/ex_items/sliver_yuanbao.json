@@ -14,7 +14,9 @@
                 "value": "item.dec:sliver_yuanbao.name"
             },
             "minecraft:icon": {
-                "texture": "sliver_yuanbao"
+                "textures": {
+                    "default": "sliver_yuanbao"
+                }
             }
         }
     }

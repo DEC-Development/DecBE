@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:rice_wine.name"
             },
-            "minecraft:icon": {
-                "texture": "rice_wine"
-            },
             "minecraft:use_animation": "drink",
             "minecraft:food": {
                 "on_consume": {
@@ -30,6 +27,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.8,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "rice_wine"
+                }
             }
         },
         "events": {

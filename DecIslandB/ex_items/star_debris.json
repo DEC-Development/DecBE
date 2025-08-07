@@ -10,14 +10,16 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 80
-            },
             "minecraft:display_name": {
                 "value": "item.dec:star_debris.name"
             },
+            "minecraft:fuel": {
+                "duration": 80
+            },
             "minecraft:icon": {
-                "texture": "star_debris"
+                "textures": {
+                    "default": "star_debris"
+                }
             }
         }
     }

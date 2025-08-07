@@ -14,7 +14,9 @@
                 "value": "item.dec:hemp_rope.name"
             },
             "minecraft:icon": {
-                "texture": "hemp_rope"
+                "textures": {
+                    "default": "hemp_rope"
+                }
             }
         }
     }

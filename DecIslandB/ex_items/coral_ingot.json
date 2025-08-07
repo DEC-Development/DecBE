@@ -14,7 +14,9 @@
                 "value": "item.dec:coral_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "coral_ingot"
+                "textures": {
+                    "default": "coral_ingot"
+                }
             }
         }
     }

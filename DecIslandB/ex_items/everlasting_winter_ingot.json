@@ -14,7 +14,9 @@
                 "value": "item.dec:everlasting_winter_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "everlasting_winter_ingot"
+                "textures": {
+                    "default": "everlasting_winter_ingot"
+                }
             }
         }
     }

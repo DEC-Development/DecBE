@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:plain_tower_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 31205604,
+      "separation": 30,
+      "spacing": 64,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:plain_tower",
+        "weight": 1
+      }
+    ]
+  }
+}

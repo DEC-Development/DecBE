@@ -1951,6 +1951,21 @@
     },
     "magic_mask_bag": {
       "textures": "textures/items/magic_mask_bag"
+    },
+    "echo_of_deep": {
+      "textures": "textures/items/echo_of_deep"
+    },
+    "firefly_bottle": {
+      "textures": "textures/items/firefly_bottle"
+    },
+    "muddy_fish": {
+      "textures": "textures/items/muddy_fish"
+    },
+    "pumpkin_candy": {
+      "textures": "textures/items/pumpkin_candy"
+    },
+    "muddy_ball": {
+      "textures": "textures/items/muddy_ball"
     }
   }
 }

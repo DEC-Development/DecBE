@@ -14,7 +14,9 @@
                 "value": "item.dec:ice_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "ice_ingot"
+                "textures": {
+                    "default": "ice_ingot"
+                }
             }
         }
     }

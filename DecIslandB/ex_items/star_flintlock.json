@@ -13,15 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:star_flintlock.name"
             },
-            "minecraft:icon": {
-                "texture": "star_flintlock"
-            },
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
             "minecraft:cooldown": {
                 "category": "gun",
-                "duration": 1.5
+                "duration": 1.2
             },
             "minecraft:durability": {
                 "max_durability": 3855
@@ -35,6 +32,11 @@
                     "comp:sneak_movement_addition:-0.06",
                     "comp:equipment_type:range_weapon_:range_weapon:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "star_flintlock"
+                }
             }
         },
         "events": {}

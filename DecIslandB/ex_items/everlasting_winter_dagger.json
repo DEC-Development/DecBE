@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:everlasting_winter_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "everlasting_winter_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 1823
@@ -95,6 +92,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "everlasting_winter_dagger"
+                }
             }
         },
         "events": {

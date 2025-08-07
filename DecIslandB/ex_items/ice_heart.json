@@ -14,7 +14,9 @@
                 "value": "item.dec:ice_heart.name"
             },
             "minecraft:icon": {
-                "texture": "ice_heart"
+                "textures": {
+                    "default": "ice_heart"
+                }
             }
         }
     }

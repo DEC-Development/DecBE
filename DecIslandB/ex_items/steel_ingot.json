@@ -14,7 +14,9 @@
                 "value": "item.dec:steel_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "steel_ingot"
+                "textures": {
+                    "default": "steel_ingot"
+                }
             }
         }
     }

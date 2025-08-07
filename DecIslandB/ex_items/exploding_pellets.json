@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:exploding_pellets.name"
             },
+            "minecraft:allow_off_hand": true,
             "minecraft:icon": {
-                "texture": "exploding_pellets"
-            },
-            "minecraft:allow_off_hand": true
+                "textures": {
+                    "default": "exploding_pellets"
+                }
+            }
         }
     }
 }

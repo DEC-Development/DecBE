@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:mock_strawberry.name"
             },
-            "minecraft:icon": {
-                "texture": "mock_strawberry"
-            },
             "minecraft:block_placer": {
                 "block": "dec:mock_strawberry_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "mock_strawberry"
+                }
             }
         }
     }

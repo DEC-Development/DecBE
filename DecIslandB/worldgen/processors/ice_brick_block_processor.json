@@ -1,0 +1,35 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:processor_list": {
+        "description": {
+            "identifier": "dec:ice_brick_block_processor"
+        },
+        "processors": [
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "dec:ice_brick_block",
+                            "probability": 0.2
+                        },
+                        "output_state": {
+                            "name": "dec:ice_mixed_brick"
+                        }
+                    },
+                    {
+                        "input_predicate": {
+                            "predicate_type": "minecraft:random_block_match",
+                            "block": "dec:ice_brick_block",
+                            "probability": 0.1
+                        },
+                        "output_state": {
+                            "name": "dec:snow_brick_block"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

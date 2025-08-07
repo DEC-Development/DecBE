@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:red_gem_debris.name"
             },
+            "minecraft:use_animation": "eat",
             "minecraft:icon": {
-                "texture": "red_gem_debris"
-            },
-            "minecraft:use_animation": "eat"
+                "textures": {
+                    "default": "red_gem_debris"
+                }
+            }
         }
     }
 }

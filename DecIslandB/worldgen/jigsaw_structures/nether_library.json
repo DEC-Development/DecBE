@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:nether_library"
+    },
+    "biome_filters": [
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "crimson_forest"
+      }
+    ],
+    "step": "surface_structures",
+    "start_pool": "dec:nether_library_pool",
+    "max_depth": 11,
+    "start_height": {
+      "type": "uniform",
+      "min": {
+        "absolute": -61
+      },
+      "max": {
+        "absolute": -25
+      }
+    }
+  }
+}

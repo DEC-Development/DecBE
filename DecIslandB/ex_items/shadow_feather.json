@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:shadow_feather.name"
             },
-            "minecraft:icon": {
-                "texture": "shadow_feather"
-            },
             "minecraft:max_stack_size": 1,
-            "minecraft:allow_off_hand": true
+            "minecraft:allow_off_hand": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "shadow_feather"
+                }
+            }
         }
     }
 }

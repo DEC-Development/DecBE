@@ -14,7 +14,9 @@
                 "value": "item.dec:waste.name"
             },
             "minecraft:icon": {
-                "texture": "waste"
+                "textures": {
+                    "default": "waste"
+                }
             }
         }
     }

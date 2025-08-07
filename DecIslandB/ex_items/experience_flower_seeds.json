@@ -13,12 +13,17 @@
             "minecraft:display_name": {
                 "value": "item.dec:experience_flower_seeds.name"
             },
-            "minecraft:icon": {
-                "texture": "experience_flower_seeds"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:block_placer": {
                 "block": "dec:experience_flower_crop"
+            },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "experience_flower_seeds"
+                }
             }
         }
     }

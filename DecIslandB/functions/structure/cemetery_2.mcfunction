@@ -1,1 +1,0 @@
-structure load mystructure:cemetery_2 ~-11 ~-1 ~-10

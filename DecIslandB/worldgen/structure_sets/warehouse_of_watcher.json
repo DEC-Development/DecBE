@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:warehouse_of_watcher_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 27126888,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:warehouse_of_watcher",
+        "weight": 1
+      }
+    ]
+  }
+}

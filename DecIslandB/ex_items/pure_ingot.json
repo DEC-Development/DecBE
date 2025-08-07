@@ -14,7 +14,9 @@
                 "value": "item.dec:pure_ingot.name"
             },
             "minecraft:icon": {
-                "texture": "pure_ingot"
+                "textures": {
+                    "default": "pure_ingot"
+                }
             }
         }
     }

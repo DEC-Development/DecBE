@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:growth.name"
             },
-            "minecraft:icon": {
-                "texture": "growth"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "growth_attack",
@@ -88,6 +85,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "growth"
+                }
             }
         },
         "events": {

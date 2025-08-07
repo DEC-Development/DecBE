@@ -14,7 +14,9 @@
                 "value": "item.dec:wine_glass.name"
             },
             "minecraft:icon": {
-                "texture": "wine_glass"
+                "textures": {
+                    "default": "wine_glass"
+                }
             }
         }
     }

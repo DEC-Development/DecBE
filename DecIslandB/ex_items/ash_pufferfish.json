@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:ash_pufferfish.name"
             },
-            "minecraft:icon": {
-                "texture": "ash_pufferfish"
-            },
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 3
@@ -25,6 +22,11 @@
             },
             "minecraft:projectile": {
                 "projectile_entity": "dec:thrown_ash_pufferfish"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "ash_pufferfish"
+                }
             }
         }
     }

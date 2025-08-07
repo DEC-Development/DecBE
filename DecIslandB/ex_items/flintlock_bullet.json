@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:flintlock_bullet.name"
             },
-            "minecraft:icon": {
-                "texture": "flintlock_bullet"
-            },
             "minecraft:use_animation": "eat",
-            "minecraft:allow_off_hand": true
+            "minecraft:allow_off_hand": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "flintlock_bullet"
+                }
+            }
         }
     }
 }

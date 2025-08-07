@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:lamp_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "lamp_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:lamp_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lamp_flower"
+                }
             }
         }
     }

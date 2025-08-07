@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:everlasting_winter_stick.name"
             },
-            "minecraft:icon": {
-                "texture": "everlasting_winter_stick"
-            },
             "minecraft:use_animation": "eat",
-            "minecraft:hand_equipped": true
+            "minecraft:hand_equipped": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "everlasting_winter_stick"
+                }
+            }
         }
     }
 }

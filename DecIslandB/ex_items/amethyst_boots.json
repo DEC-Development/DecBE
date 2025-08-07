@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:amethyst_boots.name"
             },
-            "minecraft:icon": {
-                "texture": "amethyst_boots"
-            },
             "minecraft:repairable": {
                 "repair_items": [
                     {
@@ -66,6 +63,11 @@
                     "comp:armor_type:suit_:amethyst:_",
                     "comp:armor_magic_reduction:0"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "amethyst_boots"
+                }
             }
         }
     }

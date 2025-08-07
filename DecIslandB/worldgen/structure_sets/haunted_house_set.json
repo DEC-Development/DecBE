@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:haunted_house_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 33956524,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:haunted_house",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:wind_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "wind_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 128
@@ -83,6 +80,11 @@
                     "comp:movement_addition:0.015",
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wind_dagger"
+                }
             }
         },
         "events": {

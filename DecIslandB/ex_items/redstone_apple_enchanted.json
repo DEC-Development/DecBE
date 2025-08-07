@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:redstone_apple_enchanted.name"
             },
-            "minecraft:icon": {
-                "texture": "redstone_apple"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:hover_text_color": "light_purple",
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:food": {
                 "on_consume": {
                     "event": "consumed",
@@ -31,6 +28,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "redstone_apple"
+                }
             }
         },
         "events": {

@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:gingerbread_man.name"
             },
-            "minecraft:icon": {
-                "texture": "gingerbread_man"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "on_consume": {
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "gingerbread_man"
+                }
             }
         },
         "events": {

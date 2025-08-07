@@ -14,7 +14,9 @@
                 "value": "item.dec:blue_gem_debris.name"
             },
             "minecraft:icon": {
-                "texture": "blue_gem_debris"
+                "textures": {
+                    "default": "blue_gem_debris"
+                }
             }
         }
     }

@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:entity_soul.name"
             },
+            "minecraft:glint": true,
             "minecraft:icon": {
-                "texture": "entity_soul"
-            },
-            "minecraft:foil": true
+                "textures": {
+                    "default": "entity_soul"
+                }
+            }
         }
     }
 }

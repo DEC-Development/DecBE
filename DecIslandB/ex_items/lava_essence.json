@@ -14,7 +14,9 @@
                 "value": "item.dec:lava_essence.name"
             },
             "minecraft:icon": {
-                "texture": "lava_essence"
+                "textures": {
+                    "default": "lava_essence"
+                }
             }
         }
     }

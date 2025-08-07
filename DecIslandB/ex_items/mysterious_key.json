@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:mysterious_key.name"
             },
+            "minecraft:glint": true,
+            "minecraft:stacked_by_data": false,
             "minecraft:icon": {
-                "texture": "mysterious_key"
-            },
-            "minecraft:foil": true,
-            "minecraft:stacked_by_data": false
+                "textures": {
+                    "default": "mysterious_key"
+                }
+            }
         }
     }
 }

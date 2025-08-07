@@ -10,16 +10,18 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 20
-            },
             "minecraft:display_name": {
                 "value": "item.dec:soul_blaze_rod.name"
             },
-            "minecraft:icon": {
-                "texture": "soul_blaze_rod"
+            "minecraft:fuel": {
+                "duration": 20
             },
-            "minecraft:hand_equipped": true
+            "minecraft:hand_equipped": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "soul_blaze_rod"
+                }
+            }
         }
     }
 }

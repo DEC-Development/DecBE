@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:corn.name"
             },
-            "minecraft:icon": {
-                "texture": "corn"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "on_consume": {
@@ -29,6 +26,14 @@
             "minecraft:use_modifiers": {
                 "use_duration": 3.2,
                 "movement_modifier": 0.4
+            },
+            "minecraft:compostable": {
+                "composting_chance": 65
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "corn"
+                }
             }
         }
     }

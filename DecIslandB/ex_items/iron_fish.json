@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:iron_fish.name"
             },
-            "minecraft:icon": {
-                "texture": "iron_fish"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 4,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 4,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "iron_fish"
+                }
             }
         }
     }

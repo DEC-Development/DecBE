@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:void_whispering_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "void_whispering_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 562
@@ -88,6 +85,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:dagger:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "void_whispering_dagger"
+                }
             }
         },
         "events": {

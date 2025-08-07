@@ -14,7 +14,9 @@
                 "value": "item.dec:uranium.name"
             },
             "minecraft:icon": {
-                "texture": "uranium"
+                "textures": {
+                    "default": "uranium"
+                }
             }
         }
     }

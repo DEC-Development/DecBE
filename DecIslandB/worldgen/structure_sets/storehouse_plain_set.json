@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:storehouse_plain_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 19323783,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:storehouse_plain",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -14,7 +14,9 @@
                 "value": "item.dec:dark_debris.name"
             },
             "minecraft:icon": {
-                "texture": "dark_debris"
+                "textures": {
+                    "default": "dark_debris"
+                }
             }
         }
     }

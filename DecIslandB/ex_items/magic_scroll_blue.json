@@ -13,12 +13,14 @@
             "minecraft:display_name": {
                 "value": "item.dec:magic_scroll_blue.name"
             },
-            "minecraft:icon": {
-                "texture": "magic_scroll_blue"
-            },
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
-            "minecraft:foil": false
+            "minecraft:glint": false,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "magic_scroll_blue"
+                }
+            }
         }
     }
 }

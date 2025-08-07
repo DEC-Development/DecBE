@@ -1,0 +1,65 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:pirate_fleet_dark_oak"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "cold"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "frozen"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "ocean"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "river"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "lakes"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "beach"
+      }
+    ],
+    "step": "surface_structures",
+    "terrain_adaptation": "none",
+    "start_pool": "dec:pirate_fleet/ship_dark_oak_start_pool",
+    "max_depth": 4,
+    "start_height": {
+      "type": "constant",
+      "value": {
+        "absolute": 1
+      }
+    },
+    "heightmap_projection": "world_surface"
+  }
+}

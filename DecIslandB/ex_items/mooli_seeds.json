@@ -13,12 +13,17 @@
             "minecraft:display_name": {
                 "value": "item.dec:mooli_seeds.name"
             },
-            "minecraft:icon": {
-                "texture": "mooli_seeds"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:block_placer": {
                 "block": "dec:mooli_crop"
+            },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "mooli_seeds"
+                }
             }
         }
     }

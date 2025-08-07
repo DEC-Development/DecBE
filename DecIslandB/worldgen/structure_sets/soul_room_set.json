@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:soul_room_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 98131865,
+      "separation": 30,
+      "spacing": 64,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:soul_room",
+        "weight": 1
+      }
+    ]
+  }
+}

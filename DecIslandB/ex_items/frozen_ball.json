@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:frozen_ball.name"
             },
-            "minecraft:icon": {
-                "texture": "frozen_ball"
-            },
-
             "minecraft:throwable": {
                 "do_swing_animation": true
             },
@@ -27,6 +23,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "frozen_ball"
+                }
             }
         }
     }

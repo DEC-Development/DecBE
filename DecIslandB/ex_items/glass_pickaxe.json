@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:glass_pickaxe.name"
             },
-            "minecraft:icon": {
-                "texture": "glass_pickaxe"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 64
@@ -1148,6 +1145,11 @@
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability *  1"
                     }
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "glass_pickaxe"
+                }
             }
         },
         "events": {

@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:red_bag.name"
             },
-            "minecraft:icon": {
-                "texture": "red_bag"
-            },
             "minecraft:cooldown": {
                 "category": "red_bag",
                 "duration": 3
@@ -25,7 +22,12 @@
                     "event": "red_bag"
                 }
             },
-            "minecraft:stacked_by_data": true
+            "minecraft:stacked_by_data": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "red_bag"
+                }
+            }
         },
         "events": {
             "red_bag": {

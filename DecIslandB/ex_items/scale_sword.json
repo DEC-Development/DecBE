@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:scale_sword.name"
             },
-            "minecraft:icon": {
-                "texture": "scale_sword"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "scale_sword_attack",
@@ -89,6 +86,11 @@
                     "comp:underwater_movement_addition:0.04",
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "scale_sword"
+                }
             }
         },
         "events": {

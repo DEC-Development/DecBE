@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:ash_castle"
+    },
+    "biome_filters": [
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "basalt_deltas"
+      }
+    ],
+    "step": "surface_structures",
+    "start_pool": "dec:ash_castle_pool",
+    "max_depth": 11,
+    "start_height": {
+      "type": "uniform",
+      "min": {
+        "absolute": -124
+      },
+      "max": {
+        "absolute": -120
+      }
+    }
+  }
+}

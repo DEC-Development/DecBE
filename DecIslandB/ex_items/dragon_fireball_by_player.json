@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:dragon_fireball_by_player.name"
             },
-            "minecraft:icon": {
-                "texture": "dragon_fireball_by_player"
-            },
-
             "minecraft:cooldown": {
                 "category": "missile",
                 "duration": 3
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "dragon_fireball_by_player"
+                }
             }
         }
     }

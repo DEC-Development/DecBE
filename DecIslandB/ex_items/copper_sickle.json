@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:copper_sickle.name"
             },
-            "minecraft:icon": {
-                "texture": "copper_sickle"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "copper_sickle_attack",
@@ -47,7 +44,7 @@
                     }
                 ]
             },
-            "minecraft:damage": 6.5,
+            "minecraft:damage": 6,
             "minecraft:enchantable": {
                 "value": 15,
                 "slot": "axe"
@@ -73,6 +70,11 @@
                     "comp:movement_addition:-0.01",
                     "comp:equipment_type:melee_weapon_:sickle:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "copper_sickle"
+                }
             }
         },
         "events": {

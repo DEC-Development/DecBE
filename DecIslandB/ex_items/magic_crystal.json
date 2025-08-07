@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:magic_crystal.name"
             },
-            "minecraft:icon": {
-                "texture": "magic_crystal"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:stacked_by_data": false,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "use",
@@ -28,6 +25,11 @@
             "minecraft:cooldown": {
                 "category": "magic_nucleus",
                 "duration": 0.3
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "magic_crystal"
+                }
             }
         },
         "events": {

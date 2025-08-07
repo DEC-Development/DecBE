@@ -78,7 +78,7 @@
     "components": {
       "minecraft:target_nearby_sensor": {
         "inside_range": 3,
-        "outside_range": 6,
+        "outside_range": 4,
         "must_see": true,
         "on_inside_range": {
           "event": "minecraft:melee_mode",

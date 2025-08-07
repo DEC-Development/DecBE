@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:snow_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "snow_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:snow_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "snow_flower"
+                }
             }
         }
     }

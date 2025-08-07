@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:hammer_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "hammer_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:hammer_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "hammer_flower"
+                }
             }
         }
     }

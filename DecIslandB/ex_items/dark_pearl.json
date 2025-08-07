@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:dark_pearl.name"
             },
+            "minecraft:glint": true,
             "minecraft:icon": {
-                "texture": "dark_pearl"
-            },
-            "minecraft:foil": true
+                "textures": {
+                    "default": "dark_pearl"
+                }
+            }
         }
     }
 }

@@ -13,12 +13,14 @@
             "minecraft:display_name": {
                 "value": "item.dec:frozen_power.name"
             },
-            "minecraft:icon": {
-                "texture": "frozen_power"
-            },
             "minecraft:stacked_by_data": true,
-            "minecraft:foil": true,
-            "minecraft:hand_equipped": true
+            "minecraft:glint": true,
+            "minecraft:hand_equipped": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "frozen_power"
+                }
+            }
         }
     }
 }

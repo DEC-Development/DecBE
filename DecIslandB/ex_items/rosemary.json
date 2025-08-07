@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:rosemary.name"
             },
-            "minecraft:icon": {
-                "texture": "rosemary"
-            },
             "minecraft:block_placer": {
                 "block": "dec:rosemary_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "rosemary"
+                }
             }
         }
     }

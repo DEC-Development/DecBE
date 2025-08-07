@@ -1,0 +1,49 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:challenger_tower"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "river"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "lakes"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "ocean"
+      }
+    ],
+    "step": "surface_structures",
+    "start_pool": "dec:challenger_tower_pool",
+    "max_depth": 10,
+    "start_height": {
+      "type": "constant",
+      "value": {
+        "absolute": -65
+      }
+    },
+    "heightmap_projection": "world_surface"
+  }
+}

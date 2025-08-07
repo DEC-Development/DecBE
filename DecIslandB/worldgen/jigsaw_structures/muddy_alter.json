@@ -1,0 +1,45 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:muddy_altar"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "mangrove_swamp"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "ocean"
+      }
+    ],
+    "step": "surface_structures",
+    "terrain_adaptation": "beard_thin",
+    "start_pool": "dec:muddy_altar_pool",
+    "max_depth": 10,
+    "start_height": {
+      "type": "constant",
+      "value": {
+        "absolute": 0
+      }
+    },
+    "heightmap_projection": "world_surface"
+  }
+}

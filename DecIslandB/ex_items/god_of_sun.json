@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:god_of_sun.name"
             },
-            "minecraft:icon": {
-                "texture": "god_of_sun"
-            },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -51,6 +47,11 @@
                 "tags": [
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "god_of_sun"
+                }
             }
         },
         "events": {

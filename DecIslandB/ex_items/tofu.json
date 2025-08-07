@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:tofu.name"
             },
-            "minecraft:icon": {
-                "texture": "tofu"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 8,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "tofu"
+                }
             }
         }
     }

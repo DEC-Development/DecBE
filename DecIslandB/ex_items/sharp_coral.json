@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:sharp_coral.name"
             },
-            "minecraft:icon": {
-                "texture": "sharp_coral"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "attack",
@@ -67,6 +64,11 @@
                     "comp:underwater_movement_addition:0.01",
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "sharp_coral"
+                }
             }
         },
         "events": {

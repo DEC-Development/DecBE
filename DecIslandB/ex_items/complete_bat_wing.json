@@ -14,7 +14,9 @@
                 "value": "item.dec:complete_bat_wing.name"
             },
             "minecraft:icon": {
-                "texture": "complete_bat_wing"
+                "textures": {
+                    "default": "complete_bat_wing"
+                }
             }
         }
     }

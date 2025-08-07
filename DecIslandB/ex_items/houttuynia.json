@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:houttuynia.name"
             },
-            "minecraft:icon": {
-                "texture": "houttuynia"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 1,
@@ -26,9 +23,17 @@
                     "target": "self"
                 }
             },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "houttuynia"
+                }
             }
         },
         "events": {

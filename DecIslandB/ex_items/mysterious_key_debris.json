@@ -14,7 +14,9 @@
                 "value": "item.dec:mysterious_key_debris.name"
             },
             "minecraft:icon": {
-                "texture": "mysterious_key_debris"
+                "textures": {
+                    "default": "mysterious_key_debris"
+                }
             }
         }
     }

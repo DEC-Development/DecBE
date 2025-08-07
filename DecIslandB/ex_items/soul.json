@@ -14,7 +14,9 @@
                 "value": "item.dec:soul.name"
             },
             "minecraft:icon": {
-                "texture": "soul"
+                "textures": {
+                    "default": "soul"
+                }
             }
         }
     }

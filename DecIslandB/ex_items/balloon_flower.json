@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:balloon_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "balloon_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:balloon_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "balloon_flower"
+                }
             }
         }
     }

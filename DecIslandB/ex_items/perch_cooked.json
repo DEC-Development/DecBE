@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:perch_cooked.name"
             },
-            "minecraft:icon": {
-                "texture": "perch_cooked"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 6,
@@ -24,6 +21,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "perch_cooked"
+                }
             }
         }
     }

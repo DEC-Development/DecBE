@@ -14,7 +14,9 @@
                 "value": "item.dec:magic_powder.name"
             },
             "minecraft:icon": {
-                "texture": "magic_powder"
+                "textures": {
+                    "default": "magic_powder"
+                }
             }
         }
     }

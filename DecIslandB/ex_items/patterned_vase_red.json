@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:patterned_vase_red.name"
             },
+            "minecraft:use_animation": "eat",
             "minecraft:icon": {
-                "texture": "patterned_vase_red"
-            },
-            "minecraft:use_animation": "eat"
+                "textures": {
+                    "default": "patterned_vase_red"
+                }
+            }
         }
     }
 }

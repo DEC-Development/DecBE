@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:coffee_of_lileyi.name"
             },
-            "minecraft:icon": {
-                "texture": "coffee_of_lileyi"
-            },
             "minecraft:use_animation": "drink",
             "minecraft:food": {
                 "nutrition": 0,
@@ -29,6 +26,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "coffee_of_lileyi"
+                }
             }
         },
         "events": {

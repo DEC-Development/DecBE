@@ -13,13 +13,10 @@
             "minecraft:display_name": {
                 "value": "item.dec:drift_bottle.name"
             },
-            "minecraft:icon": {
-                "texture": "drift_bottle"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "read",
@@ -29,6 +26,11 @@
             "minecraft:cooldown": {
                 "category": "drift_bottle",
                 "duration": 3
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "drift_bottle"
+                }
             }
         },
         "events": {

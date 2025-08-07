@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:bomber_bullet.name"
             },
+            "minecraft:allow_off_hand": true,
             "minecraft:icon": {
-                "texture": "bomber_bullet"
-            },
-            "minecraft:allow_off_hand": true
+                "textures": {
+                    "default": "bomber_bullet"
+                }
+            }
         }
     }
 }

@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:maple_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "maple_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:maple_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "maple_flower"
+                }
             }
         }
     }

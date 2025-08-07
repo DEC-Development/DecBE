@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:wind_of_shadow.name"
             },
-            "minecraft:icon": {
-                "texture": "wind_of_shadow"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "attack",
@@ -104,6 +101,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wind_of_shadow"
+                }
             }
         },
         "events": {

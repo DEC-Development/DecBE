@@ -14,7 +14,9 @@
                 "value": "item.dec:straw_rope.name"
             },
             "minecraft:icon": {
-                "texture": "straw_rope"
+                "textures": {
+                    "default": "straw_rope"
+                }
             }
         }
     }

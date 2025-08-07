@@ -14,7 +14,9 @@
                 "value": "item.dec:flower_essence.name"
             },
             "minecraft:icon": {
-                "texture": "flower_essence"
+                "textures": {
+                    "default": "flower_essence"
+                }
             }
         }
     }

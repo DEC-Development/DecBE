@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:blood_worm.name"
             },
-            "minecraft:icon": {
-                "texture": "blood_worm"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 4,
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "blood_worm"
+                }
             }
         },
         "events": {

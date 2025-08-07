@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:potato_rice.name"
             },
-            "minecraft:icon": {
-                "texture": "potato_rice"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "nutrition": 15,
@@ -26,6 +23,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 2,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "potato_rice"
+                }
             }
         }
     }

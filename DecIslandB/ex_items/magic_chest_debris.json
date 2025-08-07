@@ -4,21 +4,23 @@
         "description": {
             "identifier": "dec:magic_chest_debris",
             "menu_category": {
-                "group": "minecraft:itemGroup.name.decorations",
+                "group": "dec:itemGroup.name.summon_items",
                 "is_hidden_in_commands": false,
-                "category": "items"
+                "category": "equipment"
             }
         },
         "components": {
             "minecraft:display_name": {
                 "value": "item.dec:magic_chest_debris.name"
             },
-            "minecraft:icon": {
-                "texture": "magic_chest_debris"
-            },
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 64,
-            "minecraft:foil": true
+            "minecraft:glint": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "magic_chest_debris"
+                }
+            }
         }
     }
 }

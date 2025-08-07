@@ -10,16 +10,12 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 10
-            },
             "minecraft:display_name": {
                 "value": "item.dec:wooden_enchant_book.name"
             },
-            "minecraft:icon": {
-                "texture": "wooden_enchant_book"
+            "minecraft:fuel": {
+                "duration": 10
             },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": false,
@@ -54,6 +50,11 @@
                 "tags": [
                     "comp:equipment_type:summon_weapon"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "wooden_enchant_book"
+                }
             }
         },
         "events": {

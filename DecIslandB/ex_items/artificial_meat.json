@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:artificial_meat.name"
             },
-            "minecraft:icon": {
-                "texture": "artificial_meat"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
                 "on_consume": {
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "artificial_meat"
+                }
             }
         },
         "events": {

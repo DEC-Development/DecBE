@@ -14,7 +14,9 @@
                 "value": "item.dec:ender_bone.name"
             },
             "minecraft:icon": {
-                "texture": "ender_bone"
+                "textures": {
+                    "default": "ender_bone"
+                }
             }
         }
     }

@@ -14,7 +14,9 @@
                 "value": "item.dec:diamond_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "diamond_nugget"
+                "textures": {
+                    "default": "diamond_nugget"
+                }
             }
         }
     }

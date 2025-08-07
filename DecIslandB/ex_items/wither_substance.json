@@ -14,7 +14,9 @@
                 "value": "item.dec:wither_substance.name"
             },
             "minecraft:icon": {
-                "texture": "wither_substance"
+                "textures": {
+                    "default": "wither_substance"
+                }
             }
         }
     }

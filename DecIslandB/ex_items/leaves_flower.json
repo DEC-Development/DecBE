@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:leaves_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "leaves_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:leaves_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "leaves_flower"
+                }
             }
         }
     }

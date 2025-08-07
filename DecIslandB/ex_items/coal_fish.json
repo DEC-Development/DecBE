@@ -10,14 +10,11 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 80
-            },
             "minecraft:display_name": {
                 "value": "item.dec:coal_fish.name"
             },
-            "minecraft:icon": {
-                "texture": "coal_fish"
+            "minecraft:fuel": {
+                "duration": 80
             },
             "minecraft:use_animation": "eat",
             "minecraft:food": {
@@ -27,6 +24,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 2,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "coal_fish"
+                }
             }
         }
     }

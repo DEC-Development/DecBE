@@ -14,7 +14,9 @@
                 "value": "item.dec:shell.name"
             },
             "minecraft:icon": {
-                "texture": "shell"
+                "textures": {
+                    "default": "shell"
+                }
             }
         }
     }

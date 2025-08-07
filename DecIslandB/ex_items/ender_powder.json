@@ -14,7 +14,9 @@
                 "value": "item.dec:ender_powder.name"
             },
             "minecraft:icon": {
-                "texture": "ender_powder"
+                "textures": {
+                    "default": "ender_powder"
+                }
             }
         }
     }

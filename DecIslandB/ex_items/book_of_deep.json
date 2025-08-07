@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:book_of_deep.name"
             },
+            "minecraft:glint": true,
             "minecraft:icon": {
-                "texture": "book_of_deep"
-            },
-            "minecraft:foil": true
+                "textures": {
+                    "default": "book_of_deep"
+                }
+            }
         }
     }
 }

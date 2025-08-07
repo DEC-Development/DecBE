@@ -1,1 +1,0 @@
-structure load mystructure:bat_cave ~-20 ~ ~-20

@@ -1,1 +1,0 @@
-structure load mystructure:deep_garden ~-30 ~ ~-30

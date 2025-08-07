@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:apple_juice.name"
             },
-            "minecraft:icon": {
-                "texture": "apple_juice"
-            },
             "minecraft:use_animation": "drink",
             "minecraft:food": {
                 "nutrition": 2,
@@ -28,6 +25,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "apple_juice"
+                }
             }
         },
         "events": {

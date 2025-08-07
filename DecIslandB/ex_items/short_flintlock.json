@@ -10,14 +10,11 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 10
-            },
             "minecraft:display_name": {
                 "value": "item.dec:short_flintlock.name"
             },
-            "minecraft:icon": {
-                "texture": "short_flintlock"
+            "minecraft:fuel": {
+                "duration": 10
             },
             "minecraft:cooldown": {
                 "category": "gun",
@@ -38,6 +35,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:range_weapon_:range_weapon:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "short_flintlock"
+                }
             }
         },
         "events": {}

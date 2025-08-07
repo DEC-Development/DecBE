@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:poison_bag.name"
             },
-            "minecraft:icon": {
-                "texture": "poison_bag"
-            },
             "minecraft:on_use": {
                 "on_use": {
                     "event": "shoot",
@@ -30,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "poison_bag"
+                }
             }
         },
         "events": {

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:pirate_fleet_spruce_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 97672347,
+      "separation": 120,
+      "spacing": 256,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:pirate_fleet_spruce",
+        "weight": 1
+      }
+    ]
+  }
+}

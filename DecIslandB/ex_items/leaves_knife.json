@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:leaves_knife.name"
             },
-            "minecraft:icon": {
-                "texture": "leaves_knife"
-            },
             "minecraft:cooldown": {
                 "category": "missilemissile",
                 "duration": 0.5
@@ -30,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "leaves_knife"
+                }
             }
         }
     }

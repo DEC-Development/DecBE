@@ -1,0 +1,46 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:everlasting_winter_city/top_1_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/top_1_monster_1",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/top_1_monster_2",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/top_1_reward_1",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/top_1_reward_2",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

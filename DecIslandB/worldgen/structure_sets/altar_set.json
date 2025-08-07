@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:altar_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 66448902,
+      "separation": 20,
+      "spacing": 48,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:altar",
+        "weight": 1
+      }
+    ]
+  }
+}

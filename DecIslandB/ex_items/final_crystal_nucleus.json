@@ -13,13 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:final_crystal_nucleus.name"
             },
-            "minecraft:icon": {
-                "texture": "final_crystal_nucleus"
-            },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:on_use": {
                 "on_use": {
                     "event": "use",
@@ -54,6 +50,11 @@
                         "repair_amount": "context.other->query.remaining_durability + query.max_durability * 0.4"
                     }
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "final_crystal_nucleus"
+                }
             }
         },
         "events": {

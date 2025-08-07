@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:lava_sword.name"
             },
-            "minecraft:icon": {
-                "texture": "lava_sword"
-            },
             "minecraft:weapon": {
                 "on_hurt_entity": {
                     "event": "attack",
@@ -78,6 +75,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "lava_sword"
+                }
             }
         },
         "events": {

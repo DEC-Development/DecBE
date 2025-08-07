@@ -14,7 +14,9 @@
                 "value": "item.dec:steel_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "steel_nugget"
+                "textures": {
+                    "default": "steel_nugget"
+                }
             }
         }
     }

@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:challenge_of_ash.name"
             },
+            "minecraft:glint": true,
             "minecraft:icon": {
-                "texture": "challenge_of_ash"
-            },
-            "minecraft:foil": true
+                "textures": {
+                    "default": "challenge_of_ash"
+                }
+            }
         }
     }
 }

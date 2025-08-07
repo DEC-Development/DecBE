@@ -13,8 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:autumn_leaves.name"
             },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
             "minecraft:icon": {
-                "texture": "autumn_leaves"
+                "textures": {
+                    "default": "autumn_leaves"
+                }
             }
         }
     }

@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:leaves_dagger.name"
             },
-            "minecraft:icon": {
-                "texture": "leaves_dagger"
-            },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 341
@@ -113,6 +110,11 @@
                     "comp:movement_addition:0.01",
                     "comp:equipment_type:melee_weapon_::dagger_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "leaves_dagger"
+                }
             }
         },
         "events": {

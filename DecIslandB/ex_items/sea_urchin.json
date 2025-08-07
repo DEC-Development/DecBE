@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:sea_urchin.name"
             },
-            "minecraft:icon": {
-                "texture": "sea_urchin"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:hand_equipped": false,
             "minecraft:stacked_by_data": false,
@@ -31,6 +28,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "sea_urchin"
+                }
             }
         },
         "events": {

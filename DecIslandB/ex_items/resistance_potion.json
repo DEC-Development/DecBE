@@ -10,17 +10,14 @@
             }
         },
         "components": {
-            "minecraft:max_stack_size": 1,
             "minecraft:display_name": {
                 "value": "item.dec:resistance_potion.name"
             },
-            "minecraft:icon": {
-                "texture": "resistance_potion"
-            },
+            "minecraft:max_stack_size": 1,
             "minecraft:use_animation": "drink",
             "minecraft:hand_equipped": false,
             "minecraft:stacked_by_data": false,
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:food": {
                 "on_consume": {
                     "event": "consumed",
@@ -34,6 +31,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "resistance_potion"
+                }
             }
         },
         "events": {

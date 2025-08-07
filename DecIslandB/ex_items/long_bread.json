@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:long_bread.name"
             },
-            "minecraft:icon": {
-                "texture": "long_bread"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:weapon": {
                 "on_hurt_entity": {
@@ -60,6 +57,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "long_bread"
+                }
             }
         },
         "events": {

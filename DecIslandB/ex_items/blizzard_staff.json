@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:blizzard_staff.name"
             },
-            "minecraft:icon": {
-                "texture": "blizzard_staff"
-            },
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -62,6 +59,11 @@
                 "tags": [
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "blizzard_staff"
+                }
             }
         },
         "events": {

@@ -10,16 +10,12 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 15
-            },
             "minecraft:display_name": {
                 "value": "item.dec:natural_spear.name"
             },
-            "minecraft:icon": {
-                "texture": "natural_spear"
+            "minecraft:fuel": {
+                "duration": 15
             },
-
             "minecraft:stacked_by_data": false,
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
@@ -84,6 +80,11 @@
                 "tags": [
                     "comp:equipment_type:summon_weapon_:summon_weapon:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "natural_spear"
+                }
             }
         },
         "events": {

@@ -14,7 +14,9 @@
                 "value": "item.dec:eye_of_nature.name"
             },
             "minecraft:icon": {
-                "texture": "eye_of_nature"
+                "textures": {
+                    "default": "eye_of_nature"
+                }
             }
         }
     }

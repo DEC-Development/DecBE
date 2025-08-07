@@ -1,1 +1,0 @@
-structure load mystructure:goblin_house_1 ~-9 ~1 ~-10

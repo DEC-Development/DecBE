@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:bamboo_raft_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 9550393,
+      "separation": 30,
+      "spacing": 64,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:bamboo_raft",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -13,13 +13,15 @@
             "minecraft:display_name": {
                 "value": "item.dec:artificial_meat_creator_power.name"
             },
-            "minecraft:icon": {
-                "texture": "artificial_meat_creator_power"
-            },
             "minecraft:stacked_by_data": true,
             "minecraft:max_stack_size": 64,
-            "minecraft:foil": true,
-            "minecraft:hand_equipped": true
+            "minecraft:glint": true,
+            "minecraft:hand_equipped": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "artificial_meat_creator_power"
+                }
+            }
         }
     }
 }

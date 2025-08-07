@@ -14,7 +14,9 @@
                 "value": "item.dec:health_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "health_nugget"
+                "textures": {
+                    "default": "health_nugget"
+                }
             }
         }
     }

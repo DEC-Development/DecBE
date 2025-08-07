@@ -13,12 +13,9 @@
             "minecraft:display_name": {
                 "value": "item.dec:iron_apple_enchanted.name"
             },
-            "minecraft:icon": {
-                "texture": "iron_apple"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:hover_text_color": "light_purple",
-            "minecraft:foil": true,
+            "minecraft:glint": true,
             "minecraft:food": {
                 "nutrition": 4,
                 "saturation_modifier": 1,
@@ -31,6 +28,11 @@
             "minecraft:use_modifiers": {
                 "use_duration": 1.6,
                 "movement_modifier": 0.4
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "iron_apple"
+                }
             }
         },
         "events": {

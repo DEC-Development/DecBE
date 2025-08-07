@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:cloud_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "cloud_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:cloud_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "cloud_flower"
+                }
             }
         }
     }

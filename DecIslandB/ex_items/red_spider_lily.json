@@ -13,12 +13,14 @@
             "minecraft:display_name": {
                 "value": "item.dec:red_spider_lily.name"
             },
-            "minecraft:icon": {
-                "texture": "red_spider_lily"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:block_placer": {
                 "block": "dec:red_spider_lily_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "red_spider_lily"
+                }
             }
         }
     }

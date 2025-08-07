@@ -13,9 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:amethyst_ray_staff.name"
             },
-            "minecraft:icon": {
-                "texture": "amethyst_ray_staff"
-            },
             "minecraft:enchantable": {
                 "value": 20,
                 "slot": "flintsteel"
@@ -62,6 +59,11 @@
                 "tags": [
                     "comp:equipment_type:magic_weapon_:staff:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "amethyst_ray_staff"
+                }
             }
         },
         "events": {

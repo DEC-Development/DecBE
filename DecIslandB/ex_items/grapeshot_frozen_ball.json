@@ -13,10 +13,6 @@
             "minecraft:display_name": {
                 "value": "item.dec:grapeshot_frozen_ball.name"
             },
-            "minecraft:icon": {
-                "texture": "grapeshot_frozen_ball"
-            },
-
             "minecraft:on_use": {
                 "on_use": {
                     "event": "shoot",
@@ -31,6 +27,11 @@
                 "tags": [
                     "comp:equipment_type:thrown_weapon_:sundries:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "grapeshot_frozen_ball"
+                }
             }
         },
         "events": {

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:ruined_muddy_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 76805397,
+      "separation": 1,
+      "spacing": 4,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:ruined_muddy",
+        "weight": 1
+      }
+    ]
+  }
+}

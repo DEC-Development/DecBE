@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:frozen_mirror_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "frozen_mirror_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:frozen_mirror_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "frozen_mirror_flower"
+                }
             }
         }
     }

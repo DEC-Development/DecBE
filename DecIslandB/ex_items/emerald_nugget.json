@@ -14,7 +14,9 @@
                 "value": "item.dec:emerald_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "emerald_nugget"
+                "textures": {
+                    "default": "emerald_nugget"
+                }
             }
         }
     }

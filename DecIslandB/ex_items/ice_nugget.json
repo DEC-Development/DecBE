@@ -14,7 +14,9 @@
                 "value": "item.dec:ice_nugget.name"
             },
             "minecraft:icon": {
-                "texture": "ice_nugget"
+                "textures": {
+                    "default": "ice_nugget"
+                }
             }
         }
     }

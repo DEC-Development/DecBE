@@ -1,0 +1,100 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:everlasting_winter_city/float_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/empty",
+                    "processors": "dec:empty"
+                },
+                "weight": 40,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/ice_crystal_1",
+                    "processors": "dec:ice_processor"
+                },
+                "weight": 10,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/ice_crystal_2",
+                    "processors": "dec:ice_processor"
+                },
+                "weight": 10,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/ice_crystal_3",
+                    "processors": "dec:ice_processor"
+                },
+                "weight": 10,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/snow_torch",
+                    "processors": "dec:ice_processor"
+                },
+                "weight": 5,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/snow_beacon",
+                    "processors": "dec:ice_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/tower_1",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 4,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/tower_2",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 4,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/tower_3",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 4,
+                "projection": "rigid"
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "everlasting_winter_city/tower_4",
+                    "processors": "dec:ice_and_brick_and_shelf_processor"
+                },
+                "weight": 2,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.94",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dec:soul_room/cap_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "soul_room/cap",
+                    "processors": "dec:blackstone_processor"
+                },
+                "weight": 1,
+                "projection": "rigid"
+            }
+        ]
+    }
+}

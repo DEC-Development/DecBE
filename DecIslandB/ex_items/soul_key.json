@@ -13,10 +13,12 @@
             "minecraft:display_name": {
                 "value": "item.dec:soul_key.name"
             },
+            "minecraft:glint": false,
             "minecraft:icon": {
-                "texture": "soul_key"
-            },
-            "minecraft:foil": false
+                "textures": {
+                    "default": "soul_key"
+                }
+            }
         }
     }
 }

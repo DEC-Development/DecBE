@@ -13,14 +13,16 @@
             "minecraft:display_name": {
                 "value": "item.dec:small_stone.name"
             },
-            "minecraft:icon": {
-                "texture": "small_stone"
-            },
             "minecraft:block_placer": {
                 "block": "dec:small_stone_block_entity"
             },
             "minecraft:stacked_by_data": true,
-            "minecraft:allow_off_hand": true
+            "minecraft:allow_off_hand": true,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "small_stone"
+                }
+            }
         }
     }
 }

@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:dark_stone.name"
             },
+            "minecraft:glint": true,
+            "minecraft:stacked_by_data": false,
             "minecraft:icon": {
-                "texture": "dark_stone"
-            },
-            "minecraft:foil": true,
-            "minecraft:stacked_by_data": false
+                "textures": {
+                    "default": "dark_stone"
+                }
+            }
         }
     }
 }

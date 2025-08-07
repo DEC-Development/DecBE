@@ -13,12 +13,17 @@
             "minecraft:display_name": {
                 "value": "item.dec:fritillary_seeds.name"
             },
-            "minecraft:icon": {
-                "texture": "fritillary_seeds"
-            },
             "minecraft:use_animation": "eat",
             "minecraft:block_placer": {
                 "block": "dec:fritillary_crop"
+            },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "fritillary_seeds"
+                }
             }
         }
     }

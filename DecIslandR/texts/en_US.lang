@@ -191,7 +191,7 @@ item.dec:lamprey.name=Lamprey
 item.dec:perch.name=Perch
 item.dec:perch_cooked.name=Cooked Perch
 item.dec:skeleton_fish.name=Skeleton Fish
-item.dec:zombie_fish.name=Zommbie Fish
+item.dec:zombie_fish.name=Zombie Fish
 item.dec:blue_jellyfish.name=Blue Jellyfish
 item.dec:pink_jellyfish.name=Pink Jellyfish
 item.dec:yellow_jellyfish.name=Yellow Jellyfish
@@ -652,6 +652,10 @@ item.dec:zombie_summoner_mask.name=Zombie Summoner Mask
 item.dec:zombie_villager_mask.name=Zombie Villager Mask
 item.dec:zombie_warrior_mask.name=Zombie Warrior Mask
 item.dec:magic_mask_bag.name=Magic Mask Bag
+item.dec:firefly_bottle.name=Firefly Bottle
+item.dec:muddy_fish.name=Muddy Fish
+item.dec:pumpkin_candy.name=Pumpkin Candy
+item.dec:muddy_ball.name=Muddy Ball
 
 tile.dec:ancient_ice.name=Ancient Ice
 tile.dec:lava_ore.name=Lava Ore
@@ -815,6 +819,7 @@ tile.dec:thyme_crop.name=Thyme
 tile.dec:wither_cone_crop.name=Wither Cone
 tile.dec:yellow_butterfly_flower_crop.name=Yellow Butterfly Flower
 tile.dec:flesh_block.name=Flesh Block
+item.dec:echo_of_deep.name=Echo of Deep
 
 item.spawn_egg.entity.dec:ice_zombie.name=Spawn Ice Zombie
 item.spawn_egg.entity.dec:ash_blaze.name=Spawn Ash Blaze
@@ -1204,6 +1209,9 @@ entity.dec:ash_sword_phantom.name=Ash Sword Phantom
 entity.dec:smoke_bomb.name=Smoke Bomb
 entity.dec:gas_bomb.name=Gas Bomb
 entity.dec:spots_overflow.name=Spots Overflow
+entity.dec:bullet_by_echo_of_deep.name=Echo of Deep Bullet
+entity.dec:firefly_bottle.name=Firefly Bottle
+entity.dec:muddy_ball.name=Muddy Ball
 
 entity.dec:supply_package.name=Supply Package
 

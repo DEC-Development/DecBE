@@ -122,9 +122,6 @@
         }
       },
       "minecraft:is_hidden_when_invisible": {},
-      "minecraft:experience_reward": {
-        "on_death": "10"
-      },
       "minecraft:type_family": {
         "family": [
           "archer",
@@ -137,12 +134,9 @@
         "suffocate_time": 0
       },
       "minecraft:nameable": {},
-      "minecraft:loot": {
-        "table": "loot_tables/entities/evocation_illager.json"
-      },
       "minecraft:health": {
-        "value": 24,
-        "max": 24
+        "value": 20,
+        "max": 20
       },
       "minecraft:hurt_on_condition": {
         "damage_conditions": [
@@ -186,7 +180,7 @@
               "subject": "other",
               "value": "monster"
             },
-            "max_dist": 8,
+            "max_dist": 16,
             "walk_speed_multiplier": 0.6,
             "sprint_speed_multiplier": 1.0
           }

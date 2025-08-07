@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:structure_set": {
+    "description": {
+      "identifier": "dec:everlasting_winter_city_set"
+    },
+    "placement": {
+      "type": "minecraft:random_spread",
+      "salt": 92428639,
+      "separation": 30,
+      "spacing": 64,
+      "spread_type": "linear"
+    },
+    "structures": [
+      {
+        "structure": "dec:everlasting_winter_city",
+        "weight": 1
+      }
+    ]
+  }
+}

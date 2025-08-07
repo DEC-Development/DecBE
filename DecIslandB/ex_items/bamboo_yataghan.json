@@ -10,14 +10,11 @@
             }
         },
         "components": {
-            "minecraft:fuel": {
-                "duration": 5
-            },
             "minecraft:display_name": {
                 "value": "item.dec:bamboo_yataghan.name"
             },
-            "minecraft:icon": {
-                "texture": "bamboo_yataghan"
+            "minecraft:fuel": {
+                "duration": 5
             },
             "minecraft:cooldown": {
                 "category": "sword",
@@ -78,6 +75,11 @@
                 "tags": [
                     "comp:equipment_type:melee_weapon_:sword:_"
                 ]
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "bamboo_yataghan"
+                }
             }
         },
         "events": {

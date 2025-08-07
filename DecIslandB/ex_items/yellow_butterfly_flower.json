@@ -13,11 +13,13 @@
             "minecraft:display_name": {
                 "value": "item.dec:yellow_butterfly_flower.name"
             },
-            "minecraft:icon": {
-                "texture": "yellow_butterfly_flower"
-            },
             "minecraft:block_placer": {
                 "block": "dec:yellow_butterfly_flower_crop"
+            },
+            "minecraft:icon": {
+                "textures": {
+                    "default": "yellow_butterfly_flower"
+                }
             }
         }
     }

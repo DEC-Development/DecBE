@@ -1,0 +1,69 @@
+{
+  "format_version": "1.21.94",
+  "minecraft:jigsaw": {
+    "description": {
+      "identifier": "dec:magic_forest"
+    },
+    "biome_filters": [
+      {
+        "any_of": [
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld"
+          },
+          {
+            "test": "has_biome_tag",
+            "operator": "==",
+            "value": "overworld_generation"
+          }
+        ]
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "==",
+        "value": "forest"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "taiga"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "frozen"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "dark_oak"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "river"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "lakes"
+      },
+      {
+        "test": "has_biome_tag",
+        "operator": "!=",
+        "value": "ocean"
+      }
+    ],
+    "step": "raw_generation",
+    "start_pool": "dec:magic_forest/magic_tree_pool",
+    "max_depth": 4,
+    "start_height": {
+      "type": "constant",
+      "value": {
+        "absolute": -10
+      }
+    },
+    "heightmap_projection": "world_surface"
+  }
+}
