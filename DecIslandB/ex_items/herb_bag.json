@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "herb_bag"
                 }
+            },
+            "category": "accessory/magic",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

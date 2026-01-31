@@ -64,6 +64,10 @@
                 "textures": {
                     "default": "everlasting_winter_helmet"
                 }
+            },
+            "category": "armor/armor/helmet",
+            "trade_reference": {
+                "value": 120
             }
         }
     }

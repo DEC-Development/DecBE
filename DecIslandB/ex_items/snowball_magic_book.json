@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "snowball_magic_book"
                 }
+            },
+            "category": "magic_weapon/book",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

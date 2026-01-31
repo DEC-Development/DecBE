@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "dragon_fireball_by_player"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 30,
+                "amount": 3
             }
         }
     }

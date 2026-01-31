@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "giant_ivy"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 60
             }
         },
         "events": {

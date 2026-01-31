@@ -1,0 +1,109 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "dec:everlasting_winter_shadow",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "minecraft:waiting_for_despawn": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.2,
+          "time_down_event": {
+            "event": "minecraft:despawn"
+          }
+        }
+      },
+      "minecraft:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:despawn": {
+        "despawn_from_distance": {
+          "min_distance": 64,
+          "max_distance": 64
+        }
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "fall",
+            "deals_damage": false
+          },
+          {
+            "on_damage": {
+              "filters": {
+                "test": "is_family",
+                "subject": "other",
+                "value": "frozen"
+              }
+            },
+            "deals_damage": false
+          }
+        ]
+      },
+      "minecraft:type_family": {
+        "family": [
+          "monster",
+          "everlasting_winter_frozen",
+          "mob",
+          "frozen"
+        ]
+      },
+      "minecraft:health": {
+        "value": 50,
+        "max": 50
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1
+      },
+      "minecraft:timer": {
+        "looping": false,
+        "time": 120,
+        "time_down_event": {
+          "event": "minecraft:despawn"
+        }
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:fire_immune": true,
+      "minecraft:physics": {}
+    },
+    "events": {
+      "minecraft:despawn": {
+        "add": {
+          "component_groups": [
+            "minecraft:despawn"
+          ]
+        },
+        "queue_command": {
+          "command": [
+            "particle dec:everlasting_winter_explode_particle ~~1~"
+          ]
+        }
+      },
+      "minecraft:teleport_boss": {
+        "add": {
+          "component_groups": [
+            "minecraft:waiting_for_despawn"
+          ]
+        },
+        "queue_command": {
+          "command": [
+            "tp @e[r=64,type=dec:everlasting_winter_ghast,c=1] ~~~"
+          ]
+        }
+      }
+    }
+  }
+}

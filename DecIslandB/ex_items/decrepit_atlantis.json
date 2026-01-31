@@ -40,6 +40,10 @@
                 "textures": {
                     "default": "decrepit_atlantis"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 25
             }
         },
         "events": {

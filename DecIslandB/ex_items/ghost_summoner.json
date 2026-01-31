@@ -58,6 +58,10 @@
                 "textures": {
                     "default": "ghost_summoner"
                 }
+            },
+            "category": "summon_weapon/summon_weapon",
+            "trade_reference": {
+                "value": 110
             }
         },
         "events": {

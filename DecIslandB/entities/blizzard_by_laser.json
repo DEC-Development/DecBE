@@ -1,0 +1,78 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "dec:blizzard_by_laser",
+      "runtime_identifier": "minecraft:egg",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:despawn": {
+        "despawn_from_distance": {
+          "min_distance": 40,
+          "max_distance": 40
+        }
+      },
+      "minecraft:collision_box": {
+        "width": 0.2,
+        "height": 0.2
+      },
+      "minecraft:explode": {
+        "fuseLength": 10,
+        "fuseLit": true,
+        "power": 0,
+        "causesFire": false
+      },
+      "minecraft:projectile": {
+        "onHit": {
+          "mob_effect": {
+            "effect": "slowness",
+            "durationeasy": 200,
+            "durationnormal": 200,
+            "durationhard": 200,
+            "amplifier": 0
+          },
+          "impact_damage": {
+            "damage": 9,
+            "knockback": false,
+            "catchFire": false,
+            "semirandomdiffdamage": false
+          },
+          "particle_on_hit": {
+            "particle_type": "snowballpoof",
+            "num_particles": 6,
+            "on_entity_hit": true,
+            "on_other_hit": true
+          }
+        },
+        "hit_sound": "bullet.hit",
+        "power": 0.1,
+        "gravity": 0.002,
+        "inertia": 1,
+        "liquid_inertia": 1,
+        "anchor": 1,
+        "offset": [
+          0,
+          0,
+          0
+        ],
+        "semirandomdiffdamage": true,
+        "uncertaintyBase": 0,
+        "uncertaintyMultiplier": 0,
+        "reflectOnHurt": true
+      },
+      "minecraft:type_family": {
+        "family": [
+          "remove_on_hit_ground",
+          "frozen"
+        ]
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      }
+    }
+  }
+}

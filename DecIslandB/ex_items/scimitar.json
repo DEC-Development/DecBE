@@ -76,6 +76,10 @@
                 "textures": {
                     "default": "scimitar"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

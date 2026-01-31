@@ -55,6 +55,10 @@
                 "textures": {
                     "default": "wave_magic_book"
                 }
+            },
+            "category": "magic_weapon/book",
+            "trade_reference": {
+                "value": 80
             }
         },
         "events": {

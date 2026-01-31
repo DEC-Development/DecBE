@@ -57,6 +57,10 @@
                 "textures": {
                     "default": "crying_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 120
             }
         }
     }

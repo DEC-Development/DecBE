@@ -55,6 +55,10 @@
                 "textures": {
                     "default": "wooden_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 25
             }
         },
         "events": {

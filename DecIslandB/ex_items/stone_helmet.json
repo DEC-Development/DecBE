@@ -73,6 +73,10 @@
                 "textures": {
                     "default": "stone_helmet"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 20
             }
         }
     }

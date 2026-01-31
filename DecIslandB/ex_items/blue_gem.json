@@ -30,6 +30,10 @@
                 "textures": {
                     "default": "blue_gem"
                 }
+            },
+            "category": "boost",
+            "trade_reference": {
+                "value": 10
             }
         },
         "events": {

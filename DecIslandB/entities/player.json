@@ -1294,11 +1294,6 @@
 						"minecraft:team_red_no_friendly_fire",
 						"minecraft:team_blue_no_friendly_fire"
 					]
-				},
-				"queue_command": {
-					"command": [
-						"say no"
-					]
 				}
 			},
 			"minecraft:become_team_red_no_friendly_fire": {

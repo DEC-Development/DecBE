@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "gas_bomb"
                 }
+            },
+            "category": "assist_item/cover_item",
+            "trade_reference": {
+                "value": 10,
+                "amount": 1
             }
         }
     }

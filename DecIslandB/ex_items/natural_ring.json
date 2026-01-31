@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "natural_ring"
                 }
+            },
+            "category": "accessory/thrown",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

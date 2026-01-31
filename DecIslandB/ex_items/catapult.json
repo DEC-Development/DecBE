@@ -34,6 +34,10 @@
                 "textures": {
                     "default": "catapult"
                 }
+            },
+            "category": "range_weapon/range_weapon",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {}

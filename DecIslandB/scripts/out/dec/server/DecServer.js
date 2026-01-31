@@ -7,6 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { world, Block, Direction, GameMode, ScriptEventSource, system, EntityDamageCause, DisplaySlotId, CommandPermissionLevel } from '@minecraft/server';
 import DecClient from "./DecClient.js";
 import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
@@ -35,6 +44,7 @@ import { DecEscapeSoulBoss3, DecEscapeSoulBoss4, DecEscapeSoulBoss5 } from './en
 import DecBossController from './entities/DecBossController.js';
 import DecBossBarrier from './entities/DecBossBarrier.js';
 import { ignorn } from '../../modules/exmc/server/ExErrorQueue.js';
+import ExEntityQuery from '../../modules/exmc/server/env/ExEntityQuery.js';
 export default class DecServer extends ExGameServer {
     constructor(config) {
         super(config);
@@ -611,11 +621,15 @@ export default class DecServer extends ExGameServer {
                 let power = Number(e.message);
                 let p = e.sourceEntity;
                 let r = p.getViewDirection();
-                if (power > 0) {
-                    p.applyKnockback({ x: r.x * power, z: r.z * power }, 0);
+                let rl = Math.pow((Math.pow(r.x, 2) + Math.pow(r.z, 2)), 0.5) + 0.000001;
+                let rx = r.x / rl;
+                let rz = r.z / rl;
+                // world.getDimension('overworld').runCommand(`say ${r.x} ${r.z} ${rx} ${rz} ${rl}`)
+                if (p.typeId == "minecraft:player") {
+                    p.applyKnockback({ x: rx * power, z: rz * power }, 0);
                 }
                 else {
-                    p.applyKnockback({ x: -r.x * power, z: -r.z * power }, 0);
+                    p.applyImpulse({ x: rx * power, y: 0, z: rz * power });
                 }
             }
             else if (e.id == 'dec:sustain_particle') {
@@ -625,8 +639,13 @@ export default class DecServer extends ExGameServer {
                 let i = 0;
                 while (i < Number(para_arr[1])) {
                     system.runTimeout(() => {
-                        let loc = script_event_location(e)[1];
-                        dim.spawnParticle(para_arr[0].toString(), loc);
+                        try {
+                            let loc = script_event_location(e)[1];
+                            dim.spawnParticle(para_arr[0].toString(), loc);
+                        }
+                        catch (_a) {
+                            return;
+                        }
                     }, i * Number(para_arr[2]));
                     i++;
                 }
@@ -644,16 +663,21 @@ export default class DecServer extends ExGameServer {
                 (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.addTag(para_arr[4].toString());
                 while (i < Number(para_arr[2])) {
                     system.runTimeout(() => {
-                        let loc = script_event_location(e)[1];
-                        const attackable_entity_option = {
-                            location: loc,
-                            maxDistance: 2,
-                            excludeTypes: ['minecraft:item', 'minecraft:painting', 'minecraft:armor_stand'],
-                            excludeTags: [para_arr[4].toString()]
-                        };
-                        dim.getEntities(attackable_entity_option).forEach(ent => {
-                            ent.applyDamage(Number(para_arr[1]), damage_option);
-                        });
+                        try {
+                            let loc = script_event_location(e)[1];
+                            const attackable_entity_option = {
+                                location: loc,
+                                maxDistance: 2,
+                                excludeTypes: ['minecraft:item', 'minecraft:painting', 'minecraft:armor_stand'],
+                                excludeTags: [para_arr[4].toString()]
+                            };
+                            dim.getEntities(attackable_entity_option).forEach(ent => {
+                                ent.applyDamage(Number(para_arr[1]), damage_option);
+                            });
+                        }
+                        catch (e) {
+                            return;
+                        }
                     }, i * Number(para_arr[3]));
                     i++;
                 }
@@ -661,6 +685,12 @@ export default class DecServer extends ExGameServer {
                     var _a;
                     (_a = e.sourceEntity) === null || _a === void 0 ? void 0 : _a.removeTag(para_arr[4].toString());
                 }, Number(para_arr[2]) * Number(para_arr[3]));
+            }
+            else if (e.id == 'dec:everlasting_winter_ghast') {
+                let entity = e.sourceEntity;
+                if (e.message == 'blizzard') {
+                    this.everlastingWinterGhastBlizzard(entity);
+                }
             }
         });
         const script_event_location = (source) => {
@@ -776,6 +806,213 @@ export default class DecServer extends ExGameServer {
             b.setType('dec:flesh_block');
             this.state_set_keep(b, { 'dec:age': age_ori + 1 });
         }
+    }
+    everlastingWinterGhastBlizzardExe(entity, skill_num) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // entity.runCommand('say skill_num: ' + skill_num)
+            // 使用 try-catch 包装整个函数
+            try {
+                // 检查实体是否仍然有效
+                if (!entity || !entity.isValid) {
+                    return false;
+                }
+                const ex_ent = ExEntity.getInstance(entity);
+                const blizzardEq = {
+                    maxDistance: 64,
+                    location: entity.location,
+                    type: 'dec:everlasting_winter_shadow'
+                };
+                if (skill_num > 0) {
+                    let ents = entity.dimension.getEntities(blizzardEq);
+                    if (ents.length > 0) {
+                        let ent = ents[MathUtil.randomInteger(0, ents.length - 1)];
+                        // 检查实体是否有效后再触发事件
+                        if (ent && ent.isValid) {
+                            try {
+                                // entity.runCommand('say teleport')
+                                ent.triggerEvent('minecraft:teleport_boss');
+                            }
+                            catch (e) {
+                                // entity.runCommand('say teleport fail: error')
+                                // 忽略触发事件时的错误
+                            }
+                        }
+                        else {
+                            // entity.runCommand('say teleport fail: ent is not valid')
+                        }
+                    }
+                    else {
+                        // entity.runCommand('say teleport fail: no ent')
+                        return false;
+                    }
+                }
+                // 获取附近玩家的函数
+                let getNearbyPlayers = (max_dis) => {
+                    try {
+                        if (!entity || !entity.isValid)
+                            return [];
+                        return entity.dimension.getEntities({
+                            excludeGameModes: [GameMode.Creative, GameMode.Spectator],
+                            type: 'minecraft:player',
+                            maxDistance: max_dis,
+                            location: entity.location
+                        }) || [];
+                    }
+                    catch (error) {
+                        return [];
+                    }
+                };
+                // 检查实体是否仍然有效
+                if (!entity.isValid) {
+                    // entity.runCommand('say entity no valid')
+                    return false;
+                }
+                ;
+                let ps = getNearbyPlayers(64);
+                if (!ps || !ps[0] || !ps[0].isValid) {
+                    // entity.runCommand('say no player, num:' + ps.length)
+                    return false;
+                }
+                ;
+                const max_tick = 110;
+                const sleep_tick = Math.max(5 - skill_num, 1); // 确保至少为1
+                const rad_1 = Math.min(3 + skill_num * 0.5, 6);
+                const rad_2 = Math.min(5 + skill_num * 1, 8);
+                try {
+                    ex_ent.faceLocation(new Vector3(ps[0].location));
+                    entity.playAnimation('animation.everlasting_winter_ghast.float');
+                    entity.addEffect(MinecraftEffectTypes.Levitation, max_tick + 20, { showParticles: false });
+                }
+                catch (e) {
+                    // 忽略设置动画和效果时的错误
+                    // entity.runCommand('say error')
+                    return false;
+                }
+                let view = entity.getViewDirection();
+                let mat = ExEntityQuery.getFacingMatrix(view);
+                let horizon_base = new Vector3(1, 0, 0);
+                mat.cpy().rmulVector(horizon_base).normalize();
+                let vertical_base = new Vector3(0, 1, 0);
+                mat.cpy().rmulVector(vertical_base).normalize();
+                for (let i = 0; i < max_tick; i += sleep_tick) {
+                    // 在每次循环开始时检查实体是否仍然有效
+                    if (!entity.isValid) {
+                        break;
+                    }
+                    let near_ps = getNearbyPlayers(64);
+                    if (!near_ps || !near_ps[0]) {
+                        break;
+                    }
+                    // 检查玩家实体是否有效
+                    let validPlayers = near_ps.filter(p => p && p.isValid);
+                    if (!validPlayers || !validPlayers[0]) {
+                        break;
+                    }
+                    // 确保不会访问无效索引
+                    let selectedIndex = MathUtil.randomInteger(0, validPlayers.length - 1);
+                    if (selectedIndex >= validPlayers.length) {
+                        break;
+                    }
+                    let end_loc = new Vector3(validPlayers[selectedIndex].location).add(0, 1, 0);
+                    // 内圈
+                    let start_loc_1 = new Vector3(entity.location);
+                    start_loc_1.add(horizon_base.cpy().scl(rad_1 * Math.cos(i * 13 / 180 * Math.PI)));
+                    start_loc_1.add(vertical_base.cpy().scl(rad_1 * Math.sin(i * 13 / 180 * Math.PI)));
+                    start_loc_1.add(0, 1, 0);
+                    let shoot_v_1 = end_loc.cpy().sub(start_loc_1).normalize();
+                    // 检查实体是否仍然有效后再发射弹射物
+                    if (!entity.isValid)
+                        break;
+                    try {
+                        ex_ent.shootProj('dec:blizzard_energy', {
+                            speed: Math.min(0.05 + skill_num * 0.01, 0.08),
+                            airInertia: Math.min(1.1 + skill_num * 0.05, 1.5),
+                        }, shoot_v_1, start_loc_1);
+                    }
+                    catch (e) {
+                        // 忽略发射弹射物时的错误
+                    }
+                    // 外圈
+                    let start_loc_2 = new Vector3(entity.location);
+                    start_loc_2.add(horizon_base.cpy().scl(rad_2 * Math.cos(-i * 30 / 180 * Math.PI)));
+                    start_loc_2.add(vertical_base.cpy().scl(rad_2 * Math.sin(-i * 30 / 180 * Math.PI)));
+                    start_loc_2.add(0, 1, 0);
+                    let shoot_v_2 = end_loc.cpy().sub(start_loc_2).normalize();
+                    // 检查实体是否仍然有效后再发射弹射物
+                    if (!entity.isValid)
+                        break;
+                    try {
+                        ex_ent.shootProj('dec:blizzard_energy', {
+                            speed: Math.min(0.04 + skill_num * 0.01, 0.07),
+                            airInertia: Math.min(1.1 + skill_num * 0.05, 1.4),
+                            uncertainty: 20
+                        }, shoot_v_2, start_loc_2);
+                    }
+                    catch (e) {
+                        // 忽略发射弹射物时的错误
+                    }
+                    // 在等待前检查实体是否仍然有效
+                    if (!entity.isValid)
+                        break;
+                    // 使用 try-catch 包装 sleep 操作
+                    try {
+                        yield this.sleepByTick(sleep_tick);
+                    }
+                    catch (e) {
+                        // 如果 sleep 被中断，直接退出循环
+                        break;
+                    }
+                }
+            }
+            catch (error) {
+                // 捕获并静默处理所有错误，避免 Promise rejection
+                // 这样可以防止 "Unhandled promise rejection" 错误
+            }
+            return true;
+        });
+    }
+    everlastingWinterGhastBlizzard(entity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let skill_num = 0;
+            let blizzardEq = {
+                maxDistance: 64,
+                location: entity.location,
+                type: 'dec:everlasting_winter_shadow'
+            };
+            // 使用 try-catch 包装整个函数
+            try {
+                while (entity && entity.isValid && entity.dimension.getEntities(blizzardEq).length > 0) {
+                    try {
+                        let if_coutinue = yield this.everlastingWinterGhastBlizzardExe(entity, skill_num);
+                        if (!if_coutinue)
+                            break;
+                        skill_num += 1;
+                        blizzardEq.location = entity.location;
+                        // 在循环中检查实体是否仍然有效
+                        if (!entity.isValid) {
+                            break;
+                        }
+                    }
+                    catch (e) {
+                        // 如果单次执行出错，继续下一次循环
+                        // entity.runCommand('say while内出错：' + e)
+                        continue;
+                    }
+                }
+                // 只有在实体仍然有效时才触发结束事件
+                if (entity && entity.isValid) {
+                    try {
+                        entity.triggerEvent('minecraft:blizzard_mode_end');
+                    }
+                    catch (e) {
+                        // 忽略触发事件时的错误
+                    }
+                }
+            }
+            catch (error) {
+                // 静默处理顶层错误
+            }
+        });
     }
     newClient(id, player) {
         return new DecClient(this, id, player);

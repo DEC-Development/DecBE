@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "bamboo_katana"
                 }
+            },
+            "category": "melee_weapon/katana",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

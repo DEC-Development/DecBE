@@ -55,6 +55,10 @@
                 "textures": {
                     "default": "wooden_enchant_book"
                 }
+            },
+            "category": "summon_weapon/summon_weapon",
+            "trade_reference": {
+                "value": 90
             }
         },
         "events": {

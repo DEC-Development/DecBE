@@ -97,6 +97,10 @@
                 "textures": {
                     "default": "everlasting_winter_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

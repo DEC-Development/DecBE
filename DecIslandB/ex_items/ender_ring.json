@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "ender_ring"
                 }
+            },
+            "category": "accessory/thrown",
+            "trade_reference": {
+                "value": 100
             }
         }
     }

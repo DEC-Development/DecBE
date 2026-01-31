@@ -50,6 +50,10 @@
                 "textures": {
                     "default": "turtle_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 70
             }
         }
     }

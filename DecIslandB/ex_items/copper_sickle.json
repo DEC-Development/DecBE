@@ -75,6 +75,10 @@
                 "textures": {
                     "default": "copper_sickle"
                 }
+            },
+            "category": "melee_weapon/sickle",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

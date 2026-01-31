@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "formal_style_clothes"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

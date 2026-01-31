@@ -85,6 +85,10 @@
                 "textures": {
                     "default": "natural_spear"
                 }
+            },
+            "category": "summon_weapon/summon_weapon",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

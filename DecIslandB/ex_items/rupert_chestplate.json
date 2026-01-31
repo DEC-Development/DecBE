@@ -50,6 +50,10 @@
                 "textures": {
                     "default": "rupert_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 50
             }
         }
     }

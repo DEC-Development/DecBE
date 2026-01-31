@@ -50,6 +50,10 @@
                 "textures": {
                     "default": "rupert_helmet"
                 }
+            },
+            "category": "armor/armor/helmet",
+            "trade_reference": {
+                "value": 50
             }
         }
     }

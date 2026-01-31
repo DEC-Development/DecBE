@@ -115,6 +115,10 @@
                 "textures": {
                     "default": "leaves_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 35
             }
         },
         "events": {

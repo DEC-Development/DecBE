@@ -1579,6 +1579,23 @@
 					}
 				}
 			},
+			"dec:ender_snail": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "dig.stone",
+					"hurt": "dig.stone",
+					"death": "dig.stone",
+					"step": {
+						"sound": "step.stone",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			},
 			"dec:ghost_diamond_staff": {
 				"volume": 0.7,
 				"pitch": [
@@ -1708,6 +1725,28 @@
 				}
 			},
 			"dec:everlasting_winter_ghast": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"hurt": "random.glass",
+					"death": "random.glass"
+				}
+			},
+			"dec:everlasting_winter_crystal": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"hurt": "random.glass",
+					"death": "random.glass"
+				}
+			},
+			"dec:everlasting_winter_shadow": {
 				"volume": 1.0,
 				"pitch": [
 					0.8,

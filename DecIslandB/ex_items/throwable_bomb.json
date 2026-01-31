@@ -34,6 +34,11 @@
                 "textures": {
                     "default": "throwable_bomb"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 20,
+                "amount": 5
             }
         }
     }

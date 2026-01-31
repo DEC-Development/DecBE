@@ -94,6 +94,10 @@
                 "textures": {
                     "default": "everlasting_winter_sickle"
                 }
+            },
+            "category": "melee_weapon/sickle",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

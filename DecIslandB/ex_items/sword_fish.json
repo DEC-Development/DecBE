@@ -53,6 +53,10 @@
                 "textures": {
                     "default": "sword_fish"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "soul_fireball"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 20,
+                "amount": 20
             }
         }
     }

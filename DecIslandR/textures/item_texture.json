@@ -272,9 +272,6 @@
     "ender_breath": {
       "textures": "textures/items/ender_breath"
     },
-    "copper_sword": {
-      "textures": "textures/items/copper_sword"
-    },
     "copper_sickle": {
       "textures": "textures/items/copper_sickle"
     },
@@ -454,21 +451,6 @@
     },
     "dust_destroyer": {
       "textures": "textures/items/dust_destroyer"
-    },
-    "artificial_meat": {
-      "textures": "textures/items/artificial_meat"
-    },
-    "artificial_meat_creator_off": {
-      "textures": "textures/items/artificial_meat_creator_off"
-    },
-    "artificial_meat_creator_on": {
-      "textures": "textures/items/artificial_meat_creator_on"
-    },
-    "artificial_meat_creator_power": {
-      "textures": "textures/items/artificial_meat_creator_power"
-    },
-    "wet_paper": {
-      "textures": "textures/items/wet_paper"
     },
     "challenge_of_ash": {
       "textures": "textures/items/challenge_of_ash"

@@ -43,6 +43,10 @@
                 "textures": {
                     "default": "glass_tank"
                 }
+            },
+            "category": "armor/clothes/helmet",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

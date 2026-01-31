@@ -30,6 +30,10 @@
                 "textures": {
                     "default": "spurt_egg"
                 }
+            },
+            "category": "boost",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

@@ -1,0 +1,39 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dec:ender_snail",
+      "materials": {
+        "default": "husk"
+      },
+      "textures": {
+        "default": "textures/entity/snail/ender_snail"
+      },
+      "geometry": {
+        "default": "geometry.snail"
+      },
+      "render_controllers": [
+        "controller.render.ender_snail"
+      ],
+      "scripts": {
+        "scale": "2",
+        "animate": [
+          "root",
+          "look"
+        ]
+      },
+      "animations": {
+        "root": "controller.animation.snail.root",
+        "look": "controller.animation.snail.look",
+        "defualt": "animation.snail.defualt",
+        "look_at_target": "animation.common.look_at_target",
+        "move": "animation.snail.move",
+        "attack": "animation.snail.attack"
+      },
+      "spawn_egg": {
+        "base_color": "#9E729E",
+        "overlay_color": "#E6F0AD"
+      }
+    }
+  }
+}

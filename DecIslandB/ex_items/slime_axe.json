@@ -746,6 +746,10 @@
                 "textures": {
                     "default": "slime_axe"
                 }
+            },
+            "category": "melee_weapon/axe",
+            "trade_reference": {
+                "value": 15
             }
         },
         "events": {

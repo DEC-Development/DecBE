@@ -4,12 +4,14 @@ import Vector3 from '../../utils/math/Vector3.js';
 import ExEntityBag from './ExEntityBag.js';
 import ExCommand from '../env/ExCommand.js';
 import ExDimension from '../ExDimension.js';
+import Vector2 from '../../utils/math/Vector2.js';
 import Matrix4 from '../../utils/math/Matrix4.js';
 import ExEntityQuery from '../env/ExEntityQuery.js';
 import ExGame from '../ExGame.js';
 import { falseIfError } from '../../utils/tool.js';
 import { StatusManager } from '../../../../pom/server/clientFunc/StatusManager.js';
 import { PoisonStatus } from '../../../../pom/server/clientFunc/EpicStatus';
+import { ignorn } from '../ExErrorQueue.js';
 class ExEntity {
     applyStatus(id, dur) {
         const newStatus = new PoisonStatus(dur);
@@ -220,10 +222,21 @@ class ExEntity {
         (_a = this.getComponent("minecraft:movement")) === null || _a === void 0 ? void 0 : _a.setCurrentValue(num);
     }
     shootProj(id, option, shoot_dir, loc) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        var _a;
         if (shoot_dir === void 0) { shoot_dir = this.viewDirection; }
         if (loc === void 0) { loc = new Vector3(this._entity.getHeadLocation())
             .add(this.viewDirection.scl((_a = option.spawnDistance) !== null && _a !== void 0 ? _a : 1.5)); }
+        if (option.delay) {
+            ExGame._runTimeout(() => {
+                this.shootProjExe(id, option, shoot_dir, loc);
+            }, option.delay * 20);
+        }
+        else {
+            this.shootProjExe(id, option, shoot_dir, loc);
+        }
+    }
+    shootProjExe(id, option, shoot_dir, loc) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         let locx = loc;
         let q = new ExEntityQuery(this.entity.dimension).at(locx);
         if (option.absPosOffset)
@@ -234,12 +247,12 @@ class ExEntity {
         if (option.rotOffset) {
             // view.add(this.relateRotate(option.rotOffset.x, option.rotOffset.y, false));
             let mat = ExEntityQuery.getFacingMatrix(this.entity.getViewDirection());
-            mat.cpy().invert().rmulVector(view);
+            mat.cpy().invert().rmulVector(view); // 转换为视角的相对坐标
             new Matrix4().idt().rotateX(option.rotOffset.x / 180 * Math.PI).rotateY(option.rotOffset.y / 180 * Math.PI).rmulVector(view);
-            mat.rmulVector(view);
+            mat.rmulVector(view); // 转换回世界坐标
         }
-        const proj = this.exDimension.spawnEntity(id, locx);
-        let owner = ((_b = option.owner) !== null && _b !== void 0 ? _b : this._entity);
+        const proj = ignorn(() => { return this.exDimension.spawnEntity(id, locx); });
+        let owner = ((_a = option.owner) !== null && _a !== void 0 ? _a : this._entity);
         if (owner instanceof Player) {
             let tamemount = proj === null || proj === void 0 ? void 0 : proj.getComponent("tamemount");
             if (tamemount)
@@ -255,30 +268,28 @@ class ExEntity {
             return false;
         }
         let shootOpt = {
-            uncertainty: (_c = option.uncertainty) !== null && _c !== void 0 ? _c : 0
+            uncertainty: (_b = option.uncertainty) !== null && _b !== void 0 ? _b : 0
         };
-        proj_comp.airInertia = (_d = option.airInertia) !== null && _d !== void 0 ? _d : proj_comp.airInertia;
-        proj_comp.catchFireOnHurt = (_e = option.catchFireOnHurt) !== null && _e !== void 0 ? _e : proj_comp.catchFireOnHurt;
-        proj_comp.critParticlesOnProjectileHurt = (_f = option.critParticlesOnProjectileHurt) !== null && _f !== void 0 ? _f : proj_comp.critParticlesOnProjectileHurt;
-        proj_comp.destroyOnProjectileHurt = (_g = option.destroyOnProjectileHurt) !== null && _g !== void 0 ? _g : proj_comp.destroyOnProjectileHurt;
-        proj_comp.gravity = (_h = option.gravity) !== null && _h !== void 0 ? _h : proj_comp.gravity;
-        proj_comp.hitEntitySound = (_j = option.hitEntitySound) !== null && _j !== void 0 ? _j : proj_comp.hitEntitySound;
-        proj_comp.hitGroundSound = (_k = option.hitGroundSound) !== null && _k !== void 0 ? _k : proj_comp.hitGroundSound;
-        proj_comp.hitParticle = (_l = option.hitParticle) !== null && _l !== void 0 ? _l : proj_comp.hitParticle;
-        proj_comp.lightningStrikeOnHit = (_m = option.lightningStrikeOnHit) !== null && _m !== void 0 ? _m : proj_comp.lightningStrikeOnHit;
-        proj_comp.liquidInertia = (_o = option.liquidInertia) !== null && _o !== void 0 ? _o : proj_comp.liquidInertia;
-        proj_comp.onFireTime = (_p = option.onFireTime) !== null && _p !== void 0 ? _p : proj_comp.onFireTime;
+        proj_comp.airInertia = (_c = option.airInertia) !== null && _c !== void 0 ? _c : proj_comp.airInertia;
+        proj_comp.catchFireOnHurt = (_d = option.catchFireOnHurt) !== null && _d !== void 0 ? _d : proj_comp.catchFireOnHurt;
+        proj_comp.critParticlesOnProjectileHurt = (_e = option.critParticlesOnProjectileHurt) !== null && _e !== void 0 ? _e : proj_comp.critParticlesOnProjectileHurt;
+        proj_comp.destroyOnProjectileHurt = (_f = option.destroyOnProjectileHurt) !== null && _f !== void 0 ? _f : proj_comp.destroyOnProjectileHurt;
+        proj_comp.gravity = (_g = option.gravity) !== null && _g !== void 0 ? _g : proj_comp.gravity;
+        proj_comp.hitEntitySound = (_h = option.hitEntitySound) !== null && _h !== void 0 ? _h : proj_comp.hitEntitySound;
+        proj_comp.hitGroundSound = (_j = option.hitGroundSound) !== null && _j !== void 0 ? _j : proj_comp.hitGroundSound;
+        proj_comp.hitParticle = (_k = option.hitParticle) !== null && _k !== void 0 ? _k : proj_comp.hitParticle;
+        proj_comp.lightningStrikeOnHit = (_l = option.lightningStrikeOnHit) !== null && _l !== void 0 ? _l : proj_comp.lightningStrikeOnHit;
+        proj_comp.liquidInertia = (_m = option.liquidInertia) !== null && _m !== void 0 ? _m : proj_comp.liquidInertia;
+        proj_comp.onFireTime = (_o = option.onFireTime) !== null && _o !== void 0 ? _o : proj_comp.onFireTime;
         proj_comp.owner = owner;
-        proj_comp.shouldBounceOnHit = (_q = option.shouldBounceOnHit) !== null && _q !== void 0 ? _q : proj_comp.shouldBounceOnHit;
-        proj_comp.stopOnHit = (_r = option.stopOnHit) !== null && _r !== void 0 ? _r : proj_comp.stopOnHit;
-        let v = new Vector3(view);
-        if (option.delay) {
-            console.warn('after2:' + proj_comp.owner.nameTag);
-            proj_comp.shoot(view.normalize().scl(0.05), shootOpt);
+        proj_comp.shouldBounceOnHit = (_p = option.shouldBounceOnHit) !== null && _p !== void 0 ? _p : proj_comp.shouldBounceOnHit;
+        proj_comp.stopOnHit = (_q = option.stopOnHit) !== null && _q !== void 0 ? _q : proj_comp.stopOnHit;
+        if (option.delayAfterSpawn) {
+            proj_comp.shoot(view.normalize().scl((_r = option.delayAfterSpawnSpeedMutiple) !== null && _r !== void 0 ? _r : 0.05), shootOpt);
             ExGame._runTimeout(() => {
                 if (falseIfError(() => proj.isValid))
                     proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
-            }, option.delay * 20);
+            }, option.delayAfterSpawn * 20);
         }
         else {
             proj_comp.shoot(view.normalize().scl(option.speed), shootOpt);
@@ -307,6 +318,17 @@ class ExEntity {
     getMarkVariant() {
         var _a, _b;
         return (_b = (_a = this.getComponent("minecraft:variant")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : 0;
+    }
+    faceLocation(loc) {
+        // 计算从实体位置到目标位置的方向向量
+        const direction = loc.cpy().sub(this.position);
+        // 计算水平距离
+        const horizontalDistance = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.z, 2));
+        // 计算俯仰角（pitch）和偏航角（yaw）
+        const pitch = Math.atan2(-direction.y, horizontalDistance) * 180 / Math.PI;
+        const yaw = Math.atan2(direction.z, direction.x) * 180 / Math.PI - 90;
+        // 使用rotation setter设置实体朝向
+        this.rotation = new Vector2(pitch, yaw);
     }
 }
 ExEntity.propertyNameCache = "exCache";

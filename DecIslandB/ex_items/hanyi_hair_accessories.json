@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "hanyi_hair_accessories"
                 }
+            },
+            "category": "armor/clothes/helmet",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

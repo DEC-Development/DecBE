@@ -62,6 +62,10 @@
                 "textures": {
                     "default": "long_bread"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 10
             }
         },
         "events": {

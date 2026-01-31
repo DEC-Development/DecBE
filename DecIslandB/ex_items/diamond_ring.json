@@ -13,12 +13,19 @@
             "minecraft:display_name": {
                 "value": "item.dec:diamond_ring.name"
             },
+            "minecraft:durability": {
+                "max_durability": 1652
+            },
             "minecraft:max_stack_size": 1,
             "minecraft:allow_off_hand": true,
             "minecraft:icon": {
                 "textures": {
                     "default": "diamond_ring"
                 }
+            },
+            "category": "accessory/thrown",
+            "trade_reference": {
+                "value": 60
             }
         }
     }

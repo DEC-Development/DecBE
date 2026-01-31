@@ -85,6 +85,10 @@
                 "textures": {
                     "default": "wind_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

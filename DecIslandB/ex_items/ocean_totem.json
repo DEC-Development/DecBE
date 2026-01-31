@@ -20,6 +20,10 @@
                 "textures": {
                     "default": "ocean_totem"
                 }
+            },
+            "category": "accessory/common",
+            "trade_reference": {
+                "value": 120
             }
         }
     }

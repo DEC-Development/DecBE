@@ -30,6 +30,10 @@
                 "textures": {
                     "default": "ender_egg"
                 }
+            },
+            "category": "boost",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

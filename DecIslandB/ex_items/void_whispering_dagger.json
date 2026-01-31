@@ -90,6 +90,10 @@
                 "textures": {
                     "default": "void_whispering_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 110
             }
         },
         "events": {

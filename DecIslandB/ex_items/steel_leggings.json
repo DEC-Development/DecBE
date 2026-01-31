@@ -59,6 +59,10 @@
                 "textures": {
                     "default": "steel_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

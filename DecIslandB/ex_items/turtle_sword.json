@@ -71,6 +71,10 @@
                 "textures": {
                     "default": "turtle_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

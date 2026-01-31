@@ -65,6 +65,10 @@
                 "textures": {
                     "default": "wood_helmet"
                 }
+            },
+            "category": "armor/armor/helmet",
+            "trade_reference": {
+                "value": 25
             }
         }
     }

@@ -58,6 +58,10 @@
                 "textures": {
                     "default": "iron_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

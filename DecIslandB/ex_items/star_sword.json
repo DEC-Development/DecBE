@@ -75,6 +75,10 @@
                 "textures": {
                     "default": "star_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 90
             }
         },
         "events": {

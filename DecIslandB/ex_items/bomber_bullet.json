@@ -18,6 +18,11 @@
                 "textures": {
                     "default": "bomber_bullet"
                 }
+            },
+            "category": "ammo",
+            "trade_reference": {
+                "value": 1,
+                "amount": 5
             }
         }
     }

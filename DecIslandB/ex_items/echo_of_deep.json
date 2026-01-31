@@ -46,6 +46,10 @@
                 "textures": {
                     "default": "echo_of_deep"
                 }
+            },
+            "category": "range_weapon/range_weapon",
+            "trade_reference": {
+                "value": 110
             }
         },
         "events": {

@@ -84,6 +84,10 @@
                 "textures": {
                     "default": "sword_of_guard"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

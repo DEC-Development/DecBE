@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "time_compass"
                 }
+            },
+            "category": "accessory/magic",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

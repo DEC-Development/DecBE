@@ -78,6 +78,10 @@
                 "textures": {
                     "default": "dust_destroyer"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

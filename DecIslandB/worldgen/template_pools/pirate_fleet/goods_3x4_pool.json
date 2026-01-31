@@ -8,7 +8,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_1",
+                    "location": "pirate_fleet_oak/goods_3x4_1",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },
@@ -17,7 +17,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_2",
+                    "location": "pirate_fleet_oak/goods_3x4_2",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },
@@ -26,7 +26,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_3",
+                    "location": "pirate_fleet_oak/goods_3x4_3",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },
@@ -35,7 +35,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_4",
+                    "location": "pirate_fleet_oak/goods_3x4_4",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },
@@ -44,7 +44,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_5",
+                    "location": "pirate_fleet_oak/goods_3x4_5",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },
@@ -53,7 +53,7 @@
             {
                 "element": {
                     "element_type": "minecraft:single_pool_element",
-                    "location": "pirate_fleet/goods_3x4_6",
+                    "location": "pirate_fleet_oak/goods_3x4_6",
                     "processors": "dec:empty",
                     "projection": "rigid"
                 },

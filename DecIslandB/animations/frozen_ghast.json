@@ -1,0 +1,19 @@
+{
+    "format_version": "1.8.0",
+    "animations": {
+        "animation.frozen_ghast.from_boss": {
+            "timeline": {
+                "0.02": [
+                    "/tp ~~~ facing @e[r=64,type=dec:everlasting_winter_ghast,c=1]",
+                    "/execute if entity @e[r=64,type=dec:everlasting_winter_ghast] if block ^^^0.1 air run tp ^^^0.1"
+                ],
+                "0.06": [
+                    "/tp ~~~ facing @e[r=64,type=dec:everlasting_winter_ghast,c=1]",
+                    "/execute if entity @e[r=64,type=dec:everlasting_winter_ghast] if block ^^^0.1 air run tp ^^^0.1"
+                ]
+            },
+            "animation_length": 0.08,
+            "loop": true
+        }
+    }
+}

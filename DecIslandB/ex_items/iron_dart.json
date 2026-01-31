@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "iron_dart"
                 }
+            },
+            "category": "thrown_weapon/dart",
+            "trade_reference": {
+                "value": 5,
+                "amount": 20
             }
         }
     }

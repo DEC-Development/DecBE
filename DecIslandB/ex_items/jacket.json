@@ -49,6 +49,10 @@
                 "textures": {
                     "default": "jacket"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "everlasting_winter_dart"
                 }
+            },
+            "category": "thrown_weapon/dart",
+            "trade_reference": {
+                "value": 20,
+                "amount": 20
             }
         }
     }

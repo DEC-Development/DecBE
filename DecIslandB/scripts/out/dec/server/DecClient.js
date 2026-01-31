@@ -1,4 +1,4 @@
-import { EntityDamageCause, GameMode, world } from '@minecraft/server';
+import { EntityDamageCause, GameMode, world, EquipmentSlot } from '@minecraft/server';
 import ExGameClient from "../../modules/exmc/server/ExGameClient.js";
 import { ArmorPlayerDec, ArmorPlayerPom } from "./items/ArmorData.js";
 import MathUtil from "../../modules/exmc/utils/math/MathUtil.js";
@@ -12,6 +12,7 @@ import { Objective } from "../../modules/exmc/server/entity/ExScoresManager.js";
 import Random from "../../modules/exmc/utils/Random.js";
 import { MinecraftDimensionTypes, MinecraftEffectTypes } from "../../modules/vanilla-data/lib/index.js";
 import ExEntity from '../../modules/exmc/server/entity/ExEntity.js';
+import ExPlayer from '../../modules/exmc/server/entity/ExPlayer.js';
 export default class DecClient extends ExGameClient {
     constructor(server, id, player) {
         super(server, id, player);
@@ -89,8 +90,97 @@ export default class DecClient extends ExGameClient {
             this.exPlayer.getScoresManager().setScore('skill_count', 0);
         });
         this.getEvents().exEvents.afterItemUse.subscribe((e) => {
-            if (e.itemStack.hasComponentById('minecraft:cooldown')) {
-                //这里写有饰品时触发的东西
+            const item = e.itemStack;
+            const player = ExPlayer.getInstance(e.source);
+            const offhandItem = player.getBag().itemOnOffHand;
+            // 工具函数：随机概率
+            const randomChance = (chance) => {
+                return Math.random() < chance;
+            };
+            // 触发器：带冷却的饰品触发
+            const triggerWithCooldown = (offhandTypeId, chance, cooldownCategory, cooldownTime, action) => {
+                if (e.source.getItemCooldown(cooldownCategory) <= 0) {
+                    if ((offhandItem === null || offhandItem === void 0 ? void 0 : offhandItem.typeId) === offhandTypeId && randomChance(chance)) {
+                        action();
+                        e.source.startItemCooldown(cooldownCategory, cooldownTime);
+                    }
+                }
+            };
+            // 耐久减少逻辑
+            const decreaseDurability = (item, amount, slot) => {
+                const dur = item.getComponentById("minecraft:durability");
+                if (dur.damage + amount < dur.maxDurability) {
+                    dur.damage += amount;
+                    player.getBag().setItem(slot, item);
+                }
+                else {
+                    e.source.playSound('random.break');
+                    if (item.amount > 1) {
+                        item.amount--;
+                        player.getBag().setItem(slot, item);
+                    }
+                    else {
+                        player.getBag().setItem(slot, undefined);
+                    }
+                }
+            };
+            // 饰品配置列表
+            const AccessoryTriggers = [
+                {
+                    typeId: 'dec:gold_ring',
+                    chance: 0.4,
+                    cooldownCategory: 'dec:ring',
+                    cooldownTime: 20,
+                    action: () => {
+                        player.shootProj('dec:golden_energy_ball', { speed: 0.8 });
+                        decreaseDurability(offhandItem, 1, EquipmentSlot.Offhand);
+                    }
+                },
+                {
+                    typeId: 'dec:diamond_ring',
+                    chance: 0.3,
+                    cooldownCategory: 'dec:ring',
+                    cooldownTime: 24,
+                    action: () => {
+                        player.shootProj('dec:stream_energy_ball', { speed: 0.8 });
+                        player.shootProj('dec:stream_energy_ball', { speed: 0.8, delay: 0.2 });
+                        decreaseDurability(offhandItem, 1, EquipmentSlot.Offhand);
+                    }
+                },
+                {
+                    typeId: 'dec:emerald_ring',
+                    chance: 0.2,
+                    cooldownCategory: 'dec:ring',
+                    cooldownTime: 10,
+                    action: () => {
+                        player.shootProj('dec:pure_energy_ball', { speed: 0.8 });
+                        decreaseDurability(offhandItem, 1, EquipmentSlot.Offhand);
+                    }
+                },
+                {
+                    typeId: 'dec:heart_ring',
+                    chance: 0.2,
+                    cooldownCategory: 'dec:ring',
+                    cooldownTime: 100,
+                    action: () => {
+                        player.addHealth(this.getServer(), 4);
+                        if (randomChance(0.5)) {
+                            player.addEffect(MinecraftEffectTypes.Strength, 100, 0);
+                        }
+                        player.spawnParticleVisibleToAll('dec:blood_spore_sweep_particle', new Vector3(e.source.location));
+                        decreaseDurability(offhandItem, 1, EquipmentSlot.Offhand);
+                    }
+                }
+                // 可以继续添加其他饰品
+            ];
+            if (item.hasComponentById('minecraft:cooldown')) {
+                const cooldownComponent = item.getComponent('minecraft:cooldown');
+                if (cooldownComponent.cooldownCategory === 'minecraft:missile') {
+                    // 遍历配置，统一处理
+                    for (const trigger of AccessoryTriggers) {
+                        triggerWithCooldown(trigger.typeId, trigger.chance, trigger.cooldownCategory, trigger.cooldownTime, trigger.action);
+                    }
+                }
             }
         });
         this.getEvents().exEvents.beforePlayerInteractWithBlock.subscribe(e => {

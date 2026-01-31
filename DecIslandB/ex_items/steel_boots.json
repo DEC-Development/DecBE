@@ -59,6 +59,10 @@
                 "textures": {
                     "default": "steel_boots"
                 }
+            },
+            "category": "armor/armor/boots",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

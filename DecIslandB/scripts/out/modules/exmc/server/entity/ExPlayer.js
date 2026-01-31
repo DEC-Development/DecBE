@@ -101,5 +101,8 @@ export default class ExPlayer extends ExEntity {
     stopCameraShake() {
         this.command.run(`camerashake stop`);
     }
+    spawnParticleVisibleToAll(particle, pos) {
+        this.command.run(`particle ${particle} ${pos.x} ${pos.y} ${pos.z}`);
+    }
 }
 //# sourceMappingURL=ExPlayer.js.map

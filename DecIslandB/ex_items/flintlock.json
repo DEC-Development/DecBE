@@ -39,6 +39,10 @@
                 "textures": {
                     "default": "flintlock"
                 }
+            },
+            "category": "range_weapon/range_weapon",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {}

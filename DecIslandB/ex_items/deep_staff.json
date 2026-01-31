@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "deep_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

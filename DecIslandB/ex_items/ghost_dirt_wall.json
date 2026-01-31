@@ -29,6 +29,11 @@
                 "textures": {
                     "default": "ghost_dirt_wall"
                 }
+            },
+            "category": "assist_item/blocking_item",
+            "trade_reference": {
+                "value": 5,
+                "amount": 1
             }
         },
         "events": {

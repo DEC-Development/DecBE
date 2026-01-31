@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "hunter_bullet_bag"
                 }
+            },
+            "category": "accessory/range",
+            "trade_reference": {
+                "value": 30
             }
         }
     }

@@ -9,6 +9,12 @@
       "is_experimental": false
     },
     "components": {
+      "minecraft:despawn": {
+        "despawn_from_distance": {
+          "min_distance": 40,
+          "max_distance": 40
+        }
+      },
       "minecraft:collision_box": {
         "width": 0.2,
         "height": 0.2

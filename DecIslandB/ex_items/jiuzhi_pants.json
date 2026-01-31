@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "jiuzhi_pants"
                 }
+            },
+            "category": "armor/clothes/leggings",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

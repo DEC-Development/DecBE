@@ -45,6 +45,10 @@
                 "textures": {
                     "default": "black_courtesy"
                 }
+            },
+            "category": "armor/clothes/helmet",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

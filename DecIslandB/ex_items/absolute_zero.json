@@ -91,6 +91,10 @@
                 "textures": {
                     "default": "absolute_zero"
                 }
+            },
+            "category": "melee_weapon/katana",
+            "trade_reference": {
+                "value": 128
             }
         },
         "events": {

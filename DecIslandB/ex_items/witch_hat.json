@@ -46,6 +46,10 @@
                 "textures": {
                     "default": "witch_hat"
                 }
+            },
+            "category": "armor/clothes/helmet",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

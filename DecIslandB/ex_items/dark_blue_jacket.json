@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "dark_blue_jacket"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

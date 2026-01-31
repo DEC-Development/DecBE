@@ -90,6 +90,10 @@
                 "textures": {
                     "default": "angel_purification"
                 }
+            },
+            "category": "melee_weapon/spear",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

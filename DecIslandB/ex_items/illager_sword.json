@@ -85,6 +85,10 @@
                 "textures": {
                     "default": "illager_sword"
                 }
+            },
+            "category": "melee_weapon/katana",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

@@ -28,6 +28,11 @@
                 "textures": {
                     "default": "frozen_ball"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 10,
+                "amount": 30
             }
         }
     }

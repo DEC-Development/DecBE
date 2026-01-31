@@ -68,6 +68,10 @@
                 "textures": {
                     "default": "amethyst_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 15
             }
         }
     }

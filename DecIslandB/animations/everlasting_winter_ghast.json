@@ -1,16 +1,64 @@
 {
   "format_version": "1.8.0", 
   "animations": {
-      "animation.everlasting_winter_ghast.defense": {
+      "animation.everlasting_winter_ghast.absorb_frozen_ghast": {
         "timeline": {
-            "1": [
-                "/damage @e[family=!frozen,type=!item,x=~-0.6,y=~-0.2,z=~-0.6,dx=1.2,dy=2.4,dz=1.2] 13 freezing entity @s"
+            "0.5": [
+                "/event entity @e[r=2,type=dec:frozen_ghast,c=1] minecraft:heal_boss"
             ],
-            "2": [
-                "/damage @e[family=!frozen,type=!item,x=~-0.6,y=~-0.2,z=~-0.6,dx=1.2,dy=2.4,dz=1.2] 13 freezing entity @s"
+            "2.5": [
+                "/event entity @e[r=2,type=dec:frozen_ghast,c=1] minecraft:heal_boss"
             ]
         }, 
-        "animation_length": 2, 
+        "animation_length": 4, 
+        "loop": true
+      },
+      "animation.everlasting_winter_ghast.blizzard": {
+        "timeline": {
+            "1": [
+                "/camera @r[m=!1,m=!spectator] fade time 10 0 10 color 180 180 200"
+            ],
+            "18": [
+                "/camera @r[m=!1,m=!spectator] fade time 10 0 10 color 180 180 200"
+            ]
+        }, 
+        "animation_length": 20, 
+        "loop": true
+      },
+      "animation.everlasting_winter_ghast.sprint": {
+        "timeline": {
+            "0.75": [
+                "/playanimation @s animation.everlasting_winter_ghast.sprint",
+                "/scriptevent dec:sustain_particle dec:everlasting_winter_big_wake_particle;10;2",
+                "/scriptevent dec:sustain_particle dec:blizzard_big_wake_particle;20;2"
+            ],
+            "0.9": [
+                "/tp ~~~ facing @p[m=!spectator,m=!1,r=64]",
+                "/summon dec:everlasting_winter_shadow ~~~"
+            ],
+            "1": [
+                "/playsound game.player.attack.strong @a ~~~ 10",
+                "/scriptevent dec:sprint 5",
+                "/scriptevent dec:sustain_damage freezing;12;10;2;everlasting_winter_ghast_sprint"
+            ],
+
+            
+            "1.75": [
+                "/playanimation @s animation.everlasting_winter_ghast.sprint",
+                "/scriptevent dec:sustain_particle dec:everlasting_winter_big_wake_particle;10;2",
+                "/scriptevent dec:sustain_particle dec:blizzard_big_wake_particle;20;1"
+            ],
+            "1.9": [
+                "/tp ~~~ facing @p[m=!spectator,m=!1,r=64]",
+                "/summon dec:everlasting_winter_shadow ~~~"
+            ],
+            "2": [
+                "/playsound game.player.attack.strong @a ~~~ 10",
+                "/scriptevent dec:sprint 5",
+                "/scriptevent dec:sustain_damage freezing;12;10;2;everlasting_winter_ghast_sprint"
+            ]
+        }, 
+        "animation_length": 3, 
         "loop": true
       }
    }

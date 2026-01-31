@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "hanyi_shoes"
                 }
+            },
+            "category": "armor/clothes/boots",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

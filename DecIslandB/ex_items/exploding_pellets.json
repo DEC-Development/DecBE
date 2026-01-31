@@ -18,6 +18,11 @@
                 "textures": {
                     "default": "exploding_pellets"
                 }
+            },
+            "category": "ammo",
+            "trade_reference": {
+                "value": 10,
+                "amount": 20
             }
         }
     }

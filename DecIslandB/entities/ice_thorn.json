@@ -7,7 +7,11 @@
       "is_summonable": true,
       "is_experimental": false
     },
-    "component_groups": {},
+    "component_groups": {
+      "minecraft:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
     "components": {
       "minecraft:explode": {
         "fuseLength": 5,
@@ -72,13 +76,24 @@
         "is_pushable": false,
         "is_pushable_by_piston": false
       },
+      "minecraft:on_death": {
+        "event": "minecraft:despawn",
+        "target": "self"
+      },
       "minecraft:physics": {}
     },
     "events": {
+      "minecraft:despawn": {
+        "add": {
+          "component_groups": [
+            "minecraft:despawn"
+          ]
+        }
+      },
       "dec:attack": {
         "queue_command": {
           "command": [
-            "damage @e[type=!item,family=!frozen,x=~-0.5,y=~-0.5,z=~-0.5,dx=1,dy=3,dz=1] 15 magic"
+            "damage @e[type=!item,family=!frozen,x=~-0.5,y=~-0.5,z=~-0.5,dx=1,dy=3,dz=1] 10 magic"
           ]
         }
       }

@@ -756,6 +756,10 @@
                 "textures": {
                     "default": "copper_battleaxe"
                 }
+            },
+            "category": "melee_weapon/axe",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

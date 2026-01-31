@@ -79,6 +79,10 @@
                 "textures": {
                     "default": "night_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

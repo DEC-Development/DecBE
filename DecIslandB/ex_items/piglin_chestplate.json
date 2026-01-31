@@ -43,6 +43,10 @@
                 "textures": {
                     "default": "piglin_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 100
             }
         }
     }

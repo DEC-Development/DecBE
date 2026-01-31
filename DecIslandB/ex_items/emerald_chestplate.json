@@ -58,6 +58,10 @@
                 "textures": {
                     "default": "emerald_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 30
             }
         }
     }

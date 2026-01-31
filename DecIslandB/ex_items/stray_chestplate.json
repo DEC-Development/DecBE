@@ -45,6 +45,10 @@
                 "textures": {
                     "default": "stray_chestplate"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

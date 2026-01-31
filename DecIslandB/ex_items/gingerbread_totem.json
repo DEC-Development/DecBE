@@ -20,6 +20,10 @@
                 "textures": {
                     "default": "gingerbread_totem"
                 }
+            },
+            "category": "accessory/common",
+            "trade_reference": {
+                "value": 60
             }
         }
     }

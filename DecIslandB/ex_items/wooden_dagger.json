@@ -88,6 +88,10 @@
                 "textures": {
                     "default": "wooden_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 10
             }
         },
         "events": {

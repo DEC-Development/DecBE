@@ -74,6 +74,10 @@
                 "textures": {
                     "default": "sword_of_halloween"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

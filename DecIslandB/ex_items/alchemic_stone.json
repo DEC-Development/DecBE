@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "alchemic_stone"
                 }
+            },
+            "category": "accessory/magic",
+            "trade_reference": {
+                "value": 30
             }
         }
     }

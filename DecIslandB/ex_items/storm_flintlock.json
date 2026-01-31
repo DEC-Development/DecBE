@@ -37,8 +37,11 @@
                 "textures": {
                     "default": "storm_flintlock"
                 }
+            },
+            "category": "melee_weapon/axe",
+            "trade_reference": {
+                "value": 45
             }
-        },
-        "events": {}
+        }
     }
 }

@@ -69,6 +69,10 @@
                 "textures": {
                     "default": "netherite_sickle"
                 }
+            },
+            "category": "melee_weapon/sickle",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

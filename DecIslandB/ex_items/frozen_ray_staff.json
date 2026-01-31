@@ -64,6 +64,10 @@
                 "textures": {
                     "default": "frozen_ray_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 60
             }
         },
         "events": {

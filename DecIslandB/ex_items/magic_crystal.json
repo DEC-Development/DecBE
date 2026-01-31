@@ -30,6 +30,10 @@
                 "textures": {
                     "default": "magic_crystal"
                 }
+            },
+            "category": "boost",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

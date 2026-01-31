@@ -758,6 +758,10 @@
                 "textures": {
                     "default": "amethyst_axe"
                 }
+            },
+            "category": "melee_weapon/axe",
+            "trade_reference": {
+                "value": 10
             }
         },
         "events": {

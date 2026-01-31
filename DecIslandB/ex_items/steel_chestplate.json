@@ -59,6 +59,10 @@
                 "textures": {
                     "default": "steel_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

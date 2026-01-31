@@ -57,6 +57,10 @@
                 "textures": {
                     "default": "frozen_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

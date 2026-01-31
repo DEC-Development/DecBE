@@ -90,6 +90,10 @@
                 "textures": {
                     "default": "village_guardian"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

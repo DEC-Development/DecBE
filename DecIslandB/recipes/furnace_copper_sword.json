@@ -7,7 +7,7 @@
 
     
     "tags": ["furnace", "blast_furnace"],
-    "input": "dec:copper_sword",
+    "input": "minecraft:copper_sword",
     "output": "minecraft:copper_nugget"
   }
   

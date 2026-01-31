@@ -63,6 +63,10 @@
                 "textures": {
                     "default": "lava_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

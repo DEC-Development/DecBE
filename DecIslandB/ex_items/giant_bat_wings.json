@@ -55,6 +55,10 @@
                 "textures": {
                     "default": "giant_bat_wings"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

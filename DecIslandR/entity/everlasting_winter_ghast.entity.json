@@ -42,7 +42,6 @@
         "sneaking": "animation.humanoid.sneaking",
         "bob": "animation.humanoid.bob",
         "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
-        "bow_and_arrow": "animation.humanoid.bow_and_arrow",
         "swimming": "animation.humanoid.swimming",
         "use_item_progress": "animation.humanoid.use_item_progress"
       },
@@ -57,7 +56,6 @@
         { "sneaking": "controller.animation.humanoid.sneaking" },
         { "bob": "controller.animation.humanoid.bob" },
         { "damage_nearby_mobs": "controller.animation.humanoid.damage_nearby_mobs" },
-        { "bow_and_arrow": "controller.animation.humanoid.bow_and_arrow" },
         { "swimming": "controller.animation.humanoid.swimming" },
         { "use_item_progress": "controller.animation.humanoid.use_item_progress" }
       ],

@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "smoke_bomb"
                 }
+            },
+            "category": "assist_item/cover_item",
+            "trade_reference": {
+                "value": 5,
+                "amount": 1
             }
         }
     }

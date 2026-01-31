@@ -4,10 +4,10 @@
     "description": {
       "identifier": "dec:jellyfish_by_jellyfish_staff",
       "materials": {
-        "default": "snowball"
+        "default": "charged_creeper"
       },
       "textures": {
-        "default": "textures/items/blue_jellyfish"
+        "default": "textures/entity/jellyfish_by_jellyfish_staff"
       },
       "geometry": {
         "default": "geometry.item_sprite"

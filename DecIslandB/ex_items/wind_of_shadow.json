@@ -106,6 +106,10 @@
                 "textures": {
                     "default": "wind_of_shadow"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

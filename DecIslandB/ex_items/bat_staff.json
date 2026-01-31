@@ -52,6 +52,10 @@
                 "textures": {
                     "default": "bat_staff"
                 }
+            },
+            "category": "summon_weapon/summon_weapon",
+            "trade_reference": {
+                "value": 50
             }
         },
         "events": {

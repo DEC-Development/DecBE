@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "fire_heart"
                 }
+            },
+            "category": "accessory/melee",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

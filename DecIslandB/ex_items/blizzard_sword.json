@@ -81,6 +81,10 @@
                 "textures": {
                     "default": "blizzard_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 80
             }
         },
         "events": {

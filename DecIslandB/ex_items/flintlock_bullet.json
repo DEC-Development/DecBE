@@ -19,6 +19,11 @@
                 "textures": {
                     "default": "flintlock_bullet"
                 }
+            },
+            "category": "ammo",
+            "trade_reference": {
+                "value": 5,
+                "amount": 30
             }
         }
     }

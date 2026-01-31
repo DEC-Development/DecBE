@@ -1,0 +1,59 @@
+{
+  "format_version": "1.8.0", 
+  "animations": {
+      "animation.everlasting_winter_crystal.thorn_surround": {
+        "timeline": {
+            "0.2": [
+                "/summon dec:ice_thorn ~3~~"
+            ],
+            "0.5": [
+                "/summon dec:ice_thorn ~3~~1"
+            ],
+            "0.8": [
+                "/summon dec:ice_thorn ~2~~2"
+            ],
+            "1.1": [
+                "/summon dec:ice_thorn ~1~~3"
+            ],
+            "1.4": [
+                "/summon dec:ice_thorn ~~~3"
+            ],
+            "1.7": [
+                "/summon dec:ice_thorn ~-1~~3"
+            ],
+            "2": [
+                "/summon dec:ice_thorn ~-2~~2"
+            ],
+            "2.3": [
+                "/summon dec:ice_thorn ~-3~~1"
+            ],
+            "2.6": [
+                "/summon dec:ice_thorn ~-3~~"
+            ],
+            "2.9": [
+                "/summon dec:ice_thorn ~-3~~-1"
+            ],
+            "3.2": [
+                "/summon dec:ice_thorn ~-2~~-2"
+            ],
+            "3.5": [
+                "/summon dec:ice_thorn ~-1~~-3"
+            ],
+            "3.8": [
+                "/summon dec:ice_thorn ~~~-3"
+            ],
+            "4.1": [
+                "/summon dec:ice_thorn ~1~~-3"
+            ],
+            "4.4": [
+                "/summon dec:ice_thorn ~2~~-2"
+            ],
+            "4.7": [
+                "/summon dec:ice_thorn ~3~~-1"
+            ]
+        }, 
+        "animation_length": 4.8, 
+        "loop": true
+      }
+   }
+}

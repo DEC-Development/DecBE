@@ -81,6 +81,10 @@
                 "textures": {
                     "default": "storm_giant_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 45
             }
         },
         "events": {

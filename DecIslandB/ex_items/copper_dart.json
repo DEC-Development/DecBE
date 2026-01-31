@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "copper_dart"
                 }
+            },
+            "category": "thrown_weapon/dart",
+            "trade_reference": {
+                "value": 4,
+                "amount": 20
             }
         }
     }

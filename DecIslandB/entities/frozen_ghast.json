@@ -6,15 +6,47 @@
       "runtime_identifier": "minecraft:ghast",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "scripts": {
+        "animate": [
+          "ticking"
+        ]
+      },
+      "animations": {
+        "ticking": "animation.frozen_ghast.from_boss"
+      }
     },
     "component_groups": {
+      "minecraft:waiting_for_despawn": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.2,
+          "time_down_event": {
+            "event": "minecraft:despawn"
+          }
+        }
+      },
       "minecraft:from_boss": {
         "minecraft:explode": {
           "fuseLength": 30,
           "fuseLit": true,
           "power": 0,
           "causesFire": false
+        },
+        "minecraft:behavior.follow_mob": {
+          "priority": 6,
+          "search_range": 64,
+          "stop_distance": 1,
+          "speed_multiplier": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_family",
+                "subject": "other",
+                "value": "everlasting_winter_ghast"
+              }
+            ]
+          }
         }
       },
       "minecraft:despawn": {
@@ -174,10 +206,27 @@
       }
     },
     "events": {
+      "minecraft:heal_boss": {
+        "add": {
+          "component_groups": [
+            "minecraft:waiting_for_despawn"
+          ]
+        },
+        "queue_command": {
+          "command": [
+            "effect @e[r=64,type=dec:everlasting_winter_ghast,c=1] regeneration 2 10"
+          ]
+        }
+      },
       "minecraft:despawn": {
         "add": {
           "component_groups": [
             "minecraft:despawn"
+          ]
+        },
+        "queue_command": {
+          "command": [
+            "particle dec:everlasting_winter_explode_particle ~~1~"
           ]
         }
       },

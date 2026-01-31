@@ -68,6 +68,10 @@
                 "textures": {
                     "default": "amethyst_boots"
                 }
+            },
+            "category": "armor/armor/boots",
+            "trade_reference": {
+                "value": 15
             }
         }
     }

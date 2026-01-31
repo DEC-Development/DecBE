@@ -88,7 +88,6 @@ item.dec:ender_powder.name=Ender Powder
 item.dec:ender_stone.name=Ender Stone
 item.dec:ender_core.name=Ender Core
 item.dec:ender_breath.name=Ender Breath
-item.dec:copper_sword.name=Copper Sword
 item.dec:copper_sickle.name=Copper Sickle
 item.dec:copper_battleaxe.name=Copper Battleaxe
 item.dec:destroy_staff.name=Destroy Staff
@@ -149,11 +148,6 @@ item.dec:dust_staff.name=Dust Staff
 item.dec:chaos_staff.name=Chaos Staff
 item.dec:blue_of_the_sea.name=Blue Of The Sea
 item.dec:dust_destroyer.name=Dust Destroy 
-item.dec:artificial_meat.name=Artificial Meat
-item.dec:artificial_meat_creator_off.name=AMC-OFF
-item.dec:artificial_meat_creator_on.name=AMC-ON
-item.dec:artificial_meat_creator_power.name=AMC Power
-item.dec:wet_paper.name=Wet Paper
 item.dec:challenge_of_ash.name=Challenge Of Ash
 item.dec:throwable_bomb.name=Throwable Bomb
 item.dec:nautilus_alive.name=Nautilus Alive
@@ -941,6 +935,7 @@ item.spawn_egg.entity.dec:ice_wizard.name=Spawn Ice Wizard
 item.spawn_egg.entity.dec:ice_monster.name=Spawn Ice Monster
 item.spawn_egg.entity.dec:frozen_man.name=Spawn Frozen Man
 item.spawn_egg.entity.dec:doctor.name=Spawn Doctor
+item.spawn_egg.entity.dec:ender_snail.name=Spawn Ender Snail
 
 entity.dec:ice_zombie.name=Ice Zombie
 entity.dec:ash_blaze.name=Ash Blaze
@@ -1110,6 +1105,9 @@ entity.dec:ash_knight_head.name=Ash Knight Head
 entity.dec:frozen_man.name=Frozen Man
 entity.dec:scarecrow.name=Scarecrow
 entity.dec:doctor.name=Doctor
+entity.dec:everlasting_winter_crystal.name=Everlasting Winter Crystal
+entity.dec:everlasting_winter_shadow.name=Everlasting Winter Shadow
+entity.dec:ender_snail.name=Ender Snail
 
 entity.dec:thrown_bomb.name=Thrown Bomb
 entity.dec:saucer_ray.name=Saucer Ray
@@ -1207,6 +1205,7 @@ entity.dec:spots_overflow.name=Spots Overflow
 entity.dec:bullet_by_echo_of_deep.name=Echo of Deep Bullet
 entity.dec:firefly_bottle.name=Firefly Bottle
 entity.dec:muddy_ball.name=Muddy Ball
+entity.dec:blizzard_by_laser.name=Blizzard Energy
 
 entity.dec:supply_package.name=Supply Package
 

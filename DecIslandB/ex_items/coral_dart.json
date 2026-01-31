@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "coral_dart"
                 }
+            },
+            "category": "thrown_weapon/dart",
+            "trade_reference": {
+                "value": 1,
+                "amount": 25
             }
         }
     }

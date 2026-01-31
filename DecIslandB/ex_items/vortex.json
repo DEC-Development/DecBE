@@ -85,6 +85,10 @@
                 "textures": {
                     "default": "vortex"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 70
             }
         },
         "events": {

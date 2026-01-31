@@ -45,6 +45,10 @@
                 "textures": {
                     "default": "stray_helmet"
                 }
+            },
+            "category": "armor/clothes/helmet",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "jellyfish_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

@@ -19,6 +19,10 @@
                 "textures": {
                     "default": "archer_bullet_bag"
                 }
+            },
+            "category": "accessory/range",
+            "trade_reference": {
+                "value": 60
             }
         }
     }

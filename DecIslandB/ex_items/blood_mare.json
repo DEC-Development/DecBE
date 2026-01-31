@@ -84,6 +84,10 @@
                 "textures": {
                     "default": "blood_mare"
                 }
+            },
+            "category": "melee_weapon/katana",
+            "trade_reference": {
+                "value": 50
             }
         },
         "events": {

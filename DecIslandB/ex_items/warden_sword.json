@@ -88,6 +88,10 @@
                 "textures": {
                     "default": "warden_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 100
             }
         },
         "events": {

@@ -40,6 +40,10 @@
                 "textures": {
                     "default": "flintlock_pro"
                 }
+            },
+            "category": "range_weapon/range_weapon",
+            "trade_reference": {
+                "value": 50
             }
         },
         "events": {}

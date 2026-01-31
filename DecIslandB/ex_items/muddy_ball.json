@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "muddy_ball"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 5,
+                "amount": 30
             }
         }
     }

@@ -70,6 +70,10 @@
                 "textures": {
                     "default": "the_blade"
                 }
+            },
+            "category": "melee_weapon/katana",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {

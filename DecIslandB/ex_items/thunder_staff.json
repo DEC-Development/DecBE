@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "thunder_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 100
             }
         },
         "events": {

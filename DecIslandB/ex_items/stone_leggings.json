@@ -73,6 +73,10 @@
                 "textures": {
                     "default": "stone_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 20
             }
         }
     }

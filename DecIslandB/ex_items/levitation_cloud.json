@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "levitation_cloud"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 20,
+                "amount": 5
             }
         }
     }

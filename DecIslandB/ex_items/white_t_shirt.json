@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "white_t_shirt"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

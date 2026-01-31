@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "grapeshot_frozen_ball"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 10,
+                "amount": 10
             }
         },
         "events": {

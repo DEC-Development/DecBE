@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "golden_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

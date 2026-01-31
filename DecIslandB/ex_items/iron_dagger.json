@@ -91,6 +91,10 @@
                 "textures": {
                     "default": "iron_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 20
             }
         },
         "events": {

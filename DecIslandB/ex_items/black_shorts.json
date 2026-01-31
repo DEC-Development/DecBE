@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "black_shorts"
                 }
+            },
+            "category": "armor/clothes/leggings",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

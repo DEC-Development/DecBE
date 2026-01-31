@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "frozen_dart"
                 }
+            },
+            "category": "thrown_weapon/dart",
+            "trade_reference": {
+                "value": 10,
+                "amount": 20
             }
         }
     }

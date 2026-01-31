@@ -61,6 +61,10 @@
                 "textures": {
                     "default": "cudgel"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 10
             }
         },
         "events": {

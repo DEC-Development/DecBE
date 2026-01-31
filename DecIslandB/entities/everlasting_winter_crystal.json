@@ -1,0 +1,176 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "dec:everlasting_winter_crystal",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+      "scripts": {
+        "animate": [
+          "thorn_surround"
+        ]
+      },
+      "animations": {
+        "thorn_surround": "animation.everlasting_winter_crystal.thorn_surround"
+      }
+    },
+    "component_groups": {
+      "minecraft:waiting_for_despawn": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.06,
+          "time_down_event": {
+            "event": "minecraft:despawn"
+          }
+        }
+      },
+      "minecraft:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:explode": {
+        "fuseLength": 180,
+        "fuseLit": true,
+        "power": 0,
+        "causesFire": false
+      },
+      "minecraft:timer": {
+        "looping": true,
+        "time": 10,
+        "time_down_event": {
+          "event": "minecraft:laser_attack_exe"
+        }
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "on_damage": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_damage",
+                    "value": "fatal"
+                  }
+                ]
+              },
+              "event": "minecraft:waiting_for_despawn"
+            },
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:type_family": {
+        "family": [
+          "everlasting_winter_crystal",
+          "frozen"
+        ]
+      },
+      "minecraft:health": {
+        "value": 100,
+        "max": 100
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1
+      },
+      "minecraft:physics": {
+        "has_gravity": true,
+        "has_collision": true
+      },
+      "minecraft:collision_box": {
+        "width": 1,
+        "height": 2
+      }
+    },
+    "events": {
+      "minecraft:despawn": {
+        "add": {
+          "component_groups": [
+            "minecraft:despawn"
+          ]
+        }
+      },
+      "minecraft:waiting_for_despawn": {
+        "queue_command": {
+          "command": [
+            "particle dec:everlasting_winter_explode_particle ~~1~"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:waiting_for_despawn"
+          ]
+        }
+      },
+      "minecraft:laser_attack_exe": {
+        "randomize": [
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/1"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/2"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/3"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/4"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/5"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/6"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/7"
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "queue_command": {
+              "command": [
+                "function entity/frozen_laser_spawn/8"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

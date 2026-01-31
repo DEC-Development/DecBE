@@ -45,6 +45,10 @@
                 "textures": {
                     "default": "following_particle"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

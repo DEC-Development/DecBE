@@ -91,6 +91,10 @@
                 "textures": {
                     "default": "emerald_dagger"
                 }
+            },
+            "category": "melee_weapon/dagger",
+            "trade_reference": {
+                "value": 40
             }
         },
         "events": {

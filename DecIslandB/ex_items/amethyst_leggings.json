@@ -68,6 +68,10 @@
                 "textures": {
                     "default": "amethyst_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 15
             }
         }
     }

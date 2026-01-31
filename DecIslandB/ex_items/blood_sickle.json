@@ -85,6 +85,10 @@
                 "textures": {
                     "default": "blood_sickle"
                 }
+            },
+            "category": "melee_weapon/sickle",
+            "trade_reference": {
+                "value": 45
             }
         },
         "events": {

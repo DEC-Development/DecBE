@@ -35,6 +35,10 @@
                 "textures": {
                     "default": "diamond_staff"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 90
             }
         },
         "events": {

@@ -63,6 +63,10 @@
                 "textures": {
                     "default": "lava_chestplate"
                 }
+            },
+            "category": "armor/armor/chestplate",
+            "trade_reference": {
+                "value": 40
             }
         }
     }

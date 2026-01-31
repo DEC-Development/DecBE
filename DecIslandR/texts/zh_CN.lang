@@ -88,7 +88,6 @@ item.dec:ender_powder.name=末影粉末
 item.dec:ender_stone.name=末影石
 item.dec:ender_core.name=末影核心
 item.dec:ender_breath.name=末影之息
-item.dec:copper_sword.name=黄铜剑
 item.dec:copper_sickle.name=黄铜镰刀
 item.dec:copper_battleaxe.name=黄铜战斧
 item.dec:destroy_staff.name=破坏神杖
@@ -149,11 +148,6 @@ item.dec:dust_staff.name=尘埃召唤杖
 item.dec:chaos_staff.name=混沌召唤杖
 item.dec:blue_of_the_sea.name=海之忧伤
 item.dec:dust_destroyer.name=尘灭者
-item.dec:artificial_meat.name=人造肉
-item.dec:artificial_meat_creator_off.name=AMC-OFF
-item.dec:artificial_meat_creator_on.name=AMC-ON
-item.dec:artificial_meat_creator_power.name=AMC充能条
-item.dec:wet_paper.name=含水纸
 item.dec:challenge_of_ash.name=灰烬挑战书
 item.dec:throwable_bomb.name=炸药包
 item.dec:nautilus_alive.name=活的鹦鹉螺
@@ -941,6 +935,7 @@ item.spawn_egg.entity.dec:ice_wizard.name=生成 寒潮法师
 item.spawn_egg.entity.dec:ice_monster.name=生成 冰雪怪
 item.spawn_egg.entity.dec:frozen_man.name=生成 冰人
 item.spawn_egg.entity.dec:doctor.name=生成 医生
+item.spawn_egg.entity.dec:ender_snail.name=生成 末影蜗牛
 
 entity.dec:ice_zombie.name=寒冰僵尸
 entity.dec:ash_blaze.name=灰烬烈焰人
@@ -1110,6 +1105,9 @@ entity.dec:ash_knight_head.name=灰烬之首
 entity.dec:frozen_man.name=冰人
 entity.dec:scarecrow.name=稻草人
 entity.dec:doctor.name=医生
+entity.dec:everlasting_winter_crystal.name=永冬水晶
+entity.dec:everlasting_winter_shadow.name=永冬之影
+entity.dec:ender_snail.name=末影蜗牛
 
 entity.dec:thrown_bomb.name=炸药包
 entity.dec:saucer_ray.name=飞碟射线
@@ -1207,6 +1205,7 @@ entity.dec:spots_overflow.name=溢出耀斑
 entity.dec:bullet_by_echo_of_deep.name=深渊弹
 entity.dec:firefly_bottle.name=萤火虫瓶
 entity.dec:muddy_ball.name=泥球
+entity.dec:blizzard_by_laser.name=暴雪能量
 
 entity.dec:supply_package.name=补给包
 

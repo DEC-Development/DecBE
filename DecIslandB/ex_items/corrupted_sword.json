@@ -61,6 +61,10 @@
                 "textures": {
                     "default": "corrupted_sword"
                 }
+            },
+            "category": "melee_weapon/axe",
+            "trade_reference": {
+                "value": 25
             }
         },
         "events": {

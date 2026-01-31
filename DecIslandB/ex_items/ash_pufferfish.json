@@ -27,6 +27,11 @@
                 "textures": {
                     "default": "ash_pufferfish"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 20,
+                "amount": 10
             }
         }
     }

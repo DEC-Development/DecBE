@@ -6,8 +6,8 @@
     },  
     "tags": [ "crafting_table" ],
     "pattern": [
-      "  X",
-      " # ",
+      " AX",
+      " #A",
       "#  "
     ],
     "key": {
@@ -16,6 +16,9 @@
       },
       "X": {
         "item": "minecraft:copper_ingot"
+      },
+      "A": {
+        "item": "minecraft:copper_nugget"
       }
     },
     "result": {

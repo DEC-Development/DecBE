@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "nightmare"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 110
             }
         },
         "events": {

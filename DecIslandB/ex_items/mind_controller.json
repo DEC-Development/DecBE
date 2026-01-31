@@ -28,6 +28,11 @@
                 "textures": {
                     "default": "mind_controller"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 5,
+                "amount": 20
             }
         }
     }

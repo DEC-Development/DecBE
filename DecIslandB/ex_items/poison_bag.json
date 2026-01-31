@@ -32,6 +32,11 @@
                 "textures": {
                     "default": "poison_bag"
                 }
+            },
+            "category": "thrown_weapon/sundries",
+            "trade_reference": {
+                "value": 5,
+                "amount": 30
             }
         },
         "events": {

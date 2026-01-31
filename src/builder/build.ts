@@ -5,7 +5,7 @@ import SingleFileDataSet, { JSONArray, JSONObject } from "./SingleFileDataSet.js
 import { readFile, writeFile } from "./fileOper.js";
 
 const ROOT = "DecIslandB"
-const GAMEROOT = "C:/Users/" + os.userInfo().username + "/AppData/Local/Packages/Microsoft.MinecraftUWP_8wekyb3d8bbwe/LocalState/games/com.mojang/development_behavior_packs/DecIslandB"
+const GAMEROOT = "C:/Users/" + os.userInfo().username + "/AppData/Roaming/Minecraft Bedrock/Users/Shared/games/com.mojang/development_behavior_packs/DecIslandB"
 async function fileDisplay(filePath: string) {
     for (let f of fs.readdirSync(filePath)) {
         if (fs.statSync(filePath + "/" + f).isDirectory()) {

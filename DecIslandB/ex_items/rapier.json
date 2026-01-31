@@ -84,6 +84,10 @@
                 "textures": {
                     "default": "rapier"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 50
             }
         },
         "events": {

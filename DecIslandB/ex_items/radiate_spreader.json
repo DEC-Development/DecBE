@@ -42,6 +42,10 @@
                 "textures": {
                     "default": "radiate_spreader"
                 }
+            },
+            "category": "magic_weapon/staff",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {

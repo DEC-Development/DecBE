@@ -5,45 +5,21 @@
       "identifier": "dec:frozen_laser_small",
       "is_spawnable": false,
       "is_summonable": true,
-      "is_experimental": false,
-      "scripts": {
-        "animate": [
-          {
-            "attack": "query.variant == 1"
-          }
-        ]
-      },
-      "animations": {
-        "attack": "animation.frozen_laser_small_attack"
-      }
+      "is_experimental": false
     },
     "component_groups": {
       "minecraft:despawn": {
         "minecraft:instant_despawn": {}
-      },
-      "minecraft:start": {
-        "minecraft:timer": {
-          "looping": false,
-          "time": 2,
-          "time_down_event": {
-            "event": "minecraft:attack_mode"
-          }
-        }
-      },
-      "minecraft:attack_mode": {
-        "minecraft:timer": {
-          "looping": false,
-          "time": 0.66,
-          "time_down_event": {
-            "event": "minecraft:despawn"
-          }
-        },
-        "minecraft:variant": {
-          "value": 1
-        }
       }
     },
     "components": {
+      "minecraft:timer": {
+        "looping": false,
+        "time": 0.2,
+        "time_down_event": {
+          "event": "minecraft:despawn"
+        }
+      },
       "minecraft:health": {
         "value": 100000,
         "max": 100000
@@ -70,12 +46,6 @@
         "width": 0.0,
         "height": 0.0
       },
-      "minecraft:explode": {
-        "fuseLength": 2.7,
-        "fuseLit": true,
-        "power": 0,
-        "causesFire": false
-      },
       "minecraft:type_family": {
         "family": [
           "frozen"
@@ -91,29 +61,57 @@
         }
       },
       "minecraft:entity_spawned": {
-        "add": {
-          "component_groups": [
-            "minecraft:start"
-          ]
-        },
-        "queue_command": {
-          "command": [
-            "particle dec:frozen_laser_small_particle ~~~"
-          ]
-        }
-      },
-      "minecraft:attack_mode": {
-        "add": {
-          "component_groups": [
-            "minecraft:attack_mode"
-          ]
-        },
-        "queue_command": {
-          "command": [
-            "execute if entity @e[type=!item,x=~,z=~,y=-64,dx=0,dy=512,dz=0,family=!frozen] run damage @e[type=!item,x=~,z=~,y=-64,dx=0,dy=512,dz=0,family=!frozen] 24 magic",
-            "execute if entity @e[type=!item,x=~,z=~,y=-64,dx=0,dy=512,dz=0,family=!frozen] run event entity @s minecraft:despawn"
-          ]
-        }
+        "sequence": [
+          {
+            "queue_command": {
+              "command": [
+                "particle dec:frozen_laser_small_particle ~~~"
+              ]
+            }
+          },
+          {
+            "randomize": [
+              {
+                "queue_command": {
+                  "command": [
+                    "summon dec:blizzard_by_laser ~0.1~14~",
+                    "summon dec:blizzard_by_laser ~~10~0.1",
+                    "summon dec:blizzard_by_laser ~~6~"
+                  ]
+                },
+                "weight": 2
+              },
+              {
+                "queue_command": {
+                  "command": [
+                    "summon dec:blizzard_by_laser ~0.1~14~",
+                    "summon dec:blizzard_by_laser ~-0.1~12~",
+                    "summon dec:blizzard_by_laser ~-0.1~8~"
+                  ]
+                },
+                "weight": 2
+              },
+              {
+                "queue_command": {
+                  "command": [
+                    "summon dec:blizzard_by_laser ~0.1~14~",
+                    "summon dec:blizzard_by_laser ~~10~0.1"
+                  ]
+                },
+                "weight": 3
+              },
+              {
+                "queue_command": {
+                  "command": [
+                    "summon dec:blizzard_by_laser ~0.1~16~",
+                    "summon dec:blizzard_by_laser ~~12~0.1"
+                  ]
+                },
+                "weight": 2
+              }
+            ]
+          }
+        ]
       }
     }
   }

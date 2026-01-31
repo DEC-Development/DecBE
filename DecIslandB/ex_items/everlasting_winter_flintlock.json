@@ -37,6 +37,10 @@
                 "textures": {
                     "default": "everlasting_winter_flintlock"
                 }
+            },
+            "category": "range_weapon/range_weapon",
+            "trade_reference": {
+                "value": 120
             }
         },
         "events": {}

@@ -67,6 +67,10 @@
                 "textures": {
                     "default": "hanyi_clothes"
                 }
+            },
+            "category": "armor/clothes/chestplate",
+            "trade_reference": {
+                "value": 10
             }
         }
     }

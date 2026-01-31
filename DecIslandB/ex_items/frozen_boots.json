@@ -69,6 +69,10 @@
                 "textures": {
                     "default": "frozen_boots"
                 }
+            },
+            "category": "armor/armor/boots",
+            "trade_reference": {
+                "value": 50
             }
         }
     }

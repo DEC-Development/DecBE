@@ -83,13 +83,17 @@
             "minecraft:hand_equipped": true,
             "minecraft:tags": {
                 "tags": [
-                    "comp:equipment_type:melee_weapon_:staff:_"
+                    "comp:equipment_type:melee_weapon_:sword:_"
                 ]
             },
             "minecraft:icon": {
                 "textures": {
                     "default": "growth"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 55
             }
         },
         "events": {

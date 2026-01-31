@@ -43,6 +43,10 @@
                 "textures": {
                     "default": "piglin_leggings"
                 }
+            },
+            "category": "armor/armor/leggings",
+            "trade_reference": {
+                "value": 100
             }
         }
     }

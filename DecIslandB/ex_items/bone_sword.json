@@ -68,6 +68,10 @@
                 "textures": {
                     "default": "bone_sword"
                 }
+            },
+            "category": "melee_weapon/sword",
+            "trade_reference": {
+                "value": 30
             }
         },
         "events": {
